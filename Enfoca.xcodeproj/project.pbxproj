@@ -7,12 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F2431BE1E109CDF0046A224 /* CardOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431BD1E109CDF0046A224 /* CardOrder.swift */; };
+		0F2431C31E109E120046A224 /* CardOrderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431C21E109E120046A224 /* CardOrderTests.swift */; };
+		0F2431C51E10A04E0046A224 /* CardSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431C41E10A04E0046A224 /* CardSide.swift */; };
+		0F2431C71E10A0B80046A224 /* CardSideTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431C61E10A0B80046A224 /* CardSideTests.swift */; };
+		0F2431C91E10A1DC0046A224 /* BrowseFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431C81E10A1DC0046A224 /* BrowseFilter.swift */; };
+		0F2431CB1E10A26A0046A224 /* BrowseFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431CA1E10A26A0046A224 /* BrowseFilter.swift */; };
+		0F2431CD1E10A5420046A224 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431CC1E10A5420046A224 /* Tag.swift */; };
+		0F2431CF1E10A5F90046A224 /* TagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431CE1E10A5F90046A224 /* TagTests.swift */; };
+		0F2431D11E10A9860046A224 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431D01E10A9860046A224 /* User.swift */; };
+		0F2431D31E10A9E70046A224 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431D21E10A9E70046A224 /* UserTests.swift */; };
 		0F5ADF9D1E107CDD003B1225 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5ADF9C1E107CDD003B1225 /* AppDelegate.swift */; };
 		0F5ADF9F1E107CDD003B1225 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5ADF9E1E107CDD003B1225 /* ViewController.swift */; };
 		0F5ADFA21E107CDD003B1225 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F5ADFA01E107CDD003B1225 /* Main.storyboard */; };
 		0F5ADFA41E107CDD003B1225 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F5ADFA31E107CDD003B1225 /* Assets.xcassets */; };
 		0F5ADFA71E107CDD003B1225 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F5ADFA51E107CDD003B1225 /* LaunchScreen.storyboard */; };
 		0F5ADFB21E107CDD003B1225 /* EnfocaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5ADFB11E107CDD003B1225 /* EnfocaTests.swift */; };
+		89BCD4C5F953E8798C304B9B /* Pods_EnfocaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F51C574FDE8BD2BFA035F346 /* Pods_EnfocaTests.framework */; };
+		E13C77D8E44DD9252F8222F4 /* Pods_Enfoca.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED6D653424C76C70C23D1A8 /* Pods_Enfoca.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +38,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F2431BD1E109CDF0046A224 /* CardOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardOrder.swift; sourceTree = "<group>"; };
+		0F2431C21E109E120046A224 /* CardOrderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardOrderTests.swift; path = Models/CardOrderTests.swift; sourceTree = "<group>"; };
+		0F2431C41E10A04E0046A224 /* CardSide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSide.swift; sourceTree = "<group>"; };
+		0F2431C61E10A0B80046A224 /* CardSideTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardSideTests.swift; path = Models/CardSideTests.swift; sourceTree = "<group>"; };
+		0F2431C81E10A1DC0046A224 /* BrowseFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowseFilter.swift; path = Models/BrowseFilter.swift; sourceTree = "<group>"; };
+		0F2431CA1E10A26A0046A224 /* BrowseFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowseFilter.swift; path = Models/BrowseFilter.swift; sourceTree = "<group>"; };
+		0F2431CC1E10A5420046A224 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tag.swift; path = Models/Tag.swift; sourceTree = "<group>"; };
+		0F2431CE1E10A5F90046A224 /* TagTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagTests.swift; path = Models/TagTests.swift; sourceTree = "<group>"; };
+		0F2431D01E10A9860046A224 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
+		0F2431D21E10A9E70046A224 /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserTests.swift; path = Models/UserTests.swift; sourceTree = "<group>"; };
 		0F5ADF991E107CDD003B1225 /* Enfoca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Enfoca.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F5ADF9C1E107CDD003B1225 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0F5ADF9E1E107CDD003B1225 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -36,6 +58,12 @@
 		0F5ADFAD1E107CDD003B1225 /* EnfocaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EnfocaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F5ADFB11E107CDD003B1225 /* EnfocaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnfocaTests.swift; sourceTree = "<group>"; };
 		0F5ADFB31E107CDD003B1225 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2474CEA12B197ED3F628B5F9 /* Pods-Enfoca.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Enfoca.release.xcconfig"; path = "Pods/Target Support Files/Pods-Enfoca/Pods-Enfoca.release.xcconfig"; sourceTree = "<group>"; };
+		3EE143061394603BFAE4FFED /* Pods-EnfocaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EnfocaTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EnfocaTests/Pods-EnfocaTests.release.xcconfig"; sourceTree = "<group>"; };
+		BED6D653424C76C70C23D1A8 /* Pods_Enfoca.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Enfoca.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB965A9C70C7405EE5F9DB37 /* Pods-Enfoca.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Enfoca.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Enfoca/Pods-Enfoca.debug.xcconfig"; sourceTree = "<group>"; };
+		EE70C8ECA27C8ECCF6F8AD0C /* Pods-EnfocaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EnfocaTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EnfocaTests/Pods-EnfocaTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F51C574FDE8BD2BFA035F346 /* Pods_EnfocaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EnfocaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E13C77D8E44DD9252F8222F4 /* Pods_Enfoca.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,18 +79,45 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89BCD4C5F953E8798C304B9B /* Pods_EnfocaTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0F2431BC1E109CBE0046A224 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0F2431BD1E109CDF0046A224 /* CardOrder.swift */,
+				0F2431C41E10A04E0046A224 /* CardSide.swift */,
+				0F2431C81E10A1DC0046A224 /* BrowseFilter.swift */,
+				0F2431CC1E10A5420046A224 /* Tag.swift */,
+				0F2431D01E10A9860046A224 /* User.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		0F2431BF1E109DBA0046A224 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0F2431C21E109E120046A224 /* CardOrderTests.swift */,
+				0F2431C61E10A0B80046A224 /* CardSideTests.swift */,
+				0F2431CA1E10A26A0046A224 /* BrowseFilter.swift */,
+				0F2431CE1E10A5F90046A224 /* TagTests.swift */,
+				0F2431D21E10A9E70046A224 /* UserTests.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		0F5ADF901E107CDD003B1225 = {
 			isa = PBXGroup;
 			children = (
 				0F5ADF9B1E107CDD003B1225 /* Enfoca */,
 				0F5ADFB01E107CDD003B1225 /* EnfocaTests */,
 				0F5ADF9A1E107CDD003B1225 /* Products */,
+				402B466B1E604EA32AA44313 /* Pods */,
+				5A6D575D8BACAD6631D412F2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,6 +133,7 @@
 		0F5ADF9B1E107CDD003B1225 /* Enfoca */ = {
 			isa = PBXGroup;
 			children = (
+				0F2431BC1E109CBE0046A224 /* Models */,
 				0F5ADF9C1E107CDD003B1225 /* AppDelegate.swift */,
 				0F5ADF9E1E107CDD003B1225 /* ViewController.swift */,
 				0F5ADFA01E107CDD003B1225 /* Main.storyboard */,
@@ -90,10 +147,31 @@
 		0F5ADFB01E107CDD003B1225 /* EnfocaTests */ = {
 			isa = PBXGroup;
 			children = (
+				0F2431BF1E109DBA0046A224 /* Models */,
 				0F5ADFB11E107CDD003B1225 /* EnfocaTests.swift */,
 				0F5ADFB31E107CDD003B1225 /* Info.plist */,
 			);
 			path = EnfocaTests;
+			sourceTree = "<group>";
+		};
+		402B466B1E604EA32AA44313 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EB965A9C70C7405EE5F9DB37 /* Pods-Enfoca.debug.xcconfig */,
+				2474CEA12B197ED3F628B5F9 /* Pods-Enfoca.release.xcconfig */,
+				EE70C8ECA27C8ECCF6F8AD0C /* Pods-EnfocaTests.debug.xcconfig */,
+				3EE143061394603BFAE4FFED /* Pods-EnfocaTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		5A6D575D8BACAD6631D412F2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BED6D653424C76C70C23D1A8 /* Pods_Enfoca.framework */,
+				F51C574FDE8BD2BFA035F346 /* Pods_EnfocaTests.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -103,9 +181,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0F5ADFB61E107CDD003B1225 /* Build configuration list for PBXNativeTarget "Enfoca" */;
 			buildPhases = (
+				E899A143A7168387495327E0 /* [CP] Check Pods Manifest.lock */,
 				0F5ADF951E107CDD003B1225 /* Sources */,
 				0F5ADF961E107CDD003B1225 /* Frameworks */,
 				0F5ADF971E107CDD003B1225 /* Resources */,
+				51444CFA8652AAF55B32AA17 /* [CP] Embed Pods Frameworks */,
+				9FB427B5F540D742647B9034 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -120,9 +201,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0F5ADFB91E107CDD003B1225 /* Build configuration list for PBXNativeTarget "EnfocaTests" */;
 			buildPhases = (
+				0C143297ACC782824C70CE63 /* [CP] Check Pods Manifest.lock */,
 				0F5ADFA91E107CDD003B1225 /* Sources */,
 				0F5ADFAA1E107CDD003B1225 /* Frameworks */,
 				0F5ADFAB1E107CDD003B1225 /* Resources */,
+				F3A284534D5D8C689EA3CD86 /* [CP] Embed Pods Frameworks */,
+				EDECC172539FAA87692345FB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -196,13 +280,111 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0C143297ACC782824C70CE63 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		51444CFA8652AAF55B32AA17 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Enfoca/Pods-Enfoca-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9FB427B5F540D742647B9034 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Enfoca/Pods-Enfoca-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E899A143A7168387495327E0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		EDECC172539FAA87692345FB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EnfocaTests/Pods-EnfocaTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F3A284534D5D8C689EA3CD86 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EnfocaTests/Pods-EnfocaTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0F5ADF951E107CDD003B1225 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F2431CD1E10A5420046A224 /* Tag.swift in Sources */,
+				0F2431C51E10A04E0046A224 /* CardSide.swift in Sources */,
+				0F2431C91E10A1DC0046A224 /* BrowseFilter.swift in Sources */,
 				0F5ADF9F1E107CDD003B1225 /* ViewController.swift in Sources */,
+				0F2431BE1E109CDF0046A224 /* CardOrder.swift in Sources */,
 				0F5ADF9D1E107CDD003B1225 /* AppDelegate.swift in Sources */,
+				0F2431D11E10A9860046A224 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,7 +392,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F2431D31E10A9E70046A224 /* UserTests.swift in Sources */,
+				0F2431C31E109E120046A224 /* CardOrderTests.swift in Sources */,
+				0F2431CB1E10A26A0046A224 /* BrowseFilter.swift in Sources */,
+				0F2431CF1E10A5F90046A224 /* TagTests.swift in Sources */,
 				0F5ADFB21E107CDD003B1225 /* EnfocaTests.swift in Sources */,
+				0F2431C71E10A0B80046A224 /* CardSideTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +449,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -312,6 +500,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -339,7 +528,9 @@
 		};
 		0F5ADFB71E107CDD003B1225 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EB965A9C70C7405EE5F9DB37 /* Pods-Enfoca.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = KRNJ229R7J;
 				INFOPLIST_FILE = Enfoca/Info.plist;
@@ -352,7 +543,9 @@
 		};
 		0F5ADFB81E107CDD003B1225 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2474CEA12B197ED3F628B5F9 /* Pods-Enfoca.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = KRNJ229R7J;
 				INFOPLIST_FILE = Enfoca/Info.plist;
@@ -365,6 +558,7 @@
 		};
 		0F5ADFBA1E107CDD003B1225 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EE70C8ECA27C8ECCF6F8AD0C /* Pods-EnfocaTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -380,6 +574,7 @@
 		};
 		0F5ADFBB1E107CDD003B1225 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3EE143061394603BFAE4FFED /* Pods-EnfocaTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -412,6 +607,7 @@
 				0F5ADFB81E107CDD003B1225 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0F5ADFB91E107CDD003B1225 /* Build configuration list for PBXNativeTarget "EnfocaTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +616,7 @@
 				0F5ADFBB1E107CDD003B1225 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
