@@ -21,11 +21,21 @@ class UserTests: XCTestCase {
         super.tearDown()
     }
     
+    
     func testInit_PropertiesShouldBeInitialized(){
-        let user = User(userId: "eyedee", userName: "user")
+        let user = User(enfocaId: 1, name: "bob", email: "test@email.com")
         
-        XCTAssertEqual(user.userName, "user")
-        XCTAssertEqual(user.userId, "eyedee")
+        XCTAssertEqual(user.enfocaId, 1)
+        XCTAssertEqual(user.name, "bob")
+        XCTAssertEqual(user.email, "test@email.com")
     }
+    
+    func testEquatable_ShouldBeEqualIfIdIsEqual(){
+        let user = User(enfocaId: 1, name: "bob", email: "test@email.com")
+        let user2 = User(enfocaId: 1, name: "not important", email: "nither is this")
+        
+        XCTAssertEqual(user, user2)
+    }
+    
     
 }

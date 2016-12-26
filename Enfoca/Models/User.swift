@@ -8,14 +8,18 @@
 
 import Foundation
 
-public struct User {
-    private(set) var userId : String
-    private(set) var userName : String
+public struct User : Equatable{
+    private(set) var enfocaId : Int
+    private(set) var name : String
+    private(set) var email : String
     
-    init(userId : String, userName : String){
-        self.userId = userId
-        self.userName = userName
+    init(enfocaId : Int, name : String, email: String){
+        self.enfocaId = enfocaId
+        self.name = name
+        self.email = email
     }
     
-    
+    public static func ==(lhs: User, rhs: User) -> Bool {
+        return lhs.enfocaId == rhs.enfocaId
+    }
 }

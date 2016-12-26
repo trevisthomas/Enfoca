@@ -7,6 +7,7 @@ target 'Enfoca' do
 
   # Pods for Enfoca
   pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
+  # pod 'Google/SignIn' - I cant get this to work so i gave up.
 
   target 'EnfocaTests' do
     inherit! :search_paths
