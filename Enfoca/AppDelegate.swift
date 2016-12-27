@@ -97,13 +97,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
 extension AppDelegate : AuthenticationDelegate {
     func performLogin() {
-        
+        //Hm.
     }
     func performSilentLogin() {
-        
+        GIDSignIn.sharedInstance().signInSilently()
     }
     func performLogoff() {
-        
+        GIDSignIn.sharedInstance().signOut()
     }
 }
 

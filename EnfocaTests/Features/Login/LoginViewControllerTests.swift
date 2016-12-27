@@ -29,6 +29,15 @@ class LoginViewControllerTests: XCTestCase {
         super.tearDown()
     }
     
+    func testInitialization_ShouldHideBackButton(){
+        XCTAssertTrue(sut.navigationItem.hidesBackButton)
+    }
+    
+    func testInitialization_ShouldConnectCallbackToAppDelegate(){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        XCTAssertNotNil(appDelegate.userAuthenticated)
+    }
+    
     func testViewDidLoad_ShouldAttemptSilentLogin(){
         XCTAssertNotNil(sut)
         XCTAssertEqual(authDelegate.performSilentLoginCount, 1)

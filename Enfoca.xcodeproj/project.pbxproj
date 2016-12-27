@@ -31,6 +31,7 @@
 		0F38A4DE1E11B2AA00051F9E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F38A4DD1E11B2AA00051F9E /* LoginViewController.swift */; };
 		0F38A4E01E11B94A00051F9E /* SharedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F38A4DF1E11B94A00051F9E /* SharedMocks.swift */; };
 		0F38A4E21E11C61000051F9E /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F38A4E11E11C61000051F9E /* WelcomeViewController.swift */; };
+		0F38A4E41E11E3C100051F9E /* WelcomeViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F38A4E31E11E3C100051F9E /* WelcomeViewControllerTests.swift */; };
 		0F5ADF9D1E107CDD003B1225 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5ADF9C1E107CDD003B1225 /* AppDelegate.swift */; };
 		0F5ADF9F1E107CDD003B1225 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5ADF9E1E107CDD003B1225 /* ViewController.swift */; };
 		0F5ADFA21E107CDD003B1225 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F5ADFA01E107CDD003B1225 /* Main.storyboard */; };
@@ -77,6 +78,7 @@
 		0F38A4DD1E11B2AA00051F9E /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Features/Login/LoginViewController.swift; sourceTree = "<group>"; };
 		0F38A4DF1E11B94A00051F9E /* SharedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedMocks.swift; sourceTree = "<group>"; };
 		0F38A4E11E11C61000051F9E /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeViewController.swift; path = Features/Login/WelcomeViewController.swift; sourceTree = "<group>"; };
+		0F38A4E31E11E3C100051F9E /* WelcomeViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeViewControllerTests.swift; path = Features/Login/WelcomeViewControllerTests.swift; sourceTree = "<group>"; };
 		0F5ADF991E107CDD003B1225 /* Enfoca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Enfoca.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F5ADF9C1E107CDD003B1225 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0F5ADF9E1E107CDD003B1225 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				0F38A4D31E11AFE100051F9E /* LoginViewControllerTests.swift */,
+				0F38A4E31E11E3C100051F9E /* WelcomeViewControllerTests.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F38A4E01E11B94A00051F9E /* SharedMocks.swift in Sources */,
+				0F38A4E41E11E3C100051F9E /* WelcomeViewControllerTests.swift in Sources */,
 				0F2431D31E10A9E70046A224 /* UserTests.swift in Sources */,
 				0F2431C31E109E120046A224 /* CardOrderTests.swift in Sources */,
 				0F2431CB1E10A26A0046A224 /* BrowseFilter.swift in Sources */,

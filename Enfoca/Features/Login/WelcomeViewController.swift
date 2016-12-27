@@ -10,16 +10,61 @@ import UIKit
 
 class WelcomeViewController: UIViewController {
 
-    var user : User!
+    @IBOutlet weak var welcomeLabel: UILabel!
+    
+    @IBOutlet weak var quizButton: UIButton!
+    @IBOutlet weak var browseButton: UIButton!
+    @IBOutlet weak var logOffButton: UIButton!
+    
+    var authenticationDelegate : AuthenticationDelegate!
+    
+    var user : User! {
+        didSet{
+            populateComponents()
+        }
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        performInit()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        performInit()
+    }
+    
+    func performInit(){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        authenticationDelegate = appDelegate
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.navigationItem.hidesBackButton = true
+        populateComponents()
+    }
+    
+    func populateComponents(){
+        guard let _ = user else { return }
+        guard let _ = welcomeLabel else { return }
+        welcomeLabel.text = "Hi, \(user.name). Welcome to..."
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func logoffAction(_ sender: Any) {
+        authenticationDelegate.performLogoff()
+        
+        popSelfFromNavStackNotUnitTestable()
+    }
+    
+    func popSelfFromNavStackNotUnitTestable(){
+        _ = navigationController?.popViewController(animated: true)
     }
     
 

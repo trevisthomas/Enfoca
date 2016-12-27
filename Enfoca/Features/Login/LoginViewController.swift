@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, GIDSignInUIDelegate {
     
     var authenticateionDelegate : AuthenticationDelegate!
     
@@ -24,12 +24,14 @@ class LoginViewController: UIViewController {
     
     func performInit(){
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        appDelegate.userCallback = self.callback
+        appDelegate.userAuthenticated = self.userAuthenticated
         authenticateionDelegate = appDelegate
+        GIDSignIn.sharedInstance().uiDelegate = self
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.hidesBackButton = true
         authenticateionDelegate.performSilentLogin()
     }
 
