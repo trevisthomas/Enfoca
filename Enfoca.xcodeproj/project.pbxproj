@@ -11,8 +11,8 @@
 		0F2431C31E109E120046A224 /* CardOrderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431C21E109E120046A224 /* CardOrderTests.swift */; };
 		0F2431C51E10A04E0046A224 /* CardSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431C41E10A04E0046A224 /* CardSide.swift */; };
 		0F2431C71E10A0B80046A224 /* CardSideTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431C61E10A0B80046A224 /* CardSideTests.swift */; };
-		0F2431C91E10A1DC0046A224 /* BrowseFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431C81E10A1DC0046A224 /* BrowseFilter.swift */; };
-		0F2431CB1E10A26A0046A224 /* BrowseFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431CA1E10A26A0046A224 /* BrowseFilter.swift */; };
+		0F2431C91E10A1DC0046A224 /* WordStateFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431C81E10A1DC0046A224 /* WordStateFilter.swift */; };
+		0F2431CB1E10A26A0046A224 /* WordStateFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431CA1E10A26A0046A224 /* WordStateFilterTests.swift */; };
 		0F2431CD1E10A5420046A224 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431CC1E10A5420046A224 /* Tag.swift */; };
 		0F2431CF1E10A5F90046A224 /* TagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431CE1E10A5F90046A224 /* TagTests.swift */; };
 		0F2431D11E10A9860046A224 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431D01E10A9860046A224 /* User.swift */; };
@@ -32,6 +32,12 @@
 		0F38A4E01E11B94A00051F9E /* SharedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F38A4DF1E11B94A00051F9E /* SharedMocks.swift */; };
 		0F38A4E21E11C61000051F9E /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F38A4E11E11C61000051F9E /* WelcomeViewController.swift */; };
 		0F38A4E41E11E3C100051F9E /* WelcomeViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F38A4E31E11E3C100051F9E /* WelcomeViewControllerTests.swift */; };
+		0F4D8A431E12E27600900729 /* BrowseViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D8A421E12E27600900729 /* BrowseViewControllerTests.swift */; };
+		0F4D8A451E12E3D400900729 /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D8A441E12E3D400900729 /* BrowseViewController.swift */; };
+		0F4D8A481E12E3FA00900729 /* Browse.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F4D8A471E12E3FA00900729 /* Browse.storyboard */; };
+		0F4D8A4B1E12E86900900729 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D8A4A1E12E86900900729 /* UIViewController+.swift */; };
+		0F4D8A4D1E12F27100900729 /* WordStateFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D8A4C1E12F27100900729 /* WordStateFilterViewController.swift */; };
+		0F4D8A511E13041C00900729 /* WordStateFilterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D8A501E13041C00900729 /* WordStateFilterDelegate.swift */; };
 		0F5ADF9D1E107CDD003B1225 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5ADF9C1E107CDD003B1225 /* AppDelegate.swift */; };
 		0F5ADF9F1E107CDD003B1225 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5ADF9E1E107CDD003B1225 /* ViewController.swift */; };
 		0F5ADFA21E107CDD003B1225 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F5ADFA01E107CDD003B1225 /* Main.storyboard */; };
@@ -57,8 +63,8 @@
 		0F2431C21E109E120046A224 /* CardOrderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardOrderTests.swift; path = Models/CardOrderTests.swift; sourceTree = "<group>"; };
 		0F2431C41E10A04E0046A224 /* CardSide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSide.swift; sourceTree = "<group>"; };
 		0F2431C61E10A0B80046A224 /* CardSideTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardSideTests.swift; path = Models/CardSideTests.swift; sourceTree = "<group>"; };
-		0F2431C81E10A1DC0046A224 /* BrowseFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowseFilter.swift; path = Models/BrowseFilter.swift; sourceTree = "<group>"; };
-		0F2431CA1E10A26A0046A224 /* BrowseFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowseFilter.swift; path = Models/BrowseFilter.swift; sourceTree = "<group>"; };
+		0F2431C81E10A1DC0046A224 /* WordStateFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WordStateFilter.swift; path = Models/WordStateFilter.swift; sourceTree = "<group>"; };
+		0F2431CA1E10A26A0046A224 /* WordStateFilterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WordStateFilterTests.swift; path = Models/WordStateFilterTests.swift; sourceTree = "<group>"; };
 		0F2431CC1E10A5420046A224 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tag.swift; path = Models/Tag.swift; sourceTree = "<group>"; };
 		0F2431CE1E10A5F90046A224 /* TagTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagTests.swift; path = Models/TagTests.swift; sourceTree = "<group>"; };
 		0F2431D01E10A9860046A224 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
@@ -79,6 +85,12 @@
 		0F38A4DF1E11B94A00051F9E /* SharedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedMocks.swift; sourceTree = "<group>"; };
 		0F38A4E11E11C61000051F9E /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeViewController.swift; path = Features/Login/WelcomeViewController.swift; sourceTree = "<group>"; };
 		0F38A4E31E11E3C100051F9E /* WelcomeViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeViewControllerTests.swift; path = Features/Login/WelcomeViewControllerTests.swift; sourceTree = "<group>"; };
+		0F4D8A421E12E27600900729 /* BrowseViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowseViewControllerTests.swift; path = Features/Browse/BrowseViewControllerTests.swift; sourceTree = "<group>"; };
+		0F4D8A441E12E3D400900729 /* BrowseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowseViewController.swift; path = Features/Browse/BrowseViewController.swift; sourceTree = "<group>"; };
+		0F4D8A471E12E3FA00900729 /* Browse.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Browse.storyboard; path = Features/Browse/Browse.storyboard; sourceTree = "<group>"; };
+		0F4D8A4A1E12E86900900729 /* UIViewController+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+.swift"; path = "Extensions/UIViewController+.swift"; sourceTree = "<group>"; };
+		0F4D8A4C1E12F27100900729 /* WordStateFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WordStateFilterViewController.swift; path = Features/Browse/WordStateFilterViewController.swift; sourceTree = "<group>"; };
+		0F4D8A501E13041C00900729 /* WordStateFilterDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WordStateFilterDelegate.swift; path = Protocols/WordStateFilterDelegate.swift; sourceTree = "<group>"; };
 		0F5ADF991E107CDD003B1225 /* Enfoca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Enfoca.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F5ADF9C1E107CDD003B1225 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0F5ADF9E1E107CDD003B1225 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -128,7 +140,7 @@
 			children = (
 				0F2431BD1E109CDF0046A224 /* CardOrder.swift */,
 				0F2431C41E10A04E0046A224 /* CardSide.swift */,
-				0F2431C81E10A1DC0046A224 /* BrowseFilter.swift */,
+				0F2431C81E10A1DC0046A224 /* WordStateFilter.swift */,
 				0F2431CC1E10A5420046A224 /* Tag.swift */,
 				0F2431D01E10A9860046A224 /* User.swift */,
 			);
@@ -140,7 +152,7 @@
 			children = (
 				0F2431C21E109E120046A224 /* CardOrderTests.swift */,
 				0F2431C61E10A0B80046A224 /* CardSideTests.swift */,
-				0F2431CA1E10A26A0046A224 /* BrowseFilter.swift */,
+				0F2431CA1E10A26A0046A224 /* WordStateFilterTests.swift */,
 				0F2431CE1E10A5F90046A224 /* TagTests.swift */,
 				0F2431D21E10A9E70046A224 /* UserTests.swift */,
 			);
@@ -172,6 +184,7 @@
 		0F38A4D11E11AFA200051F9E /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				0F4D8A411E12E19400900729 /* Browse */,
 				0F38A4D21E11AFAD00051F9E /* Login */,
 			);
 			name = Features;
@@ -190,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				0F38A4D71E11B14D00051F9E /* AuthenticationDelegate.swift */,
+				0F4D8A501E13041C00900729 /* WordStateFilterDelegate.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -197,6 +211,7 @@
 		0F38A4D91E11B1FE00051F9E /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				0F4D8A461E12E3E100900729 /* Browse */,
 				0F38A4DA1E11B20700051F9E /* Login */,
 			);
 			name = Features;
@@ -210,6 +225,32 @@
 				0F38A4E11E11C61000051F9E /* WelcomeViewController.swift */,
 			);
 			name = Login;
+			sourceTree = "<group>";
+		};
+		0F4D8A411E12E19400900729 /* Browse */ = {
+			isa = PBXGroup;
+			children = (
+				0F4D8A421E12E27600900729 /* BrowseViewControllerTests.swift */,
+			);
+			name = Browse;
+			sourceTree = "<group>";
+		};
+		0F4D8A461E12E3E100900729 /* Browse */ = {
+			isa = PBXGroup;
+			children = (
+				0F4D8A471E12E3FA00900729 /* Browse.storyboard */,
+				0F4D8A441E12E3D400900729 /* BrowseViewController.swift */,
+				0F4D8A4C1E12F27100900729 /* WordStateFilterViewController.swift */,
+			);
+			name = Browse;
+			sourceTree = "<group>";
+		};
+		0F4D8A491E12E84000900729 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0F4D8A4A1E12E86900900729 /* UIViewController+.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		0F5ADF901E107CDD003B1225 = {
@@ -236,6 +277,7 @@
 		0F5ADF9B1E107CDD003B1225 /* Enfoca */ = {
 			isa = PBXGroup;
 			children = (
+				0F4D8A491E12E84000900729 /* Extensions */,
 				0F38A4D91E11B1FE00051F9E /* Features */,
 				0F38A4D61E11B12600051F9E /* Protocols */,
 				0F32FC3D1E11A7DB00D599D8 /* Resources */,
@@ -377,6 +419,7 @@
 			files = (
 				0F32FC351E11A6A200D599D8 /* GoogleSignIn.bundle in Resources */,
 				0F5ADFA71E107CDD003B1225 /* LaunchScreen.storyboard in Resources */,
+				0F4D8A481E12E3FA00900729 /* Browse.storyboard in Resources */,
 				0F38A4DC1E11B28A00051F9E /* Login.storyboard in Resources */,
 				0F32FC3F1E11A7F100D599D8 /* GoogleService-Info.plist in Resources */,
 				0F5ADFA41E107CDD003B1225 /* Assets.xcassets in Resources */,
@@ -492,11 +535,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F38A4DE1E11B2AA00051F9E /* LoginViewController.swift in Sources */,
+				0F4D8A511E13041C00900729 /* WordStateFilterDelegate.swift in Sources */,
 				0F38A4E21E11C61000051F9E /* WelcomeViewController.swift in Sources */,
+				0F4D8A4B1E12E86900900729 /* UIViewController+.swift in Sources */,
 				0F2431CD1E10A5420046A224 /* Tag.swift in Sources */,
+				0F4D8A451E12E3D400900729 /* BrowseViewController.swift in Sources */,
 				0F2431C51E10A04E0046A224 /* CardSide.swift in Sources */,
+				0F4D8A4D1E12F27100900729 /* WordStateFilterViewController.swift in Sources */,
 				0F38A4D81E11B14D00051F9E /* AuthenticationDelegate.swift in Sources */,
-				0F2431C91E10A1DC0046A224 /* BrowseFilter.swift in Sources */,
+				0F2431C91E10A1DC0046A224 /* WordStateFilter.swift in Sources */,
 				0F5ADF9F1E107CDD003B1225 /* ViewController.swift in Sources */,
 				0F2431BE1E109CDF0046A224 /* CardOrder.swift in Sources */,
 				0F5ADF9D1E107CDD003B1225 /* AppDelegate.swift in Sources */,
@@ -512,10 +559,11 @@
 				0F38A4E41E11E3C100051F9E /* WelcomeViewControllerTests.swift in Sources */,
 				0F2431D31E10A9E70046A224 /* UserTests.swift in Sources */,
 				0F2431C31E109E120046A224 /* CardOrderTests.swift in Sources */,
-				0F2431CB1E10A26A0046A224 /* BrowseFilter.swift in Sources */,
+				0F2431CB1E10A26A0046A224 /* WordStateFilterTests.swift in Sources */,
 				0F38A4D41E11AFE100051F9E /* LoginViewControllerTests.swift in Sources */,
 				0F2431CF1E10A5F90046A224 /* TagTests.swift in Sources */,
 				0F5ADFB21E107CDD003B1225 /* EnfocaTests.swift in Sources */,
+				0F4D8A431E12E27600900729 /* BrowseViewControllerTests.swift in Sources */,
 				0F2431C71E10A0B80046A224 /* CardSideTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

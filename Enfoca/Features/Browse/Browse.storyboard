@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jDD-bs-71Q">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Browse View Controller-->
+        <scene sceneID="Hty-WP-ZHq">
+            <objects>
+                <viewController storyboardIdentifier="BrowseVC" id="jDD-bs-71Q" customClass="BrowseViewController" customModule="Enfoca" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fCa-0I-EOf"/>
+                        <viewControllerLayoutGuide type="bottom" id="UKC-rG-xgi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JAd-rv-iMl">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N9c-dn-pN4">
+                                <rect key="frame" x="33" y="72" width="128" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="128" id="3wW-aV-vaT"/>
+                                </constraints>
+                                <state key="normal" title="Both"/>
+                                <connections>
+                                    <action selector="wordStateFilterAction:" destination="jDD-bs-71Q" eventType="touchUpInside" id="FR0-ai-yoz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iNU-QU-6ez">
+                                <rect key="frame" x="210" y="72" width="128" height="32"/>
+                                <state key="normal" title="Tag Filter"/>
+                                <connections>
+                                    <action selector="tagFilterAction:" destination="jDD-bs-71Q" eventType="touchUpInside" id="lsj-dT-JqU"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="N9c-dn-pN4" firstAttribute="top" secondItem="iNU-QU-6ez" secondAttribute="top" id="2Np-x5-aec"/>
+                            <constraint firstItem="iNU-QU-6ez" firstAttribute="baseline" secondItem="N9c-dn-pN4" secondAttribute="firstBaseline" id="Nrg-ka-Bf2"/>
+                            <constraint firstItem="UKC-rG-xgi" firstAttribute="top" secondItem="N9c-dn-pN4" secondAttribute="bottom" constant="563" id="Oi6-gH-SHp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="iNU-QU-6ez" secondAttribute="trailing" constant="21" id="PHf-L3-LW8"/>
+                            <constraint firstItem="N9c-dn-pN4" firstAttribute="top" secondItem="fCa-0I-EOf" secondAttribute="bottom" constant="52" id="Y2i-yF-UzZ"/>
+                            <constraint firstItem="iNU-QU-6ez" firstAttribute="leading" secondItem="N9c-dn-pN4" secondAttribute="trailing" constant="49" id="by2-kF-DEq"/>
+                            <constraint firstItem="N9c-dn-pN4" firstAttribute="baseline" secondItem="iNU-QU-6ez" secondAttribute="firstBaseline" id="p7p-rV-n9L"/>
+                            <constraint firstItem="N9c-dn-pN4" firstAttribute="leading" secondItem="JAd-rv-iMl" secondAttribute="leadingMargin" constant="17" id="pbo-Mh-ElA"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Blm-8b-SmH"/>
+                    <connections>
+                        <outlet property="tagFilterButton" destination="iNU-QU-6ez" id="HJz-KE-MwK"/>
+                        <outlet property="wordStateFilterButton" destination="N9c-dn-pN4" id="WnE-NF-MWS"/>
+                        <segue destination="P3C-6C-QCJ" kind="popoverPresentation" identifier="WordStateFilterSegue" popoverAnchorView="N9c-dn-pN4" id="oKy-xf-sdK">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rhR-E2-jqU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1084" y="94.902548725637189"/>
+        </scene>
+        <!--Word State Filter View Controller-->
+        <scene sceneID="sdb-Lv-Qzq">
+            <objects>
+                <viewController storyboardIdentifier="WordStateFilterVC" id="P3C-6C-QCJ" customClass="WordStateFilterViewController" customModule="Enfoca" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nKV-Ra-fyF"/>
+                        <viewControllerLayoutGuide type="bottom" id="2Om-oS-Iej"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wCe-O8-Vxb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MyG-Is-0T7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1084" y="1104"/>
+        </scene>
+    </scenes>
+</document>

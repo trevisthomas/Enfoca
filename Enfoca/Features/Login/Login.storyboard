@@ -23,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¡Enfoca!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uas-Ab-P6b">
-                                <rect key="frame" x="110" y="102" width="155" height="56"/>
+                                <rect key="frame" x="110" y="146" width="155" height="56"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="WT2-Rf-G4D"/>
                                 </constraints>
@@ -39,7 +39,7 @@
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XXX-Bh-5YD">
-                                <rect key="frame" x="67" y="166" width="240" height="165"/>
+                                <rect key="frame" x="67" y="210" width="240" height="121"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Hi, Enfoca requires a google acount for authentication. The button below will redirect you to Google.  Once you have provided your login information to Google, you you will be able to proceed.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -82,7 +82,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h4U-rf-p9g">
-                                <rect key="frame" x="16" y="73" width="343" height="21"/>
+                                <rect key="frame" x="16" y="117" width="343" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="qJ9-hB-zWK"/>
                                 </constraints>
@@ -91,7 +91,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¡Enfoca!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HjJ-w4-RzK">
-                                <rect key="frame" x="110" y="102" width="155" height="56"/>
+                                <rect key="frame" x="110" y="146" width="155" height="56"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="rxC-kU-N70"/>
                                 </constraints>
@@ -100,7 +100,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pa4-KL-NKB">
-                                <rect key="frame" x="87" y="198" width="200" height="80"/>
+                                <rect key="frame" x="87" y="242" width="200" height="80"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="qKv-Ad-XiF"/>
@@ -109,9 +109,13 @@
                                 <state key="normal" title="Browse">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="browseWordsAction:" destination="p0X-zQ-xog" eventType="touchUpInside" id="lwz-e8-efQ"/>
+                                    <segue destination="JJv-V1-s26" kind="show" identifier="BrowseSegue" id="GZ3-cv-dgl"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ze8-Ue-Dj8">
-                                <rect key="frame" x="87" y="306" width="200" height="80"/>
+                                <rect key="frame" x="87" y="350" width="200" height="80"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="iSF-2V-2QG"/>
@@ -122,7 +126,7 @@
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ziY-sd-blh">
-                                <rect key="frame" x="156" y="410" width="62" height="30"/>
+                                <rect key="frame" x="156" y="454" width="62" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="62" id="1cN-oF-VvS"/>
                                     <constraint firstAttribute="height" constant="30" id="bw3-F1-r4T"/>
@@ -162,12 +166,20 @@
             </objects>
             <point key="canvasLocation" x="2080.8000000000002" y="37.331334332833585"/>
         </scene>
+        <!--Browse-->
+        <scene sceneID="yW5-zU-4EN">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="Browse" storyboardName="Browse" id="JJv-V1-s26" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Awy-vW-43l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2948" y="190"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="Vot-Pc-zOK">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ZJs-8X-5ko" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="p10-VP-VB2">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="p10-VP-VB2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

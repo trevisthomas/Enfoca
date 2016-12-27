@@ -12,4 +12,5 @@ protocol AuthenticationDelegate {
     func performLogin()
     func performSilentLogin()
     func performLogoff()
+    
 }

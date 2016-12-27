@@ -63,6 +63,10 @@ class WelcomeViewController: UIViewController {
         popSelfFromNavStackNotUnitTestable()
     }
     
+    @IBAction func browseWordsAction(_ sender: UIButton) {
+        performSegue(withIdentifier: "BrowseSegue", sender: nil)
+    }
+    
     func popSelfFromNavStackNotUnitTestable(){
         _ = navigationController?.popViewController(animated: true)
     }

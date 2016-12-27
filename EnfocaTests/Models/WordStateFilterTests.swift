@@ -9,7 +9,7 @@
 import XCTest
 
 @testable import Enfoca
-class BrowseFilterTests: XCTestCase {
+class WordStateFilterTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -23,9 +23,9 @@ class BrowseFilterTests: XCTestCase {
     
     func testInit_ShouldContainProperRawValue(){
         
-        XCTAssertEqual(BrowseFilter.all.rawValue, "All")
-        XCTAssertEqual(BrowseFilter.active.rawValue, "Active Only")
-        XCTAssertEqual(BrowseFilter.inactive.rawValue, "Inactive Only")
+        XCTAssertEqual(WordStateFilter.all.rawValue, "All")
+        XCTAssertEqual(WordStateFilter.active.rawValue, "Active Only")
+        XCTAssertEqual(WordStateFilter.inactive.rawValue, "Inactive Only")
         
     }
     

@@ -71,4 +71,34 @@ class WelcomeViewControllerTests: XCTestCase {
         
     }
     
+    func testBrowseButtonAction_ShouldSegueToBrowseVC(){
+        class MockWelcomeViewController : WelcomeViewController {
+            var segueIdentifier : String?
+            
+            override func performSegue(withIdentifier identifier: String, sender: Any?) {
+                segueIdentifier = identifier
+                
+            }
+        }
+        
+        let mockVC = MockWelcomeViewController(nibName: nil, bundle: nil)
+        
+        mockVC.browseWordsAction(UIButton())
+        
+        XCTAssertEqual(mockVC.segueIdentifier, "BrowseSegue")
+    }
+    
+    func testStorybard_ShoudContainSegues(){
+
+        let list = segues(ofViewController: sut)
+        XCTAssertTrue(list.contains("BrowseSegue"))
+        
+    }
+    
+    func segues(ofViewController viewController: UIViewController) -> [String] {
+        let identifiers = (viewController.value(forKey: "storyboardSegueTemplates") as? [AnyObject])?.flatMap({ $0.value(forKey: "identifier") as? String }) ?? []
+        return identifiers
+    }
+
+    
 }

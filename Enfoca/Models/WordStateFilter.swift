@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum BrowseFilter : String {
+enum WordStateFilter : String {
     case all = "All"
     case active = "Active Only"
     case inactive = "Inactive Only"
