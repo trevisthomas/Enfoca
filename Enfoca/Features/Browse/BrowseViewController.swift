@@ -13,7 +13,12 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate {
     @IBOutlet weak var wordStateFilterButton: UIButton!
     @IBOutlet weak var tagFilterButton: UIButton!
     
-    var currentWordStateFilter: WordStateFilter = .all
+    var currentWordStateFilter: WordStateFilter = .all {
+        didSet{
+            wordStateFilterButton.setTitle(currentWordStateFilter.rawValue, for: .normal)
+        }
+    }
+    
     var authenticateionDelegate : AuthenticationDelegate!
     
     
@@ -33,6 +38,8 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        currentWordStateFilter = .all
 
         // Do any additional setup after loading the view.
     }
@@ -60,10 +67,25 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate {
         if button == wordStateFilterButton {
             let wordFilterVC = segue.destination as! WordStateFilterViewController
             wordFilterVC.wordStateFilterDelegate = self
-        } 
+            
+            wordFilterVC.modalPresentationStyle = UIModalPresentationStyle.popover
+            let popover: UIPopoverPresentationController = wordFilterVC.popoverPresentationController!
+            popover.delegate = self
+            popover.sourceRect = button.bounds //No clue why source view didnt do this.
+            
+//            wordFilterVC.preferredContentSize = CGSize(width: 200, height: 300)
+            
+        }
         
         
     }
     
 
+}
+
+extension BrowseViewController : UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        //Pretty sure this is only called on iphone.  This is to force iPhone to show this as a popover style modal instead of full screen.
+        return UIModalPresentationStyle.none
+    }
 }

@@ -64,6 +64,7 @@ class WelcomeViewController: UIViewController {
     }
     
     @IBAction func browseWordsAction(_ sender: UIButton) {
+        //It's already wired in IB, so this is not needed.
         performSegue(withIdentifier: "BrowseSegue", sender: nil)
     }
     

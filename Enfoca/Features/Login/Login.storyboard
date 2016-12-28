@@ -111,7 +111,6 @@
                                 </state>
                                 <connections>
                                     <action selector="browseWordsAction:" destination="p0X-zQ-xog" eventType="touchUpInside" id="lwz-e8-efQ"/>
-                                    <segue destination="JJv-V1-s26" kind="show" identifier="BrowseSegue" id="GZ3-cv-dgl"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ze8-Ue-Dj8">
@@ -160,6 +159,7 @@
                         <outlet property="logOffButton" destination="ziY-sd-blh" id="P9S-m0-bsX"/>
                         <outlet property="quizButton" destination="ze8-Ue-Dj8" id="xa3-xW-fur"/>
                         <outlet property="welcomeLabel" destination="h4U-rf-p9g" id="XAF-Q3-qW7"/>
+                        <segue destination="JJv-V1-s26" kind="show" identifier="BrowseSegue" id="L2G-cC-cOG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oJM-S4-Pwm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -179,7 +179,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ZJs-8X-5ko" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="p10-VP-VB2">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="p10-VP-VB2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

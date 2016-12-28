@@ -43,6 +43,10 @@ class BrowseViewControllerTests: XCTestCase {
     func testInit_ShouldHaveInitialalState(){
         XCTAssertEqual(sut.currentWordStateFilter, WordStateFilter.all)
     }
+    func testInit_StateFilterButtonTextShouldMatchEnumRaw() {
+        XCTAssertEqual(sut.wordStateFilterButton.currentTitle, WordStateFilter.all.rawValue)
+        
+    }
     
     func testStateFilterAction_ShouldCallPerformSegue(){
         
@@ -75,9 +79,28 @@ class BrowseViewControllerTests: XCTestCase {
         
         sut.prepare(for: segue, sender: sut.wordStateFilterButton)
         
+        XCTAssertEqual(destVC.modalPresentationStyle, .popover)
+        
         XCTAssertNotNil(destVC.wordStateFilterDelegate)
         XCTAssertEqual(destVC.wordStateFilterDelegate.currentWordStateFilter, .active)
         
+        let popover: UIPopoverPresentationController = destVC.popoverPresentationController!
+        
+        //Alternatives?
+        XCTAssertEqual(popover.delegate as! BrowseViewController, sut) //BrowseViewController should be the delegate
+        XCTAssertEqual(sut.wordStateFilterButton.bounds, popover.sourceRect)
+        
     }
+    
+    func testPopoverDelegate_ShouldAlwaysReturnsNone(){
+        //Enforces popover style on device
+        let storyboard = UIStoryboard(name: "Browse", bundle: nil)
+        let destVC = storyboard.instantiateViewController(withIdentifier: "WordStateFilterVC") as! WordStateFilterViewController
+        
+        let style = sut.adaptivePresentationStyle(for: destVC.presentationController!)
+        XCTAssertEqual(UIModalPresentationStyle.none, style)
+    }
+    
+    
     
 }

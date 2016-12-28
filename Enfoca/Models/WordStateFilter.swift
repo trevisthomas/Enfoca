@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum WordStateFilter : String {
+enum WordStateFilter : String, EnumCollection {
     case all = "All"
     case active = "Active Only"
     case inactive = "Inactive Only"

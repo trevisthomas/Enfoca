@@ -84,21 +84,18 @@ class WelcomeViewControllerTests: XCTestCase {
         let mockVC = MockWelcomeViewController(nibName: nil, bundle: nil)
         
         mockVC.browseWordsAction(UIButton())
-        
+        //Note, if you wire directly to the button *and* initiate the segue in the button action you'll get two VC's The solution that i have settled on is to wire the segue from VC to VC, insteand of from Button to VC
         XCTAssertEqual(mockVC.segueIdentifier, "BrowseSegue")
     }
     
     func testStorybard_ShoudContainSegues(){
-
         let list = segues(ofViewController: sut)
         XCTAssertTrue(list.contains("BrowseSegue"))
         
     }
     
-    func segues(ofViewController viewController: UIViewController) -> [String] {
-        let identifiers = (viewController.value(forKey: "storyboardSegueTemplates") as? [AnyObject])?.flatMap({ $0.value(forKey: "identifier") as? String }) ?? []
-        return identifiers
-    }
+    
+    
 
     
 }

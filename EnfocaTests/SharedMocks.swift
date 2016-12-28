@@ -24,3 +24,4 @@ class MockAuthenticationDelegate: AuthenticationDelegate {
         performLogoffCount += 1
     }
 }
+

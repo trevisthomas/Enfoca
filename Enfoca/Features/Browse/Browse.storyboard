@@ -76,15 +76,47 @@
                         <viewControllerLayoutGuide type="bottom" id="2Om-oS-Iej"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="wCe-O8-Vxb">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fr0-LW-M9Q">
+                                <rect key="frame" x="16" y="20" width="343" height="260"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WordStateFilterCell" id="KPh-3a-Fxu">
+                                        <rect key="frame" x="0.0" y="28" width="343" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KPh-3a-Fxu" id="KJH-K9-IRe">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="E0O-RO-d4c" id="Hl4-CZ-xzw"/>
+                                    <outlet property="delegate" destination="E0O-RO-d4c" id="YAy-KB-KZN"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fr0-LW-M9Q" firstAttribute="top" secondItem="wCe-O8-Vxb" secondAttribute="top" constant="20" symbolic="YES" id="TZV-fU-bXa"/>
+                            <constraint firstAttribute="bottom" secondItem="fr0-LW-M9Q" secondAttribute="bottom" constant="20" symbolic="YES" id="bc2-ru-KS2"/>
+                            <constraint firstItem="fr0-LW-M9Q" firstAttribute="leading" secondItem="wCe-O8-Vxb" secondAttribute="leadingMargin" id="ebT-lt-hzs"/>
+                            <constraint firstItem="fr0-LW-M9Q" firstAttribute="trailing" secondItem="wCe-O8-Vxb" secondAttribute="trailingMargin" id="vUY-Tl-ASh"/>
+                        </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="375" height="300"/>
+                    <connections>
+                        <outlet property="tableView" destination="fr0-LW-M9Q" id="E2W-gr-ezp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MyG-Is-0T7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="E0O-RO-d4c" customClass="WordStateFilterViewModel" customModule="Enfoca" customModuleProvider="target"/>
             </objects>
-            <point key="canvasLocation" x="1084" y="1104"/>
+            <point key="canvasLocation" x="1084" y="1103.2983508245877"/>
         </scene>
     </scenes>
 </document>
