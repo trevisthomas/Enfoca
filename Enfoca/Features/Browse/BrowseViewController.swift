@@ -15,12 +15,15 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate {
     
     var currentWordStateFilter: WordStateFilter = .all {
         didSet{
-            wordStateFilterButton.setTitle(currentWordStateFilter.rawValue, for: .normal)
+//            if wordStateFilterButton != nil { //Some unit tests havent wired up.
+                wordStateFilterButton.setTitle(currentWordStateFilter.rawValue, for: .normal)
+//            }
         }
     }
     
     var authenticateionDelegate : AuthenticationDelegate!
-    
+    var tagTuples : [(Tag, Bool)]!
+    var webService : WebService!
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -34,16 +37,40 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate {
     
     private func performInit(){
         authenticateionDelegate = getAppDelegate()
+        webService = getAppDelegate().webService
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         currentWordStateFilter = .all
-
+        
+        
+        if let enfocaId = authenticateionDelegate.currentUser()?.enfocaId {
+            self.webService.fetchUserTags(enfocaId: enfocaId) {
+                list in
+                print(list)
+                self.populateTags(tags: list)
+            }
+        }
+        
+        
         // Do any additional setup after loading the view.
     }
 
+    private func populateTags(tags : [Tag]){
+//        tagTuples = tags.map({$0, false})
+//        
+//        {
+//            (value: Double) -> Double in
+//            return value * value
+//        }
+        
+        tagTuples = tags.map({
+            (value: Tag) -> (Tag, Bool) in
+            return (value, false)
+        })
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

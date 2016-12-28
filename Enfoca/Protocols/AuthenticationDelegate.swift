@@ -12,5 +12,5 @@ protocol AuthenticationDelegate {
     func performLogin()
     func performSilentLogin()
     func performLogoff()
-    
+    func currentUser() -> User?
 }

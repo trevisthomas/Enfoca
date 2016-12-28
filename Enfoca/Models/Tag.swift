@@ -23,9 +23,14 @@ public struct Tag : Equatable {
 
     private(set) var tagId : String
     private(set) var name : String
+    private(set) var ownerId : Int
+    private(set) var count : Int
     
-    init (tagId : String, name: String){
+    
+    init (ownerId : Int, tagId : String, name: String, count: Int = 0){
         self.tagId = tagId
         self.name = name
+        self.ownerId = ownerId
+        self.count = count
     }
 }

@@ -14,12 +14,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     var window: UIWindow?
     private let googleClientId = "528831726200-caemar3na7rvr7jp9cqjreq6t6pa5s33.apps.googleusercontent.com"
     
+    var webService : WebService!
+    
     var userAuthenticated : ((User) -> ())?
+    fileprivate var user: User?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         GIDSignIn.sharedInstance().clientID = googleClientId
         GIDSignIn.sharedInstance().delegate = self
+        
+        webService = DemoWebService()
+        
         return true
     }
 
@@ -76,6 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             
             if let userAuthenticated = userAuthenticated {
                 userAuthenticated(user)
+                self.user = user
             }
             
         } else {
@@ -104,6 +111,10 @@ extension AppDelegate : AuthenticationDelegate {
     }
     func performLogoff() {
         GIDSignIn.sharedInstance().signOut()
+    }
+    
+    func currentUser() -> User?{
+        return self.user
     }
 }
 

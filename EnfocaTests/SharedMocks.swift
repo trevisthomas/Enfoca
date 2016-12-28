@@ -13,6 +13,11 @@ class MockAuthenticationDelegate: AuthenticationDelegate {
     var performLoginCount = 0
     var performSilentLoginCount = 0
     var performLogoffCount = 0
+    var user : User?
+    
+    init(user : User? = nil) {
+        self.user = user
+    }
     
     func performLogin() {
         performLoginCount += 1
@@ -22,6 +27,10 @@ class MockAuthenticationDelegate: AuthenticationDelegate {
     }
     func performLogoff(){
         performLogoffCount += 1
+    }
+    
+    func currentUser() -> User?{
+        return user
     }
 }
 
