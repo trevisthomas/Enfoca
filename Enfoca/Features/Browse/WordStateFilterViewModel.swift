@@ -11,10 +11,6 @@ import Foundation
 class WordStateFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate {
     var delegate : WordStateFilterDelegate!
     
-//    init(delegate : WordStateFilterDelegate){
-//        self.delegate = delegate
-//    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }

@@ -61,6 +61,9 @@
                         <segue destination="P3C-6C-QCJ" kind="popoverPresentation" identifier="WordStateFilterSegue" popoverAnchorView="N9c-dn-pN4" id="oKy-xf-sdK">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
+                        <segue destination="1pu-Gh-rsh" kind="popoverPresentation" identifier="TagFilterSegue" popoverAnchorView="iNU-QU-6ez" id="yri-GT-3F3">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rhR-E2-jqU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -117,6 +120,96 @@
                 <customObject id="E0O-RO-d4c" customClass="WordStateFilterViewModel" customModule="Enfoca" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="1084" y="1103.2983508245877"/>
+        </scene>
+        <!--Tag Filter-->
+        <scene sceneID="tGk-q8-vjc">
+            <objects>
+                <viewController id="Lw3-aX-uZa" customClass="TagFilterViewController" customModule="Enfoca" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="R54-zf-tzf"/>
+                        <viewControllerLayoutGuide type="bottom" id="psc-nG-spp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BLJ-Pq-5Gm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zHM-Zn-nWK">
+                                <rect key="frame" x="16" y="44" width="343" height="615"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TagFilterCell" textLabel="j0r-cq-z3d" detailTextLabel="KS1-UR-s7P" style="IBUITableViewCellStyleSubtitle" id="Svy-wM-sKL">
+                                        <rect key="frame" x="0.0" y="28" width="343" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Svy-wM-sKL" id="uVV-it-0qO">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="j0r-cq-z3d">
+                                                    <rect key="frame" x="15" y="4" width="34" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KS1-UR-s7P">
+                                                    <rect key="frame" x="15" y="25" width="33" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="YpH-hW-RNu" id="nv6-nZ-BWv"/>
+                                    <outlet property="delegate" destination="YpH-hW-RNu" id="xQV-7F-u5u"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="zHM-Zn-nWK" firstAttribute="top" secondItem="R54-zf-tzf" secondAttribute="bottom" id="LpA-WQ-5pN"/>
+                            <constraint firstItem="zHM-Zn-nWK" firstAttribute="trailing" secondItem="BLJ-Pq-5Gm" secondAttribute="trailingMargin" id="Z7z-so-las"/>
+                            <constraint firstItem="psc-nG-spp" firstAttribute="top" secondItem="zHM-Zn-nWK" secondAttribute="bottom" constant="8" symbolic="YES" id="z8s-c0-KDI"/>
+                            <constraint firstItem="zHM-Zn-nWK" firstAttribute="leading" secondItem="BLJ-Pq-5Gm" secondAttribute="leadingMargin" id="zbg-pd-wwT"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Tag Filter" id="gsT-N0-9PD">
+                        <barButtonItem key="rightBarButtonItem" title="Apply" id="qFG-Hh-SIo">
+                            <connections>
+                                <action selector="applyFilterAction:" destination="Lw3-aX-uZa" id="vSF-WG-YRH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <connections>
+                        <outlet property="tableView" destination="zHM-Zn-nWK" id="dY6-em-cKu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HsY-Jw-NAl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="YpH-hW-RNu" customClass="TagFilterViewModel" customModule="Enfoca" customModuleProvider="target"/>
+            </objects>
+            <point key="canvasLocation" x="2884" y="1267.9160419790105"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="pAV-2Z-JuW">
+            <objects>
+                <navigationController storyboardIdentifier="TagFilterVC" automaticallyAdjustsScrollViewInsets="NO" id="1pu-Gh-rsh" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="5I2-kp-iRe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Lw3-aX-uZa" kind="relationship" relationship="rootViewController" id="5Oi-UK-LRq"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6Oa-Uo-dkl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1944.8" y="1267.9160419790105"/>
         </scene>
     </scenes>
 </document>

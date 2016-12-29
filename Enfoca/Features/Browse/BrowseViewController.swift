@@ -8,21 +8,23 @@
 
 import UIKit
 
-class BrowseViewController: UIViewController, WordStateFilterDelegate {
+class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilterDelegate {
+    internal func updated() {
+        assertionFailure()
+    }
+
 
     @IBOutlet weak var wordStateFilterButton: UIButton!
     @IBOutlet weak var tagFilterButton: UIButton!
     
     var currentWordStateFilter: WordStateFilter = .all {
         didSet{
-//            if wordStateFilterButton != nil { //Some unit tests havent wired up.
-                wordStateFilterButton.setTitle(currentWordStateFilter.rawValue, for: .normal)
-//            }
+            wordStateFilterButton.setTitle(currentWordStateFilter.rawValue, for: .normal)
         }
     }
     
     var authenticateionDelegate : AuthenticationDelegate!
-    var tagTuples : [(Tag, Bool)]!
+    var tagTuples : [(Tag, Bool)] = []
     var webService : WebService!
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -49,28 +51,14 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate {
         if let enfocaId = authenticateionDelegate.currentUser()?.enfocaId {
             self.webService.fetchUserTags(enfocaId: enfocaId) {
                 list in
-                print(list)
-                self.populateTags(tags: list)
+                self.tagTuples = list.map({
+                    (value: Tag) -> (Tag, Bool) in
+                    return (value, false)
+                })
             }
         }
-        
-        
-        // Do any additional setup after loading the view.
     }
 
-    private func populateTags(tags : [Tag]){
-//        tagTuples = tags.map({$0, false})
-//        
-//        {
-//            (value: Double) -> Double in
-//            return value * value
-//        }
-        
-        tagTuples = tags.map({
-            (value: Tag) -> (Tag, Bool) in
-            return (value, false)
-        })
-    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -81,6 +69,7 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate {
     }
     
     @IBAction func tagFilterAction(_ sender: UIButton) {
+        performSegue(withIdentifier: "TagFilterSegue", sender: sender)
     }
 
     // MARK: - Navigation
@@ -91,23 +80,25 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate {
             fatalError()
         }
         
+        let vc = segue.destination
+        
         if button == wordStateFilterButton {
-            let wordFilterVC = segue.destination as! WordStateFilterViewController
+            let wordFilterVC = vc as! WordStateFilterViewController
             wordFilterVC.wordStateFilterDelegate = self
-            
-            wordFilterVC.modalPresentationStyle = UIModalPresentationStyle.popover
-            let popover: UIPopoverPresentationController = wordFilterVC.popoverPresentationController!
-            popover.delegate = self
-            popover.sourceRect = button.bounds //No clue why source view didnt do this.
-            
-//            wordFilterVC.preferredContentSize = CGSize(width: 200, height: 300)
-            
+        } else if button == tagFilterButton {
+            let tagFilterNav = vc as! UINavigationController
+            let tagFilterVC = tagFilterNav.viewControllers.first as! TagFilterViewController
+            tagFilterVC.tagFilterDelegate = self
         }
         
+        vc.modalPresentationStyle = UIModalPresentationStyle.popover
+        let popover: UIPopoverPresentationController = vc.popoverPresentationController!
+        popover.delegate = self
+        popover.sourceRect = button.bounds //No clue why source view didnt do this.
+
         
     }
     
-
 }
 
 extension BrowseViewController : UIPopoverPresentationControllerDelegate {

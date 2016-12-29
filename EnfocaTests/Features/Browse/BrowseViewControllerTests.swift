@@ -32,6 +32,13 @@ class BrowseViewControllerTests: XCTestCase {
         super.tearDown()
     }
     
+    func testStorybard_ShoudContainSegues(){
+        let list = segues(ofViewController: sut)
+        XCTAssertTrue(list.contains("TagFilterSegue"))
+        XCTAssertTrue(list.contains("WordStateFilterSegue"))
+        
+    }
+    
     func testInit_ShouldHaveAuthDelegateAndWebService() {
         let storyboard = UIStoryboard(name: "Browse", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "BrowseVC") as! BrowseViewController
@@ -127,18 +134,63 @@ class BrowseViewControllerTests: XCTestCase {
         XCTAssertEqual(tagTuples.count, 5)
     }
     
-    private func makeTags() -> [Tag]{
-        var tags: [Tag] = []
-        tags.append(Tag(ownerId: currentUser.enfocaId, tagId: "123", name: "Noun"))
-        tags.append(Tag(ownerId: currentUser.enfocaId, tagId: "124", name: "Verb"))
-        tags.append(Tag(ownerId: currentUser.enfocaId, tagId: "125", name: "Phrase"))
-        tags.append(Tag(ownerId: currentUser.enfocaId, tagId: "126", name: "Adverb"))
-        tags.append(Tag(ownerId: currentUser.enfocaId, tagId: "127", name: "From Class #3"))
-        return tags
+    func testTagFilter_ShouldCallPerformSegue(){
+        
+        class MockBrowseViewController : BrowseViewController {
+            var segueIdentifier : String?
+            var sender : Any?
+            override func performSegue(withIdentifier identifier: String, sender: Any?) {
+                self.segueIdentifier = identifier
+                self.sender = sender
+            }
+        }
+        
+        let mockVC = MockBrowseViewController(nibName: nil, bundle: nil)
+        
+        let button = UIButton()
+        mockVC.tagFilterAction(button)
+        
+        XCTAssertEqual(mockVC.segueIdentifier, "TagFilterSegue")
+        XCTAssertEqual(mockVC.sender as! UIButton, button)
     }
     
-//    func testTagFilter_ShouldRecieveExpectedResults
+    func testSegueTagFilter_ShouldSegueWithTagTupleWhenSourceIsButton() {
+        
+        let storyboard = UIStoryboard(name: "Browse", bundle: nil)
+        
+        let destNav = storyboard.instantiateViewController(withIdentifier: "TagFilterVC") as! UINavigationController
+        let destVC = destNav.viewControllers.first as! TagFilterViewController
+        let segue = UIStoryboardSegue(identifier: "TagFilterSegue", source: sut, destination: destNav)
+        
+//        sut.currentWordStateFilter = .active
+        sut.tagTuples = makeTags().map({
+            (value : Tag) -> (Tag, Bool) in
+            return (value, false)
+        })
+        
+        sut.prepare(for: segue, sender: sut.tagFilterButton)
+        
+        let popover: UIPopoverPresentationController = destNav.popoverPresentationController!
+        
+        //Alternatives?
+        XCTAssertEqual(popover.delegate as! BrowseViewController, sut) //BrowseViewController should be the delegate
+        XCTAssertEqual(sut.tagFilterButton.bounds, popover.sourceRect)
+        
+        XCTAssertEqual(destNav.modalPresentationStyle, .popover)
+        
+        //TODO: test VC for expected stuff
+        XCTAssertNotNil(destVC.tagFilterDelegate)
+        XCTAssertEqual(destVC.tagFilterDelegate.tagTuples.count, sut.tagTuples.count)
+        
+        XCTAssertTrue(destVC.tagFilterDelegate.tagTuples.compare(sut.tagTuples))
+        
+    }
+    
+    
+   
 }
+
+
 
 extension BrowseViewControllerTests {
     class MockWebService : WebService {

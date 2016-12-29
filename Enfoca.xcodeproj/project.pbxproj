@@ -53,6 +53,13 @@
 		0FB1C6591E144D730087DC93 /* TagAssociation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB1C6581E144D730087DC93 /* TagAssociation.swift */; };
 		0FB1C65B1E14500E0087DC93 /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB1C65A1E14500E0087DC93 /* WebService.swift */; };
 		0FB1C65E1E145CB60087DC93 /* DemoWebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB1C65D1E145CB60087DC93 /* DemoWebService.swift */; };
+		0FB1C6621E148CA00087DC93 /* TagFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB1C6611E148CA00087DC93 /* TagFilterViewController.swift */; };
+		0FB1C6641E148F710087DC93 /* TagFilterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB1C6631E148F710087DC93 /* TagFilterDelegate.swift */; };
+		0FB1C6661E154F200087DC93 /* Sequence+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB1C6651E154F200087DC93 /* Sequence+.swift */; };
+		0FB1C6681E154F650087DC93 /* Sequence+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB1C6671E154F650087DC93 /* Sequence+Tests.swift */; };
+		0FDC87091E1552F600CF4EC6 /* TagFilterViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FDC87081E1552F600CF4EC6 /* TagFilterViewControllerTests.swift */; };
+		0FDC870B1E15560700CF4EC6 /* TagFilterViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FDC870A1E15560700CF4EC6 /* TagFilterViewModelTests.swift */; };
+		0FDC870D1E15573300CF4EC6 /* TagFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FDC870C1E15573300CF4EC6 /* TagFilterViewModel.swift */; };
 		89BCD4C5F953E8798C304B9B /* Pods_EnfocaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F51C574FDE8BD2BFA035F346 /* Pods_EnfocaTests.framework */; };
 		E13C77D8E44DD9252F8222F4 /* Pods_Enfoca.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED6D653424C76C70C23D1A8 /* Pods_Enfoca.framework */; };
 /* End PBXBuildFile section */
@@ -119,6 +126,13 @@
 		0FB1C6581E144D730087DC93 /* TagAssociation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagAssociation.swift; path = Models/TagAssociation.swift; sourceTree = "<group>"; };
 		0FB1C65A1E14500E0087DC93 /* WebService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebService.swift; path = Network/WebService.swift; sourceTree = "<group>"; };
 		0FB1C65D1E145CB60087DC93 /* DemoWebService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DemoWebService.swift; path = Network/DemoWebService.swift; sourceTree = "<group>"; };
+		0FB1C6611E148CA00087DC93 /* TagFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagFilterViewController.swift; path = Features/Browse/TagFilterViewController.swift; sourceTree = "<group>"; };
+		0FB1C6631E148F710087DC93 /* TagFilterDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagFilterDelegate.swift; path = Features/Browse/TagFilterDelegate.swift; sourceTree = "<group>"; };
+		0FB1C6651E154F200087DC93 /* Sequence+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Sequence+.swift"; path = "Shared/Extensions/Sequence+.swift"; sourceTree = "<group>"; };
+		0FB1C6671E154F650087DC93 /* Sequence+Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Sequence+Tests.swift"; path = "Shared/Extensions/Sequence+Tests.swift"; sourceTree = "<group>"; };
+		0FDC87081E1552F600CF4EC6 /* TagFilterViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagFilterViewControllerTests.swift; path = Features/Browse/TagFilterViewControllerTests.swift; sourceTree = "<group>"; };
+		0FDC870A1E15560700CF4EC6 /* TagFilterViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagFilterViewModelTests.swift; path = EnfocaTests/Features/Browse/TagFilterViewModelTests.swift; sourceTree = SOURCE_ROOT; };
+		0FDC870C1E15573300CF4EC6 /* TagFilterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagFilterViewModel.swift; path = Features/Browse/TagFilterViewModel.swift; sourceTree = "<group>"; };
 		2474CEA12B197ED3F628B5F9 /* Pods-Enfoca.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Enfoca.release.xcconfig"; path = "Pods/Target Support Files/Pods-Enfoca/Pods-Enfoca.release.xcconfig"; sourceTree = "<group>"; };
 		3EE143061394603BFAE4FFED /* Pods-EnfocaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EnfocaTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EnfocaTests/Pods-EnfocaTests.release.xcconfig"; sourceTree = "<group>"; };
 		BED6D653424C76C70C23D1A8 /* Pods_Enfoca.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Enfoca.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -254,6 +268,8 @@
 				0F4D8A421E12E27600900729 /* BrowseViewControllerTests.swift */,
 				0FB1C64C1E13F05E0087DC93 /* WordStateFilterViewControllerTests.swift */,
 				0FB1C6501E13F8B40087DC93 /* WordStateFilterViewModelTests.swift */,
+				0FDC870A1E15560700CF4EC6 /* TagFilterViewModelTests.swift */,
+				0FDC87081E1552F600CF4EC6 /* TagFilterViewControllerTests.swift */,
 			);
 			name = Browse;
 			sourceTree = "<group>";
@@ -266,6 +282,9 @@
 				0F4D8A4C1E12F27100900729 /* WordStateFilterViewController.swift */,
 				0FB1C64E1E13F3530087DC93 /* WordStateFilterViewModel.swift */,
 				0F4D8A501E13041C00900729 /* WordStateFilterDelegate.swift */,
+				0FB1C6611E148CA00087DC93 /* TagFilterViewController.swift */,
+				0FB1C6631E148F710087DC93 /* TagFilterDelegate.swift */,
+				0FDC870C1E15573300CF4EC6 /* TagFilterViewModel.swift */,
 			);
 			name = Browse;
 			sourceTree = "<group>";
@@ -274,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				0F4D8A4A1E12E86900900729 /* UIViewController+.swift */,
+				0FB1C6651E154F200087DC93 /* Sequence+.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -325,6 +345,7 @@
 				0F5ADFB31E107CDD003B1225 /* Info.plist */,
 				0F38A4DF1E11B94A00051F9E /* SharedMocks.swift */,
 				0F4D8A521E13ED9A00900729 /* ToolsForTesting.swift */,
+				0FB1C6671E154F650087DC93 /* Sequence+Tests.swift */,
 			);
 			path = EnfocaTests;
 			sourceTree = "<group>";
@@ -586,6 +607,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FB1C65B1E14500E0087DC93 /* WebService.swift in Sources */,
+				0FB1C6641E148F710087DC93 /* TagFilterDelegate.swift in Sources */,
+				0FB1C6661E154F200087DC93 /* Sequence+.swift in Sources */,
 				0FB1C64F1E13F3530087DC93 /* WordStateFilterViewModel.swift in Sources */,
 				0F38A4DE1E11B2AA00051F9E /* LoginViewController.swift in Sources */,
 				0F4D8A511E13041C00900729 /* WordStateFilterDelegate.swift in Sources */,
@@ -594,10 +617,12 @@
 				0FB1C6541E1403BE0087DC93 /* EnumCollection.swift in Sources */,
 				0F2431CD1E10A5420046A224 /* Tag.swift in Sources */,
 				0F4D8A451E12E3D400900729 /* BrowseViewController.swift in Sources */,
+				0FDC870D1E15573300CF4EC6 /* TagFilterViewModel.swift in Sources */,
 				0F2431C51E10A04E0046A224 /* CardSide.swift in Sources */,
 				0F4D8A4D1E12F27100900729 /* WordStateFilterViewController.swift in Sources */,
 				0F38A4D81E11B14D00051F9E /* AuthenticationDelegate.swift in Sources */,
 				0F2431C91E10A1DC0046A224 /* WordStateFilter.swift in Sources */,
+				0FB1C6621E148CA00087DC93 /* TagFilterViewController.swift in Sources */,
 				0FB1C6591E144D730087DC93 /* TagAssociation.swift in Sources */,
 				0F5ADF9F1E107CDD003B1225 /* ViewController.swift in Sources */,
 				0F2431BE1E109CDF0046A224 /* CardOrder.swift in Sources */,
@@ -613,8 +638,11 @@
 			files = (
 				0FB1C64D1E13F05E0087DC93 /* WordStateFilterViewControllerTests.swift in Sources */,
 				0F38A4E01E11B94A00051F9E /* SharedMocks.swift in Sources */,
+				0FB1C6681E154F650087DC93 /* Sequence+Tests.swift in Sources */,
 				0F38A4E41E11E3C100051F9E /* WelcomeViewControllerTests.swift in Sources */,
+				0FDC870B1E15560700CF4EC6 /* TagFilterViewModelTests.swift in Sources */,
 				0F2431D31E10A9E70046A224 /* UserTests.swift in Sources */,
+				0FDC87091E1552F600CF4EC6 /* TagFilterViewControllerTests.swift in Sources */,
 				0F2431C31E109E120046A224 /* CardOrderTests.swift in Sources */,
 				0F2431CB1E10A26A0046A224 /* WordStateFilterTests.swift in Sources */,
 				0FB1C6571E144BB20087DC93 /* TagAssociationTests.swift in Sources */,
