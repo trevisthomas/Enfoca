@@ -10,5 +10,6 @@ import Foundation
 
 protocol ApplicationDefaults {
     func initialWordStateFilter() -> WordStateFilter
+    func reverseWordPair() -> Bool
     
 }

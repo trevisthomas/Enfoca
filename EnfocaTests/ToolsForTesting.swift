@@ -23,3 +23,14 @@ func makeTags(ownerId : Int = 1) -> [Tag] {
     tags.append(Tag(ownerId: ownerId, tagId: "127", name: "From Class #3"))
     return tags
 }
+
+func makeWordPairs() -> [WordPair]{
+    let d = Date()
+    var list : [WordPair] = []
+    list.append(WordPair(creatorId: -1, pairId: "guid", word: "English", definition: "Espanol", dateCreated: d))
+    list.append(WordPair(creatorId: -1, pairId: "guid", word: "Black", definition: "Negro", dateCreated: d))
+    list.append(WordPair(creatorId: -1, pairId: "guid", word: "Tall", definition: "Alta", dateCreated: d))
+    list.append(WordPair(creatorId: -1, pairId: "guid", word: "To Run", definition: "Correr", dateCreated: d))
+    
+    return list
+}

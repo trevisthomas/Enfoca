@@ -10,12 +10,14 @@ import UIKit
 
 class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilterDelegate {
     internal func updated() {
-        assertionFailure()
+        viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: getSelectedFilterTags())
     }
 
 
     @IBOutlet weak var wordStateFilterButton: UIButton!
     @IBOutlet weak var tagFilterButton: UIButton!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var reverseWordPairSegmentedControl: UISegmentedControl!
     
     var currentWordStateFilter: WordStateFilter = .all {
         didSet{
@@ -27,6 +29,16 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
     var authenticateionDelegate : AuthenticationDelegate!
     var tagTuples : [(Tag, Bool)] = []
     var webService : WebService!
+    var viewModel : BrowseViewModel!
+    
+    var reverseWordPair : Bool {
+        get{
+            return viewModel.reverseWordPair
+        }
+        set {
+            viewModel.reverseWordPair = newValue
+        }
+    }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -47,8 +59,10 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        currentWordStateFilter = appDefaultsDelegate.initialWordStateFilter()
+        viewModel = tableView.delegate as! BrowseViewModel
+        viewModel.webService = webService
         
+        currentWordStateFilter = appDefaultsDelegate.initialWordStateFilter()
         
         if let enfocaId = authenticateionDelegate.currentUser()?.enfocaId {
             self.webService.fetchUserTags(enfocaId: enfocaId) {
@@ -59,6 +73,20 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
                 })
             }
         }
+        
+        viewModel.reverseWordPair = appDefaultsDelegate.reverseWordPair()
+        viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: getSelectedFilterTags())
+        reverseWordPairSegmentedControl.selectedSegmentIndex = reverseWordPair ? 1 : 0
+    }
+    
+    private func getSelectedFilterTags() -> [Tag] {
+        //lol
+        let tags = tagTuples.filter({(tag, selected) in
+            return selected}).map({
+                (tag, _) -> Tag in
+                return tag
+            })
+        return tags
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,6 +100,21 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
     
     @IBAction func tagFilterAction(_ sender: UIButton) {
         performSegue(withIdentifier: "TagFilterSegue", sender: sender)
+    }
+    @IBAction func reverseWordPairSegmentAction(_ sender: UISegmentedControl) {
+//        reverseWordPairSegmentedControl.selectedSegmentIndex = reverseWordPair ? 1 : 0
+        
+        switch (sender.selectedSegmentIndex){
+            case 0:
+                    reverseWordPair = false
+            case 1:
+                    reverseWordPair = true
+            default:
+                fatalError()
+        }
+        
+        applyWordPairOrder()
+        
     }
 
     // MARK: - Navigation
@@ -99,6 +142,18 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         popover.sourceRect = button.bounds //No clue why source view didnt do this.
 
         
+    }
+    
+    private func applyWordPairOrder() {
+        
+        for cell in tableView.visibleCells {
+            
+            guard let myCell = cell as? WordPairCell else {
+                fatalError()
+            }
+            
+            myCell.reverseWordPair = reverseWordPair
+        }
     }
     
 }

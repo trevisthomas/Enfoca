@@ -47,6 +47,11 @@
 		0F5ADFB21E107CDD003B1225 /* EnfocaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5ADFB11E107CDD003B1225 /* EnfocaTests.swift */; };
 		0F864E811E17F81600539773 /* BrowseViewControllerStudyItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F864E801E17F81500539773 /* BrowseViewControllerStudyItemTests.swift */; };
 		0F864E831E17F93F00539773 /* ApplicationDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F864E821E17F93F00539773 /* ApplicationDefaults.swift */; };
+		0F864E871E1807A400539773 /* WordPairCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F864E851E1807A400539773 /* WordPairCell.swift */; };
+		0F864E881E1807A400539773 /* WordPairCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F864E861E1807A400539773 /* WordPairCell.xib */; };
+		0F864E8A1E1808C900539773 /* BrowserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F864E891E1808C900539773 /* BrowserViewModel.swift */; };
+		0F864E8C1E180C1E00539773 /* BrowseViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F864E8B1E180C1E00539773 /* BrowseViewModelTests.swift */; };
+		0F864E8E1E18660800539773 /* WordPairCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F864E8D1E18660800539773 /* WordPairCellTests.swift */; };
 		0FB1C64D1E13F05E0087DC93 /* WordStateFilterViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB1C64C1E13F05E0087DC93 /* WordStateFilterViewControllerTests.swift */; };
 		0FB1C64F1E13F3530087DC93 /* WordStateFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB1C64E1E13F3530087DC93 /* WordStateFilterViewModel.swift */; };
 		0FB1C6511E13F8B40087DC93 /* WordStateFilterViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB1C6501E13F8B40087DC93 /* WordStateFilterViewModelTests.swift */; };
@@ -124,6 +129,11 @@
 		0F5ADFB31E107CDD003B1225 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0F864E801E17F81500539773 /* BrowseViewControllerStudyItemTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowseViewControllerStudyItemTests.swift; path = Features/Browse/BrowseViewControllerStudyItemTests.swift; sourceTree = "<group>"; };
 		0F864E821E17F93F00539773 /* ApplicationDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApplicationDefaults.swift; path = Core/ApplicationDefaults.swift; sourceTree = "<group>"; };
+		0F864E851E1807A400539773 /* WordPairCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WordPairCell.swift; path = Features/Browse/WordPairCell.swift; sourceTree = "<group>"; };
+		0F864E861E1807A400539773 /* WordPairCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WordPairCell.xib; path = Features/Browse/WordPairCell.xib; sourceTree = "<group>"; };
+		0F864E891E1808C900539773 /* BrowserViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowserViewModel.swift; path = Features/Browse/BrowserViewModel.swift; sourceTree = "<group>"; };
+		0F864E8B1E180C1E00539773 /* BrowseViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowseViewModelTests.swift; path = Features/Browse/BrowseViewModelTests.swift; sourceTree = "<group>"; };
+		0F864E8D1E18660800539773 /* WordPairCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WordPairCellTests.swift; path = Features/Browse/WordPairCellTests.swift; sourceTree = "<group>"; };
 		0FB1C64C1E13F05E0087DC93 /* WordStateFilterViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WordStateFilterViewControllerTests.swift; path = Features/Browse/WordStateFilterViewControllerTests.swift; sourceTree = "<group>"; };
 		0FB1C64E1E13F3530087DC93 /* WordStateFilterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WordStateFilterViewModel.swift; path = Features/Browse/WordStateFilterViewModel.swift; sourceTree = "<group>"; };
 		0FB1C6501E13F8B40087DC93 /* WordStateFilterViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WordStateFilterViewModelTests.swift; path = Features/Browse/WordStateFilterViewModelTests.swift; sourceTree = "<group>"; };
@@ -281,6 +291,8 @@
 				0FB1C6501E13F8B40087DC93 /* WordStateFilterViewModelTests.swift */,
 				0FDC870A1E15560700CF4EC6 /* TagFilterViewModelTests.swift */,
 				0FDC87081E1552F600CF4EC6 /* TagFilterViewControllerTests.swift */,
+				0F864E8B1E180C1E00539773 /* BrowseViewModelTests.swift */,
+				0F864E8D1E18660800539773 /* WordPairCellTests.swift */,
 			);
 			name = Browse;
 			sourceTree = "<group>";
@@ -290,12 +302,15 @@
 			children = (
 				0F4D8A471E12E3FA00900729 /* Browse.storyboard */,
 				0F4D8A441E12E3D400900729 /* BrowseViewController.swift */,
+				0F864E891E1808C900539773 /* BrowserViewModel.swift */,
 				0F4D8A4C1E12F27100900729 /* WordStateFilterViewController.swift */,
 				0FB1C64E1E13F3530087DC93 /* WordStateFilterViewModel.swift */,
 				0F4D8A501E13041C00900729 /* WordStateFilterDelegate.swift */,
 				0FB1C6611E148CA00087DC93 /* TagFilterViewController.swift */,
 				0FB1C6631E148F710087DC93 /* TagFilterDelegate.swift */,
 				0FDC870C1E15573300CF4EC6 /* TagFilterViewModel.swift */,
+				0F864E851E1807A400539773 /* WordPairCell.swift */,
+				0F864E861E1807A400539773 /* WordPairCell.xib */,
 			);
 			name = Browse;
 			sourceTree = "<group>";
@@ -510,6 +525,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F32FC351E11A6A200D599D8 /* GoogleSignIn.bundle in Resources */,
+				0F864E881E1807A400539773 /* WordPairCell.xib in Resources */,
 				0F5ADFA71E107CDD003B1225 /* LaunchScreen.storyboard in Resources */,
 				0F4D8A481E12E3FA00900729 /* Browse.storyboard in Resources */,
 				0F38A4DC1E11B28A00051F9E /* Login.storyboard in Resources */,
@@ -631,6 +647,7 @@
 				0FB1C6641E148F710087DC93 /* TagFilterDelegate.swift in Sources */,
 				0FB1C6661E154F200087DC93 /* Sequence+.swift in Sources */,
 				0FB1C64F1E13F3530087DC93 /* WordStateFilterViewModel.swift in Sources */,
+				0F864E8A1E1808C900539773 /* BrowserViewModel.swift in Sources */,
 				0F38A4DE1E11B2AA00051F9E /* LoginViewController.swift in Sources */,
 				0F4D8A511E13041C00900729 /* WordStateFilterDelegate.swift in Sources */,
 				0F864E831E17F93F00539773 /* ApplicationDefaults.swift in Sources */,
@@ -639,6 +656,7 @@
 				0FB1C6541E1403BE0087DC93 /* EnumCollection.swift in Sources */,
 				0F2431CD1E10A5420046A224 /* Tag.swift in Sources */,
 				0F4D8A451E12E3D400900729 /* BrowseViewController.swift in Sources */,
+				0F864E871E1807A400539773 /* WordPairCell.swift in Sources */,
 				0FDC870D1E15573300CF4EC6 /* TagFilterViewModel.swift in Sources */,
 				0F2431C51E10A04E0046A224 /* CardSide.swift in Sources */,
 				0F4D8A4D1E12F27100900729 /* WordStateFilterViewController.swift in Sources */,
@@ -658,6 +676,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F864E8E1E18660800539773 /* WordPairCellTests.swift in Sources */,
 				0FB1C64D1E13F05E0087DC93 /* WordStateFilterViewControllerTests.swift in Sources */,
 				0F38A4E01E11B94A00051F9E /* SharedMocks.swift in Sources */,
 				0FB1C6681E154F650087DC93 /* Sequence+Tests.swift in Sources */,
@@ -672,6 +691,7 @@
 				0FB1C6571E144BB20087DC93 /* TagAssociationTests.swift in Sources */,
 				0F4D8A531E13ED9A00900729 /* ToolsForTesting.swift in Sources */,
 				0F38A4D41E11AFE100051F9E /* LoginViewControllerTests.swift in Sources */,
+				0F864E8C1E180C1E00539773 /* BrowseViewModelTests.swift in Sources */,
 				0F2431CF1E10A5F90046A224 /* TagTests.swift in Sources */,
 				0F5ADFB21E107CDD003B1225 /* EnfocaTests.swift in Sources */,
 				0F4D8A431E12E27600900729 /* BrowseViewControllerFilterTests.swift in Sources */,

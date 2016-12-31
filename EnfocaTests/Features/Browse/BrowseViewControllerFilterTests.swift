@@ -59,16 +59,7 @@ class BrowseViewControllerFilterTests: XCTestCase {
     
     
     func testInit_StateFilterButtonTextShouldMatchEnumRaw() {
-        class MockDefaults : ApplicationDefaults {
-            func initialWordStateFilter() -> WordStateFilter {
-                return .active
-            }
-            
-        }
-        
-        let defaults = MockDefaults()
-        
-        
+        let defaults = MockDefaults(defaultWordStateFilter: .active)
         sut.appDefaultsDelegate = defaults
         _ = sut.view
         XCTAssertEqual(sut.wordStateFilterButton.currentTitle, WordStateFilter.active.rawValue)

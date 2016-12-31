@@ -9,6 +9,20 @@
 import Foundation
 
 class DemoWebService : WebService {
+    
+    internal func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], callback: @escaping ([WordPair]) -> ()) {
+//        fetchWordPairTagFilter = 
+        let d = Date()
+        var list : [WordPair] = []
+        list.append(WordPair(creatorId: -1, pairId: "guid", word: "English", definition: "Espanol", dateCreated: d))
+        list.append(WordPair(creatorId: -1, pairId: "guid", word: "Black", definition: "Negro", dateCreated: d))
+        list.append(WordPair(creatorId: -1, pairId: "guid", word: "Tall", definition: "Alta", dateCreated: d))
+        list.append(WordPair(creatorId: -1, pairId: "guid", word: "To Run", definition: "Correr", dateCreated: d))
+        
+        callback(list)
+        
+    }
+
     func fetchUserTags(enfocaId : Int, callback : @escaping([Tag])->()){
         callback(makeTags(ownerId: enfocaId))
     }

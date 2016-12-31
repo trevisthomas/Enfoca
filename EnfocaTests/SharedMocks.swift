@@ -35,6 +35,18 @@ class MockAuthenticationDelegate: AuthenticationDelegate {
 }
 
 class MockWebService : WebService {
+    var fetchWordPairTagFilter : [Tag]?
+    var fetchWordPairWordStateFilter : WordStateFilter?
+    var fetchWordPairCallCount : Int = 0
+    var wordPairs : [WordPair] = []
+    
+    func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], callback: @escaping ([WordPair]) -> ()) {
+        fetchWordPairTagFilter = tagFilter
+        fetchWordPairWordStateFilter = wordStateFilter
+        callback(wordPairs)
+        fetchWordPairCallCount += fetchWordPairCallCount
+    }
+    
     var fetchCallCount : Int = 0
     var tags : [Tag] = []
     var fetchUserId : Int?
@@ -44,5 +56,41 @@ class MockWebService : WebService {
         fetchUserId = enfocaId
         
         callback(tags)
+    }
+    
+    
+}
+
+class MockDefaults : ApplicationDefaults {
+    var wordStateFilter: WordStateFilter
+    var reverse: Bool = false
+    init(defaultWordStateFilter: WordStateFilter = .active){
+        self.wordStateFilter = defaultWordStateFilter
+    }
+    
+    func initialWordStateFilter() -> WordStateFilter {
+        return wordStateFilter
+    }
+    
+    func reverseWordPair() -> Bool {
+        return reverse
+    }
+}
+
+class MockWordPairTableView : UITableView {
+    var identifier : String!
+    var visibleMockCells : [UITableViewCell] = []
+    
+    //WARNING! This is not the way these work.  dequing does not make a cell visible
+    override func dequeueReusableCell(withIdentifier identifier: String) -> UITableViewCell? {
+        self.identifier = identifier
+        let c = WordPairCell()
+        visibleMockCells.append(c)
+        return c
+        
+    }
+    
+    override var visibleCells: [UITableViewCell]{
+        return visibleMockCells
     }
 }

@@ -119,6 +119,10 @@ extension AppDelegate : AuthenticationDelegate {
 }
 
 extension AppDelegate : ApplicationDefaults {
+    internal func reverseWordPair() -> Bool {
+        return false
+    }
+
     func initialWordStateFilter() -> WordStateFilter {
         return .all
     }

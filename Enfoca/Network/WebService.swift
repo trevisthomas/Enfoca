@@ -9,6 +9,7 @@
 import Foundation
 
 protocol WebService {
+    //TODO, remove the enfocaId from this.  The service should know who you are.
     func fetchUserTags(enfocaId : Int, callback : @escaping([Tag])->())
-//    func fetchWordPairs(userId : String, callback : @escaping([WordPair])->())
+    func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], callback : @escaping([WordPair])->())
 }
