@@ -34,3 +34,15 @@ class MockAuthenticationDelegate: AuthenticationDelegate {
     }
 }
 
+class MockWebService : WebService {
+    var fetchCallCount : Int = 0
+    var tags : [Tag] = []
+    var fetchUserId : Int?
+    
+    func fetchUserTags(enfocaId : Int, callback : @escaping([Tag])->()){
+        fetchCallCount += 1
+        fetchUserId = enfocaId
+        
+        callback(tags)
+    }
+}

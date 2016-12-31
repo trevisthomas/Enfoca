@@ -8,7 +8,7 @@
 
 import XCTest
 @testable import Enfoca
-class BrowseViewControllerTests: XCTestCase {
+class BrowseViewControllerFilterTests: XCTestCase {
     
     var sut : BrowseViewController!
     var authDelegate : MockAuthenticationDelegate!
@@ -23,8 +23,7 @@ class BrowseViewControllerTests: XCTestCase {
         sut.authenticateionDelegate = authDelegate
         sut.webService = MockWebService()
         
-        //To force view did load to be called
-        _ = sut.view
+        
     }
     
     override func tearDown() {
@@ -33,6 +32,9 @@ class BrowseViewControllerTests: XCTestCase {
     }
     
     func testStorybard_ShoudContainSegues(){
+        //To force view did load to be called
+        _ = sut.view
+        
         let list = segues(ofViewController: sut)
         XCTAssertTrue(list.contains("TagFilterSegue"))
         XCTAssertTrue(list.contains("WordStateFilterSegue"))
@@ -40,6 +42,8 @@ class BrowseViewControllerTests: XCTestCase {
     }
     
     func testInit_ShouldHaveAuthDelegateAndWebService() {
+        _ = sut.view
+        
         let storyboard = UIStoryboard(name: "Browse", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "BrowseVC") as! BrowseViewController
         XCTAssertNotNil(vc.authenticateionDelegate)
@@ -47,19 +51,35 @@ class BrowseViewControllerTests: XCTestCase {
     }
     
     func testInit_ShouldBeWiredAndReady(){
+        _ = sut.view
+        
         XCTAssertNotNil(sut.wordStateFilterButton)
         XCTAssertNotNil(sut.tagFilterButton)
     }
     
-    func testInit_ShouldHaveInitialalState(){
-        XCTAssertEqual(sut.currentWordStateFilter, WordStateFilter.all)
-    }
+    
     func testInit_StateFilterButtonTextShouldMatchEnumRaw() {
-        XCTAssertEqual(sut.wordStateFilterButton.currentTitle, WordStateFilter.all.rawValue)
+        class MockDefaults : ApplicationDefaults {
+            func initialWordStateFilter() -> WordStateFilter {
+                return .active
+            }
+            
+        }
+        
+        let defaults = MockDefaults()
+        
+        
+        sut.appDefaultsDelegate = defaults
+        _ = sut.view
+        XCTAssertEqual(sut.wordStateFilterButton.currentTitle, WordStateFilter.active.rawValue)
         
     }
+
+    
+   
     
     func testStateFilterAction_ShouldCallPerformSegue(){
+        _ = sut.view
         
         class MockBrowseViewController : BrowseViewController {
             var segueIdentifier : String?
@@ -80,6 +100,7 @@ class BrowseViewControllerTests: XCTestCase {
     }
     
     func testSegueWordStateFilter_ShouldSegueWithWordStateFilterWhenSourceIsButton() {
+        _ = sut.view
         
         let storyboard = UIStoryboard(name: "Browse", bundle: nil)
         
@@ -155,7 +176,7 @@ class BrowseViewControllerTests: XCTestCase {
     }
     
     func testSegueTagFilter_ShouldSegueWithTagTupleWhenSourceIsButton() {
-        
+        _ = sut.view
         let storyboard = UIStoryboard(name: "Browse", bundle: nil)
         
         let destNav = storyboard.instantiateViewController(withIdentifier: "TagFilterVC") as! UINavigationController
@@ -186,24 +207,30 @@ class BrowseViewControllerTests: XCTestCase {
         
     }
     
-    
+//    func testTagFilterDelegate_ShouldUpdateFromWebService(){
+//        sut.updated()
+//        let webService = sut.webService
+//        XCTAssertTrue(webService.wordPairFetched)
+//        
+//        //TODO verify filters
+//    }
+//    
    
 }
 
 
 
-extension BrowseViewControllerTests {
-    class MockWebService : WebService {
-        var fetchCallCount : Int = 0
-        var tags : [Tag] = []
-        var fetchUserId : Int?
-        
-        func fetchUserTags(enfocaId : Int, callback : @escaping([Tag])->()){
-            fetchCallCount += 1
-            fetchUserId = enfocaId
-            
-            callback(tags)
-        }
-        
-    }
-}
+//extension BrowseViewControllerFilterTests {
+////    class MockWebService : WebService {
+////        var fetchCallCount : Int = 0
+////        var tags : [Tag] = []
+////        var fetchUserId : Int?
+////        
+////        func fetchUserTags(enfocaId : Int, callback : @escaping([Tag])->()){
+////            fetchCallCount += 1
+////            fetchUserId = enfocaId
+////            
+////            callback(tags)
+////        }
+////    }
+//}

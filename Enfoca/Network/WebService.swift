@@ -10,4 +10,5 @@ import Foundation
 
 protocol WebService {
     func fetchUserTags(enfocaId : Int, callback : @escaping([Tag])->())
+//    func fetchWordPairs(userId : String, callback : @escaping([WordPair])->())
 }

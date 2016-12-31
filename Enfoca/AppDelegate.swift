@@ -118,3 +118,9 @@ extension AppDelegate : AuthenticationDelegate {
     }
 }
 
+extension AppDelegate : ApplicationDefaults {
+    func initialWordStateFilter() -> WordStateFilter {
+        return .all
+    }
+}
+

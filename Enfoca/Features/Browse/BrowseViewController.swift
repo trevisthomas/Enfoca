@@ -23,6 +23,7 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         }
     }
     
+    var appDefaultsDelegate : ApplicationDefaults!
     var authenticateionDelegate : AuthenticationDelegate!
     var tagTuples : [(Tag, Bool)] = []
     var webService : WebService!
@@ -39,13 +40,14 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
     
     private func performInit(){
         authenticateionDelegate = getAppDelegate()
+        appDefaultsDelegate = getAppDelegate()
         webService = getAppDelegate().webService
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        currentWordStateFilter = .all
+        currentWordStateFilter = appDefaultsDelegate.initialWordStateFilter()
         
         
         if let enfocaId = authenticateionDelegate.currentUser()?.enfocaId {
