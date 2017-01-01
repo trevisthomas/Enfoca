@@ -12,7 +12,12 @@ class WordPairCell: UITableViewCell {
 
     var wordPair : WordPair! {
         didSet{
+            //For some of my unit test these arent wired up.
+            guard wordLabel != nil else {
+                return
+            }
             wordLabel.text = wordPair.word
+            definitionLabel.text = wordPair.definition
         }
     }
     var reverseWordPair : Bool!

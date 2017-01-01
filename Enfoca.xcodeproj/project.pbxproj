@@ -48,7 +48,6 @@
 		0F864E811E17F81600539773 /* BrowseViewControllerStudyItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F864E801E17F81500539773 /* BrowseViewControllerStudyItemTests.swift */; };
 		0F864E831E17F93F00539773 /* ApplicationDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F864E821E17F93F00539773 /* ApplicationDefaults.swift */; };
 		0F864E871E1807A400539773 /* WordPairCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F864E851E1807A400539773 /* WordPairCell.swift */; };
-		0F864E881E1807A400539773 /* WordPairCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F864E861E1807A400539773 /* WordPairCell.xib */; };
 		0F864E8A1E1808C900539773 /* BrowserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F864E891E1808C900539773 /* BrowserViewModel.swift */; };
 		0F864E8C1E180C1E00539773 /* BrowseViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F864E8B1E180C1E00539773 /* BrowseViewModelTests.swift */; };
 		0F864E8E1E18660800539773 /* WordPairCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F864E8D1E18660800539773 /* WordPairCellTests.swift */; };
@@ -130,7 +129,6 @@
 		0F864E801E17F81500539773 /* BrowseViewControllerStudyItemTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowseViewControllerStudyItemTests.swift; path = Features/Browse/BrowseViewControllerStudyItemTests.swift; sourceTree = "<group>"; };
 		0F864E821E17F93F00539773 /* ApplicationDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApplicationDefaults.swift; path = Core/ApplicationDefaults.swift; sourceTree = "<group>"; };
 		0F864E851E1807A400539773 /* WordPairCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WordPairCell.swift; path = Features/Browse/WordPairCell.swift; sourceTree = "<group>"; };
-		0F864E861E1807A400539773 /* WordPairCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WordPairCell.xib; path = Features/Browse/WordPairCell.xib; sourceTree = "<group>"; };
 		0F864E891E1808C900539773 /* BrowserViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowserViewModel.swift; path = Features/Browse/BrowserViewModel.swift; sourceTree = "<group>"; };
 		0F864E8B1E180C1E00539773 /* BrowseViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowseViewModelTests.swift; path = Features/Browse/BrowseViewModelTests.swift; sourceTree = "<group>"; };
 		0F864E8D1E18660800539773 /* WordPairCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WordPairCellTests.swift; path = Features/Browse/WordPairCellTests.swift; sourceTree = "<group>"; };
@@ -310,7 +308,6 @@
 				0FB1C6631E148F710087DC93 /* TagFilterDelegate.swift */,
 				0FDC870C1E15573300CF4EC6 /* TagFilterViewModel.swift */,
 				0F864E851E1807A400539773 /* WordPairCell.swift */,
-				0F864E861E1807A400539773 /* WordPairCell.xib */,
 			);
 			name = Browse;
 			sourceTree = "<group>";
@@ -525,7 +522,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F32FC351E11A6A200D599D8 /* GoogleSignIn.bundle in Resources */,
-				0F864E881E1807A400539773 /* WordPairCell.xib in Resources */,
 				0F5ADFA71E107CDD003B1225 /* LaunchScreen.storyboard in Resources */,
 				0F4D8A481E12E3FA00900729 /* Browse.storyboard in Resources */,
 				0F38A4DC1E11B28A00051F9E /* Login.storyboard in Resources */,

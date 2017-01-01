@@ -81,20 +81,26 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
 //
 //    }
     
-//    func testInit_CellsShouldBeInflatedAndPoulated(){
-//        overrideWithMocks()
-//        
-//        viewDidLoad()
-//        
-//        XCTAssertNotNil(sut.tableView)
-//        
-//        let cell = sut.tableView.dequeueReusableCell(withIdentifier: "WordPairCell") as! WordPairCell
-//        XCTAssertNotNil(cell)
-//        
-//        
-////        XCTAssertNotNil(cell.wordLabel)
-////        XCTAssertNotNil(cell.definitionLabel)
-//    }
+    func testInit_CellsShouldBeInflatedAndPoulated(){
+        overrideWithMocks()
+        
+        mockWebService.wordPairs = makeWordPairs()
+        
+        viewDidLoad()
+        
+        XCTAssertNotNil(sut.tableView)
+//        let cell = sut.tableView.dequeueReusableCell(withIdentifier: "WordPairCell", for: IndexPath(row: 2, section: 0)) as! WordPairCell
+        
+        let cell = sut.viewModel.tableView(sut.tableView, cellForRowAt: IndexPath(row: 2, section: 0)) as! WordPairCell
+        
+        let wp = mockWebService.wordPairs[2]
+        
+        XCTAssertNotNil(cell.wordLabel)
+        XCTAssertNotNil(cell.definitionLabel)
+        
+        XCTAssertEqual(cell.wordLabel?.text, wp.word)
+        XCTAssertEqual(cell.definitionLabel?.text, wp.definition)
+    }
     
     func testWebService_ShouldFetchWordsFromServiceWithCurrentFilterParams(){
         overrideWithMocks()
