@@ -90,7 +90,7 @@ class TagFilterViewControllerTests: XCTestCase {
         
     }
     
-    func testTableView_ApplyFilterShouldUpdateDelegate(){
+    func testTableView_ApplyFilterShouldUpdateDelegateAndCloseView(){
         let delegate = MockTagFilterDelegate()
         sut.tagFilterDelegate = delegate
         let _ = sut.view //View Did Load
@@ -112,6 +112,9 @@ class TagFilterViewControllerTests: XCTestCase {
         //Verify that it is selected now and that it has been notified
         XCTAssertTrue(delegate.touched)
         XCTAssertTrue(delegate.tagTuples[2].1)
+        
+        
+        //TODO: How to test if popover is closed?
         
     }
 
@@ -157,6 +160,28 @@ class TagFilterViewControllerTests: XCTestCase {
 //        XCTAssertNotNil(sut.webService)
 //    }
     
+    func testApplyFilter_ShouldBeAbleToUnselectASelectedItem(){
+        let delegate = MockTagFilterDelegate()
+        sut.tagFilterDelegate = delegate
+        let _ = sut.view //View Did Load
+        let path = IndexPath(row: 2, section: 0)
+        XCTAssertFalse(delegate.touched)
+        sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: path)
+        XCTAssertFalse(delegate.touched) //Stil false!
+        
+        XCTAssertFalse(delegate.tagTuples[2].1)
+        
+        sut.applyFilterAction("none")
+        XCTAssertTrue(delegate.touched)
+        
+        XCTAssertTrue(delegate.tagTuples[2].1)
+        
+        sut.tableView.delegate?.tableView!(sut.tableView, didDeselectRowAt: path) //This should deselect
+        sut.applyFilterAction("none")
+        XCTAssertFalse(delegate.tagTuples[2].1)
+        
+        
+    }
 }
 
 extension TagFilterViewControllerTests {

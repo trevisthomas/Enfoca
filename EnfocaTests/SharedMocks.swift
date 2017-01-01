@@ -44,7 +44,7 @@ class MockWebService : WebService {
         fetchWordPairTagFilter = tagFilter
         fetchWordPairWordStateFilter = wordStateFilter
         callback(wordPairs)
-        fetchWordPairCallCount += fetchWordPairCallCount
+        fetchWordPairCallCount += 1
     }
     
     var fetchCallCount : Int = 0
@@ -92,5 +92,13 @@ class MockWordPairTableView : UITableView {
     
     override var visibleCells: [UITableViewCell]{
         return visibleMockCells
+    }
+}
+
+class MockWordStateFilterDelegate : WordStateFilterDelegate {
+    var currentWordStateFilter: WordStateFilter = .all
+    var updatedCalled : Bool = false
+    func updated() {
+        updatedCalled = true
     }
 }

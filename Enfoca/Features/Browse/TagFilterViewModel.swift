@@ -30,6 +30,9 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-//        tagFilterDelegate.tagTuples![indexPath.row].1 = !tagFilterDelegate.tagTuples![indexPath.row].1
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

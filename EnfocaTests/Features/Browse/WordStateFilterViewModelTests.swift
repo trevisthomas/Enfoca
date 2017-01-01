@@ -16,7 +16,7 @@ class WordStateFilterViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         sut = WordStateFilterViewModel()
-        sut.delegate = MockDelegate()
+        sut.delegate = MockWordStateFilterDelegate()
     }
     
     override func tearDown() {
@@ -75,7 +75,7 @@ extension WordStateFilterViewModelTests {
         }
     }
     
-    class MockDelegate : WordStateFilterDelegate {
-        var currentWordStateFilter: WordStateFilter = .all
-    }
+//    class MockDelegate : WordStateFilterDelegate {
+//        var currentWordStateFilter: WordStateFilter = .all
+//    }
 }

@@ -63,12 +63,21 @@
                                             <action selector="reverseWordPairSegmentAction:" destination="jDD-bs-71Q" eventType="valueChanged" id="D4R-0Z-16E"/>
                                         </connections>
                                     </segmentedControl>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rnw-3e-3nj">
+                                        <rect key="frame" x="8" y="16" width="34" height="30"/>
+                                        <state key="normal" title="Back"/>
+                                        <connections>
+                                            <action selector="performBackButtonAction" destination="jDD-bs-71Q" eventType="touchUpInside" id="ReU-Pz-z7Z"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="BSH-3d-BYY" firstAttribute="centerY" secondItem="0RR-Za-2Lm" secondAttribute="centerY" id="5ca-pL-cbL"/>
                                     <constraint firstItem="BSH-3d-BYY" firstAttribute="centerX" secondItem="0RR-Za-2Lm" secondAttribute="centerX" id="SnF-ni-TPE"/>
                                     <constraint firstAttribute="height" constant="160" id="Vuk-yP-Ddg"/>
+                                    <constraint firstItem="rnw-3e-3nj" firstAttribute="leading" secondItem="0RR-Za-2Lm" secondAttribute="leading" constant="8" id="bXD-eU-2uf"/>
+                                    <constraint firstItem="rnw-3e-3nj" firstAttribute="top" secondItem="0RR-Za-2Lm" secondAttribute="top" constant="16" id="lMS-d4-2gm"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="104" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1L9-nB-MDd">
@@ -123,6 +132,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Blm-8b-SmH"/>
                     <connections>
+                        <outlet property="backButton" destination="rnw-3e-3nj" id="8Wh-HP-Xhf"/>
                         <outlet property="reverseWordPairSegmentedControl" destination="DAz-mb-g1w" id="rUg-1E-X8M"/>
                         <outlet property="tableView" destination="1L9-nB-MDd" id="yTX-ug-p9o"/>
                         <outlet property="tagFilterButton" destination="iNU-QU-6ez" id="HJz-KE-MwK"/>

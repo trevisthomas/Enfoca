@@ -11,14 +11,18 @@ import Foundation
 class DemoWebService : WebService {
     
     internal func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], callback: @escaping ([WordPair]) -> ()) {
-//        fetchWordPairTagFilter = 
+        
+        print("Dummy fetch called")
         let d = Date()
         var list : [WordPair] = []
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "English", definition: "Espanol", dateCreated: d))
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "Black", definition: "Negro", dateCreated: d))
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "Tall", definition: "Alta", dateCreated: d))
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "To Run", definition: "Correr", dateCreated: d))
-        
+        list.append(WordPair(creatorId: -1, pairId: "guid", word: "Clean", definition: "Limpo", dateCreated: d))
+        list.append(WordPair(creatorId: -1, pairId: "guid", word: "Fat", definition: "Gordo", dateCreated: d))
+        list.append(WordPair(creatorId: -1, pairId: "guid", word: "Gustar", definition: "To Please", dateCreated: d))
+        list.append(WordPair(creatorId: -1, pairId: "guid", word: "Llamar", definition: "To Call", dateCreated: d))
         callback(list)
         
     }

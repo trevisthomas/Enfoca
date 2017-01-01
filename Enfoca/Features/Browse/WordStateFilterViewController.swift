@@ -15,11 +15,16 @@ class WordStateFilterViewController: UIViewController, WordStateFilterDelegate {
         set {
             self.dismiss(animated: true, completion: { _ in
                 self.wordStateFilterDelegate.currentWordStateFilter = newValue
+                self.updated()
             })
         }
         get {
             return wordStateFilterDelegate.currentWordStateFilter
         }
+    }
+    
+    func updated() {
+        wordStateFilterDelegate.updated()
     }
     
     @IBOutlet weak var tableView: UITableView!

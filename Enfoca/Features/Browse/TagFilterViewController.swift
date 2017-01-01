@@ -37,6 +37,12 @@ class TagFilterViewController: UIViewController {
     }
     
     private func applyFilter(){
+        
+        let tuples = tagFilterDelegate.tagTuples
+        for index in (0..<tuples.count) {
+            tagFilterDelegate.tagTuples[index].1 = false
+        }
+        
         guard let selected = self.tableView.indexPathsForSelectedRows else {
             return
         }
@@ -56,6 +62,9 @@ class TagFilterViewController: UIViewController {
     
     @IBAction func applyFilterAction(_ sender: Any) {
         applyFilter()
+        
+        //TODO, learn how to test
+        self.dismiss(animated: true, completion: nil) //I dont know how to unit test this dismiss
     }
 
     /*

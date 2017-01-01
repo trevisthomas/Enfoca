@@ -61,7 +61,7 @@ class WordStateFilterViewControllerTests: XCTestCase {
         XCTAssertEqual(tableView.selectedIndexPath?.row, WordStateFilter.asArray().index(of: .active))
     }
     
-    func testInit_VerifyWordFilterDelegateClosesViewControler(){
+    func testInit_VerifyWordFilterDelegateClosesViewControlerAndUpdatesDelegate(){
         
         let mockVC = MockWordStateFilterViewController()
         
@@ -72,6 +72,7 @@ class WordStateFilterViewControllerTests: XCTestCase {
         mockVC.currentWordStateFilter = .inactive
         
         XCTAssertEqual(delegate.currentWordStateFilter, .inactive) //Asserting state changed
+        XCTAssertTrue(delegate.updatedCalled)
         
         XCTAssertTrue(mockVC.dismissed) // Asserting that VC was dismissed
         
@@ -98,9 +99,7 @@ class WordStateFilterViewControllerTests: XCTestCase {
 }
 
 extension WordStateFilterViewControllerTests {
-    class MockWordStateFilterDelegate : WordStateFilterDelegate {
-        var currentWordStateFilter: WordStateFilter = .all
-    }
+    
     
     class MockWordStateFilterViewController : WordStateFilterViewController {
         var dismissed = false

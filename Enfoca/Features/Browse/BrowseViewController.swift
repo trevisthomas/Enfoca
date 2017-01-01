@@ -13,7 +13,7 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: getSelectedFilterTags())
     }
 
-
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var wordStateFilterButton: UIButton!
     @IBOutlet weak var tagFilterButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -59,10 +59,11 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        currentWordStateFilter = appDefaultsDelegate.initialWordStateFilter() //Setting this before the webservice so that update doesnt get called twice.
         viewModel = tableView.delegate as! BrowseViewModel
         viewModel.webService = webService
         
-        currentWordStateFilter = appDefaultsDelegate.initialWordStateFilter()
+        
         
         if let enfocaId = authenticateionDelegate.currentUser()?.enfocaId {
             self.webService.fetchUserTags(enfocaId: enfocaId) {
@@ -75,8 +76,8 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         }
         
         viewModel.reverseWordPair = appDefaultsDelegate.reverseWordPair()
-        viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: getSelectedFilterTags())
         reverseWordPairSegmentedControl.selectedSegmentIndex = reverseWordPair ? 1 : 0
+        updated()
     }
     
     private func getSelectedFilterTags() -> [Tag] {
@@ -115,6 +116,10 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         
         applyWordPairOrder()
         
+    }
+    
+    @IBAction func performBackButtonAction(){
+//        navigationController?.popViewController(animated: true)
     }
 
     // MARK: - Navigation

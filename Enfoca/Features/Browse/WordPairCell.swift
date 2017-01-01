@@ -21,6 +21,15 @@ class WordPairCell: UITableViewCell {
         }
     }
     var reverseWordPair : Bool!
+//        {
+//        didSet{
+//            if reverseWordPair == true {
+//                backgroundColor = UIColor.green
+//            } else {
+//                backgroundColor = UIColor.white
+//            }
+//        }
+//    }
     
     @IBOutlet weak var definitionLabel: UILabel!
     @IBOutlet weak var wordLabel: UILabel!

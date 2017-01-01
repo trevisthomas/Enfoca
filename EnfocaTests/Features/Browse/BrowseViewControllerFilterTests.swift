@@ -48,6 +48,8 @@ class BrowseViewControllerFilterTests: XCTestCase {
         let vc = storyboard.instantiateViewController(withIdentifier: "BrowseVC") as! BrowseViewController
         XCTAssertNotNil(vc.authenticateionDelegate)
         XCTAssertNotNil(vc.webService)
+        
+        
     }
     
     func testInit_ShouldBeWiredAndReady(){
@@ -55,8 +57,18 @@ class BrowseViewControllerFilterTests: XCTestCase {
         
         XCTAssertNotNil(sut.wordStateFilterButton)
         XCTAssertNotNil(sut.tagFilterButton)
+        XCTAssertNotNil(sut.backButton)
     }
     
+    func backButton_ShouldCallInvisibleNavigationController(){
+        let _ = sut.view
+        
+        let origCount = sut.navigationController?.viewControllers.count
+        
+        sut.backButton.sendActions(for: .touchUpInside)
+        
+        XCTAssertTrue((sut.navigationController?.viewControllers.count)! < origCount!)
+    }
     
     func testInit_StateFilterButtonTextShouldMatchEnumRaw() {
         let defaults = MockDefaults(defaultWordStateFilter: .active)
@@ -114,6 +126,7 @@ class BrowseViewControllerFilterTests: XCTestCase {
         XCTAssertEqual(sut.wordStateFilterButton.bounds, popover.sourceRect)
         
     }
+    
     
     func testPopoverDelegate_ShouldAlwaysReturnsNone(){
         //Enforces popover style on device
@@ -198,30 +211,65 @@ class BrowseViewControllerFilterTests: XCTestCase {
         
     }
     
-//    func testTagFilterDelegate_ShouldUpdateFromWebService(){
-//        sut.updated()
-//        let webService = sut.webService
-//        XCTAssertTrue(webService.wordPairFetched)
-//        
-//        //TODO verify filters
-//    }
-//    
-   
+    func testTagFilterDelegate_ShouldUpdateFromWebService(){
+        
+        
+        let origStateFilter : WordStateFilter = .active
+        let defaults = MockDefaults(defaultWordStateFilter: origStateFilter)
+        sut.appDefaultsDelegate = defaults
+        
+        
+        _ = sut.view
+        
+        let webService = sut.webService as! MockWebService
+        
+        XCTAssertEqual(webService.fetchWordPairCallCount, 1)
+        sut.updated()
+        XCTAssertEqual(webService.fetchWordPairCallCount, 2)
+        
+        
+        
+        XCTAssertEqual(sut.currentWordStateFilter, origStateFilter) //Just verifying that we're in a known start state
+        XCTAssertEqual(webService.fetchWordPairWordStateFilter, origStateFilter)
+        sut.currentWordStateFilter = origStateFilter //No change.
+        XCTAssertEqual(webService.fetchWordPairCallCount, 2) //Confirm no service call
+        sut.currentWordStateFilter = .inactive //A change
+        sut.updated()
+        XCTAssertEqual(webService.fetchWordPairCallCount, 3)
+        XCTAssertEqual(webService.fetchWordPairWordStateFilter, .inactive)
+    }
+    
+    
+    func testTagFilter_UpdateShouldCallWebServiceWithFilter(){
+        
+        let storyboard = UIStoryboard(name: "Browse", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "BrowseVC") as! BrowseViewController
+        let webservice = MockWebService()
+        
+        vc.authenticateionDelegate = authDelegate
+        vc.webService = webservice
+        
+        webservice.tags = makeTags()
+        
+        //To force view did load to be called
+        _ = vc.view
+        
+        XCTAssertEqual(webservice.fetchCallCount, 1)
+        XCTAssertEqual(webservice.fetchUserId, currentUser.enfocaId)
+        
+        
+        
+        let testTag = vc.tagTuples[1].0 //Grab a tag to test
+        vc.tagTuples[1].1 = true //Turn on the filter for this tag
+        
+        vc.updated() //Notify the VC that it should refresh
+        
+        XCTAssertEqual(webservice.fetchWordPairTagFilter!, [testTag]) //Assert that the testTag was passed to the service
+        
+        XCTAssertEqual(webservice.fetchWordPairCallCount, 2)
+        
+        vc.updated() //Notify the VC that it should refresh
+        
+    }
 }
 
-
-
-//extension BrowseViewControllerFilterTests {
-////    class MockWebService : WebService {
-////        var fetchCallCount : Int = 0
-////        var tags : [Tag] = []
-////        var fetchUserId : Int?
-////        
-////        func fetchUserTags(enfocaId : Int, callback : @escaping([Tag])->()){
-////            fetchCallCount += 1
-////            fetchUserId = enfocaId
-////            
-////            callback(tags)
-////        }
-////    }
-//}
