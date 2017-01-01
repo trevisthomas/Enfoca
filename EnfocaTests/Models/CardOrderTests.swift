@@ -31,7 +31,6 @@ class CardOrderTests: XCTestCase {
         XCTAssertEqual(CardOrder.latestAdded.rawValue, "Most Reciently Added")
         XCTAssertEqual(CardOrder.random.rawValue, "Random")
         XCTAssertEqual(CardOrder.leastRecientlyStudied.rawValue, "Least Reciently Studied")
-        
     }
     
 }

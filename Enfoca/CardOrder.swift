@@ -8,6 +8,7 @@
 
 import Foundation
 
+//For quizes
 enum CardOrder : String {
     case hardest = "Hardest"
     case slowest = "Slowest to answer"

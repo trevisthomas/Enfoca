@@ -24,8 +24,8 @@ class BrowseViewModel : NSObject, UITableViewDelegate, UITableViewDataSource{
         return wordPairs.count
     }
 
-    func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag]) {
-        webService.fetchWordPairs(wordStateFilter: wordStateFilter, tagFilter: tagFilter, callback: {
+    func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder order : WordPairOrder) {
+        webService.fetchWordPairs(wordStateFilter: wordStateFilter, tagFilter: tagFilter, wordPairOrder: order, callback: {
             newWordPairs in
             self.wordPairs = newWordPairs
         })

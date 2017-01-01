@@ -161,6 +161,22 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         viewDidLoad()
         
         XCTAssertTrue(sut.viewModel.reverseWordPair)
+        XCTAssertEqual(mockWebService.fetchWordPairOrder!, .definitionAsc)
+    }
+    
+    func testAppDefaults_ViewModelShouldReflectNormalWordPairSetting(){
+        overrideWithMocks()
+        
+        let mockDefaults = MockDefaults()
+        
+        mockDefaults.reverse = false
+        sut.appDefaultsDelegate = mockDefaults
+        
+        viewDidLoad()
+        
+        XCTAssertFalse(sut.viewModel.reverseWordPair)
+        
+        XCTAssertEqual(mockWebService.fetchWordPairOrder!, .wordAsc)
     }
     
     func testAppDefaults_ViewModelShouldReflectReverseWordPairSettingWhenFalse(){

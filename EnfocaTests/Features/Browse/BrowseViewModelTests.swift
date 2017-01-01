@@ -30,7 +30,7 @@ class BrowseViewModelTests: XCTestCase {
         var tags : [Tag] = []
         tags.append(Tag(ownerId: -1, tagId: "guid100", name: "Noun"))
         
-        sut.fetchWordPairs(wordStateFilter: .all, tagFilter: tags)
+        sut.fetchWordPairs(wordStateFilter: .all, tagFilter: tags, wordPairOrder: .wordAsc)
         
         XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), mockService.wordPairs.count)
     }
@@ -41,7 +41,7 @@ class BrowseViewModelTests: XCTestCase {
         sut.webService = mockService
         let tableView = MockWordPairTableView()
         
-        sut.fetchWordPairs(wordStateFilter: .all, tagFilter: [])
+        sut.fetchWordPairs(wordStateFilter: .all, tagFilter: [], wordPairOrder: .wordAsc)
         
         sut.reverseWordPair = true
 

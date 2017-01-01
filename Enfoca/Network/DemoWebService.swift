@@ -10,7 +10,7 @@ import Foundation
 
 class DemoWebService : WebService {
     
-    internal func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], callback: @escaping ([WordPair]) -> ()) {
+    internal func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder: WordPairOrder, callback: @escaping ([WordPair]) -> ()) {
         
         print("Dummy fetch called")
         let d = Date()

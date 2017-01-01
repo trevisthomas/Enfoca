@@ -42,13 +42,15 @@ class BrowseViewControllerFilterTests: XCTestCase {
     }
     
     func testInit_ShouldHaveAuthDelegateAndWebService() {
-        _ = sut.view
+//        _ = sut.view
         
         let storyboard = UIStoryboard(name: "Browse", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "BrowseVC") as! BrowseViewController
+        
+        _ = vc.view
         XCTAssertNotNil(vc.authenticateionDelegate)
         XCTAssertNotNil(vc.webService)
-        
+        XCTAssertNotNil(vc.wordPairOrder)
         
     }
     
@@ -60,14 +62,28 @@ class BrowseViewControllerFilterTests: XCTestCase {
         XCTAssertNotNil(sut.backButton)
     }
     
-    func backButton_ShouldCallInvisibleNavigationController(){
+    
+    func testBackButton_ShouldCallInvisibleNavigationController(){
+        
+        class MockNav : UINavigationController {
+            var popped : Bool = false
+            override func popViewController(animated: Bool) -> UIViewController? {
+                popped = true
+                return super.popViewController(animated: animated)
+            }
+        }
+        
+        let nav = MockNav()
+        
+        nav.pushViewController(sut, animated: false)
+        
+        let _ = nav.view
         let _ = sut.view
         
-        let origCount = sut.navigationController?.viewControllers.count
         
         sut.backButton.sendActions(for: .touchUpInside)
         
-        XCTAssertTrue((sut.navigationController?.viewControllers.count)! < origCount!)
+        XCTAssertTrue(nav.popped)
     }
     
     func testInit_StateFilterButtonTextShouldMatchEnumRaw() {

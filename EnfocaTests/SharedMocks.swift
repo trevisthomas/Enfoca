@@ -39,12 +39,14 @@ class MockWebService : WebService {
     var fetchWordPairWordStateFilter : WordStateFilter?
     var fetchWordPairCallCount : Int = 0
     var wordPairs : [WordPair] = []
+    var fetchWordPairOrder : WordPairOrder?
     
-    func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], callback: @escaping ([WordPair]) -> ()) {
+    func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder : WordPairOrder, callback: @escaping ([WordPair]) -> ()) {
         fetchWordPairTagFilter = tagFilter
         fetchWordPairWordStateFilter = wordStateFilter
         callback(wordPairs)
         fetchWordPairCallCount += 1
+        fetchWordPairOrder = wordPairOrder
     }
     
     var fetchCallCount : Int = 0

@@ -10,7 +10,7 @@ import UIKit
 
 class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilterDelegate {
     internal func updated() {
-        viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: getSelectedFilterTags())
+        viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: getSelectedFilterTags(),wordPairOrder : wordPairOrder)
     }
 
     @IBOutlet weak var backButton: UIButton!
@@ -18,6 +18,7 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
     @IBOutlet weak var tagFilterButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var reverseWordPairSegmentedControl: UISegmentedControl!
+    
     
     var currentWordStateFilter: WordStateFilter = .all {
         didSet{
@@ -30,6 +31,7 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
     var tagTuples : [(Tag, Bool)] = []
     var webService : WebService!
     var viewModel : BrowseViewModel!
+    var wordPairOrder : WordPairOrder!
     
     var reverseWordPair : Bool {
         get{
@@ -37,6 +39,11 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         }
         set {
             viewModel.reverseWordPair = newValue
+            if(viewModel.reverseWordPair == true) {
+                self.wordPairOrder = .definitionAsc
+            } else {
+                self.wordPairOrder = .wordAsc
+            }
         }
     }
     
@@ -75,7 +82,8 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
             }
         }
         
-        viewModel.reverseWordPair = appDefaultsDelegate.reverseWordPair()
+        reverseWordPair = appDefaultsDelegate.reverseWordPair()
+        viewModel.reverseWordPair = reverseWordPair
         reverseWordPairSegmentedControl.selectedSegmentIndex = reverseWordPair ? 1 : 0
         updated()
     }
@@ -118,12 +126,12 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         
     }
     
+    //NOT UNIT TESTED!
     @IBAction func performBackButtonAction(){
-//        navigationController?.popViewController(animated: true)
+        _ = navigationController?.popViewController(animated: true)
     }
-
+    
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let button = sender as? UIButton else{
