@@ -102,7 +102,7 @@ class TagFilterViewModelTests: XCTestCase {
 extension TagFilterViewModelTests {
     class MockTagFilterDelegate : TagFilterDelegate{
         var tagTuples : [(Tag, Bool)] = []
-        func updated() {
+        func updated(_ callback : (() -> ())? = nil) {
             //noop
         }
     }

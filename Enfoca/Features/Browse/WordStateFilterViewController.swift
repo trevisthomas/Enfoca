@@ -23,8 +23,8 @@ class WordStateFilterViewController: UIViewController, WordStateFilterDelegate {
         }
     }
     
-    func updated() {
-        wordStateFilterDelegate.updated()
+    func updated(_ callback : (() -> ())? = nil) {
+        wordStateFilterDelegate.updated(callback)
     }
     
     @IBOutlet weak var tableView: UITableView!

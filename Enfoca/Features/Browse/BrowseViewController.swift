@@ -9,8 +9,18 @@
 import UIKit
 
 class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilterDelegate {
-    internal func updated() {
-        viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: getSelectedFilterTags(),wordPairOrder : wordPairOrder)
+    func updated(_ callback: (() -> ())? = nil) {
+        
+        let wordPairOrder : WordPairOrder = (viewModel.reverseWordPair == true) ? .definitionAsc : .wordAsc
+        
+        viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: getSelectedFilterTags(),wordPairOrder : wordPairOrder, callback: {
+            //My assumption here is that if you give me a callback, that you will reload the table manually
+            if let callback = callback {
+                callback()
+            } else {
+                self.tableView.reloadData()
+            }
+        })
     }
 
     @IBOutlet weak var backButton: UIButton!
@@ -19,19 +29,18 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var reverseWordPairSegmentedControl: UISegmentedControl!
     
-    
-    var currentWordStateFilter: WordStateFilter = .all {
-        didSet{
-            wordStateFilterButton.setTitle(currentWordStateFilter.rawValue, for: .normal)
-        }
-    }
-    
+   
     var appDefaultsDelegate : ApplicationDefaults!
     var authenticateionDelegate : AuthenticationDelegate!
     var tagTuples : [(Tag, Bool)] = []
     var webService : WebService!
     var viewModel : BrowseViewModel!
-    var wordPairOrder : WordPairOrder!
+   
+    var currentWordStateFilter: WordStateFilter = .all {
+        didSet{
+            wordStateFilterButton.setTitle(currentWordStateFilter.rawValue, for: .normal)
+        }
+    }
     
     var reverseWordPair : Bool {
         get{
@@ -39,11 +48,6 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         }
         set {
             viewModel.reverseWordPair = newValue
-            if(viewModel.reverseWordPair == true) {
-                self.wordPairOrder = .definitionAsc
-            } else {
-                self.wordPairOrder = .wordAsc
-            }
         }
     }
     
@@ -111,8 +115,6 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         performSegue(withIdentifier: "TagFilterSegue", sender: sender)
     }
     @IBAction func reverseWordPairSegmentAction(_ sender: UISegmentedControl) {
-//        reverseWordPairSegmentedControl.selectedSegmentIndex = reverseWordPair ? 1 : 0
-        
         switch (sender.selectedSegmentIndex){
             case 0:
                     reverseWordPair = false
@@ -122,8 +124,10 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
                 fatalError()
         }
         
-        applyWordPairOrder()
-        
+        updated({
+            self.applyWordPairOrder()
+            self.tableView.reloadData()
+        })
     }
     
     //NOT UNIT TESTED!

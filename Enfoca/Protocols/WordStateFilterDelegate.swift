@@ -10,5 +10,5 @@ import Foundation
 
 protocol WordStateFilterDelegate {
     var currentWordStateFilter : WordStateFilter {get set}
-    func updated()
+    func updated(_ callback: (() -> ())?)
 }

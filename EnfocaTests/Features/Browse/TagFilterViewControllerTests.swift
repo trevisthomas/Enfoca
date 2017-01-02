@@ -197,7 +197,7 @@ extension TagFilterViewControllerTests {
         }
         var tagTuples : [(Tag, Bool)] = []
         
-        func updated(){
+        func updated(_ callback : (() -> ())? = nil){
             touched = true
         }
     }

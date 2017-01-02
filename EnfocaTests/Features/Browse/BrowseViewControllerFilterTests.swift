@@ -50,7 +50,6 @@ class BrowseViewControllerFilterTests: XCTestCase {
         _ = vc.view
         XCTAssertNotNil(vc.authenticateionDelegate)
         XCTAssertNotNil(vc.webService)
-        XCTAssertNotNil(vc.wordPairOrder)
         
     }
     

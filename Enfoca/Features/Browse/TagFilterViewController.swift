@@ -57,7 +57,7 @@ class TagFilterViewController: UIViewController {
              tagFilterDelegate.tagTuples[value].1 = true
         }
         
-        tagFilterDelegate.updated()
+        tagFilterDelegate.updated(nil)
     }
     
     @IBAction func applyFilterAction(_ sender: Any) {

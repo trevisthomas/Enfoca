@@ -24,10 +24,13 @@ class BrowseViewModel : NSObject, UITableViewDelegate, UITableViewDataSource{
         return wordPairs.count
     }
 
-    func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder order : WordPairOrder) {
+    func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder order : WordPairOrder, callback completionHandler : (() -> ())? = nil ) {
         webService.fetchWordPairs(wordStateFilter: wordStateFilter, tagFilter: tagFilter, wordPairOrder: order, callback: {
             newWordPairs in
             self.wordPairs = newWordPairs
+            if let completionHandler = completionHandler {
+                completionHandler()
+            }
         })
     }
 }

@@ -204,6 +204,7 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         XCTAssertEqual(sut.reverseWordPairSegmentedControl.selectedSegmentIndex, 1)
     }
     
+    
     func testTableView_TogglingReverseShouldNotifyVisibleCells(){
         overrideWithMocks()
 
@@ -216,9 +217,8 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         tableView.dataSource = sut.viewModel
         sut.tableView = tableView
  
-        //Manually setting the segment, and calling the action.  Shrug.  Made sense to me at the time.
         sut.reverseWordPairSegmentedControl.selectedSegmentIndex = 1
-        sut.reverseWordPairSegmentAction(sut.reverseWordPairSegmentedControl)
+        sut.reverseWordPairSegmentedControl.sendActions(for: .valueChanged)
         
         let cell = sut.tableView.dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as! WordPairCell
         
@@ -230,13 +230,84 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         XCTAssertTrue(sut.reverseWordPair)
         
         sut.reverseWordPairSegmentedControl.selectedSegmentIndex = 0
-        sut.reverseWordPairSegmentAction(sut.reverseWordPairSegmentedControl)
+        sut.reverseWordPairSegmentedControl.sendActions(for: .valueChanged)
         
         XCTAssertFalse(sut.reverseWordPair)
         XCTAssertFalse(sut.viewModel.reverseWordPair)
         
         XCTAssertFalse(cell.reverseWordPair)
         
+    }
+    
+    func testTableView_TogglingReverseShouldReloadData(){
+        overrideWithMocks()
+        
+        mockWebService.wordPairs = makeWordPairs()
+        
+        viewDidLoad()
+        
+        //Real tables dont say that their cells are visible because they have been dequeued.  This might be a problem but i'm going to make this test work this way (with this hacked TabieView) and see what happens in the real thing.
+        let tableView = MockWordPairTableView()
+        tableView.dataSource = sut.viewModel
+        sut.tableView = tableView
+        
+        sut.reverseWordPairSegmentedControl.selectedSegmentIndex = 1
+        sut.reverseWordPairSegmentedControl.sendActions(for: .valueChanged)
+        
+        let cell = sut.tableView.dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as! WordPairCell
+        
+        XCTAssertTrue(cell.reverseWordPair)
+        
+        //I'm buildint this test based on the assumption that calling cellForRow means that the cell is visible.  I am trying to verify that visible cells are notified when the order changes
+        
+        XCTAssertTrue(sut.viewModel.reverseWordPair)
+        XCTAssertTrue(sut.reverseWordPair)
+        
+        XCTAssertTrue(tableView.dataReloaded)
+        
+    }
+    
+    func testTableView_ShouldNotReloadDataWhenCallbackPresent(){
+//        (() -> ())? = nil
+        
+        overrideWithMocks()
+        
+        mockWebService.wordPairs = makeWordPairs()
+        
+        viewDidLoad()
+        
+        //Real tables dont say that their cells are visible because they have been dequeued.  This might be a problem but i'm going to make this test work this way (with this hacked TabieView) and see what happens in the real thing.
+        let tableView = MockWordPairTableView()
+        tableView.dataSource = sut.viewModel
+        sut.tableView = tableView
+        
+        var callbackCalled : Bool = false
+        sut.updated({
+            callbackCalled = true
+        })
+        
+        XCTAssertTrue(callbackCalled)
+        XCTAssertFalse(tableView.dataReloaded)
+    }
+    
+    func testTableView_ShouldReloadDataWhenNoCallbackIsPassed(){
+        //        (() -> ())? = nil
+        
+        overrideWithMocks()
+        
+        mockWebService.wordPairs = makeWordPairs()
+        
+        viewDidLoad()
+        
+        //Real tables dont say that their cells are visible because they have been dequeued.  This might be a problem but i'm going to make this test work this way (with this hacked TabieView) and see what happens in the real thing.
+        let tableView = MockWordPairTableView()
+        tableView.dataSource = sut.viewModel
+        sut.tableView = tableView
+        
+        sut.updated()
+        
+        
+        XCTAssertTrue(tableView.dataReloaded)
     }
     
     

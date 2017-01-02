@@ -10,10 +10,14 @@ import XCTest
 @testable import Enfoca
 class BrowseViewModelTests: XCTestCase {
     var sut : BrowseViewModel!
-    
+    var mockService: MockWebService!
     override func setUp() {
         super.setUp()
         sut = BrowseViewModel()
+        
+        mockService = MockWebService()
+        mockService.wordPairs = makeWordPairs()
+        sut.webService = mockService
     }
     
     override func tearDown() {
@@ -22,9 +26,9 @@ class BrowseViewModelTests: XCTestCase {
     }
 
     func testWebService_FetchShouldFetchDataFromService(){
-        let mockService = MockWebService()
-        mockService.wordPairs = makeWordPairs()
-        sut.webService = mockService
+//        let mockService = MockWebService()
+//        mockService.wordPairs = makeWordPairs()
+//        sut.webService = mockService
         let tableView = UITableView()
         
         var tags : [Tag] = []
@@ -36,9 +40,9 @@ class BrowseViewModelTests: XCTestCase {
     }
     
     func testTableView_ShouldCreatePopulatedCell(){
-        let mockService = MockWebService()
-        mockService.wordPairs = makeWordPairs()
-        sut.webService = mockService
+//        let mockService = MockWebService()
+//        mockService.wordPairs = makeWordPairs()
+//        sut.webService = mockService
         let tableView = MockWordPairTableView()
         
         sut.fetchWordPairs(wordStateFilter: .all, tagFilter: [], wordPairOrder: .wordAsc)
@@ -56,6 +60,17 @@ class BrowseViewModelTests: XCTestCase {
         XCTAssertEqual(cell.wordPair.definition, wp.definition)
         XCTAssertEqual(cell.wordPair.word, wp.word)
         XCTAssertTrue(cell.reverseWordPair)
+    }
+    
+    func testWebService_CallbackShouldNotifyCallerUponComplete(){
+        var callbackCalled = false
+        sut.fetchWordPairs(wordStateFilter: .all, tagFilter: [], wordPairOrder: .wordAsc, callback: {
+            callbackCalled = true
+        })
+        
+        XCTAssertTrue(callbackCalled)
+        
+        
     }
     
 //    func testTableView_TogglingReverseShouldNotifyVisibleCells(){

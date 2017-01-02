@@ -10,5 +10,5 @@ import Foundation
 
 protocol TagFilterDelegate {
     var tagTuples : [(Tag, Bool)] {get set}
-    func updated()
+    func updated(_ callback: (() -> ())?)
 }

@@ -83,6 +83,8 @@ class MockWordPairTableView : UITableView {
     var identifier : String!
     var visibleMockCells : [UITableViewCell] = []
     
+    var dataReloaded : Bool = false
+    
     //WARNING! This is not the way these work.  dequing does not make a cell visible
     override func dequeueReusableCell(withIdentifier identifier: String) -> UITableViewCell? {
         self.identifier = identifier
@@ -95,12 +97,17 @@ class MockWordPairTableView : UITableView {
     override var visibleCells: [UITableViewCell]{
         return visibleMockCells
     }
+    
+    override func reloadData() {
+        super.reloadData()
+        dataReloaded = true
+    }
 }
 
 class MockWordStateFilterDelegate : WordStateFilterDelegate {
     var currentWordStateFilter: WordStateFilter = .all
     var updatedCalled : Bool = false
-    func updated() {
+    func updated(_ callback: (() -> ())? = nil) {
         updatedCalled = true
     }
 }
