@@ -10,6 +10,20 @@ import UIKit
 
 class WordPairCell: UITableViewCell {
 
+    @IBOutlet weak var wordLabelConstraint: NSLayoutConstraint! {
+        didSet{
+            origWordConstant = wordLabelConstraint.constant
+        }
+    }
+    @IBOutlet weak var definitionLabelConstraint: NSLayoutConstraint! {
+        didSet{
+            origDefinitionConstant = definitionLabelConstraint.constant
+        }
+    }
+    
+    var origWordConstant : CGFloat!
+    var origDefinitionConstant : CGFloat!
+    
     var wordPair : WordPair! {
         didSet{
             //For some of my unit test these arent wired up.
@@ -30,20 +44,31 @@ class WordPairCell: UITableViewCell {
         }
     }
     var reverseWordPair : Bool!
-//        {
-//        didSet{
-//            if reverseWordPair == true {
-//                backgroundColor = UIColor.green
-//            } else {
-//                backgroundColor = UIColor.white
-//            }
-//        }
-//    }
     
     @IBOutlet weak var definitionLabel: UILabel!
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var activeSwitch: UISwitch!
     @IBOutlet weak var tagLabel: UILabel!
+
+    func animate(){
+        guard let _ = wordLabelConstraint else {
+            return //Some unit tests call this before we're wired
+        }
+        
+        self.contentView.layoutIfNeeded()
+        if self.reverseWordPair == true {
+            self.definitionLabelConstraint.constant = self.origWordConstant
+            self.wordLabelConstraint.constant = self.origDefinitionConstant
+        } else {
+            self.definitionLabelConstraint.constant = self.origDefinitionConstant
+            self.wordLabelConstraint.constant = self.origWordConstant
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 0.2, options: [.curveEaseInOut], animations: {
+            self.contentView.layoutIfNeeded()
+        }, completion: nil)
+
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

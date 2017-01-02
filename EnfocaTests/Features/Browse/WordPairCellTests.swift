@@ -101,4 +101,21 @@ class WordPairCellTests: XCTestCase {
         
     }
     
+    func testInit_ConstraintsShouldBeWired(){
+        overrideWithMocks()
+        
+        mockWebService.wordPairs = makeWordPairs()
+        
+        viewDidLoad()
+        
+        let cell = sut.viewModel.tableView(sut.tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as! WordPairCell
+        
+        XCTAssertNotNil(cell.definitionLabelConstraint)
+        XCTAssertNotNil(cell.wordLabelConstraint)
+        
+        XCTAssertNotNil(cell.origWordConstant)
+        XCTAssertNotNil(cell.definitionLabelConstraint)
+    }
+    
 }
+

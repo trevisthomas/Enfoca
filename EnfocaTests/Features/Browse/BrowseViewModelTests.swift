@@ -26,9 +26,6 @@ class BrowseViewModelTests: XCTestCase {
     }
 
     func testWebService_FetchShouldFetchDataFromService(){
-//        let mockService = MockWebService()
-//        mockService.wordPairs = makeWordPairs()
-//        sut.webService = mockService
         let tableView = UITableView()
         
         var tags : [Tag] = []
@@ -40,9 +37,6 @@ class BrowseViewModelTests: XCTestCase {
     }
     
     func testTableView_ShouldCreatePopulatedCell(){
-//        let mockService = MockWebService()
-//        mockService.wordPairs = makeWordPairs()
-//        sut.webService = mockService
         let tableView = MockWordPairTableView()
         
         sut.fetchWordPairs(wordStateFilter: .all, tagFilter: [], wordPairOrder: .wordAsc)
@@ -73,32 +67,25 @@ class BrowseViewModelTests: XCTestCase {
         
     }
     
-//    func testTableView_TogglingReverseShouldNotifyVisibleCells(){
-//        let mockService = MockWebService()
-//        mockService.wordPairs = makeWordPairs()
-//        sut.webService = mockService
-//        let tableView = MockTableView()
-//        
-//        sut.fetchWordPairs(wordStateFilter: .all, tagFilter: [])
-//        
-//        sut.reverseWordPair = false
-//        
-//        let wp = mockService.wordPairs[1]
-//        
-//        let cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as! WordPairCell
-//        
-//        XCTAssertFalse(cell.reverseWordPair) //Asserting initial state
-//        
-//        sut.reverseWordPair = true
-//        
-//        XCTAssertFalse(cell.reverseWordPair) //Asserting initial state
-//    }
-    
-    
+    func testTableView_AnimateShouldBeCalledOnCell(){
+        
+        let tableView = MockWordPairTableView()
+        
+        sut.fetchWordPairs(wordStateFilter: .all, tagFilter: [], wordPairOrder: .wordAsc)
+        
+        sut.reverseWordPair = true
+        
+        let wp = mockService.wordPairs[1]
+        
+        guard let cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as? MockWordPairCell else {
+            XCTFail("Cell is not the expected type")
+            fatalError()
+        }
+        
+        XCTAssertEqual(cell.animateCallCount, 1) //Confirm that dequing calls animate.
+        XCTAssertEqual(cell.wordPair.definition, wp.definition)
+        XCTAssertEqual(cell.wordPair.word, wp.word)
+        XCTAssertTrue(cell.reverseWordPair)
+    }
 }
 
-extension BrowseViewModelTests {
-    
-    
-   
-}

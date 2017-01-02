@@ -28,10 +28,12 @@ class DemoWebService : WebService {
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "To Run", definition: "Correr", dateCreated: d))
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "Clean", definition: "Limpo", dateCreated: d))
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "Fat", definition: "Gordo", dateCreated: d))
-        list.append(WordPair(creatorId: -1, pairId: "guid", word: "Gustar", definition: "To Please", dateCreated: d))
-        list.append(WordPair(creatorId: -1, pairId: "guid", word: "Llamar", definition: "To Call", dateCreated: d))
+        list.append(WordPair(creatorId: -1, pairId: "guid", word: "To Please", definition: "Gustar", dateCreated: d))
+        list.append(WordPair(creatorId: -1, pairId: "guid", word: "To Call", definition: "Llamar", dateCreated: d))
         
-        
+        if(wordPairOrder == .definitionAsc){
+            list.reverse()
+        }
         
         callback(list)
         

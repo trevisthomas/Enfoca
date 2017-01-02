@@ -17,6 +17,9 @@ class BrowseViewModel : NSObject, UITableViewDelegate, UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "WordPairCell") as! WordPairCell
         cell.wordPair = wordPairs[indexPath.row]
         cell.reverseWordPair = reverseWordPair
+        
+        cell.animate()
+        
         return cell
     }
 

@@ -88,7 +88,7 @@ class MockWordPairTableView : UITableView {
     //WARNING! This is not the way these work.  dequing does not make a cell visible
     override func dequeueReusableCell(withIdentifier identifier: String) -> UITableViewCell? {
         self.identifier = identifier
-        let c = WordPairCell()
+        let c = MockWordPairCell()
         visibleMockCells.append(c)
         return c
         
@@ -101,6 +101,13 @@ class MockWordPairTableView : UITableView {
     override func reloadData() {
         super.reloadData()
         dataReloaded = true
+    }
+}
+
+class MockWordPairCell : WordPairCell {
+    var animateCallCount = 0
+    override func animate(){
+        animateCallCount += 1
     }
 }
 
