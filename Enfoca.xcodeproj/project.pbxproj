@@ -370,7 +370,7 @@
 				0F5ADFB31E107CDD003B1225 /* Info.plist */,
 				0F38A4DF1E11B94A00051F9E /* SharedMocks.swift */,
 				0F4D8A521E13ED9A00900729 /* ToolsForTesting.swift */,
-				0FB1C6671E154F650087DC93 /* Sequence+Tests.swift */,
+				0FAA96201E1AB79100078365 /* Shared */,
 			);
 			path = EnfocaTests;
 			sourceTree = "<group>";
@@ -383,6 +383,22 @@
 				0F864E821E17F93F00539773 /* ApplicationDefaults.swift */,
 			);
 			name = Core;
+			sourceTree = "<group>";
+		};
+		0FAA96201E1AB79100078365 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				0FAA96211E1AB7A000078365 /* Extensions */,
+			);
+			name = Shared;
+			sourceTree = "<group>";
+		};
+		0FAA96211E1AB7A000078365 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0FB1C6671E154F650087DC93 /* Sequence+Tests.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		0FB1C6521E14038E0087DC93 /* Utilities */ = {

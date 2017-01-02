@@ -18,6 +18,15 @@ class WordPairCell: UITableViewCell {
             }
             wordLabel.text = wordPair.word
             definitionLabel.text = wordPair.definition
+            if wordPair.tags.isEmpty {
+                tagLabel.isHidden = true
+                tagLabel.text = nil
+            } else {
+                tagLabel.isHidden = false
+                tagLabel.text = "Tags: \(wordPair.tags.tagsToText())"
+            }
+            
+            activeSwitch.isOn = wordPair.active
         }
     }
     var reverseWordPair : Bool!
@@ -33,6 +42,8 @@ class WordPairCell: UITableViewCell {
     
     @IBOutlet weak var definitionLabel: UILabel!
     @IBOutlet weak var wordLabel: UILabel!
+    @IBOutlet weak var activeSwitch: UISwitch!
+    @IBOutlet weak var tagLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

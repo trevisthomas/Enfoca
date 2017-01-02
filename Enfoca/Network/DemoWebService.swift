@@ -15,16 +15,34 @@ class DemoWebService : WebService {
         print("Dummy fetch called")
         let d = Date()
         var list : [WordPair] = []
+        list.append(makeWordPairWithTag(word: "blacksmith", definition: "herrero", tagNames: ["Noun"]))
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "English", definition: "Espanol", dateCreated: d))
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "Black", definition: "Negro", dateCreated: d))
+        list.append(makeWordPairWithTag(word: "Party", definition: "Fiesta", tagNames: ["Noun"]))
+        list.append(makeWordPairWithTag(word: "to forge", definition: "forjar", tagNames: ["Verb", "Ferrg, El Dragon"]))
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "Tall", definition: "Alta", dateCreated: d))
+        
+        
+        list.append(makeWordPairWithTag(word: "i got to speak with him", definition: "yo conseguí hablar con el", tagNames: ["Phrase", "Ferrg, El Dragon"]))
+        
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "To Run", definition: "Correr", dateCreated: d))
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "Clean", definition: "Limpo", dateCreated: d))
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "Fat", definition: "Gordo", dateCreated: d))
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "Gustar", definition: "To Please", dateCreated: d))
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "Llamar", definition: "To Call", dateCreated: d))
+        
+        
+        
         callback(list)
         
+    }
+    
+    private func makeWordPairWithTag(word: String, definition: String, tagNames : [String]) -> WordPair{
+        var wp = WordPair(creatorId: -1, pairId: "1-0-0-1", word: word, definition: definition, dateCreated: Date())
+        for name in tagNames{
+            wp.tags.append(Tag(ownerId: -1, tagId: "nothing", name: name))
+        }
+        return wp
     }
 
     func fetchUserTags(enfocaId : Int, callback : @escaping([Tag])->()){

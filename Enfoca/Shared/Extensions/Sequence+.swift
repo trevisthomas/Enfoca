@@ -26,4 +26,22 @@ extension Sequence where Iterator.Element == (Tag, Bool) {
         }
         return true
     }
+    
+    
 }
+
+extension Sequence where Iterator.Element == Tag {
+    func tagsToText() -> String {
+        let array = self as![Tag]
+        var text : String = ""
+        for t in array {
+            if !text.isEmpty {
+                text.append(", ")
+            }
+            text.append(t.name)
+        }
+        return text
+    }
+}
+
+

@@ -20,7 +20,7 @@ class Sequence_Tests: XCTestCase {
         super.tearDown()
     }
     
-    func testOperation_ShuoldCompareSize(){
+    func testCompare_ShuoldCompareSize(){
         let tagTuples = makeTags().map({
             (value : Tag) -> (Tag, Bool) in
             return (value, false)
@@ -39,7 +39,7 @@ class Sequence_Tests: XCTestCase {
         XCTAssertFalse(tagTuples2.compare(tagTuples))
     }
     
-    func testOperation_ShuoldBoolean(){
+    func testCompare_ShuoldBoolean(){
         let tagTuples = makeTags().map({
             (value : Tag) -> (Tag, Bool) in
             return (value, false)
@@ -58,5 +58,41 @@ class Sequence_Tests: XCTestCase {
         XCTAssertFalse(tagTuples.compare(tagTuples2))
         XCTAssertFalse(tagTuples2.compare(tagTuples))
     }
-       
+    
+    func testTagsToText_OneTag(){
+        let tag = Tag(ownerId: -1, tagId: "", name: "Noun")
+        let listOfOne = [tag]
+        let text = listOfOne.tagsToText()
+        XCTAssertEqual(text, "Noun")
+        
+    }
+    
+    func testTagsToText_TwoTags(){
+        let tag1 = Tag(ownerId: -1, tagId: "", name: "Noun")
+        let tag2 = Tag(ownerId: -1, tagId: "", name: "Bird")
+        let two = [tag1, tag2]
+        let text = two.tagsToText()
+        XCTAssertEqual(text, "Noun, Bird")
+        
+    }
+    
+    func testTagsToText_EmptyList() {
+        let empty : [Tag] = []
+        XCTAssertEqual(empty.tagsToText(), "")
+    }
+
+    
+//    private void createCommaSeperatedListOfStrings(Collection<String> collection,
+//    StringBuilder builder) {
+//    boolean first = true;
+//    for(String key : collection){
+//    if(!first){
+//				builder.append(",");
+//    } else {
+//				first = !first;
+//    }
+//    builder.append("'").append(key).append("'");
+//    }
+//    }
+    
 }
