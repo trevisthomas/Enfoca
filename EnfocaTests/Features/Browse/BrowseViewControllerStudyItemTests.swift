@@ -291,8 +291,6 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
     }
     
     func testTableView_ShouldReloadDataWhenNoCallbackIsPassed(){
-        //        (() -> ())? = nil
-        
         overrideWithMocks()
         
         mockWebService.wordPairs = makeWordPairs()
@@ -311,7 +309,37 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
     }
     
     
+    func testSearch_ShouldExist(){
+        overrideWithMocks()
+        
+        mockWebService.wordPairs = makeWordPairs()
+        
+        viewDidLoad()
+        
+        XCTAssertNotNil(sut.wordPairSearchBar)
+        XCTAssertNotNil(sut.wordPairSearchBar.backgroundImage) //Setting a blank image keeps the ugly borders from showing up
+        XCTAssertNotNil(sut.wordPairSearchBar.delegate)
+        
+        XCTAssert(BrowseViewController.conforms(to: UISearchBarDelegate.self))
+    }
     
+    func testSearch_ChangingTextShouldCallSearch(){
+        overrideWithMocks()
+        
+        mockWebService.wordPairs = makeWordPairs()
+        let mockTableView = MockWordPairTableView()
+        
+        viewDidLoad()
+        
+        sut.tableView = mockTableView //Mock tableview is an override to the init.  Do this after view did load
+        
+        XCTAssertFalse(mockTableView.dataReloaded) //Assert initial state
+        
+        sut.searchBar(sut.wordPairSearchBar, textDidChange: "L")
+        XCTAssertEqual(mockWebService.fetchWordPairPattern, "L")//Assert that webservice was called with enterted text.
+        
+        XCTAssertTrue(mockTableView.dataReloaded)
+    }
 
 }
 

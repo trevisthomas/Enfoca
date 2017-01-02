@@ -11,9 +11,7 @@ import UIKit
 class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilterDelegate {
     func updated(_ callback: (() -> ())? = nil) {
         
-        let wordPairOrder : WordPairOrder = (viewModel.reverseWordPair == true) ? .definitionAsc : .wordAsc
-        
-        viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: getSelectedFilterTags(),wordPairOrder : wordPairOrder, callback: {
+        viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: getSelectedFilterTags(),wordPairOrder : determineWordOrder(), callback: {
             //My assumption here is that if you give me a callback, that you will reload the table manually
             if let callback = callback {
                 callback()
@@ -28,6 +26,7 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
     @IBOutlet weak var tagFilterButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var reverseWordPairSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var wordPairSearchBar: UISearchBar!
     
    
     var appDefaultsDelegate : ApplicationDefaults!
@@ -49,6 +48,11 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         set {
             viewModel.reverseWordPair = newValue
         }
+    }
+    
+    fileprivate func determineWordOrder() -> WordPairOrder{
+        let wordPairOrder : WordPairOrder = (viewModel.reverseWordPair == true) ? .definitionAsc : .wordAsc
+        return wordPairOrder
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -90,9 +94,11 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         viewModel.reverseWordPair = reverseWordPair
         reverseWordPairSegmentedControl.selectedSegmentIndex = reverseWordPair ? 1 : 0
         updated()
+        
+        wordPairSearchBar.backgroundImage = UIImage() //Ah ha!  This gits rid of that horible border!
     }
     
-    private func getSelectedFilterTags() -> [Tag] {
+    fileprivate func getSelectedFilterTags() -> [Tag] {
         //lol
         let tags = tagTuples.filter({(tag, selected) in
             return selected}).map({
@@ -179,5 +185,17 @@ extension BrowseViewController : UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         //Pretty sure this is only called on iphone.  This is to force iPhone to show this as a popover style modal instead of full screen.
         return UIModalPresentationStyle.none
+    }
+}
+
+extension BrowseViewController : UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        autoComplete(pattern: searchText)
+    }
+    
+    private func autoComplete(pattern : String) {
+        viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: getSelectedFilterTags(),wordPairOrder : determineWordOrder(), pattern: pattern, callback: {
+            self.tableView.reloadData()
+        })
     }
 }

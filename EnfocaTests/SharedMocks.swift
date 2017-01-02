@@ -40,13 +40,16 @@ class MockWebService : WebService {
     var fetchWordPairCallCount : Int = 0
     var wordPairs : [WordPair] = []
     var fetchWordPairOrder : WordPairOrder?
+    var fetchWordPairPattern : String?
     
-    func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder : WordPairOrder, callback: @escaping ([WordPair]) -> ()) {
+    func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder : WordPairOrder, pattern : String? = nil, callback: @escaping ([WordPair]) -> ()) {
         fetchWordPairTagFilter = tagFilter
         fetchWordPairWordStateFilter = wordStateFilter
-        callback(wordPairs)
         fetchWordPairCallCount += 1
         fetchWordPairOrder = wordPairOrder
+        fetchWordPairPattern = pattern
+        
+        callback(wordPairs)
     }
     
     var fetchCallCount : Int = 0

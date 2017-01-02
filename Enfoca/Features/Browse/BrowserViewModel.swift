@@ -27,8 +27,8 @@ class BrowseViewModel : NSObject, UITableViewDelegate, UITableViewDataSource{
         return wordPairs.count
     }
 
-    func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder order : WordPairOrder, callback completionHandler : (() -> ())? = nil ) {
-        webService.fetchWordPairs(wordStateFilter: wordStateFilter, tagFilter: tagFilter, wordPairOrder: order, callback: {
+    func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder order : WordPairOrder, pattern : String? = nil, callback completionHandler : (() -> ())? = nil ) {
+        webService.fetchWordPairs(wordStateFilter: wordStateFilter, tagFilter: tagFilter, wordPairOrder: order, pattern: pattern, callback: {
             newWordPairs in
             self.wordPairs = newWordPairs
             if let completionHandler = completionHandler {
