@@ -51,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
+    
     //Added for google login:  https://developers.google.com/identity/sign-in/ios/sign-in?ver=swift
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         return GIDSignIn.sharedInstance().handle(url,
@@ -128,3 +129,6 @@ extension AppDelegate : ApplicationDefaults {
     }
 }
 
+func getAppDelegate() -> AppDelegate{
+    return UIApplication.shared.delegate as! AppDelegate
+}

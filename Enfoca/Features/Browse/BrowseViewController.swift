@@ -10,7 +10,6 @@ import UIKit
 
 class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilterDelegate {
     func updated(_ callback: (() -> ())? = nil) {
-        
         viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: getSelectedFilterTags(),wordPairOrder : determineWordOrder(), callback: {
             //My assumption here is that if you give me a callback, that you will reload the table manually
             if let callback = callback {
@@ -96,6 +95,14 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         updated()
         
         wordPairSearchBar.backgroundImage = UIImage() //Ah ha!  This gits rid of that horible border!
+        
+//        //Looks for single or multiple taps.
+//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+//        
+//        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
+//        //tap.cancelsTouchesInView = false
+//        
+//        view.addGestureRecognizer(tap)
     }
     
     fileprivate func getSelectedFilterTags() -> [Tag] {
@@ -134,6 +141,11 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
             self.applyWordPairOrder()
             self.tableView.reloadData()
         })
+    }
+    
+    
+    @IBAction func dismissKeyboard(){
+        self.wordPairSearchBar.endEditing(true)
     }
     
     //NOT UNIT TESTED!

@@ -9,7 +9,11 @@
 import Foundation
 
 protocol WebService {
+//    typealias <#type name#> = <#type expression#>
+    
     //TODO, remove the enfocaId from this.  The service should know who you are.
     func fetchUserTags(enfocaId : Int, callback : @escaping([Tag])->())
     func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder: WordPairOrder, pattern : String?, callback : @escaping([WordPair])->())
+    func activateWordPair(wordPair: WordPair, callback: ((WordPair)->())? )
+    func deactivateWordPair(wordPair: WordPair, callback: ((WordPair)->())? )
 }

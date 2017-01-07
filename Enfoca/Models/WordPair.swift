@@ -8,7 +8,19 @@
 
 import Foundation
 
-struct WordPair {
+struct WordPair : Equatable {
+    /// Returns a Boolean value indicating whether two values are equal.
+    ///
+    /// Equality is the inverse of inequality. For any values `a` and `b`,
+    /// `a == b` implies that `a != b` is `false`.
+    ///
+    /// - Parameters:
+    ///   - lhs: A value to compare.
+    ///   - rhs: Another value to compare.
+    public static func ==(lhs: WordPair, rhs: WordPair) -> Bool {
+        return lhs.pairId == rhs.pairId
+    }
+
     
     private(set) var creatorId: Int
     private(set) var pairId: String

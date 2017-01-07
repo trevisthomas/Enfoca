@@ -32,6 +32,7 @@ class WordPairCellTests: XCTestCase {
         sut.authenticateionDelegate = authDelegate
         mockWebService = MockWebService()
         sut.webService = mockWebService
+        
         mockAppDefaults = MockDefaults()
         sut.appDefaultsDelegate = mockAppDefaults
     }
@@ -117,5 +118,77 @@ class WordPairCellTests: XCTestCase {
         XCTAssertNotNil(cell.definitionLabelConstraint)
     }
     
+    func testActiveSwitch_SwitchingShouldActivate(){
+        
+        
+        overrideWithMocks()
+        getAppDelegate().webService = mockWebService
+        
+        
+        let row = 1
+        
+        var wordPairs = makeWordPairs()
+
+        mockWebService.wordPairs = wordPairs
+        
+        viewDidLoad()
+        
+        XCTAssertNotNil(sut.tableView)
+        
+        let cell = sut.viewModel.tableView(sut.tableView, cellForRowAt: IndexPath(row: row, section: 0)) as! WordPairCell
+        
+        XCTAssertNotNil(cell)
+        XCTAssertFalse(cell.wordPair.active)
+        XCTAssertFalse(cell.activeSwitch.isOn)
+        XCTAssertFalse(mockWebService.activateCalled) //Assert initial state
+        
+        //This seems to be the way to unit test a UISwitch
+        cell.activeSwitch.isOn = true
+        cell.activeSwitch.sendActions(for: .valueChanged)
+        
+        XCTAssertTrue(cell.wordPair.active)
+        XCTAssertTrue(cell.activeSwitch.isOn)
+        
+        XCTAssertTrue(mockWebService.activateCalled)
+        XCTAssertEqual(mockWebService.activeCalledWithWordPair, wordPairs[row])
+        
+    }
+    
+    func testActiveSwitch_SwitchingShouldDeactivate(){
+        
+        
+        overrideWithMocks()
+        getAppDelegate().webService = mockWebService
+        
+        
+        let row = 3
+        
+        var wordPairs = makeWordPairs()
+        wordPairs[row].active = true
+        mockWebService.wordPairs = wordPairs
+        
+        viewDidLoad()
+        
+        XCTAssertNotNil(sut.tableView)
+        
+        let cell = sut.viewModel.tableView(sut.tableView, cellForRowAt: IndexPath(row: row, section: 0)) as! WordPairCell
+        
+        XCTAssertNotNil(cell)
+        
+        XCTAssertTrue(cell.wordPair.active)
+        XCTAssertTrue(cell.activeSwitch.isOn)
+        XCTAssertFalse(mockWebService.deactivateCalled) //Assert initial state
+        
+        
+        //This seems to be the way to unit test a UISwitch
+        cell.activeSwitch.isOn = false
+        cell.activeSwitch.sendActions(for: .valueChanged)
+        
+        XCTAssertFalse(cell.wordPair.active)
+        XCTAssertFalse(cell.activeSwitch.isOn)
+        
+        XCTAssertTrue(mockWebService.deactivateCalled)
+        XCTAssertEqual(mockWebService.deactiveCalledWithWordPair, wordPairs[row])
+    }
 }
 

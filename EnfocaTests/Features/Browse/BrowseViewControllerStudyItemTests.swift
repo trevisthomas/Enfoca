@@ -340,6 +340,42 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
         XCTAssertTrue(mockTableView.dataReloaded)
     }
+    
+    func testSearch_TapOutsideShouldResignFirstResponder(){
+        overrideWithMocks()
+        
+        viewDidLoad()
+        
+        let search = MockUISearchBar()
+        sut.wordPairSearchBar = search
+        
+        XCTAssertEqual(sut.view.gestureRecognizers?.count, 1) //There should be one
+        
+        guard let tap = sut.view.gestureRecognizers?.first as? UITapGestureRecognizer else {
+            XCTFail()
+            return
+        }
+        
+        
+        //I cant figure out how to tap the tap :-(
+        sut.dismissKeyboard()
+        
+        XCTAssertTrue(search.endEditingCalled)
+        
+        
+    }
 
+}
+
+extension BrowseViewControllerStudyItemTests {
+    
+    class MockUISearchBar : UISearchBar{
+        var endEditingCalled : Bool = false
+        override func endEditing(_ force: Bool) -> Bool {
+            endEditingCalled = true
+            return true
+        }
+    }
+    
 }
 

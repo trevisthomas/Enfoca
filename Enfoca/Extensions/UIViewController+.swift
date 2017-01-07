@@ -9,7 +9,5 @@
 import Foundation
 
 extension UIViewController{
-    func getAppDelegate() -> AppDelegate{
-        return UIApplication.shared.delegate as! AppDelegate
-    }
+    
 }

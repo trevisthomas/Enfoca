@@ -9,7 +9,27 @@
 import Foundation
 
 class DemoWebService : WebService {
+    internal func deactivateWordPair(wordPair: WordPair, callback: ((WordPair) -> ())?) {
+        var wp = wordPair
+        wp.active = false
+        if let callback = callback {
+            callback(wp)
+        }
+        print("Dummy de-activate called \(wordPair.word)")
+    }
+
     
+    internal func activateWordPair(wordPair: WordPair, callback: ((WordPair) -> ())?) {
+        var wp = wordPair
+        wp.active = true
+        if let callback = callback {
+            callback(wp)
+        }
+        print("Dummy activiate called \(wordPair.word)")
+    }
+    
+    
+
     internal func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder: WordPairOrder, pattern: String? = nil, callback: @escaping ([WordPair]) -> ()) {
         
         print("Dummy fetch called")

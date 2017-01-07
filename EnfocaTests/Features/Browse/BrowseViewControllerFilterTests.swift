@@ -286,5 +286,6 @@ class BrowseViewControllerFilterTests: XCTestCase {
         vc.updated() //Notify the VC that it should refresh
         
     }
+    
 }
 

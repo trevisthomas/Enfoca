@@ -42,6 +42,13 @@ class MockWebService : WebService {
     var fetchWordPairOrder : WordPairOrder?
     var fetchWordPairPattern : String?
     
+    var activateCalled : Bool = false
+    var activeCalledWithWordPair : WordPair!
+    
+    var deactivateCalled : Bool = false
+    var deactiveCalledWithWordPair : WordPair!
+    
+    
     func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder : WordPairOrder, pattern : String? = nil, callback: @escaping ([WordPair]) -> ()) {
         fetchWordPairTagFilter = tagFilter
         fetchWordPairWordStateFilter = wordStateFilter
@@ -63,6 +70,21 @@ class MockWebService : WebService {
         callback(tags)
     }
     
+    func activateWordPair(wordPair: WordPair, callback: ((WordPair) -> ())?) {
+        activateCalled = true
+        activeCalledWithWordPair = wordPair
+        var wp = wordPair
+        wp.active = true
+        callback!(wp)
+    }
+    
+    func deactivateWordPair(wordPair: WordPair, callback: ((WordPair) -> ())?) {
+        deactivateCalled = true
+        deactiveCalledWithWordPair = wordPair
+        var wp = wordPair
+        wp.active = false
+        callback!(wp)
+    }
     
 }
 

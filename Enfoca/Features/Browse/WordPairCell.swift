@@ -81,4 +81,16 @@ class WordPairCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBAction func activeSwitchAction(_ sender: UISwitch) {
+        if sender.isOn {
+            getAppDelegate().webService.activateWordPair(wordPair : wordPair, callback: { wp in
+                self.wordPair = wp
+            })
+        }
+        else {
+            getAppDelegate().webService.deactivateWordPair(wordPair : wordPair, callback: { wp in
+                self.wordPair = wp
+            })
+        }
+    }
 }
