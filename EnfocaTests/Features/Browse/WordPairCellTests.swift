@@ -34,7 +34,7 @@ class WordPairCellTests: XCTestCase {
         sut.webService = mockWebService
         
         mockAppDefaults = MockDefaults()
-        sut.appDefaultsDelegate = mockAppDefaults
+        sut.appDefaults = mockAppDefaults
     }
     
     func viewDidLoad(){
@@ -57,7 +57,7 @@ class WordPairCellTests: XCTestCase {
         let wp = wordPairs[row]
         mockWebService.wordPairs = wordPairs
         
-        mockAppDefaults.reverse = true
+        mockAppDefaults.reverseWordPair = true
         
         viewDidLoad()
         
@@ -65,7 +65,7 @@ class WordPairCellTests: XCTestCase {
         
         let cell = sut.viewModel.tableView(sut.tableView, cellForRowAt: IndexPath(row: row, section: 0)) as! WordPairCell
 
-        XCTAssertTrue(sut.appDefaultsDelegate.reverseWordPair()) //Confirming initial state
+        XCTAssertTrue(sut.appDefaults.reverseWordPair) //Confirming initial state
         
         XCTAssertNotNil(cell)
         
@@ -179,6 +179,7 @@ class WordPairCellTests: XCTestCase {
         XCTAssertTrue(cell.activeSwitch.isOn)
         XCTAssertFalse(mockWebService.deactivateCalled) //Assert initial state
         
+        XCTAssertTrue(sut.viewModel.wordPairs[row].active) //Again, asserting expected initial state
         
         //This seems to be the way to unit test a UISwitch
         cell.activeSwitch.isOn = false
@@ -189,6 +190,10 @@ class WordPairCellTests: XCTestCase {
         
         XCTAssertTrue(mockWebService.deactivateCalled)
         XCTAssertEqual(mockWebService.deactiveCalledWithWordPair, wordPairs[row])
+        
+        
+        XCTAssertFalse(sut.viewModel.wordPairs[row].active) //Asserting that the datamodel sees that the data changed.
+        
     }
 }
 

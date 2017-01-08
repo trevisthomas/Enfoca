@@ -9,7 +9,15 @@
 import UIKit
 
 class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilterDelegate {
+    
     func updated(_ callback: (() -> ())? = nil) {
+        reloadWordPairs(callback)
+        
+        
+        appDefaults.save()
+    }
+    
+    private func reloadWordPairs(_ callback: (() -> ())? = nil){
         viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: getSelectedFilterTags(),wordPairOrder : determineWordOrder(), callback: {
             //My assumption here is that if you give me a callback, that you will reload the table manually
             if let callback = callback {
@@ -28,15 +36,20 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
     @IBOutlet weak var wordPairSearchBar: UISearchBar!
     
    
-    var appDefaultsDelegate : ApplicationDefaults!
+    var appDefaults : ApplicationDefaults!
     var authenticateionDelegate : AuthenticationDelegate!
-    var tagTuples : [(Tag, Bool)] = []
+    var tagTuples : [(Tag, Bool)] = [] {
+        didSet{
+            appDefaults.tagFilters = tagTuples
+        }
+    }
     var webService : WebService!
     var viewModel : BrowseViewModel!
    
     var currentWordStateFilter: WordStateFilter = .all {
         didSet{
             wordStateFilterButton.setTitle(currentWordStateFilter.rawValue, for: .normal)
+            appDefaults.wordStateFilter = currentWordStateFilter
         }
     }
     
@@ -46,6 +59,7 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         }
         set {
             viewModel.reverseWordPair = newValue
+            appDefaults.reverseWordPair = newValue
         }
     }
     
@@ -66,43 +80,41 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
     
     private func performInit(){
         authenticateionDelegate = getAppDelegate()
-        appDefaultsDelegate = getAppDelegate()
+        appDefaults = getAppDelegate().applicationDefaults
         webService = getAppDelegate().webService
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        currentWordStateFilter = appDefaultsDelegate.initialWordStateFilter() //Setting this before the webservice so that update doesnt get called twice.
+        currentWordStateFilter = appDefaults.wordStateFilter //Setting this before the webservice so that update doesnt get called twice.
         viewModel = tableView.delegate as! BrowseViewModel
         viewModel.webService = webService
         
         
-        
+        //Load the persons tags from the webservice and then apply any local default selections to them
         if let enfocaId = authenticateionDelegate.currentUser()?.enfocaId {
             self.webService.fetchUserTags(enfocaId: enfocaId) {
                 list in
                 self.tagTuples = list.map({
                     (value: Tag) -> (Tag, Bool) in
-                    return (value, false)
+                    
+                    guard let isSelected = self.appDefaults.tagFilters.find(tag: value)?.1 else {
+                        return (value, false) //Didnt find it at all
+                    }
+                    return (value, isSelected) //If found, apply selection from defaults
                 })
             }
         }
+
         
-        reverseWordPair = appDefaultsDelegate.reverseWordPair()
+        reverseWordPair = appDefaults.reverseWordPair
         viewModel.reverseWordPair = reverseWordPair
         reverseWordPairSegmentedControl.selectedSegmentIndex = reverseWordPair ? 1 : 0
-        updated()
+        reloadWordPairs()
         
         wordPairSearchBar.backgroundImage = UIImage() //Ah ha!  This gits rid of that horible border!
         
-//        //Looks for single or multiple taps.
-//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-//        
-//        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
-//        //tap.cancelsTouchesInView = false
-//        
-//        view.addGestureRecognizer(tap)
     }
     
     fileprivate func getSelectedFilterTags() -> [Tag] {
@@ -138,8 +150,8 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         }
         
         updated({
-            self.applyWordPairOrder()
-            self.tableView.reloadData()
+            self.viewModel.animating = true
+            self.tableView.reloadData() // you tried some ways of setting .animating back to false but they didn't always leave things in the right state
         })
     }
     
@@ -179,17 +191,17 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         
     }
     
-    private func applyWordPairOrder() {
-        
-        for cell in tableView.visibleCells {
-            
-            guard let myCell = cell as? WordPairCell else {
-                fatalError()
-            }
-            
-            myCell.reverseWordPair = reverseWordPair
-        }
-    }
+    //deprecated - Since i do a reload, this isnt needed.
+//    private func applyWordPairOrder() {
+//        for cell in tableView.visibleCells {
+//            
+//            guard let myCell = cell as? WordPairCell else {
+//                fatalError()
+//            }
+//            
+//            myCell.reverseWordPair = reverseWordPair
+//        }
+//    }
     
 }
 

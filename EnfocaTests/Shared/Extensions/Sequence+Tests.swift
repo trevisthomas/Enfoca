@@ -59,6 +59,28 @@ class Sequence_Tests: XCTestCase {
         XCTAssertFalse(tagTuples2.compare(tagTuples))
     }
     
+    func testFind_ShouldFindIt(){
+        let tag1 = Tag(ownerId: -1, tagId: "123", name: "Noun")
+        let tag2 = Tag(ownerId: -1, tagId: "456", name: "Bird")
+        let tag3 = Tag(ownerId: -1, tagId: "789", name: "Turd")
+        
+        let tags = [tag1, tag2]
+        
+        let tagTuples = tags.map({
+            (value : Tag) -> (Tag, Bool) in
+            return (value, false)
+        })
+        
+        let tagFilter2 = tagTuples.find(tag: tag2)
+        XCTAssertNotNil(tagFilter2)
+        XCTAssertEqual(tagFilter2?.0, tag2)
+        
+        let tagFilter3 = tagTuples.find(tag: tag3)
+        XCTAssertNil(tagFilter3) //Should not have been found
+        
+        
+    }
+    
     func testTagsToText_OneTag(){
         let tag = Tag(ownerId: -1, tagId: "", name: "Noun")
         let listOfOne = [tag]

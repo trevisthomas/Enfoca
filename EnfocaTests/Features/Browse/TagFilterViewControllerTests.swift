@@ -190,10 +190,7 @@ extension TagFilterViewControllerTests {
         var touched : Bool = false
         
         init(){
-            self.tagTuples = makeTags().map({
-                (value : Tag) -> (Tag, Bool) in
-                return (value, false)
-            })
+            self.tagTuples = makeTagTuples()
         }
         var tagTuples : [(Tag, Bool)] = []
         

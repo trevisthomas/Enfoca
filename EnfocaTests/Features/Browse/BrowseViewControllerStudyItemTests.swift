@@ -102,11 +102,16 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         XCTAssertEqual(cell.definitionLabel?.text, wp.definition)
     }
     
+    func testInit_ViewModelShouldNotAnimateCellsDuringInit(){
+        _ = sut.view
+        XCTAssertFalse(sut.viewModel.animating)
+    }
+    
     func testWebService_ShouldFetchWordsFromServiceWithCurrentFilterParams(){
         overrideWithMocks()
         
         let defaults = MockDefaults(defaultWordStateFilter: .inactive)
-        sut.appDefaultsDelegate = defaults
+        sut.appDefaults = defaults
         
         let service = sut.webService as! MockWebService //Just making sure
         
@@ -122,7 +127,7 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         overrideWithMocks()
         
         let defaults = MockDefaults(defaultWordStateFilter: .inactive)
-        sut.appDefaultsDelegate = defaults
+        sut.appDefaults = defaults
         
         let service = sut.webService as! MockWebService //Just making sure
         
@@ -155,8 +160,8 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
         let mockDefaults = MockDefaults()
         
-        mockDefaults.reverse = true
-        sut.appDefaultsDelegate = mockDefaults
+        mockDefaults.reverseWordPair = true
+        sut.appDefaults = mockDefaults
         
         viewDidLoad()
         
@@ -169,8 +174,8 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
         let mockDefaults = MockDefaults()
         
-        mockDefaults.reverse = false
-        sut.appDefaultsDelegate = mockDefaults
+        mockDefaults.reverseWordPair = false
+        sut.appDefaults = mockDefaults
         
         viewDidLoad()
         
@@ -183,20 +188,88 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         overrideWithMocks()
         
         let mockDefaults = MockDefaults()
-        mockDefaults.reverse = false
-        sut.appDefaultsDelegate = mockDefaults
+        mockDefaults.reverseWordPair = false
+        sut.appDefaults = mockDefaults
         viewDidLoad()
         
        XCTAssertFalse(sut.viewModel.reverseWordPair)
     }
     
+    func testAppDefaults_ChangesToBrowseVCShouldUpdateAppDefaults(){
+        overrideWithMocks()
+        
+        let mockDefaults = MockDefaults()
+        mockDefaults.reverseWordPair = false
+        sut.appDefaults = mockDefaults
+        viewDidLoad()
+        
+        XCTAssertEqual(mockDefaults.saveCount, 0)
+        XCTAssertFalse(sut.reverseWordPair)
+        
+        XCTAssertEqual(sut.reverseWordPairSegmentedControl.selectedSegmentIndex, 0) //Confirming initial state
+
+        //Toggle the selector
+        sut.reverseWordPairSegmentedControl.selectedSegmentIndex = 1
+        sut.reverseWordPairSegmentedControl.sendActions(for: .valueChanged)
+        
+        //Verify that save was called and that the value was updated
+        XCTAssertEqual(mockDefaults.saveCount, 1)
+        XCTAssertTrue(mockDefaults.reverseWordPair)
+    }
+    
+    func testAppDefaults_WordStateFilterChangeShouldUpdateAppDefaults(){
+        overrideWithMocks()
+        
+        let mockDefaults = MockDefaults()
+        mockDefaults.wordStateFilter = .inactive
+        sut.appDefaults = mockDefaults
+        viewDidLoad()
+        
+        
+        XCTAssertEqual(mockDefaults.wordStateFilter, .inactive)
+        XCTAssertEqual(mockDefaults.saveCount, 0)
+        
+        sut.currentWordStateFilter = .active
+        sut.updated()
+        
+        //Verify that save was called and that the value was updated
+        XCTAssertEqual(mockDefaults.saveCount, 1)
+        XCTAssertEqual(mockDefaults.wordStateFilter, .active)
+    }
+
+    func testAppDefaults_TagFilterChangeShouldUpdateAppDefaults(){
+        overrideWithMocks()
+        
+        viewDidLoad()
+        
+        let mockDefaults = MockDefaults()
+        mockDefaults.tagFilters = makeTagTuples()
+        sut.appDefaults = mockDefaults
+        
+        sut.tagTuples = mockDefaults.tagFilters //Doing this to bypass the service call.  That stuff is tested elsewhere
+        
+        XCTAssertEqual(mockDefaults.saveCount, 0)
+        XCTAssertFalse(sut.tagTuples[3].1) //Assert initial state
+        XCTAssertFalse(mockDefaults.tagFilters[3].1) //Trevis you asserted this a different way because you were amazed by the fact that just setting a value on a tuple called the didSet.  Still amazed by that.
+        
+        //Simulating what the tag filter view controller does.
+        sut.tagTuples[3].1 = true
+        sut.updated()
+        
+        //Verify that save was called and that the value was updated
+        XCTAssertEqual(mockDefaults.saveCount, 1)
+        
+        XCTAssertTrue(mockDefaults.tagFilters[3].1)
+    }
+
+    
     func testSegmented_ShouldBeSetToDefault(){
         overrideWithMocks()
         mockWebService.wordPairs = makeWordPairs()
         let delegate = MockDefaults()
-        delegate.reverse = true
+        delegate.reverseWordPair = true
         
-        sut.appDefaultsDelegate = delegate
+        sut.appDefaults = delegate
         
         viewDidLoad()
         
@@ -211,6 +284,7 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         mockWebService.wordPairs = makeWordPairs()
         
         viewDidLoad()
+        XCTAssertEqual(mockWebService.fetchWordPairCallCount, 1)
         
         //Real tables dont say that their cells are visible because they have been dequeued.  This might be a problem but i'm going to make this test work this way (with this hacked TabieView) and see what happens in the real thing.
         let tableView = MockWordPairTableView()
@@ -223,6 +297,7 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         let cell = sut.tableView.dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as! WordPairCell
         
         XCTAssertTrue(cell.reverseWordPair)
+        XCTAssertEqual(mockWebService.fetchWordPairCallCount, 2)
         
         //I'm buildint this test based on the assumption that calling cellForRow means that the cell is visible.  I am trying to verify that visible cells are notified when the order changes
         
@@ -235,8 +310,8 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         XCTAssertFalse(sut.reverseWordPair)
         XCTAssertFalse(sut.viewModel.reverseWordPair)
         
-        XCTAssertFalse(cell.reverseWordPair)
-        
+        XCTAssertEqual(mockWebService.fetchWordPairCallCount, 3)
+//        XCTAssertFalse(cell.reverseWordPair) - I dont notify active cells anymore since i reload data.
     }
     
     func testTableView_TogglingReverseShouldReloadData(){
@@ -308,6 +383,44 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         XCTAssertTrue(tableView.dataReloaded)
     }
     
+    func testViewModel_TogglingReverseShouldAskViewModelToAnimateCells(){
+        overrideWithMocks()
+        
+        mockWebService.wordPairs = makeWordPairs()
+        
+        viewDidLoad()
+        
+        //Real tables dont say that their cells are visible because they have been dequeued.  This might be a problem but i'm going to make this test work this way (with this hacked TabieView) and see what happens in the real thing.
+        let tableView = MockWordPairTableView()
+        let mockViewModel = MockViewModel()
+        mockViewModel.webService = mockWebService
+        sut.viewModel = mockViewModel
+        tableView.dataSource = sut.viewModel
+        sut.tableView = tableView
+        
+        sut.reverseWordPairSegmentedControl.selectedSegmentIndex = 1
+        sut.reverseWordPairSegmentedControl.sendActions(for: .valueChanged)
+        
+        let cell = sut.tableView.dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as! WordPairCell
+        
+        XCTAssertTrue(cell.reverseWordPair)
+        
+        XCTAssertEqual(mockViewModel.animatingSetCount, 1)
+        
+//        //I'm buildint this test based on the assumption that calling cellForRow means that the cell is visible.  I am trying to verify that visible cells are notified when the order changes
+//        
+//        XCTAssertTrue(sut.viewModel.reverseWordPair)
+//        XCTAssertTrue(sut.reverseWordPair)
+//        
+//        sut.reverseWordPairSegmentedControl.selectedSegmentIndex = 0
+//        sut.reverseWordPairSegmentedControl.sendActions(for: .valueChanged)
+//        
+//        XCTAssertFalse(sut.reverseWordPair)
+//        XCTAssertFalse(sut.viewModel.reverseWordPair)
+//        
+//        XCTAssertFalse(cell.reverseWordPair)
+    }
+    
     
     func testSearch_ShouldExist(){
         overrideWithMocks()
@@ -364,6 +477,7 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
         
     }
+    
 
 }
 
@@ -377,5 +491,13 @@ extension BrowseViewControllerStudyItemTests {
         }
     }
     
+    class MockViewModel : BrowseViewModel {
+        var animatingSetCount = 0
+        override var animating: Bool {
+            didSet{
+                animatingSetCount += 1
+            }
+        }
+    }
 }
 

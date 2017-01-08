@@ -50,7 +50,27 @@ class WordPairCell: UITableViewCell {
     @IBOutlet weak var activeSwitch: UISwitch!
     @IBOutlet weak var tagLabel: UILabel!
 
-    func animate(){
+//    func animate(){
+//        guard let _ = wordLabelConstraint else {
+//            return //Some unit tests call this before we're wired
+//        }
+//        
+//        self.contentView.layoutIfNeeded()
+//        if self.reverseWordPair == true {
+//            self.definitionLabelConstraint.constant = self.origWordConstant
+//            self.wordLabelConstraint.constant = self.origDefinitionConstant
+//        } else {
+//            self.definitionLabelConstraint.constant = self.origDefinitionConstant
+//            self.wordLabelConstraint.constant = self.origWordConstant
+//        }
+//        
+//        UIView.animate(withDuration: 0.5, delay: 0.2, options: [.curveEaseInOut], animations: {
+//            self.contentView.layoutIfNeeded()
+//        }, completion: nil)
+//
+//    }
+    
+    func updateContentPositions(animate : Bool = false) {
         guard let _ = wordLabelConstraint else {
             return //Some unit tests call this before we're wired
         }
@@ -63,11 +83,15 @@ class WordPairCell: UITableViewCell {
             self.definitionLabelConstraint.constant = self.origDefinitionConstant
             self.wordLabelConstraint.constant = self.origWordConstant
         }
-        
-        UIView.animate(withDuration: 0.5, delay: 0.2, options: [.curveEaseInOut], animations: {
+        if animate {
+            UIView.animate(withDuration: 0.5, delay: 0.2, options: [.curveEaseInOut], animations: {
+                self.contentView.layoutIfNeeded()
+            }, completion: nil)
+        }
+        else {
             self.contentView.layoutIfNeeded()
-        }, completion: nil)
-
+        }
+        
     }
     
     override func awakeFromNib() {
@@ -83,13 +107,15 @@ class WordPairCell: UITableViewCell {
     
     @IBAction func activeSwitchAction(_ sender: UISwitch) {
         if sender.isOn {
-            getAppDelegate().webService.activateWordPair(wordPair : wordPair, callback: { wp in
-                self.wordPair = wp
+            wordPair.active = true
+            getAppDelegate().webService.activateWordPair(wordPair : wordPair, callback: { success in
+                //Do sometning if the web call fails
             })
         }
         else {
-            getAppDelegate().webService.deactivateWordPair(wordPair : wordPair, callback: { wp in
-                self.wordPair = wp
+            wordPair.active = false
+            getAppDelegate().webService.deactivateWordPair(wordPair : wordPair, callback: { success in
+                //Do sometning if the web call fails
             })
         }
     }

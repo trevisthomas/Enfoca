@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 @testable import Enfoca
+
 func segues(ofViewController viewController: UIViewController) -> [String] {
     let identifiers = (viewController.value(forKey: "storyboardSegueTemplates") as? [AnyObject])?.flatMap({ $0.value(forKey: "identifier") as? String }) ?? []
     return identifiers
@@ -23,6 +24,16 @@ func makeTags(ownerId : Int = 1) -> [Tag] {
     tags.append(Tag(ownerId: ownerId, tagId: "127", name: "From Class #3"))
     return tags
 }
+
+func makeTagTuples(tags : [Tag] = makeTags())->[(Tag, Bool)] {
+    let tagTuples : [(Tag, Bool)]
+    tagTuples = tags.map({
+        (value : Tag) -> (Tag, Bool) in
+        return (value, false)
+    })
+    return tagTuples
+}
+
 
 func makeWordPairs() -> [WordPair]{
     let d = Date()

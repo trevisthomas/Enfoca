@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     private let googleClientId = "528831726200-caemar3na7rvr7jp9cqjreq6t6pa5s33.apps.googleusercontent.com"
     
     var webService : WebService!
+    var applicationDefaults : ApplicationDefaults!
     
     var userAuthenticated : ((User) -> ())?
     fileprivate var user: User?
@@ -25,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         GIDSignIn.sharedInstance().delegate = self
         
         webService = DemoWebService()
+        applicationDefaults = LocalApplicationDefaults()
         
         return true
     }
@@ -119,15 +121,20 @@ extension AppDelegate : AuthenticationDelegate {
     }
 }
 
-extension AppDelegate : ApplicationDefaults {
-    internal func reverseWordPair() -> Bool {
-        return false
-    }
-
-    func initialWordStateFilter() -> WordStateFilter {
-        return .all
-    }
-}
+//extension AppDelegate : ApplicationDefaults {
+//    var tagFilters : [(Tag, Bool)]
+//    func tagFilters() -> [tagFilter] {
+//        return tagFilters
+//    }
+//
+//    internal func reverseWordPair() -> Bool {
+//        return false
+//    }
+//
+//    func wordStateFilter() -> WordStateFilter {
+//        return .all
+//    }
+//}
 
 func getAppDelegate() -> AppDelegate{
     return UIApplication.shared.delegate as! AppDelegate

@@ -12,13 +12,14 @@ class BrowseViewModel : NSObject, UITableViewDelegate, UITableViewDataSource{
     var webService : WebService!
     var wordPairs : [WordPair] = []
     var reverseWordPair : Bool!
+    var animating: Bool = false
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WordPairCell") as! WordPairCell
         cell.wordPair = wordPairs[indexPath.row]
         cell.reverseWordPair = reverseWordPair
         
-        cell.animate()
+        cell.updateContentPositions(animate: animating)
         
         return cell
     }

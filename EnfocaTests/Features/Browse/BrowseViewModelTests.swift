@@ -77,12 +77,39 @@ class BrowseViewModelTests: XCTestCase {
         
         let wp = mockService.wordPairs[1]
         
+        sut.animating = true
+        
         guard let cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as? MockWordPairCell else {
             XCTFail("Cell is not the expected type")
             fatalError()
         }
         
+        XCTAssertEqual(cell.setContentPositionCalledCount, 1)
         XCTAssertEqual(cell.animateCallCount, 1) //Confirm that dequing calls animate.
+        XCTAssertEqual(cell.wordPair.definition, wp.definition)
+        XCTAssertEqual(cell.wordPair.word, wp.word)
+        XCTAssertTrue(cell.reverseWordPair)
+    }
+    
+    func testTableView_AnimateShouldNotBeCalled(){
+        
+        let tableView = MockWordPairTableView()
+        
+        sut.fetchWordPairs(wordStateFilter: .all, tagFilter: [], wordPairOrder: .wordAsc)
+        
+        sut.reverseWordPair = true
+        
+        let wp = mockService.wordPairs[1]
+        
+        sut.animating = false
+        
+        guard let cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as? MockWordPairCell else {
+            XCTFail("Cell is not the expected type")
+            fatalError()
+        }
+        
+        XCTAssertEqual(cell.setContentPositionCalledCount, 1)
+        XCTAssertEqual(cell.animateCallCount, 0) //Confirm that dequing calls animate.
         XCTAssertEqual(cell.wordPair.definition, wp.definition)
         XCTAssertEqual(cell.wordPair.word, wp.word)
         XCTAssertTrue(cell.reverseWordPair)

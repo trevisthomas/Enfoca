@@ -61,7 +61,6 @@ class BrowseViewControllerFilterTests: XCTestCase {
         XCTAssertNotNil(sut.backButton)
     }
     
-    
     func testBackButton_ShouldCallInvisibleNavigationController(){
         
         class MockNav : UINavigationController {
@@ -87,14 +86,12 @@ class BrowseViewControllerFilterTests: XCTestCase {
     
     func testInit_StateFilterButtonTextShouldMatchEnumRaw() {
         let defaults = MockDefaults(defaultWordStateFilter: .active)
-        sut.appDefaultsDelegate = defaults
+        sut.appDefaults = defaults
         _ = sut.view
         XCTAssertEqual(sut.wordStateFilterButton.currentTitle, WordStateFilter.active.rawValue)
         
     }
-
     
-   
     
     func testStateFilterAction_ShouldCallPerformSegue(){
         _ = sut.view
@@ -157,11 +154,54 @@ class BrowseViewControllerFilterTests: XCTestCase {
         let storyboard = UIStoryboard(name: "Browse", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "BrowseVC") as! BrowseViewController
         let webservice = MockWebService()
+        let mockDefaults = MockDefaults()
+        
+        vc.authenticateionDelegate = authDelegate
+        vc.webService = webservice
+        webservice.tags = makeTags()
+        var initialTagFilters = makeTagTuples(tags: webservice.tags)
+        
+        let tagRow = 3
+        XCTAssertFalse(initialTagFilters[tagRow].1) //Asserting initial state assumption
+        initialTagFilters[tagRow].1 = true //Set it selected
+        let tagUnderTest = initialTagFilters[tagRow].0 //Get thet tag for future assesrtions
+        
+        mockDefaults.tagFilters = initialTagFilters
+        
+        vc.appDefaults = mockDefaults
+        
+        //To force view did load to be called
+        _ = vc.view
+        
+        XCTAssertEqual(webservice.fetchCallCount, 1)
+        XCTAssertEqual(webservice.fetchUserId, currentUser.enfocaId)
+        
+        
+        let tagTuples : [(Tag, Bool)] = vc.tagTuples
+        XCTAssertEqual(tagTuples.count, 5)
+
+        var tagExists = false
+        for (tag, selected) in tagTuples {
+            if tagUnderTest == tag {
+                XCTAssertTrue(selected) //Asserting that if the tag was found, that it is selected
+                tagExists = true
+            }
+        }
+        XCTAssertTrue(tagExists)//Asserting that the tag was found in the filter set.
+    }
+    
+    func testTagFilter_ShouldMergeStateOfLocalTagFiltersIntoServerResults(){
+        
+        let storyboard = UIStoryboard(name: "Browse", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "BrowseVC") as! BrowseViewController
+        let webservice = MockWebService()
         
         vc.authenticateionDelegate = authDelegate
         vc.webService = webservice
         
         webservice.tags = makeTags()
+        
+        XCTAssertEqual(webservice.tags.count, 5)
         
         //To force view did load to be called
         _ = vc.view
@@ -202,7 +242,6 @@ class BrowseViewControllerFilterTests: XCTestCase {
         let destVC = destNav.viewControllers.first as! TagFilterViewController
         let segue = UIStoryboardSegue(identifier: "TagFilterSegue", source: sut, destination: destNav)
         
-//        sut.currentWordStateFilter = .active
         sut.tagTuples = makeTags().map({
             (value : Tag) -> (Tag, Bool) in
             return (value, false)
@@ -231,7 +270,7 @@ class BrowseViewControllerFilterTests: XCTestCase {
         
         let origStateFilter : WordStateFilter = .active
         let defaults = MockDefaults(defaultWordStateFilter: origStateFilter)
-        sut.appDefaultsDelegate = defaults
+        sut.appDefaults = defaults
         
         
         _ = sut.view
@@ -287,5 +326,6 @@ class BrowseViewControllerFilterTests: XCTestCase {
         
     }
     
+   
 }
 

@@ -70,37 +70,32 @@ class MockWebService : WebService {
         callback(tags)
     }
     
-    func activateWordPair(wordPair: WordPair, callback: ((WordPair) -> ())?) {
+    func activateWordPair(wordPair: WordPair, callback: ((Bool) -> ())?) {
         activateCalled = true
         activeCalledWithWordPair = wordPair
-        var wp = wordPair
-        wp.active = true
-        callback!(wp)
+        callback!(true)
     }
     
-    func deactivateWordPair(wordPair: WordPair, callback: ((WordPair) -> ())?) {
+    func deactivateWordPair(wordPair: WordPair, callback: ((Bool) -> ())?) {
         deactivateCalled = true
         deactiveCalledWithWordPair = wordPair
-        var wp = wordPair
-        wp.active = false
-        callback!(wp)
+        callback!(true)
     }
     
 }
 
 class MockDefaults : ApplicationDefaults {
     var wordStateFilter: WordStateFilter
-    var reverse: Bool = false
+    var reverseWordPair: Bool = false
+    var tagFilters:[(Tag, Bool)] = []
+    var saveCount = 0
+    
     init(defaultWordStateFilter: WordStateFilter = .active){
         self.wordStateFilter = defaultWordStateFilter
     }
     
-    func initialWordStateFilter() -> WordStateFilter {
-        return wordStateFilter
-    }
-    
-    func reverseWordPair() -> Bool {
-        return reverse
+    func save() {
+        saveCount += 1
     }
 }
 
@@ -131,9 +126,25 @@ class MockWordPairTableView : UITableView {
 
 class MockWordPairCell : WordPairCell {
     var animateCallCount = 0
-    override func animate(){
-        animateCallCount += 1
+    var setContentPositionCalledCount = 0
+//    override func animate(){
+//        animateCallCount += 1
+//    }
+    
+//    override func setContentPositions(animate : Bool) {
+//        if (animate) {
+//            animateCallCount += 1
+//        }
+//        setContentPositionCalledCount += 1
+//    }
+    
+    override func updateContentPositions(animate : Bool = false) {
+        if (animate) {
+            animateCallCount += 1
+        }
+        setContentPositionCalledCount += 1
     }
+    
 }
 
 class MockWordStateFilterDelegate : WordStateFilterDelegate {

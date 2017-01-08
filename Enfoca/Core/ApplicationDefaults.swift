@@ -9,7 +9,18 @@
 import Foundation
 
 protocol ApplicationDefaults {
-    func initialWordStateFilter() -> WordStateFilter
-    func reverseWordPair() -> Bool
+    var wordStateFilter : WordStateFilter {get set}
+    var reverseWordPair : Bool {get set}
+    var tagFilters : [tagFilter] {get set}
+    func save()
+}
+
+class LocalApplicationDefaults : ApplicationDefaults {
+    var tagFilters : [(Tag, Bool)] = []
+    var reverseWordPair : Bool = false
+    var wordStateFilter : WordStateFilter = .all
     
+    func save(){
+        //Nothing yet.
+    }
 }
