@@ -174,8 +174,6 @@ class BrowseViewControllerFilterTests: XCTestCase {
         _ = vc.view
         
         XCTAssertEqual(webservice.fetchCallCount, 1)
-        XCTAssertEqual(webservice.fetchUserId, currentUser.enfocaId)
-        
         
         let tagTuples : [(Tag, Bool)] = vc.tagTuples
         XCTAssertEqual(tagTuples.count, 5)
@@ -207,8 +205,6 @@ class BrowseViewControllerFilterTests: XCTestCase {
         _ = vc.view
         
         XCTAssertEqual(webservice.fetchCallCount, 1)
-        XCTAssertEqual(webservice.fetchUserId, currentUser.enfocaId)
-        
         
         let tagTuples : [(Tag, Bool)] = vc.tagTuples
         XCTAssertEqual(tagTuples.count, 5)
@@ -309,8 +305,6 @@ class BrowseViewControllerFilterTests: XCTestCase {
         _ = vc.view
         
         XCTAssertEqual(webservice.fetchCallCount, 1)
-        XCTAssertEqual(webservice.fetchUserId, currentUser.enfocaId)
-        
         
         
         let testTag = vc.tagTuples[1].0 //Grab a tag to test

@@ -63,7 +63,7 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
             fatalError()
         }
         
-        XCTAssertNotNil(vm.webService)
+        XCTAssertNotNil(vm.delegate)
     }
     
 //    func testDataSource_ShouldMakeHappyCells(){
@@ -393,7 +393,10 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         //Real tables dont say that their cells are visible because they have been dequeued.  This might be a problem but i'm going to make this test work this way (with this hacked TabieView) and see what happens in the real thing.
         let tableView = MockWordPairTableView()
         let mockViewModel = MockViewModel()
-        mockViewModel.webService = mockWebService
+//        mockViewModel.webService = mockWebService
+        sut.webService = mockWebService
+        
+        mockViewModel.delegate = sut
         sut.viewModel = mockViewModel
         tableView.dataSource = sut.viewModel
         sut.tableView = tableView
@@ -478,7 +481,59 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
     }
     
+    func testStorybard_ShoudContainSegues(){
+        //To force view did load to be called
+        _ = sut.view
+        
+        let list = segues(ofViewController: sut)
+        XCTAssertTrue(list.contains("PairEditorSegue"))
+    }
+    
+    func testEdit_EditingWordPairShouldSegue(){
+//            overrideWithMocks()
+        
+        class MockBrowseViewController : BrowseViewController {
+            var segueIdentifier : String?
+            var sender : Any?
+            override func performSegue(withIdentifier identifier: String, sender: Any?) {
+                self.segueIdentifier = identifier
+                self.sender = sender
+            }
+        }
+        
+        let mockVC = MockBrowseViewController(nibName: nil, bundle: nil)
+        
+        let wp = WordPair(creatorId: 1, pairId: "thisIsCrap", word: "Red", definition: "Rojo", dateCreated: Date())
+        
+        mockVC.edit(wordPair: wp)
+        
+        XCTAssertEqual(mockVC.segueIdentifier, "PairEditorSegue")
+        XCTAssertEqual(mockVC.sender as! WordPair, wp)
+        
+//Test the ViewModel / delegate thing seperately
+//        sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
 
+
+    }
+    
+    func testEdit_SegueShouldPrepareForEdit(){
+        overrideWithMocks()
+        
+        viewDidLoad()
+        
+        let storyboard = UIStoryboard(name: "PairEditor", bundle: nil)
+        
+        let destVC = storyboard.instantiateInitialViewController() as! PairEditorViewController
+        let segue = UIStoryboardSegue(identifier: "PairEditorSegue", source: sut, destination: destVC)
+        
+        let wp = WordPair(creatorId: 1, pairId: "thisIsCrap", word: "Red", definition: "Rojo", dateCreated: Date())
+        
+        sut.prepare(for: segue, sender: wp)
+        
+        XCTAssertNotNil(destVC.wordPair)
+        XCTAssertEqual(destVC.wordPair, wp)
+    }
+    
 }
 
 extension BrowseViewControllerStudyItemTests {

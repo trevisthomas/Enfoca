@@ -89,12 +89,12 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         
         currentWordStateFilter = appDefaults.wordStateFilter //Setting this before the webservice so that update doesnt get called twice.
         viewModel = tableView.delegate as! BrowseViewModel
-        viewModel.webService = webService
+        viewModel.delegate = self
         
         
         //Load the persons tags from the webservice and then apply any local default selections to them
-        if let enfocaId = authenticateionDelegate.currentUser()?.enfocaId {
-            self.webService.fetchUserTags(enfocaId: enfocaId) {
+//        if let enfocaId = authenticateionDelegate.currentUser()?.enfocaId {
+            self.webService.fetchUserTags() {
                 list in
                 self.tagTuples = list.map({
                     (value: Tag) -> (Tag, Bool) in
@@ -104,7 +104,7 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
                     }
                     return (value, isSelected) //If found, apply selection from defaults
                 })
-            }
+//            }
         }
 
         
@@ -160,14 +160,20 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         self.wordPairSearchBar.endEditing(true)
     }
     
-    //NOT UNIT TESTED!
     @IBAction func performBackButtonAction(){
         _ = navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Navigation
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PairEditorSegue" {
+            guard let pairEditorVC = segue.destination as? PairEditorViewController else { fatalError() }
+            guard let wordPair = sender as? WordPair else { fatalError() }
+            pairEditorVC.wordPair = wordPair
+            return
+        }
+        
+        
         guard let button = sender as? UIButton else{
             fatalError()
         }
@@ -188,8 +194,9 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         popover.delegate = self
         popover.sourceRect = button.bounds //No clue why source view didnt do this.
 
-        
     }
+    
+    
     
     //deprecated - Since i do a reload, this isnt needed.
 //    private func applyWordPairOrder() {
@@ -203,6 +210,12 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
 //        }
 //    }
     
+}
+
+extension BrowseViewController : BrowseViewModelDelegate {
+    func edit(wordPair: WordPair){
+        performSegue(withIdentifier: "PairEditorSegue", sender: wordPair)
+    }
 }
 
 extension BrowseViewController : UIPopoverPresentationControllerDelegate {

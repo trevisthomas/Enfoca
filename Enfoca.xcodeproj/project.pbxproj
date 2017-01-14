@@ -42,11 +42,13 @@
 		0F5044D01E22A316007030CD /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5044CF1E22A316007030CD /* TypeAliases.swift */; };
 		0F5044D21E22D8B3007030CD /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5044D11E22D8B3007030CD /* UITableView+.swift */; };
 		0F5ADF9D1E107CDD003B1225 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5ADF9C1E107CDD003B1225 /* AppDelegate.swift */; };
-		0F5ADF9F1E107CDD003B1225 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5ADF9E1E107CDD003B1225 /* ViewController.swift */; };
-		0F5ADFA21E107CDD003B1225 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F5ADFA01E107CDD003B1225 /* Main.storyboard */; };
 		0F5ADFA41E107CDD003B1225 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F5ADFA31E107CDD003B1225 /* Assets.xcassets */; };
 		0F5ADFA71E107CDD003B1225 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F5ADFA51E107CDD003B1225 /* LaunchScreen.storyboard */; };
 		0F5ADFB21E107CDD003B1225 /* EnfocaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5ADFB11E107CDD003B1225 /* EnfocaTests.swift */; };
+		0F64F1801E2AB7EF000549CF /* PairEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F64F17F1E2AB7EF000549CF /* PairEditorViewController.swift */; };
+		0F64F1831E2AB872000549CF /* PairEditorViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F64F1821E2AB872000549CF /* PairEditorViewControllerTests.swift */; };
+		0F64F1851E2AD1C7000549CF /* BrowseViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F64F1841E2AD1C7000549CF /* BrowseViewModelDelegate.swift */; };
+		0F8594161E2AB41500163462 /* PairEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F8594151E2AB41500163462 /* PairEditor.storyboard */; };
 		0F864E811E17F81600539773 /* BrowseViewControllerStudyItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F864E801E17F81500539773 /* BrowseViewControllerStudyItemTests.swift */; };
 		0F864E831E17F93F00539773 /* ApplicationDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F864E821E17F93F00539773 /* ApplicationDefaults.swift */; };
 		0F864E871E1807A400539773 /* WordPairCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F864E851E1807A400539773 /* WordPairCell.swift */; };
@@ -123,14 +125,16 @@
 		0F5044D11E22D8B3007030CD /* UITableView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
 		0F5ADF991E107CDD003B1225 /* Enfoca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Enfoca.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F5ADF9C1E107CDD003B1225 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0F5ADF9E1E107CDD003B1225 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		0F5ADFA11E107CDD003B1225 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0F5ADFA31E107CDD003B1225 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0F5ADFA61E107CDD003B1225 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0F5ADFA81E107CDD003B1225 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0F5ADFAD1E107CDD003B1225 /* EnfocaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EnfocaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F5ADFB11E107CDD003B1225 /* EnfocaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnfocaTests.swift; sourceTree = "<group>"; };
 		0F5ADFB31E107CDD003B1225 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0F64F17F1E2AB7EF000549CF /* PairEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PairEditorViewController.swift; path = Features/PairEditor/PairEditorViewController.swift; sourceTree = "<group>"; };
+		0F64F1821E2AB872000549CF /* PairEditorViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PairEditorViewControllerTests.swift; path = Features/PairEditor/PairEditorViewControllerTests.swift; sourceTree = "<group>"; };
+		0F64F1841E2AD1C7000549CF /* BrowseViewModelDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowseViewModelDelegate.swift; path = Features/Browse/BrowseViewModelDelegate.swift; sourceTree = "<group>"; };
+		0F8594151E2AB41500163462 /* PairEditor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = PairEditor.storyboard; path = Features/Edit/PairEditor.storyboard; sourceTree = "<group>"; };
 		0F864E801E17F81500539773 /* BrowseViewControllerStudyItemTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowseViewControllerStudyItemTests.swift; path = Features/Browse/BrowseViewControllerStudyItemTests.swift; sourceTree = "<group>"; };
 		0F864E821E17F93F00539773 /* ApplicationDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApplicationDefaults.swift; path = Core/ApplicationDefaults.swift; sourceTree = "<group>"; };
 		0F864E851E1807A400539773 /* WordPairCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WordPairCell.swift; path = Features/Browse/WordPairCell.swift; sourceTree = "<group>"; };
@@ -243,6 +247,7 @@
 		0F38A4D11E11AFA200051F9E /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				0F64F1811E2AB82F000549CF /* PairEditor */,
 				0F4D8A411E12E19400900729 /* Browse */,
 				0F38A4D21E11AFAD00051F9E /* Login */,
 			);
@@ -274,6 +279,7 @@
 			children = (
 				0F4D8A461E12E3E100900729 /* Browse */,
 				0F38A4DA1E11B20700051F9E /* Login */,
+				0F8594171E2AB42500163462 /* PairEditor */,
 			);
 			name = Features;
 			sourceTree = "<group>";
@@ -316,6 +322,7 @@
 				0FB1C6631E148F710087DC93 /* TagFilterDelegate.swift */,
 				0FDC870C1E15573300CF4EC6 /* TagFilterViewModel.swift */,
 				0F864E851E1807A400539773 /* WordPairCell.swift */,
+				0F64F1841E2AD1C7000549CF /* BrowseViewModelDelegate.swift */,
 			);
 			name = Browse;
 			sourceTree = "<group>";
@@ -359,8 +366,6 @@
 				0F38A4D61E11B12600051F9E /* Shared */,
 				0F32FC3D1E11A7DB00D599D8 /* Resources */,
 				0F2431BC1E109CBE0046A224 /* Models */,
-				0F5ADF9E1E107CDD003B1225 /* ViewController.swift */,
-				0F5ADFA01E107CDD003B1225 /* Main.storyboard */,
 				0F5ADFA31E107CDD003B1225 /* Assets.xcassets */,
 				0FB1C65C1E1452900087DC93 /* Network */,
 			);
@@ -379,6 +384,23 @@
 				0FAA96201E1AB79100078365 /* Shared */,
 			);
 			path = EnfocaTests;
+			sourceTree = "<group>";
+		};
+		0F64F1811E2AB82F000549CF /* PairEditor */ = {
+			isa = PBXGroup;
+			children = (
+				0F64F1821E2AB872000549CF /* PairEditorViewControllerTests.swift */,
+			);
+			name = PairEditor;
+			sourceTree = "<group>";
+		};
+		0F8594171E2AB42500163462 /* PairEditor */ = {
+			isa = PBXGroup;
+			children = (
+				0F8594151E2AB41500163462 /* PairEditor.storyboard */,
+				0F64F17F1E2AB7EF000549CF /* PairEditorViewController.swift */,
+			);
+			name = PairEditor;
 			sourceTree = "<group>";
 		};
 		0F864E841E17F94D00539773 /* Core */ = {
@@ -552,7 +574,7 @@
 				0F38A4DC1E11B28A00051F9E /* Login.storyboard in Resources */,
 				0F32FC3F1E11A7F100D599D8 /* GoogleService-Info.plist in Resources */,
 				0F5ADFA41E107CDD003B1225 /* Assets.xcassets in Resources */,
-				0F5ADFA21E107CDD003B1225 /* Main.storyboard in Resources */,
+				0F8594161E2AB41500163462 /* PairEditor.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,6 +690,7 @@
 				0FB1C6641E148F710087DC93 /* TagFilterDelegate.swift in Sources */,
 				0F5044D21E22D8B3007030CD /* UITableView+.swift in Sources */,
 				0FB1C6661E154F200087DC93 /* Sequence+.swift in Sources */,
+				0F64F1801E2AB7EF000549CF /* PairEditorViewController.swift in Sources */,
 				0FB1C64F1E13F3530087DC93 /* WordStateFilterViewModel.swift in Sources */,
 				0F864E8A1E1808C900539773 /* BrowserViewModel.swift in Sources */,
 				0F38A4DE1E11B2AA00051F9E /* LoginViewController.swift in Sources */,
@@ -676,6 +699,7 @@
 				0F38A4E21E11C61000051F9E /* WelcomeViewController.swift in Sources */,
 				0F4D8A4B1E12E86900900729 /* UIViewController+.swift in Sources */,
 				0FB1C6541E1403BE0087DC93 /* EnumCollection.swift in Sources */,
+				0F64F1851E2AD1C7000549CF /* BrowseViewModelDelegate.swift in Sources */,
 				0F2431CD1E10A5420046A224 /* Tag.swift in Sources */,
 				0F4D8A451E12E3D400900729 /* BrowseViewController.swift in Sources */,
 				0F864E871E1807A400539773 /* WordPairCell.swift in Sources */,
@@ -686,7 +710,6 @@
 				0F2431C91E10A1DC0046A224 /* WordStateFilter.swift in Sources */,
 				0FB1C6621E148CA00087DC93 /* TagFilterViewController.swift in Sources */,
 				0FB1C6591E144D730087DC93 /* TagAssociation.swift in Sources */,
-				0F5ADF9F1E107CDD003B1225 /* ViewController.swift in Sources */,
 				0F2431BE1E109CDF0046A224 /* CardOrder.swift in Sources */,
 				0F5ADF9D1E107CDD003B1225 /* AppDelegate.swift in Sources */,
 				0F2431D11E10A9860046A224 /* User.swift in Sources */,
@@ -700,6 +723,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F64F1831E2AB872000549CF /* PairEditorViewControllerTests.swift in Sources */,
 				0F864E8E1E18660800539773 /* WordPairCellTests.swift in Sources */,
 				0FB1C64D1E13F05E0087DC93 /* WordStateFilterViewControllerTests.swift in Sources */,
 				0F38A4E01E11B94A00051F9E /* SharedMocks.swift in Sources */,
@@ -735,14 +759,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		0F5ADFA01E107CDD003B1225 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0F5ADFA11E107CDD003B1225 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		0F5ADFA51E107CDD003B1225 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

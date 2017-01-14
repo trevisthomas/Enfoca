@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vAK-aZ-pqa">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Pair Editor View Controller-->
+        <scene sceneID="baD-0e-kaz">
+            <objects>
+                <viewController storyboardIdentifier="PairEditor" id="vAK-aZ-pqa" customClass="PairEditorViewController" customModule="Enfoca" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SGD-FG-y0v"/>
+                        <viewControllerLayoutGuide type="bottom" id="fiH-0o-CpH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FKI-Jb-1xE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vbo-tI-t5k">
+                                <rect key="frame" x="-4" y="0.0" width="383" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oj6-SO-Od7">
+                                        <rect key="frame" x="16" y="16" width="34" height="30"/>
+                                        <state key="normal" title="Back"/>
+                                        <connections>
+                                            <action selector="performBackButtonAction" destination="vAK-aZ-pqa" eventType="touchUpInside" id="1VE-EB-7UC"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YOn-Cu-qzg">
+                                        <rect key="frame" x="266" y="16" width="101" height="30"/>
+                                        <state key="normal" title="Save or Create"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="6oN-8u-jXm"/>
+                                    <constraint firstItem="oj6-SO-Od7" firstAttribute="top" secondItem="Vbo-tI-t5k" secondAttribute="top" constant="16" id="MYu-6v-YQV"/>
+                                    <constraint firstAttribute="trailing" secondItem="YOn-Cu-qzg" secondAttribute="trailing" constant="16" id="Q2C-Df-gFQ"/>
+                                    <constraint firstItem="YOn-Cu-qzg" firstAttribute="top" secondItem="Vbo-tI-t5k" secondAttribute="top" constant="16" id="QJ0-9p-OZ1"/>
+                                    <constraint firstItem="oj6-SO-Od7" firstAttribute="leading" secondItem="Vbo-tI-t5k" secondAttribute="leading" constant="16" id="XZb-Kf-qux"/>
+                                </constraints>
+                            </view>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Word" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N1b-AO-JeH">
+                                <rect key="frame" x="16" y="68" width="343" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Definition" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OAm-d3-IIx">
+                                <rect key="frame" x="16" y="106" width="343" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Vbo-tI-t5k" firstAttribute="leading" secondItem="FKI-Jb-1xE" secondAttribute="leadingMargin" constant="-20" id="70u-xL-vv5"/>
+                            <constraint firstItem="OAm-d3-IIx" firstAttribute="height" secondItem="N1b-AO-JeH" secondAttribute="height" id="DhD-CU-PRZ"/>
+                            <constraint firstItem="OAm-d3-IIx" firstAttribute="top" secondItem="N1b-AO-JeH" secondAttribute="bottom" constant="8" id="KVe-d0-sQA"/>
+                            <constraint firstItem="N1b-AO-JeH" firstAttribute="top" secondItem="Vbo-tI-t5k" secondAttribute="bottom" constant="8" id="LPn-Cv-ycU"/>
+                            <constraint firstItem="Vbo-tI-t5k" firstAttribute="top" secondItem="SGD-FG-y0v" secondAttribute="bottom" constant="-20" id="Rae-OZ-xK9"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Vbo-tI-t5k" secondAttribute="trailing" constant="-20" id="dQg-DO-BPW"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="N1b-AO-JeH" secondAttribute="leading" id="kU4-8n-4gi"/>
+                            <constraint firstItem="OAm-d3-IIx" firstAttribute="leading" secondItem="N1b-AO-JeH" secondAttribute="leading" id="oNN-4A-jMh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="N1b-AO-JeH" secondAttribute="trailing" id="rEh-et-9ba"/>
+                            <constraint firstItem="OAm-d3-IIx" firstAttribute="width" secondItem="N1b-AO-JeH" secondAttribute="width" id="vWW-Sy-UlQ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="backButton" destination="oj6-SO-Od7" id="R10-ig-aEa"/>
+                        <outlet property="definitionTextField" destination="OAm-d3-IIx" id="V9C-iH-ScY"/>
+                        <outlet property="saveOrCreateButton" destination="YOn-Cu-qzg" id="37p-S4-HY1"/>
+                        <outlet property="wordTextField" destination="N1b-AO-JeH" id="586-u3-jEn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TNO-HK-HBv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="53.600000000000001" y="-136.28185907046478"/>
+        </scene>
+    </scenes>
+</document>

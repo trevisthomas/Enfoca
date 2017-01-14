@@ -11,13 +11,20 @@ import XCTest
 class BrowseViewModelTests: XCTestCase {
     var sut : BrowseViewModel!
     var mockService: MockWebService!
+    var mockBVMDelegate : MockBrowseViewModelDelegate!
+    
     override func setUp() {
         super.setUp()
         sut = BrowseViewModel()
         
-        mockService = MockWebService()
+        
         mockService.wordPairs = makeWordPairs()
-        sut.webService = mockService
+        
+        mockService = MockWebService()
+        mockBVMDelegate = MockBrowseViewModelDelegate()
+        
+        mockBVMDelegate.webService = mockService
+        sut.delegate = mockBVMDelegate
     }
     
     override func tearDown() {
@@ -113,6 +120,31 @@ class BrowseViewModelTests: XCTestCase {
         XCTAssertEqual(cell.wordPair.definition, wp.definition)
         XCTAssertEqual(cell.wordPair.word, wp.word)
         XCTAssertTrue(cell.reverseWordPair)
+    }
+    
+    //TODO, Row tap on ViewModel should tell VC to edit
+    func testEdit_SelectingRowShouldNotifyViewController(){
+        let rut = 1
+        let tableView = MockWordPairTableView()
+        
+        let wp = mockService.wordPairs[rut]
+        
+        sut.fetchWordPairs(wordStateFilter: .all, tagFilter: [], wordPairOrder: .wordAsc) //This forces the VM to load data.
+        
+        sut.tableView(tableView, didSelectRowAt: IndexPath(row: rut, section: 0))
+        
+        XCTAssertEqual(wp, mockBVMDelegate.editCalledWithWordPair)
+    }
+}
+
+extension BrowseViewModelTests{
+    class MockBrowseViewModelDelegate : BrowseViewModelDelegate {
+        var webService: WebService!
+        
+        var editCalledWithWordPair : WordPair!
+        func edit(wordPair: WordPair) {
+            editCalledWithWordPair = wordPair
+        }
     }
 }
 

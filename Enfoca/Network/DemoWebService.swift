@@ -71,8 +71,8 @@ class DemoWebService : WebService {
         return wp
     }
 
-    func fetchUserTags(enfocaId : Int, callback : @escaping([Tag])->()){
-        callback(DemoWebService.makeTags(ownerId: enfocaId))
+    func fetchUserTags(callback : @escaping([Tag])->()){
+        callback(DemoWebService.makeTags())
     }
     
     private class func makeTags(ownerId : Int = 1) -> [Tag] {
