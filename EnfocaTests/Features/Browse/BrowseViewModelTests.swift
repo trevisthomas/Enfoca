@@ -17,10 +17,9 @@ class BrowseViewModelTests: XCTestCase {
         super.setUp()
         sut = BrowseViewModel()
         
-        
+        mockService = MockWebService()
         mockService.wordPairs = makeWordPairs()
         
-        mockService = MockWebService()
         mockBVMDelegate = MockBrowseViewModelDelegate()
         
         mockBVMDelegate.webService = mockService

@@ -115,6 +115,16 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         
         wordPairSearchBar.backgroundImage = UIImage() //Ah ha!  This gits rid of that horible border!
         
+        registerForKeyboardNotifications(NotificationCenter.default)
+        
+        
+    }
+    
+    
+    func registerForKeyboardNotifications(_ notificationCenter : NotificationCenter){
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        
+        notificationCenter.addObserver(self, selector: #selector(keyboardDidHide(_:)), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
     }
     
     fileprivate func getSelectedFilterTags() -> [Tag] {
@@ -155,6 +165,19 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         })
     }
     
+    func keyboardWillShow(_ notification : NSNotification) {
+        guard let tap = view.gestureRecognizers?.first as? UITapGestureRecognizer else {
+            fatalError() //required
+        }
+        tap.cancelsTouchesInView = true
+    }
+    
+    func keyboardDidHide(_ notification : NSNotification) {
+        guard let tap = view.gestureRecognizers?.first as? UITapGestureRecognizer else {
+            fatalError() //required
+        }
+        tap.cancelsTouchesInView = false
+    }
     
     @IBAction func dismissKeyboard(){
         self.wordPairSearchBar.endEditing(true)

@@ -481,6 +481,44 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
     }
     
+    func testTap_GestureRecognizerShouldCancelTouchesOnlyWhenKeyboardIsOpen(){
+        overrideWithMocks()
+        
+        viewDidLoad()
+        
+        let search = MockUISearchBar()
+        sut.wordPairSearchBar = search
+        
+        XCTAssertEqual(sut.view.gestureRecognizers?.count, 1) //There should be one
+        
+        guard let tap = sut.view.gestureRecognizers?.first as? UITapGestureRecognizer else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssertFalse(tap.cancelsTouchesInView)
+        
+        let notification = NSNotification(name: NSNotification.Name("Mock"), object: nil)
+        
+        sut.keyboardWillShow(notification)
+        
+        XCTAssertTrue(tap.cancelsTouchesInView)
+        
+        sut.keyboardDidHide(notification)
+        
+        XCTAssertFalse(tap.cancelsTouchesInView)
+        
+    }
+    
+    func testKeyboard_ShouldRegisterForKeyboardOpenCloseNotifications(){
+        
+        let mockCenter = MockNotificationCenter()
+        sut.registerForKeyboardNotifications(mockCenter)
+        
+        XCTAssertTrue(mockCenter.list.contains(NSNotification.Name.UIKeyboardWillShow))
+        XCTAssertTrue(mockCenter.list.contains(NSNotification.Name.UIKeyboardDidHide))
+    }
+    
     func testStorybard_ShoudContainSegues(){
         //To force view did load to be called
         _ = sut.view
@@ -537,6 +575,14 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
 }
 
 extension BrowseViewControllerStudyItemTests {
+    
+    class MockNotificationCenter : NotificationCenter{
+        var list : [NSNotification.Name] = []
+        override func addObserver(_ observer: Any, selector aSelector: Selector, name aName: NSNotification.Name?, object anObject: Any?) {
+            list.append(aName!)
+        }
+    }
+    
     
     class MockUISearchBar : UISearchBar{
         var endEditingCalled : Bool = false
