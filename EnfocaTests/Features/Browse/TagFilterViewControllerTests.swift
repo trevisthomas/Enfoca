@@ -14,9 +14,7 @@ class TagFilterViewControllerTests: XCTestCase {
         super.setUp()
         
         let storyboard = UIStoryboard(name: "Browse", bundle: nil)
-        let destNav = storyboard.instantiateViewController(withIdentifier: "TagFilterVC") as! UINavigationController
-        sut = destNav.viewControllers.first as! TagFilterViewController
-        
+        sut = storyboard.instantiateViewController(withIdentifier: "TagFilterVC") as! TagFilterViewController
     }
     
     override func tearDown() {
@@ -84,40 +82,13 @@ class TagFilterViewControllerTests: XCTestCase {
         sut.tagFilterDelegate = delegate
         let _ = sut.view //View Did Load
         let path = IndexPath(row: 2, section: 0)
-        XCTAssertFalse(delegate.touched)
+        XCTAssertFalse(delegate.updateCalled)
         sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: path)
-        XCTAssertFalse(delegate.touched) //Stil false!
+        XCTAssertFalse(delegate.updateCalled) //Stil false!
         
     }
     
-    func testTableView_ApplyFilterShouldUpdateDelegateAndCloseView(){
-        let delegate = MockTagFilterDelegate()
-        sut.tagFilterDelegate = delegate
-        let _ = sut.view //View Did Load
-        let path = IndexPath(row: 2, section: 0)
-        
-        XCTAssertFalse(delegate.tagTuples[2].1) //Assert that this is not selected in the delegate
-        XCTAssertFalse(delegate.touched)
-        
-        sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: path)
-        XCTAssertFalse(delegate.touched) //Stil false!
-        XCTAssertFalse(delegate.tagTuples[2].1) //Assert that this is still not selected in the delegate
-        
-//        sut.applyFilter()
-        
-        let applyButton = sut.navigationItem.rightBarButtonItem!
-        XCTAssertEqual(applyButton.title, "Apply")
-
-        UIApplication.shared.sendAction(applyButton.action!, to: applyButton.target, from: nil, for: nil)
-        //Verify that it is selected now and that it has been notified
-        XCTAssertTrue(delegate.touched)
-        XCTAssertTrue(delegate.tagTuples[2].1)
-        
-        
-        //TODO: How to test if popover is closed?
-        
-    }
-
+   
     func testTableView_ShouldDequeueMyCell() {
         let delegate = MockTagFilterDelegate()
         sut.tagFilterDelegate = delegate
@@ -146,48 +117,130 @@ class TagFilterViewControllerTests: XCTestCase {
         XCTAssertEqual(applyButton.title, "Apply")
     }
     
-//    func testApplyButton_ApplyShouldNotifyDelegateOfUpdatedTuple(){
-//        let delegate = MockTagFilterDelegate()
-//        sut.tagFilterDelegate = delegate
-//        
-//        let _ = sut.view //View Did Load
-//        
-//        sut.applyFilter()
-//    }
-    
-//    func testInit_ShouldHaveAuthDelegateAndWebService() {
-//        XCTAssertNotNil(sut.authenticateionDelegate)
-//        XCTAssertNotNil(sut.webService)
-//    }
-    
     func testApplyFilter_ShouldBeAbleToUnselectASelectedItem(){
         let delegate = MockTagFilterDelegate()
         sut.tagFilterDelegate = delegate
         let _ = sut.view //View Did Load
         let path = IndexPath(row: 2, section: 0)
-        XCTAssertFalse(delegate.touched)
+        XCTAssertFalse(delegate.updateCalled)
         sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: path)
-        XCTAssertFalse(delegate.touched) //Stil false!
+        XCTAssertFalse(delegate.updateCalled) //Stil false!
         
         XCTAssertFalse(delegate.tagTuples[2].1)
         
         sut.applyFilterAction("none")
-        XCTAssertTrue(delegate.touched)
+        XCTAssertTrue(delegate.updateCalled)
         
         XCTAssertTrue(delegate.tagTuples[2].1)
         
         sut.tableView.delegate?.tableView!(sut.tableView, didDeselectRowAt: path) //This should deselect
         sut.applyFilterAction("none")
         XCTAssertFalse(delegate.tagTuples[2].1)
+    }
+    
+    func testTableView_ApplyFilterShouldUpdateDelegateAndCloseView(){
+        let delegate = MockTagFilterDelegate()
+        sut.tagFilterDelegate = delegate
+        let _ = sut.view //View Did Load
+        let path = IndexPath(row: 2, section: 0)
         
+        XCTAssertFalse(delegate.tagTuples[2].1) //Assert that this is not selected in the delegate
+        XCTAssertFalse(delegate.updateCalled)
+        
+        sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: path)
+        XCTAssertFalse(delegate.updateCalled) //Stil false!
+        XCTAssertFalse(delegate.tagTuples[2].1) //Assert that this is still not selected in the delegate
+        
+        //        sut.applyFilter()
+        
+        let applyButton = sut.navigationItem.rightBarButtonItem!
+        XCTAssertEqual(applyButton.title, "Apply")
+        
+        UIApplication.shared.sendAction(applyButton.action!, to: applyButton.target, from: nil, for: nil)
+        //Verify that it is selected now and that it has been notified
+        XCTAssertTrue(delegate.updateCalled)
+        XCTAssertTrue(delegate.tagTuples[2].1)
+        
+        //TODO: How to test if popover is closed?
+        
+    }
+
+    
+    func testSearch_ShouldExist(){
+        let delegate = MockTagFilterDelegate()
+        sut.tagFilterDelegate = delegate
+        let _ = sut.view //View Did Load
+        
+        XCTAssertNotNil(sut.tagSearchBar)
+        XCTAssertNotNil(sut.tagSearchBar.backgroundImage) //Setting a blank image keeps the ugly borders from showing up
+        XCTAssertNotNil(sut.tagSearchBar.delegate)
+        
+        XCTAssert(TagFilterViewController.conforms(to: UISearchBarDelegate.self))
+    }
+    
+    func testSearch_ChangingTextShouldCallSearch(){
+        let delegate = MockTagFilterDelegate()
+        sut.tagFilterDelegate = delegate
+        
+        let viewModel = MockTagFilterViewModel()
+        let _ = sut.view //View Did Load
+        
+        let mockTableView = MockTableView()
+        sut.tableView = mockTableView
+        sut.viewModel = viewModel
+        
+        sut.searchBar(sut.tagSearchBar, textDidChange: "L")
+        XCTAssertEqual(viewModel.searchFor, "L")
+        
+        XCTAssertTrue(mockTableView.dataReloaded)
+    }
+    
+    //This break was missed initially!
+    func testSearch_ApplyFilterShoudSelectProperTag(){
+        let delegate = MockTagFilterDelegate()
+        sut.tagFilterDelegate = delegate
+        let _ = sut.view //View Did Load
+        
+        
+        
+        let tagTuple = delegate.tagTuples[2]
+        
+        XCTAssertFalse(delegate.tagTuples[2].1) //Assert that this is not selected in the delegate
+        XCTAssertFalse(delegate.updateCalled)
+        
+        
+        sut.searchBar(sut.tagSearchBar, textDidChange: tagTuple.0.name) //Search for this tag
+        
+        //Post search, the list should contain only this tag
+        XCTAssertEqual(sut.viewModel.tableView(sut.tableView, numberOfRowsInSection: 0), 1)
+        
+        let path = IndexPath(row: 0, section: 0) //The only row post search
+        sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: path)
+        
+        let applyButton = sut.navigationItem.rightBarButtonItem!
+        XCTAssertEqual(applyButton.title, "Apply")
+        
+        UIApplication.shared.sendAction(applyButton.action!, to: applyButton.target, from: nil, for: nil)
+        
+        //Verify that it is selected now and that it has been notified
+        XCTAssertTrue(delegate.updateCalled)
+        XCTAssertTrue(delegate.tagTuples[2].1)
+        
+        //TODO: How to test if popover is closed?
         
     }
 }
 
 extension TagFilterViewControllerTests {
+    class MockTagFilterViewModel : TagFilterViewModel {
+        var searchFor : String?
+        override func searchTagsFor(prefix: String) {
+            searchFor = prefix
+        }
+    }
     
     class MockTagFilterDelegate : TagFilterDelegate {
-        var touched : Bool = false
+        var updateCalled : Bool = false
         
         init(){
             self.tagTuples = makeTagTuples()
@@ -195,7 +248,7 @@ extension TagFilterViewControllerTests {
         var tagTuples : [(Tag, Bool)] = []
         
         func updated(_ callback : (() -> ())? = nil){
-            touched = true
+            updateCalled = true
         }
     }
 }

@@ -27,7 +27,7 @@ extension Sequence where Iterator.Element == (Tag, Bool) {
         return true
     }
     
-    func find(tag : Tag) -> tagFilter? {
+    func find(tag : Tag) -> TagFilter? {
         let array = self as! [(Tag, Bool)]
         guard let index = array.index(where: {
             (t, s) in

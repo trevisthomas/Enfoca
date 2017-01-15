@@ -11,7 +11,7 @@ import Foundation
 protocol ApplicationDefaults {
     var wordStateFilter : WordStateFilter {get set}
     var reverseWordPair : Bool {get set}
-    var tagFilters : [tagFilter] {get set}
+    var tagFilters : [TagFilter] {get set}
     func save()
 }
 

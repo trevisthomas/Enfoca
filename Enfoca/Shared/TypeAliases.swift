@@ -8,4 +8,4 @@
 
 import Foundation
 
-typealias tagFilter = (Tag, Bool)
+typealias TagFilter = (Tag, Bool)

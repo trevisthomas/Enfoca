@@ -27,7 +27,7 @@ class WordStateFilterViewModelTests: XCTestCase {
     func testTableView_ShouldDequeueExpectedIdentifier() {
         let tableView = MockTableView()
         _ = sut.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0))
-        XCTAssertEqual(tableView.calledWithIdentifier, "WordStateFilterCell")
+        XCTAssertEqual(tableView.identifier, "WordStateFilterCell")
     }
     
     func testTableView_CheckCellCount(){
@@ -67,13 +67,7 @@ class WordStateFilterViewModelTests: XCTestCase {
 }
 
 extension WordStateFilterViewModelTests {
-    class MockTableView : UITableView {
-        var calledWithIdentifier : String!
-        override func dequeueReusableCell(withIdentifier identifier: String) -> UITableViewCell? {
-            calledWithIdentifier = identifier
-            return UITableViewCell()
-        }
-    }
+
     
 //    class MockDelegate : WordStateFilterDelegate {
 //        var currentWordStateFilter: WordStateFilter = .all

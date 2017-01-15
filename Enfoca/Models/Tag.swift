@@ -8,7 +8,13 @@
 
 import Foundation
 
-public struct Tag : Equatable {
+public struct Tag : Equatable, Hashable {
+    /// The hash value.
+    ///
+    /// Hash values are not guaranteed to be equal across different executions of
+    /// your program. Do not save hash values to use during a future execution.
+    public var hashValue: Int
+
     /// Returns a Boolean value indicating whether two values are equal.
     ///
     /// Equality is the inverse of inequality. For any values `a` and `b`,
@@ -32,5 +38,6 @@ public struct Tag : Equatable {
         self.name = name
         self.ownerId = ownerId
         self.count = count
+        self.hashValue = name.hashValue
     }
 }

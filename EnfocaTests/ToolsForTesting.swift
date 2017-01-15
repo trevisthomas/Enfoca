@@ -22,6 +22,7 @@ func makeTags(ownerId : Int = 1) -> [Tag] {
     tags.append(Tag(ownerId: ownerId, tagId: "125", name: "Phrase"))
     tags.append(Tag(ownerId: ownerId, tagId: "126", name: "Adverb"))
     tags.append(Tag(ownerId: ownerId, tagId: "127", name: "From Class #3"))
+    tags.append(Tag(ownerId: ownerId, tagId: "128", name: "Adjective"))
     return tags
 }
 

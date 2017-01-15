@@ -200,10 +200,10 @@
                         <segue destination="P3C-6C-QCJ" kind="popoverPresentation" identifier="WordStateFilterSegue" popoverAnchorView="N9c-dn-pN4" id="oKy-xf-sdK">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
-                        <segue destination="1pu-Gh-rsh" kind="popoverPresentation" identifier="TagFilterSegue" popoverAnchorView="iNU-QU-6ez" id="yri-GT-3F3">
+                        <segue destination="bi6-Z9-Gmu" kind="show" identifier="PairEditorSegue" id="ZFn-Fq-DbS"/>
+                        <segue destination="Lw3-aX-uZa" kind="popoverPresentation" identifier="TagFilterSegue" popoverAnchorView="iNU-QU-6ez" id="r0Q-pe-AXO">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
-                        <segue destination="bi6-Z9-Gmu" kind="show" identifier="PairEditorSegue" id="ZFn-Fq-DbS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rhR-E2-jqU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -278,7 +278,7 @@
         <!--Tag Filter-->
         <scene sceneID="tGk-q8-vjc">
             <objects>
-                <viewController id="Lw3-aX-uZa" customClass="TagFilterViewController" customModule="Enfoca" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TagFilterVC" id="Lw3-aX-uZa" customClass="TagFilterViewController" customModule="Enfoca" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="R54-zf-tzf"/>
                         <viewControllerLayoutGuide type="bottom" id="psc-nG-spp"/>
@@ -287,15 +287,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r5X-cJ-ZYw">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wWl-KI-b4o">
+                                        <rect key="frame" x="316" y="16" width="43" height="30"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Apply"/>
+                                        <connections>
+                                            <action selector="applyFilterAction:" destination="HsY-Jw-NAl" eventType="touchUpInside" id="C8R-5Z-pyZ"/>
+                                        </connections>
+                                    </button>
+                                    <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="dQE-oM-e5Q">
+                                        <rect key="frame" x="0.0" y="52" width="375" height="44"/>
+                                        <color key="barTintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="Lw3-aX-uZa" id="6av-Uf-NVR"/>
+                                        </connections>
+                                    </searchBar>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="dQE-oM-e5Q" secondAttribute="trailing" id="1UJ-hx-qBk"/>
+                                    <constraint firstItem="wWl-KI-b4o" firstAttribute="top" secondItem="r5X-cJ-ZYw" secondAttribute="top" constant="16" id="5gb-0U-W1v"/>
+                                    <constraint firstItem="dQE-oM-e5Q" firstAttribute="top" secondItem="r5X-cJ-ZYw" secondAttribute="top" constant="52" id="Drv-e1-3y2"/>
+                                    <constraint firstAttribute="trailing" secondItem="wWl-KI-b4o" secondAttribute="trailing" constant="16" id="ElL-jG-AuP"/>
+                                    <constraint firstAttribute="height" constant="120" id="c0U-L8-Dty"/>
+                                    <constraint firstItem="dQE-oM-e5Q" firstAttribute="leading" secondItem="r5X-cJ-ZYw" secondAttribute="leading" id="erJ-pz-IlY"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zHM-Zn-nWK">
-                                <rect key="frame" x="16" y="44" width="343" height="615"/>
+                                <rect key="frame" x="0.0" y="120" width="375" height="539"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TagFilterCell" textLabel="j0r-cq-z3d" detailTextLabel="KS1-UR-s7P" style="IBUITableViewCellStyleSubtitle" id="Svy-wM-sKL">
-                                        <rect key="frame" x="0.0" y="28" width="343" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Svy-wM-sKL" id="uVV-it-0qO">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="j0r-cq-z3d">
@@ -324,10 +354,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="zHM-Zn-nWK" firstAttribute="top" secondItem="R54-zf-tzf" secondAttribute="bottom" id="LpA-WQ-5pN"/>
-                            <constraint firstItem="zHM-Zn-nWK" firstAttribute="trailing" secondItem="BLJ-Pq-5Gm" secondAttribute="trailingMargin" id="Z7z-so-las"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="r5X-cJ-ZYw" secondAttribute="trailing" constant="-16" id="GeM-Cd-t95"/>
+                            <constraint firstItem="r5X-cJ-ZYw" firstAttribute="leading" secondItem="BLJ-Pq-5Gm" secondAttribute="leadingMargin" constant="-16" id="SQ2-BK-gJT"/>
+                            <constraint firstItem="zHM-Zn-nWK" firstAttribute="top" secondItem="r5X-cJ-ZYw" secondAttribute="bottom" id="TAJ-cY-DnG"/>
+                            <constraint firstItem="zHM-Zn-nWK" firstAttribute="trailing" secondItem="BLJ-Pq-5Gm" secondAttribute="trailing" id="Z7z-so-las"/>
+                            <constraint firstItem="r5X-cJ-ZYw" firstAttribute="top" secondItem="R54-zf-tzf" secondAttribute="bottom" id="d8x-pQ-LvY"/>
                             <constraint firstItem="psc-nG-spp" firstAttribute="top" secondItem="zHM-Zn-nWK" secondAttribute="bottom" constant="8" symbolic="YES" id="z8s-c0-KDI"/>
-                            <constraint firstItem="zHM-Zn-nWK" firstAttribute="leading" secondItem="BLJ-Pq-5Gm" secondAttribute="leadingMargin" id="zbg-pd-wwT"/>
+                            <constraint firstItem="zHM-Zn-nWK" firstAttribute="leading" secondItem="BLJ-Pq-5Gm" secondAttribute="leading" id="zbg-pd-wwT"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Tag Filter" id="gsT-N0-9PD">
@@ -340,30 +373,13 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="zHM-Zn-nWK" id="dY6-em-cKu"/>
+                        <outlet property="tagSearchBar" destination="dQE-oM-e5Q" id="lep-br-ccV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HsY-Jw-NAl" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="YpH-hW-RNu" customClass="TagFilterViewModel" customModule="Enfoca" customModuleProvider="target"/>
             </objects>
-            <point key="canvasLocation" x="2884" y="1267.9160419790105"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="pAV-2Z-JuW">
-            <objects>
-                <navigationController storyboardIdentifier="TagFilterVC" automaticallyAdjustsScrollViewInsets="NO" id="1pu-Gh-rsh" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="5I2-kp-iRe">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Lw3-aX-uZa" kind="relationship" relationship="rootViewController" id="5Oi-UK-LRq"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6Oa-Uo-dkl" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1944.8" y="1267.9160419790105"/>
+            <point key="canvasLocation" x="2069.5999999999999" y="1129.385307346327"/>
         </scene>
     </scenes>
 </document>

@@ -302,8 +302,8 @@
 				0F864E8B1E180C1E00539773 /* BrowseViewModelTests.swift */,
 				0FB1C64C1E13F05E0087DC93 /* WordStateFilterViewControllerTests.swift */,
 				0FB1C6501E13F8B40087DC93 /* WordStateFilterViewModelTests.swift */,
-				0FDC870A1E15560700CF4EC6 /* TagFilterViewModelTests.swift */,
 				0FDC87081E1552F600CF4EC6 /* TagFilterViewControllerTests.swift */,
+				0FDC870A1E15560700CF4EC6 /* TagFilterViewModelTests.swift */,
 				0F864E8D1E18660800539773 /* WordPairCellTests.swift */,
 			);
 			name = Browse;

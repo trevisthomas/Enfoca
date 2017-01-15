@@ -109,12 +109,5 @@ extension WordStateFilterViewControllerTests {
             completion!()
         }
     }
-    
-    class MockTableView : UITableView {
-        var selectedIndexPath : IndexPath?
-        
-        override func selectRow(at indexPath: IndexPath?, animated: Bool, scrollPosition: UITableViewScrollPosition) {
-            selectedIndexPath = indexPath
-        }
-    }
+ 
 }

@@ -151,3 +151,23 @@ class MockWordStateFilterDelegate : WordStateFilterDelegate {
         updatedCalled = true
     }
 }
+
+class MockTableView : UITableView {
+    
+    var dataReloaded : Bool = false
+    override func reloadData() {
+        super.reloadData()
+        dataReloaded = true
+    }
+    
+    var selectedIndexPath : IndexPath?
+    override func selectRow(at indexPath: IndexPath?, animated: Bool, scrollPosition: UITableViewScrollPosition) {
+        selectedIndexPath = indexPath
+    }
+    
+    var identifier : String?
+    override func dequeueReusableCell(withIdentifier identifier: String) -> UITableViewCell? {
+        self.identifier = identifier
+        return UITableViewCell(style: .subtitle, reuseIdentifier: identifier)
+    }
+}

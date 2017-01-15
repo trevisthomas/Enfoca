@@ -207,8 +207,7 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
             let wordFilterVC = vc as! WordStateFilterViewController
             wordFilterVC.wordStateFilterDelegate = self
         } else if button == tagFilterButton {
-            let tagFilterNav = vc as! UINavigationController
-            let tagFilterVC = tagFilterNav.viewControllers.first as! TagFilterViewController
+            let tagFilterVC = vc as! TagFilterViewController
             tagFilterVC.tagFilterDelegate = self
         }
         

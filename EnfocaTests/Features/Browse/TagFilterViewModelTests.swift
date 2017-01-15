@@ -24,9 +24,7 @@ class TagFilterViewModelTests: XCTestCase {
         
         let delegate = MockTagFilterDelegate()
         delegate.tagTuples = tagTuples
-        sut.tagFilterDelegate = delegate
-        
-        
+        sut.configureFromDelegate(delegate: delegate)
     }
     
     override func tearDown() {
@@ -62,6 +60,33 @@ class TagFilterViewModelTests: XCTestCase {
         XCTAssertEqual(cell.detailTextLabel?.text, sut.formatDetailText(tag.count))
     }
     
+    func testTagSearch_SearchShouldLimitReultsToThoseMatchingSearchPattern() {
+        let tableView = MockTableView()
+        
+        XCTAssertEqual(sut.tagFilterDelegate.tagTuples.count, sut.tableView(tableView, numberOfRowsInSection: 0))
+        
+        
+        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), sut.tagFilterDelegate.tagTuples.count) //Assert initial state of all tags shown
+        
+        sut.searchTagsFor(prefix: "Ph")
+        
+        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 1)
+        let cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0))
+        XCTAssertEqual(cell.textLabel?.text, "Phrase")
+        
+        
+        sut.searchTagsFor(prefix: "Xa")
+        
+        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 0)
+        
+        sut.searchTagsFor(prefix: "Ad")
+        
+        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 2)
+        
+        sut.searchTagsFor(prefix: "nOun") //case insensitivie
+        
+        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 1)
+    }
     
    //You dont need to track the state this way.  The controller will deal with this
 //    func testTuple_ShouldToggleSelectedWhenTouched(){
@@ -105,14 +130,7 @@ extension TagFilterViewModelTests {
         func updated(_ callback : (() -> ())? = nil) {
             //noop
         }
-    }
-    
-    
-    class MockTableView : UITableView {
-        var identifier : String?
-        override func dequeueReusableCell(withIdentifier identifier: String) -> UITableViewCell? {
-            self.identifier = identifier
-            return UITableViewCell(style: .subtitle, reuseIdentifier: identifier)
-        }
+        
+        
     }
 }
