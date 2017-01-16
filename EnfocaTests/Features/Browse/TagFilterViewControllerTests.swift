@@ -15,6 +15,9 @@ class TagFilterViewControllerTests: XCTestCase {
         
         let storyboard = UIStoryboard(name: "Browse", bundle: nil)
         sut = storyboard.instantiateViewController(withIdentifier: "TagFilterVC") as! TagFilterViewController
+        
+        let delegate = MockTagFilterDelegate()
+        sut.tagFilterDelegate = delegate
     }
     
     override func tearDown() {
@@ -23,16 +26,13 @@ class TagFilterViewControllerTests: XCTestCase {
     }
     
     func testInit_ViewModelShouldBeWiredToDelegate(){
-        let delegate = MockTagFilterDelegate()
-        sut.tagFilterDelegate = delegate
+        
         let _ = sut.view //View Did Load
         let viewModel = sut.tableView.dataSource as! TagFilterViewModel
         XCTAssertNotNil(viewModel.tagFilterDelegate)
     }
     
     func testInit_TableViewsDataSourceAndDelegateAreWiredToViewModel(){
-        let delegate = MockTagFilterDelegate()
-        sut.tagFilterDelegate = delegate
         let _ = sut.view //View Did Load
         
         let _ = sut.tableView.delegate as! TagFilterViewModel
@@ -74,8 +74,7 @@ class TagFilterViewControllerTests: XCTestCase {
     }
     
     func testTableView_RowSelectionShouldNotUpdateDelegate(){
-        let delegate = MockTagFilterDelegate()
-        sut.tagFilterDelegate = delegate
+        let delegate = sut.tagFilterDelegate as! MockTagFilterDelegate
         let _ = sut.view //View Did Load
         let path = IndexPath(row: 2, section: 0)
         XCTAssertFalse(delegate.updateCalled)
@@ -86,8 +85,6 @@ class TagFilterViewControllerTests: XCTestCase {
     
    
     func testTableView_ShouldDequeueMyCell() {
-        let delegate = MockTagFilterDelegate()
-        sut.tagFilterDelegate = delegate
         let _ = sut.view //View Did Load
         
         //This test is insuring that the expected cell is registered.  At the moment IB does it.
@@ -103,17 +100,47 @@ class TagFilterViewControllerTests: XCTestCase {
     }
     
     func testApplyFilter_ButtonShoudldExist(){
-        let delegate = MockTagFilterDelegate()
-        sut.tagFilterDelegate = delegate
         let _ = sut.view //View Did Load
         
         let applyButton = sut.navigationItem.rightBarButtonItem!
         XCTAssertEqual(applyButton.title, "Apply")
     }
     
+    func testClear_ButtonShouldExist() {
+        let _ = sut.view //View Did Load
+        
+        let clearButton = sut.clearButton
+        XCTAssertEqual(clearButton?.title(for: .normal), "Clear")
+    }
+    
+    func testClear_ClearButtonShouldClearSelections(){
+        let _ = sut.view //View Did Load
+        
+        sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
+        
+        let tag1 = sut.viewModel.tagFilterDelegate.tagTuples[1].0
+        
+        XCTAssertEqual(sut.tagSummaryLabel.text, "Selected: \(tag1.name)")
+        
+        
+        sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: IndexPath(row: 2, section: 0))
+        
+        let tag2 = sut.viewModel.tagFilterDelegate.tagTuples[2].0
+        
+        XCTAssertEqual(sut.tagSummaryLabel.text, "Selected: \(tag2.name), \(tag1.name)")
+        
+        XCTAssertEqual(sut.viewModel.getSelectedTags().count, 2)
+        
+        sut.clearButton.sendActions(for: .touchUpInside)
+        
+        XCTAssertEqual(sut.viewModel.getSelectedTags().count, 0)
+        
+    }
+    
+    
     func testApplyFilter_ShouldBeAbleToUnselectASelectedItem(){
-        let delegate = MockTagFilterDelegate()
-        sut.tagFilterDelegate = delegate
+        let delegate = sut.tagFilterDelegate as! MockTagFilterDelegate
+        
         let _ = sut.view //View Did Load
         let path = IndexPath(row: 2, section: 0)
         XCTAssertFalse(delegate.updateCalled)
@@ -133,8 +160,7 @@ class TagFilterViewControllerTests: XCTestCase {
     }
     
     func testTableView_ApplyFilterShouldUpdateDelegateAndCloseView(){
-        let delegate = MockTagFilterDelegate()
-        sut.tagFilterDelegate = delegate
+        let delegate = sut.tagFilterDelegate as! MockTagFilterDelegate
         let _ = sut.view //View Did Load
         let path = IndexPath(row: 2, section: 0)
         
@@ -144,8 +170,6 @@ class TagFilterViewControllerTests: XCTestCase {
         sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: path)
         XCTAssertFalse(delegate.updateCalled) //Stil false!
         XCTAssertFalse(delegate.tagTuples[2].1) //Assert that this is still not selected in the delegate
-        
-        //        sut.applyFilter()
         
         let applyButton = sut.navigationItem.rightBarButtonItem!
         XCTAssertEqual(applyButton.title, "Apply")
@@ -161,8 +185,6 @@ class TagFilterViewControllerTests: XCTestCase {
 
     
     func testSearch_ShouldExist(){
-        let delegate = MockTagFilterDelegate()
-        sut.tagFilterDelegate = delegate
         let _ = sut.view //View Did Load
         
         XCTAssertNotNil(sut.tagSearchBar)
@@ -170,12 +192,11 @@ class TagFilterViewControllerTests: XCTestCase {
         XCTAssertNotNil(sut.tagSearchBar.delegate)
         
         XCTAssert(TagFilterViewController.conforms(to: UISearchBarDelegate.self))
+        
+        XCTAssertEqual(sut.tagSearchBar.placeholder, "Tag Search")
     }
     
     func testSearch_ChangingTextShouldCallSearch(){
-        let delegate = MockTagFilterDelegate()
-        sut.tagFilterDelegate = delegate
-        
         let viewModel = MockTagFilterViewModel()
         let _ = sut.view //View Did Load
         
@@ -191,8 +212,8 @@ class TagFilterViewControllerTests: XCTestCase {
     
     //This break was missed initially!
     func testSearch_ApplyFilterShoudSelectProperTag(){
-        let delegate = MockTagFilterDelegate()
-        sut.tagFilterDelegate = delegate
+        let delegate = sut.tagFilterDelegate as! MockTagFilterDelegate
+        
         let _ = sut.view //View Did Load
         
         
@@ -222,6 +243,29 @@ class TagFilterViewControllerTests: XCTestCase {
         
         //TODO: How to test if popover is closed?
         
+    }
+    
+    func testTagSummary_LabelShouldExist(){
+        let _ = sut.view //View Did Load
+        XCTAssertNotNil(sut.tagSummaryLabel)
+        XCTAssertEqual(sut.tagSummaryLabel.text, "Selected: (none)")
+    }
+    
+    func testTagSummary_LabelShouldShowProperSummary(){
+        let _ = sut.view //View Did Load
+        
+        sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
+        
+        let tag1 = sut.viewModel.tagFilterDelegate.tagTuples[1].0
+        
+        XCTAssertEqual(sut.tagSummaryLabel.text, "Selected: \(tag1.name)")
+        
+        
+        sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: IndexPath(row: 2, section: 0))
+        
+        let tag2 = sut.viewModel.tagFilterDelegate.tagTuples[2].0
+        
+        XCTAssertEqual(sut.tagSummaryLabel.text, "Selected: \(tag2.name), \(tag1.name)")
     }
 }
 

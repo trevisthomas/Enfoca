@@ -291,14 +291,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wWl-KI-b4o">
-                                        <rect key="frame" x="316" y="16" width="43" height="30"/>
+                                        <rect key="frame" x="324" y="16" width="43" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="Apply"/>
                                         <connections>
                                             <action selector="applyFilterAction:" destination="HsY-Jw-NAl" eventType="touchUpInside" id="C8R-5Z-pyZ"/>
                                         </connections>
                                     </button>
-                                    <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="dQE-oM-e5Q">
+                                    <searchBar contentMode="redraw" placeholder="Tag Search" translatesAutoresizingMaskIntoConstraints="NO" id="dQE-oM-e5Q">
                                         <rect key="frame" x="0.0" y="52" width="375" height="44"/>
                                         <color key="barTintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -306,13 +306,30 @@
                                             <outlet property="delegate" destination="Lw3-aX-uZa" id="6av-Uf-NVR"/>
                                         </connections>
                                     </searchBar>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Selected: (none)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XYe-5g-wlU">
+                                        <rect key="frame" x="8" y="96" width="359" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ccm-0w-qoP">
+                                        <rect key="frame" x="8" y="16" width="39" height="30"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Clear"/>
+                                        <connections>
+                                            <action selector="clearButtonAction:" destination="Lw3-aX-uZa" eventType="touchUpInside" id="y92-BJ-aar"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="dQE-oM-e5Q" secondAttribute="trailing" id="1UJ-hx-qBk"/>
+                                    <constraint firstItem="Ccm-0w-qoP" firstAttribute="leading" secondItem="r5X-cJ-ZYw" secondAttribute="leading" constant="8" id="3iM-aT-Zkx"/>
                                     <constraint firstItem="wWl-KI-b4o" firstAttribute="top" secondItem="r5X-cJ-ZYw" secondAttribute="top" constant="16" id="5gb-0U-W1v"/>
                                     <constraint firstItem="dQE-oM-e5Q" firstAttribute="top" secondItem="r5X-cJ-ZYw" secondAttribute="top" constant="52" id="Drv-e1-3y2"/>
-                                    <constraint firstAttribute="trailing" secondItem="wWl-KI-b4o" secondAttribute="trailing" constant="16" id="ElL-jG-AuP"/>
+                                    <constraint firstAttribute="trailing" secondItem="wWl-KI-b4o" secondAttribute="trailing" constant="8" id="ElL-jG-AuP"/>
+                                    <constraint firstItem="Ccm-0w-qoP" firstAttribute="top" secondItem="r5X-cJ-ZYw" secondAttribute="top" constant="16" id="TkY-np-4K4"/>
                                     <constraint firstAttribute="height" constant="120" id="c0U-L8-Dty"/>
                                     <constraint firstItem="dQE-oM-e5Q" firstAttribute="leading" secondItem="r5X-cJ-ZYw" secondAttribute="leading" id="erJ-pz-IlY"/>
                                 </constraints>
@@ -406,8 +423,10 @@
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="clearButton" destination="Ccm-0w-qoP" id="I2a-d0-ekF"/>
                         <outlet property="tableView" destination="zHM-Zn-nWK" id="dY6-em-cKu"/>
                         <outlet property="tagSearchBar" destination="dQE-oM-e5Q" id="lep-br-ccV"/>
+                        <outlet property="tagSummaryLabel" destination="XYe-5g-wlU" id="tJf-VE-Dyq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HsY-Jw-NAl" userLabel="First Responder" sceneMemberID="firstResponder"/>

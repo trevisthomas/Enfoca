@@ -34,11 +34,6 @@ class TagFilterViewModelTests: XCTestCase {
         vc.tagFilterDelegate = delegate
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
     func testTuple_SizeShouldMatchSize(){
         let tableView = UITableView()
         
@@ -145,6 +140,51 @@ class TagFilterViewModelTests: XCTestCase {
         XCTAssertEqual(cell.tagTitleLabel?.text, "Phrase")
         XCTAssertTrue((vc.tableView.indexPathsForSelectedRows?.contains(path))!)
         
+    }
+    
+    func testGetSelected_ShouldReturnSelectedTags() {
+        
+        let _ = vc.view //View Did Load
+        
+        vc.tableView.delegate = sut
+        vc.tableView.dataSource = sut
+        
+        let tableView = vc.tableView!
+        
+        XCTAssertTrue(sut.tagFilterDelegate.tagTuples.count > 0)
+        
+        XCTAssertEqual(sut.tagFilterDelegate.tagTuples.count, sut.tableView(tableView, numberOfRowsInSection: 0))
+        
+        
+        var path = IndexPath(row: 2, section: 0)
+        sut.tableView(vc.tableView, didSelectRowAt: path)
+        
+        let tag1 = sut.localTempTagFilters[path.row].0
+        
+        path = IndexPath(row: 3, section: 0)
+        sut.tableView(vc.tableView, didSelectRowAt: path)
+        
+        let tag2 = sut.localTempTagFilters[path.row].0
+        
+        let selectedTags = sut.getSelectedTags()
+        
+        XCTAssertTrue(selectedTags.contains(tag1))
+        XCTAssertTrue(selectedTags.contains(tag2))
+    }
+    
+    func testDeselect_ShouldCallCallback(){
+        var called : Bool = false
+        
+        let _ = vc.view
+        
+        
+        sut.observeChanges(callback: {
+            called = true
+        })
+        
+        sut.deselectAll()
+        
+        XCTAssertTrue(called)
         
     }
 }

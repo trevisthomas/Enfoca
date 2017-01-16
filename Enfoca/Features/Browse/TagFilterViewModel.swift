@@ -12,6 +12,7 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
     var localTempTagFilters : [TagFilter] = []
     var localTagDictionary : [Tag: Bool] = [:]
     private(set) var tagFilterDelegate : TagFilterDelegate!
+    var callbackWhenChanged : (() -> ())?
     
     func configureFromDelegate(delegate : TagFilterDelegate){
         self.tagFilterDelegate = delegate
@@ -50,12 +51,14 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
         tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
         let tag = localTempTagFilters[indexPath.row].0
         localTagDictionary[tag] = true
+        callbackWhenChanged?()
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let tag = localTempTagFilters[indexPath.row].0
         localTagDictionary[tag] = false
+        callbackWhenChanged?()
     }
     
     func applySelectedTagsToDelegate(){
@@ -73,4 +76,26 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
             }
         }
     }
+    
+    func getSelectedTags() -> [Tag] {
+        var tags : [Tag] = []
+        for (tag, selected) in localTagDictionary {
+            if (selected) {
+                tags.append(tag)
+            }
+        }
+        return tags
+    }
+    
+    func observeChanges(callback : @escaping () ->()) {
+        callbackWhenChanged = callback
+    }
+    
+    func deselectAll(){
+        for (tag, _) in localTagDictionary {
+            localTagDictionary[tag] = false
+        }
+        callbackWhenChanged?()
+    }
+    
 }

@@ -12,15 +12,21 @@ class TagFilterViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tagSearchBar: UISearchBar!
+    @IBOutlet weak var tagSummaryLabel: UILabel!
+    @IBOutlet weak var clearButton: UIButton!
     
     var tagFilterDelegate : TagFilterDelegate!
     var viewModel : TagFilterViewModel!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         viewModel = tableView.dataSource as! TagFilterViewModel
         viewModel.configureFromDelegate(delegate: tagFilterDelegate)
+        
+        viewModel.observeChanges(callback : updateSelectedSummary)
+        
+        updateSelectedSummary()
         
         tagSearchBar.backgroundImage = UIImage() //Ah ha!  This gits rid of that horible border!
         
@@ -44,7 +50,30 @@ class TagFilterViewController: UIViewController {
         //TODO, learn how to test
         self.dismiss(animated: true, completion: nil) //I dont know how to unit test this dismiss
     }
+    
+    fileprivate func updateSelectedSummary(){
+        let selected = viewModel.getSelectedTags()
+        
+        guard selected.count > 0 else {
+            tagSummaryLabel.text = "Selected: (none)"
+            return
+        }
+        
+        var s : String = ""
+        for tag in selected {
+            if !s.isEmpty {
+                s.append(", ")
+            }
+            s.append(tag.name)
+        }
+        
+        tagSummaryLabel.text = "Selected: \(s)"
+    }
 
+    @IBAction func clearButtonAction(_ sender: Any) {
+        viewModel.deselectAll()
+        tableView.reloadData()
+    }
 }
 
 extension TagFilterViewController : UISearchBarDelegate {
