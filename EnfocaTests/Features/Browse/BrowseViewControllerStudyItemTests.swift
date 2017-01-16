@@ -18,6 +18,7 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         super.setUp()
         
         let storyboard = UIStoryboard(name: "Browse", bundle: nil)
+        
         sut = storyboard.instantiateViewController(withIdentifier: "BrowseVC") as! BrowseViewController
     }
     
@@ -66,20 +67,6 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         XCTAssertNotNil(vm.delegate)
     }
     
-//    func testDataSource_ShouldMakeHappyCells(){
-//        overrideWithMocks()
-//        
-//        let mockDefaults = MockDefaults()
-//        sut.appDefaultsDelegate = mockDefaults
-//        mockWebService.wordPairs = makeWordPairs()
-//        
-//        viewDidLoad()
-//        
-//        let cell = sut.tableView.dataSource?.tableView(sut.tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as! WordPairCell
-//        
-//        XCTAssertNotNil(cell)
-//
-//    }
     
     func testInit_CellsShouldBeInflatedAndPoulated(){
         overrideWithMocks()
@@ -89,7 +76,6 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         viewDidLoad()
         
         XCTAssertNotNil(sut.tableView)
-//        let cell = sut.tableView.dequeueReusableCell(withIdentifier: "WordPairCell", for: IndexPath(row: 2, section: 0)) as! WordPairCell
         
         let cell = sut.viewModel.tableView(sut.tableView, cellForRowAt: IndexPath(row: 2, section: 0)) as! WordPairCell
         
@@ -393,7 +379,7 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         //Real tables dont say that their cells are visible because they have been dequeued.  This might be a problem but i'm going to make this test work this way (with this hacked TabieView) and see what happens in the real thing.
         let tableView = MockWordPairTableView()
         let mockViewModel = MockViewModel()
-//        mockViewModel.webService = mockWebService
+
         sut.webService = mockWebService
         
         mockViewModel.delegate = sut
@@ -409,19 +395,6 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         XCTAssertTrue(cell.reverseWordPair)
         
         XCTAssertEqual(mockViewModel.animatingSetCount, 1)
-        
-//        //I'm buildint this test based on the assumption that calling cellForRow means that the cell is visible.  I am trying to verify that visible cells are notified when the order changes
-//        
-//        XCTAssertTrue(sut.viewModel.reverseWordPair)
-//        XCTAssertTrue(sut.reverseWordPair)
-//        
-//        sut.reverseWordPairSegmentedControl.selectedSegmentIndex = 0
-//        sut.reverseWordPairSegmentedControl.sendActions(for: .valueChanged)
-//        
-//        XCTAssertFalse(sut.reverseWordPair)
-//        XCTAssertFalse(sut.viewModel.reverseWordPair)
-//        
-//        XCTAssertFalse(cell.reverseWordPair)
     }
     
     
@@ -528,8 +501,6 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
     }
     
     func testEdit_EditingWordPairShouldSegue(){
-//            overrideWithMocks()
-        
         class MockBrowseViewController : BrowseViewController {
             var segueIdentifier : String?
             var sender : Any?
@@ -547,11 +518,6 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
         XCTAssertEqual(mockVC.segueIdentifier, "PairEditorSegue")
         XCTAssertEqual(mockVC.sender as! WordPair, wp)
-        
-//Test the ViewModel / delegate thing seperately
-//        sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
-
-
     }
     
     func testEdit_SegueShouldPrepareForEdit(){

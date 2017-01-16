@@ -22,16 +22,6 @@ class TagFilterViewControllerTests: XCTestCase {
         super.tearDown()
     }
     
-//    func testTuples_LocalChangesShouldNotNotifyDelegateUntilISaySo(){
-//        let vc = TagFilterViewController()
-//        let delegate = MockTagFilterDelegate()
-//        vc.tagFilterDelegate = delegate
-//        
-//        vc.tagFilterViewModel.didtouchupinside
-//        
-//        XCTAssertFalse(delegate.touched) //Internal modifications dont notify delegate
-//    }
-    
     func testInit_ViewModelShouldBeWiredToDelegate(){
         let delegate = MockTagFilterDelegate()
         sut.tagFilterDelegate = delegate
@@ -61,6 +51,12 @@ class TagFilterViewControllerTests: XCTestCase {
         let _ = sut.view //View Did Load
         
         XCTAssertTrue(sut.tableView.allowsMultipleSelection)
+        
+        //Made a change later where the VM does the table selection instead in ViewDidLoad to fix this test, i'm going to ask for the cells which will cause them to be selected.  This all works because filter apply also relies on the VM, not the actual selected rows.  The selected rows are just cosmetic now.
+        
+        for i in 0 ..< delegate.tagTuples.count {
+            _ = sut.viewModel.tableView(sut.tableView, cellForRowAt: IndexPath(row: i, section: 0))
+        }
         
         let selected = sut.tableView.indexPathsForSelectedRows!
         XCTAssertEqual(selected.count, 2)
@@ -95,7 +91,7 @@ class TagFilterViewControllerTests: XCTestCase {
         let _ = sut.view //View Did Load
         
         //This test is insuring that the expected cell is registered.  At the moment IB does it.
-        guard let cell = sut.tableView.dataSource?.tableView(sut.tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as UITableViewCell? else{
+        guard let cell = sut.tableView.dataSource?.tableView(sut.tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as! TagCell? else{
             XCTFail()
             return
         }
@@ -103,9 +99,7 @@ class TagFilterViewControllerTests: XCTestCase {
         XCTAssertNotNil(cell)
         
         let (tag, _) = sut.tagFilterDelegate.tagTuples[0]
-        XCTAssertEqual(cell.textLabel?.text, tag.name)
-        //Note: The detailTextLabel will be nil if the cell style isnt set
-        XCTAssertNotNil(cell.detailTextLabel)
+        XCTAssertEqual(cell.tagTitleLabel?.text, tag.name)
     }
     
     func testApplyFilter_ButtonShoudldExist(){
@@ -239,16 +233,4 @@ extension TagFilterViewControllerTests {
         }
     }
     
-    class MockTagFilterDelegate : TagFilterDelegate {
-        var updateCalled : Bool = false
-        
-        init(){
-            self.tagTuples = makeTagTuples()
-        }
-        var tagTuples : [(Tag, Bool)] = []
-        
-        func updated(_ callback : (() -> ())? = nil){
-            updateCalled = true
-        }
-    }
 }

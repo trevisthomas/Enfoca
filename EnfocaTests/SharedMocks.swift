@@ -168,6 +168,30 @@ class MockTableView : UITableView {
     var identifier : String?
     override func dequeueReusableCell(withIdentifier identifier: String) -> UITableViewCell? {
         self.identifier = identifier
-        return UITableViewCell(style: .subtitle, reuseIdentifier: identifier)
+        
+        if(identifier == "TagFilterCell"){
+            let cell = TagCell(style: .default, reuseIdentifier: identifier)
+            cell.tagSubtitleLabel = UILabel(frame: CGRect.zero)
+            cell.tagTitleLabel = UILabel(frame: CGRect.zero)
+            cell.tagSelectedView = UIView(frame: CGRect.zero)
+            return cell
+        } else {
+            return UITableViewCell(style: .subtitle, reuseIdentifier: identifier)
+        }
+
     }
 }
+
+class MockTagFilterDelegate : TagFilterDelegate {
+    var updateCalled : Bool = false
+    
+    init(){
+        self.tagTuples = makeTagTuples()
+    }
+    var tagTuples : [(Tag, Bool)] = []
+    
+    func updated(_ callback : (() -> ())? = nil){
+        updateCalled = true
+    }
+}
+

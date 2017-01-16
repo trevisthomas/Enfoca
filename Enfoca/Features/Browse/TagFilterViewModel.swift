@@ -26,11 +26,19 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TagFilterCell")! as UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TagFilterCell")! as! TagCell
 
         let (tag, _) = localTempTagFilters[indexPath.row]
-        cell.textLabel?.text = tag.name
-        cell.detailTextLabel?.text = formatDetailText(tag.count)
+        cell.tagTitleLabel?.text = tag.name
+        cell.tagSubtitleLabel?.text = formatDetailText(tag.count)
+        let selected : Bool = localTagDictionary[tag]!
+        
+        if selected {
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        } else {
+            tableView.deselectRow(at: indexPath, animated: false)
+        }
+
         return cell
     }
     
@@ -39,11 +47,9 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("How am i not here?")
         tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
         let tag = localTempTagFilters[indexPath.row].0
         localTagDictionary[tag] = true
-        print(" :-( \(localTagDictionary[tag])")
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -58,15 +64,6 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
             tagFilterDelegate.tagTuples[i].1 = selected
         }
     }
-    
-//    fileprivate func updateSelectedTagInDelegate(tag : Tag, selected : Bool){
-//        for i in 0 ..< tagFilterDelegate.tagTuples.count {
-//            //Dont allow duplicate tag names!
-//            if (tagFilterDelegate.tagTuples[i].0.name == tag.name){
-//                tagFilterDelegate.tagTuples[i].1 = selected
-//            }
-//        }
-//    }
     
     func searchTagsFor(prefix: String){
         localTempTagFilters = []

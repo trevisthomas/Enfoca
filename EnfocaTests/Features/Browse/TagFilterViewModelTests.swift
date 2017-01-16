@@ -11,6 +11,7 @@ import XCTest
 class TagFilterViewModelTests: XCTestCase {
     
     var sut : TagFilterViewModel!
+    var vc : TagFilterViewController!
     
     override func setUp() {
         super.setUp()
@@ -25,6 +26,12 @@ class TagFilterViewModelTests: XCTestCase {
         let delegate = MockTagFilterDelegate()
         delegate.tagTuples = tagTuples
         sut.configureFromDelegate(delegate: delegate)
+        
+        
+        
+        let storyboard = UIStoryboard(name: "Browse", bundle: nil)
+        vc = storyboard.instantiateViewController(withIdentifier: "TagFilterVC") as! TagFilterViewController
+        vc.tagFilterDelegate = delegate
     }
     
     override func tearDown() {
@@ -49,19 +56,34 @@ class TagFilterViewModelTests: XCTestCase {
     }
     
     func testCells_ShouldContainTagData(){
-        let tableView = MockTableView()
         
-        let cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) 
+        let storyboard = UIStoryboard(name: "Browse", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "TagFilterVC") as! TagFilterViewController
+        let delegate = MockTagFilterDelegate()
+        vc.tagFilterDelegate = delegate
+        let _ = vc.view //View Did Load
+        
+        vc.tableView.delegate = sut
+        vc.tableView.dataSource = sut
+        
+        
+        let cell = sut.tableView(vc.tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as! TagCell
         
         let (tag, _) = sut.tagFilterDelegate.tagTuples[1]
         
-        XCTAssertEqual(cell.textLabel?.text, tag.name)
+        XCTAssertEqual(cell.tagTitleLabel?.text, tag.name)
         //Note: The detailTextLabel will be nil if the cell style isnt set
-        XCTAssertEqual(cell.detailTextLabel?.text, sut.formatDetailText(tag.count))
+        XCTAssertEqual(cell.tagSubtitleLabel?.text, sut.formatDetailText(tag.count))
     }
     
     func testTagSearch_SearchShouldLimitReultsToThoseMatchingSearchPattern() {
-        let tableView = MockTableView()
+        
+        let _ = vc.view //View Did Load
+        
+        vc.tableView.delegate = sut
+        vc.tableView.dataSource = sut
+        
+        let tableView = vc.tableView!
         
         XCTAssertEqual(sut.tagFilterDelegate.tagTuples.count, sut.tableView(tableView, numberOfRowsInSection: 0))
         
@@ -71,8 +93,8 @@ class TagFilterViewModelTests: XCTestCase {
         sut.searchTagsFor(prefix: "Ph")
         
         XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 1)
-        let cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0))
-        XCTAssertEqual(cell.textLabel?.text, "Phrase")
+        let cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as! TagCell
+        XCTAssertEqual(cell.tagTitleLabel?.text, "Phrase")
         
         
         sut.searchTagsFor(prefix: "Xa")
@@ -88,40 +110,43 @@ class TagFilterViewModelTests: XCTestCase {
         XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 1)
     }
     
-   //You dont need to track the state this way.  The controller will deal with this
-//    func testTuple_ShouldToggleSelectedWhenTouched(){
-//        let tableView = UITableView()
-//        
-//        XCTAssertFalse(sut.tagFilterDelegate.tagTuples![1].1)
-//        
-//        sut.tableView(tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
-//        
-//        XCTAssertTrue(sut.tagFilterDelegate.tagTuples![1].1)
-//        
-//        sut.tableView(tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
-//        
-//        XCTAssertFalse(sut.tagFilterDelegate.tagTuples![1].1)
-//        
-//    }
-
-    //This never made sense here, the controller owns the table
-//    func testTuple_InitialStateOfTableShouldReflectTupleSelectionState(){
-//        let tableView = UITableView()
-//        
-//        
-//        tableView.selected
-//        XCTAssertFalse(sut.tagFilterDelegate.tagTuples![1].1)
-//        
-//        sut.tableView(tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
-//        
-//        XCTAssertTrue(sut.tagFilterDelegate.tagTuples![1].1)
-//        
-//        sut.tableView(tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
-//        
-//        XCTAssertFalse(sut.tagFilterDelegate.tagTuples![1].1)
-//        
-//    }
-    
+    func testTagSearch_SearchShouldNotClearSelection() {
+        
+        let _ = vc.view //View Did Load
+        
+        vc.tableView.delegate = sut
+        vc.tableView.dataSource = sut
+        
+        let tableView = vc.tableView!
+        
+        XCTAssertTrue(sut.tagFilterDelegate.tagTuples.count > 0)
+        
+        XCTAssertEqual(sut.tagFilterDelegate.tagTuples.count, sut.tableView(tableView, numberOfRowsInSection: 0))
+        
+        var cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 2, section: 0)) as! TagCell
+        XCTAssertEqual(cell.tagTitleLabel?.text, "Phrase")
+        XCTAssertFalse(cell.isSelected)
+        
+        var path = IndexPath(row: 2, section: 0)
+        sut.tableView(vc.tableView, didSelectRowAt: path)
+        
+        cell = sut.tableView(tableView, cellForRowAt: path) as! TagCell
+        XCTAssertEqual(cell.tagTitleLabel?.text, "Phrase")
+        //XCTAssertTrue(cell.isSelected) //Irrelevant.  The table decides.
+        XCTAssertTrue((vc.tableView.indexPathsForSelectedRows?.contains(path))!)
+        
+        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), sut.tagFilterDelegate.tagTuples.count) //Assert initial state of all tags shown
+        
+        sut.searchTagsFor(prefix: "Ph")
+        
+        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 1)
+        path = IndexPath(row: 0, section: 0)
+        cell = sut.tableView(tableView, cellForRowAt: path) as! TagCell
+        XCTAssertEqual(cell.tagTitleLabel?.text, "Phrase")
+        XCTAssertTrue((vc.tableView.indexPathsForSelectedRows?.contains(path))!)
+        
+        
+    }
 }
 
 extension TagFilterViewModelTests {

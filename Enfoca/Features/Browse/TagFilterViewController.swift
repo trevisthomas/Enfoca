@@ -22,14 +22,6 @@ class TagFilterViewController: UIViewController {
         viewModel = tableView.dataSource as! TagFilterViewModel
         viewModel.configureFromDelegate(delegate: tagFilterDelegate)
         
-        let tuples = tagFilterDelegate.tagTuples
-        for index in (0..<tuples.count) {
-            if tuples[index].1 {
-                let path = IndexPath(row: index, section: 0)
-                tableView.selectRow(at: path, animated: true, scrollPosition: .none)
-            }
-        }
-        
         tagSearchBar.backgroundImage = UIImage() //Ah ha!  This gits rid of that horible border!
         
     }
@@ -40,21 +32,6 @@ class TagFilterViewController: UIViewController {
         for index in (0..<tuples.count) {
             tagFilterDelegate.tagTuples[index].1 = false
         }
-        
-        
-//        guard let selected = self.tableView.indexPathsForSelectedRows else {
-//            return
-//        }
-//        
-//        let selectedRows = selected.map({
-//            (value : IndexPath) -> Int in
-//            return value.row
-//        })
-//        
-//        //Apply selection
-//        for value in selectedRows {
-//             tagFilterDelegate.tagTuples[value].1 = true
-//        }
         
         viewModel.applySelectedTagsToDelegate()
         
