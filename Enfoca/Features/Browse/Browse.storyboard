@@ -219,7 +219,7 @@
         <!--PairEditor-->
         <scene sceneID="3AB-p5-xXr">
             <objects>
-                <viewControllerPlaceholder storyboardName="PairEditor" id="bi6-Z9-Gmu" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="PairEditor" referencedIdentifier="PairEditor" id="bi6-Z9-Gmu" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hfd-CH-zMj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1846" y="360"/>
