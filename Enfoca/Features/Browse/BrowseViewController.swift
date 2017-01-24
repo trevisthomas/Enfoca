@@ -12,13 +12,11 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
     
     func updated(_ callback: (() -> ())? = nil) {
         reloadWordPairs(callback)
-        
-        
         appDefaults.save()
     }
     
     private func reloadWordPairs(_ callback: (() -> ())? = nil){
-        viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: getSelectedFilterTags(),wordPairOrder : determineWordOrder(), callback: {
+        viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: selectedTags, wordPairOrder : determineWordOrder(), callback: {
             //My assumption here is that if you give me a callback, that you will reload the table manually
             if let callback = callback {
                 callback()
@@ -38,13 +36,19 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
    
     var appDefaults : ApplicationDefaults!
     var authenticateionDelegate : AuthenticationDelegate!
-    var tagTuples : [(Tag, Bool)] = [] {
-        didSet{
-            appDefaults.tagFilters = tagTuples
-        }
-    }
+//    var tagTuples : [(Tag, Bool)] = [] {
+//        didSet{
+//            appDefaults.tagFilters = tagTuples
+//        }
+//    }
     var webService : WebService!
     var viewModel : BrowseViewModel!
+    var tags: [Tag] = []
+    var selectedTags: [Tag] = [] {
+        didSet{
+            appDefaults.selectedTags = selectedTags
+        }
+    }
    
     var currentWordStateFilter: WordStateFilter = .all {
         didSet{
@@ -93,20 +97,19 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         
         
         //Load the persons tags from the webservice and then apply any local default selections to them
-//        if let enfocaId = authenticateionDelegate.currentUser()?.enfocaId {
-            self.webService.fetchUserTags() {
-                list in
-                self.tagTuples = list.map({
-                    (value: Tag) -> (Tag, Bool) in
-                    
-                    guard let isSelected = self.appDefaults.tagFilters.find(tag: value)?.1 else {
-                        return (value, false) //Didnt find it at all
-                    }
-                    return (value, isSelected) //If found, apply selection from defaults
-                })
-//            }
+        self.webService.fetchUserTags() {
+            list in
+            
+            self.tags = list
+            self.selectedTags = self.appDefaults.selectedTags
+            
+            //                for tag in self.tags {
+            //                    if let _ = self.appDefaults.tagFilters.find(tag: tag)?.1 {
+            //                        self.selectedTags.append(tag)
+            //                    }
+            //                }
         }
-
+        
         
         reverseWordPair = appDefaults.reverseWordPair
         viewModel.reverseWordPair = reverseWordPair
@@ -127,15 +130,15 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         notificationCenter.addObserver(self, selector: #selector(keyboardDidHide(_:)), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
     }
     
-    fileprivate func getSelectedFilterTags() -> [Tag] {
-        //lol
-        let tags = tagTuples.filter({(tag, selected) in
-            return selected}).map({
-                (tag, _) -> Tag in
-                return tag
-            })
-        return tags
-    }
+//    fileprivate func getSelectedFilterTags() -> [Tag] {
+//        //lol
+//        let tags = tagTuples.filter({(tag, selected) in
+//            return selected}).map({
+//                (tag, _) -> Tag in
+//                return tag
+//            })
+//        return tags
+//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -253,7 +256,7 @@ extension BrowseViewController : UISearchBarDelegate {
     }
     
     private func autoComplete(pattern : String) {
-        viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: getSelectedFilterTags(),wordPairOrder : determineWordOrder(), pattern: pattern, callback: {
+        viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: selectedTags, wordPairOrder : determineWordOrder(), pattern: pattern, callback: {
             self.tableView.reloadData()
         })
     }

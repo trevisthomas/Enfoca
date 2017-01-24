@@ -9,6 +9,7 @@
 import Foundation
 
 protocol TagFilterDelegate {
-    var tagTuples : [(Tag, Bool)] {get set}
     func updated(_ callback: (() -> ())?)
+    var selectedTags : [Tag] {get set}
+    var tags : [Tag] {get set}
 }

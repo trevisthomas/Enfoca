@@ -84,8 +84,10 @@ class MockWebService : WebService {
 class MockDefaults : ApplicationDefaults {
     var wordStateFilter: WordStateFilter
     var reverseWordPair: Bool = false
-    var tagFilters:[(Tag, Bool)] = []
     var saveCount = 0
+    var selectedTags: [Tag] = []
+    var tags: [Tag] = []
+    
     
     init(defaultWordStateFilter: WordStateFilter = .active){
         self.wordStateFilter = defaultWordStateFilter
@@ -184,11 +186,13 @@ class MockTableView : UITableView {
 
 class MockTagFilterDelegate : TagFilterDelegate {
     var updateCalled : Bool = false
+    var tags: [Tag]
+    var selectedTags: [Tag]
     
     init(){
-        self.tagTuples = makeTagTuples()
+        tags = makeTags()
+        selectedTags = []
     }
-    var tagTuples : [(Tag, Bool)] = []
     
     func updated(_ callback : (() -> ())? = nil){
         updateCalled = true

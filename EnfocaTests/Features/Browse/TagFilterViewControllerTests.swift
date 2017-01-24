@@ -43,8 +43,9 @@ class TagFilterViewControllerTests: XCTestCase {
     
     func testTable_TableShouldSelectTagsFromDelegateTuple(){
         let delegate = MockTagFilterDelegate()
-        delegate.tagTuples[1].1 = true //Select this row
-        delegate.tagTuples[3].1 = true //Select this row
+        
+        delegate.selectedTags.append(delegate.tags[1])
+        delegate.selectedTags.append(delegate.tags[3])
 
         sut.tagFilterDelegate = delegate
         
@@ -54,7 +55,7 @@ class TagFilterViewControllerTests: XCTestCase {
         
         //Made a change later where the VM does the table selection instead in ViewDidLoad to fix this test, i'm going to ask for the cells which will cause them to be selected.  This all works because filter apply also relies on the VM, not the actual selected rows.  The selected rows are just cosmetic now.
         
-        for i in 0 ..< delegate.tagTuples.count {
+        for i in 0 ..< delegate.tags.count {
             _ = sut.viewModel.tableView(sut.tableView, cellForRowAt: IndexPath(row: i, section: 0))
         }
         
@@ -95,7 +96,7 @@ class TagFilterViewControllerTests: XCTestCase {
         
         XCTAssertNotNil(cell)
         
-        let (tag, _) = sut.tagFilterDelegate.tagTuples[0]
+        let tag = sut.tagFilterDelegate.tags[0]
         XCTAssertEqual(cell.tagTitleLabel?.text, tag.name)
     }
     
@@ -118,14 +119,14 @@ class TagFilterViewControllerTests: XCTestCase {
         
         sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
         
-        let tag1 = sut.viewModel.tagFilterDelegate.tagTuples[1].0
+        let tag1 = sut.viewModel.tagFilterDelegate.tags[1]
         
         XCTAssertEqual(sut.tagSummaryLabel.text, "Selected: \(tag1.name)")
         
         
         sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: IndexPath(row: 2, section: 0))
         
-        let tag2 = sut.viewModel.tagFilterDelegate.tagTuples[2].0
+        let tag2 = sut.viewModel.tagFilterDelegate.tags[2]
         
         XCTAssertEqual(sut.tagSummaryLabel.text, "Selected: \(tag2.name), \(tag1.name)")
         
@@ -147,29 +148,32 @@ class TagFilterViewControllerTests: XCTestCase {
         sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: path)
         XCTAssertFalse(delegate.updateCalled) //Stil false!
         
-        XCTAssertFalse(delegate.tagTuples[2].1)
+        let selectedTag = delegate.tags[2]
+        
+        XCTAssertFalse(delegate.selectedTags.contains(selectedTag))
         
         sut.applyFilterAction("none")
         XCTAssertTrue(delegate.updateCalled)
         
-        XCTAssertTrue(delegate.tagTuples[2].1)
+        XCTAssertTrue(delegate.selectedTags.contains(selectedTag))
         
         sut.tableView.delegate?.tableView!(sut.tableView, didDeselectRowAt: path) //This should deselect
         sut.applyFilterAction("none")
-        XCTAssertFalse(delegate.tagTuples[2].1)
+        XCTAssertFalse(delegate.selectedTags.contains(selectedTag))
     }
     
     func testTableView_ApplyFilterShouldUpdateDelegateAndCloseView(){
         let delegate = sut.tagFilterDelegate as! MockTagFilterDelegate
         let _ = sut.view //View Did Load
         let path = IndexPath(row: 2, section: 0)
+        let selectedTag = delegate.tags[2]
         
-        XCTAssertFalse(delegate.tagTuples[2].1) //Assert that this is not selected in the delegate
+        XCTAssertFalse(delegate.selectedTags.contains(selectedTag)) //Assert that this is not selected in the delegate
         XCTAssertFalse(delegate.updateCalled)
         
         sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: path)
         XCTAssertFalse(delegate.updateCalled) //Stil false!
-        XCTAssertFalse(delegate.tagTuples[2].1) //Assert that this is still not selected in the delegate
+        XCTAssertFalse(delegate.selectedTags.contains(selectedTag)) //Assert that this is still not selected in the delegate
         
         let applyButton = sut.navigationItem.rightBarButtonItem!
         XCTAssertEqual(applyButton.title, "Apply")
@@ -177,7 +181,7 @@ class TagFilterViewControllerTests: XCTestCase {
         UIApplication.shared.sendAction(applyButton.action!, to: applyButton.target, from: nil, for: nil)
         //Verify that it is selected now and that it has been notified
         XCTAssertTrue(delegate.updateCalled)
-        XCTAssertTrue(delegate.tagTuples[2].1)
+        XCTAssertTrue(delegate.selectedTags.contains(selectedTag))
         
         //TODO: How to test if popover is closed?
         
@@ -216,15 +220,13 @@ class TagFilterViewControllerTests: XCTestCase {
         
         let _ = sut.view //View Did Load
         
+        let selectedTag = delegate.tags[2]
         
-        
-        let tagTuple = delegate.tagTuples[2]
-        
-        XCTAssertFalse(delegate.tagTuples[2].1) //Assert that this is not selected in the delegate
+        XCTAssertFalse(delegate.selectedTags.contains(selectedTag)) //Assert that this is not selected in the delegate
         XCTAssertFalse(delegate.updateCalled)
         
         
-        sut.searchBar(sut.tagSearchBar, textDidChange: tagTuple.0.name) //Search for this tag
+        sut.searchBar(sut.tagSearchBar, textDidChange: selectedTag.name) //Search for this tag
         
         //Post search, the list should contain only this tag
         XCTAssertEqual(sut.viewModel.tableView(sut.tableView, numberOfRowsInSection: 0), 1)
@@ -239,7 +241,7 @@ class TagFilterViewControllerTests: XCTestCase {
         
         //Verify that it is selected now and that it has been notified
         XCTAssertTrue(delegate.updateCalled)
-        XCTAssertTrue(delegate.tagTuples[2].1)
+        XCTAssertTrue(delegate.selectedTags.contains(selectedTag))
         
         //TODO: How to test if popover is closed?
         
@@ -256,15 +258,14 @@ class TagFilterViewControllerTests: XCTestCase {
         
         sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
         
-        let tag1 = sut.viewModel.tagFilterDelegate.tagTuples[1].0
+        let tag1 = sut.viewModel.tagFilterDelegate.tags[1]
         
         XCTAssertEqual(sut.tagSummaryLabel.text, "Selected: \(tag1.name)")
         
         
         sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: IndexPath(row: 2, section: 0))
         
-        let tag2 = sut.viewModel.tagFilterDelegate.tagTuples[2].0
-        
+        let tag2 = sut.viewModel.tagFilterDelegate.tags[2]
         XCTAssertEqual(sut.tagSummaryLabel.text, "Selected: \(tag2.name), \(tag1.name)")
     }
 }

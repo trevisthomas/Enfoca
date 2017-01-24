@@ -11,12 +11,12 @@ import Foundation
 protocol ApplicationDefaults {
     var wordStateFilter : WordStateFilter {get set}
     var reverseWordPair : Bool {get set}
-    var tagFilters : [TagFilter] {get set}
+    var selectedTags : [Tag] {get set}
     func save()
 }
 
 class LocalApplicationDefaults : ApplicationDefaults {
-    var tagFilters : [(Tag, Bool)] = []
+    var selectedTags : [Tag] = []
     var reverseWordPair : Bool = false
     var wordStateFilter : WordStateFilter = .all
     

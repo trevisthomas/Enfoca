@@ -159,14 +159,12 @@ class BrowseViewControllerFilterTests: XCTestCase {
         vc.authenticateionDelegate = authDelegate
         vc.webService = webservice
         webservice.tags = makeTags()
-        var initialTagFilters = makeTagTuples(tags: webservice.tags)
         
         let tagRow = 3
-        XCTAssertFalse(initialTagFilters[tagRow].1) //Asserting initial state assumption
-        initialTagFilters[tagRow].1 = true //Set it selected
-        let tagUnderTest = initialTagFilters[tagRow].0 //Get thet tag for future assesrtions
         
-        mockDefaults.tagFilters = initialTagFilters
+        mockDefaults.tags = webservice.tags
+        let tagUnderTest = mockDefaults.tags[tagRow]
+        mockDefaults.selectedTags = [tagUnderTest]
         
         vc.appDefaults = mockDefaults
         
@@ -174,18 +172,8 @@ class BrowseViewControllerFilterTests: XCTestCase {
         _ = vc.view
         
         XCTAssertEqual(webservice.fetchCallCount, 1)
-        
-        let tagTuples : [(Tag, Bool)] = vc.tagTuples
-        XCTAssertTrue(tagTuples.count > 0)
 
-        var tagExists = false
-        for (tag, selected) in tagTuples {
-            if tagUnderTest == tag {
-                XCTAssertTrue(selected) //Asserting that if the tag was found, that it is selected
-                tagExists = true
-            }
-        }
-        XCTAssertTrue(tagExists)//Asserting that the tag was found in the filter set.
+        XCTAssertTrue(vc.selectedTags.contains(tagUnderTest))
     }
     
     func testTagFilter_ShouldMergeStateOfLocalTagFiltersIntoServerResults(){
@@ -207,8 +195,7 @@ class BrowseViewControllerFilterTests: XCTestCase {
         
         XCTAssertEqual(webservice.fetchCallCount, 1)
         
-        let tagTuples : [(Tag, Bool)] = vc.tagTuples
-        XCTAssertEqual(tagTuples.count, tagCount)
+        XCTAssertEqual(vc.tags.count, tagCount)
     }
     
     func testTagFilter_ShouldCallPerformSegue(){
@@ -238,10 +225,7 @@ class BrowseViewControllerFilterTests: XCTestCase {
         let destVC = storyboard.instantiateViewController(withIdentifier: "TagFilterVC") as! TagFilterViewController
         let segue = UIStoryboardSegue(identifier: "TagFilterSegue", source: sut, destination: destVC)
         
-        sut.tagTuples = makeTags().map({
-            (value : Tag) -> (Tag, Bool) in
-            return (value, false)
-        })
+        sut.tags = makeTags()
         
         sut.prepare(for: segue, sender: sut.tagFilterButton)
         
@@ -255,9 +239,9 @@ class BrowseViewControllerFilterTests: XCTestCase {
         
         //TODO: test VC for expected stuff
         XCTAssertNotNil(destVC.tagFilterDelegate)
-        XCTAssertEqual(destVC.tagFilterDelegate.tagTuples.count, sut.tagTuples.count)
+        XCTAssertEqual(destVC.tagFilterDelegate.tags.count, sut.tags.count)
         
-        XCTAssertTrue(destVC.tagFilterDelegate.tagTuples.compare(sut.tagTuples))
+        XCTAssertTrue(destVC.tagFilterDelegate.selectedTags == sut.selectedTags)
         
     }
     
@@ -307,8 +291,8 @@ class BrowseViewControllerFilterTests: XCTestCase {
         XCTAssertEqual(webservice.fetchCallCount, 1)
         
         
-        let testTag = vc.tagTuples[1].0 //Grab a tag to test
-        vc.tagTuples[1].1 = true //Turn on the filter for this tag
+        let testTag = vc.tags[1] //Grab a tag to test
+        vc.selectedTags.append(testTag)
         
         vc.updated() //Notify the VC that it should refresh
         

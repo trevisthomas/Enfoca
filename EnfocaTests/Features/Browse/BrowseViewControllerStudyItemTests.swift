@@ -119,25 +119,20 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
         viewDidLoad() //View did load. Caues the service to be called with the default filters.
         
-        sut.tagTuples = makeTags().map({
-            (value : Tag) -> (Tag, Bool) in
-            return (value, false)
-        })
+        sut.tags = makeTags()
         
-        
-        var tags : [Tag] = []
+        var selectedTags : [Tag] = []
         //Filtering on these two tags
-        sut.tagTuples[2].1 = true
-        sut.tagTuples[0].1 = true
+        selectedTags.append(sut.tags[2])
+        selectedTags.append(sut.tags[0])
         
-        tags.append(sut.tagTuples[0].0)
-        tags.append(sut.tagTuples[2].0)
+        sut.selectedTags = selectedTags
         
         sut.currentWordStateFilter = .inactive
         
         sut.updated() //Causes the service to be called again with the updated filter
         
-        XCTAssertEqual(service.fetchWordPairTagFilter!, tags)
+        XCTAssertEqual(service.fetchWordPairTagFilter!, selectedTags)
         XCTAssertEqual(service.fetchWordPairWordStateFilter, .inactive)
     }
     
@@ -229,23 +224,26 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         viewDidLoad()
         
         let mockDefaults = MockDefaults()
-        mockDefaults.tagFilters = makeTagTuples()
+        mockDefaults.tags = makeTags()
         sut.appDefaults = mockDefaults
         
-        sut.tagTuples = mockDefaults.tagFilters //Doing this to bypass the service call.  That stuff is tested elsewhere
+        sut.tags = mockDefaults.tags //Doing this to bypass the service call.  That stuff is tested elsewhere
         
         XCTAssertEqual(mockDefaults.saveCount, 0)
-        XCTAssertFalse(sut.tagTuples[3].1) //Assert initial state
-        XCTAssertFalse(mockDefaults.tagFilters[3].1) //Trevis you asserted this a different way because you were amazed by the fact that just setting a value on a tuple called the didSet.  Still amazed by that.
+        
+        let tut = sut.tags[3]
+        
+        XCTAssertFalse(sut.selectedTags.contains(tut)) //Assert initial state
+        XCTAssertFalse(mockDefaults.selectedTags.contains(tut)) //Trevis you asserted this a different way because you were amazed by the fact that just setting a value on a tuple called the didSet.  Still amazed by that.
         
         //Simulating what the tag filter view controller does.
-        sut.tagTuples[3].1 = true
+        sut.selectedTags.append(tut)
         sut.updated()
         
         //Verify that save was called and that the value was updated
         XCTAssertEqual(mockDefaults.saveCount, 1)
         
-        XCTAssertTrue(mockDefaults.tagFilters[3].1)
+        XCTAssertTrue(mockDefaults.selectedTags.contains(tut))
     }
 
     

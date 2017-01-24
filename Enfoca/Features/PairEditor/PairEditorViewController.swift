@@ -18,7 +18,8 @@ class PairEditorViewController: UIViewController {
     @IBOutlet weak var tagButton: UIButton!
     
     var wordPair : WordPair?
-    var tagTuples : [(Tag, Bool)] = []
+    var tags: [Tag] = []
+    var selectedTags: [Tag] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,4 +69,6 @@ extension PairEditorViewController : TagFilterDelegate {
     func updated(_ callback: (() -> ())?) {
         
     }
+    
+    
 }

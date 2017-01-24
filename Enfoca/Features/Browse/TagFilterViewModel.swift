@@ -9,16 +9,18 @@
 import Foundation
 
 class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate {
-    var localTempTagFilters : [TagFilter] = []
+    var localTempTagFilters : [Tag] = []
     var localTagDictionary : [Tag: Bool] = [:]
     private(set) var tagFilterDelegate : TagFilterDelegate!
     var callbackWhenChanged : (() -> ())?
     
     func configureFromDelegate(delegate : TagFilterDelegate){
         self.tagFilterDelegate = delegate
-        localTempTagFilters = tagFilterDelegate.tagTuples
-        for tagTuple in localTempTagFilters {
-            localTagDictionary[tagTuple.0] = tagTuple.1
+        
+        localTempTagFilters = delegate.tags
+        
+        for tag in localTempTagFilters {
+            localTagDictionary[tag] = delegate.selectedTags.contains(tag)
         }
     }
     
@@ -29,7 +31,7 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TagFilterCell")! as! TagCell
 
-        let (tag, _) = localTempTagFilters[indexPath.row]
+        let tag = localTempTagFilters[indexPath.row]
         cell.tagTitleLabel?.text = tag.name
         cell.tagSubtitleLabel?.text = formatDetailText(tag.count)
         let selected : Bool = localTagDictionary[tag]!
@@ -49,30 +51,35 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-        let tag = localTempTagFilters[indexPath.row].0
+        let tag = localTempTagFilters[indexPath.row]
         localTagDictionary[tag] = true
         callbackWhenChanged?()
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let tag = localTempTagFilters[indexPath.row].0
+        let tag = localTempTagFilters[indexPath.row]
         localTagDictionary[tag] = false
         callbackWhenChanged?()
     }
     
     func applySelectedTagsToDelegate(){
-        for i in 0 ..< tagFilterDelegate.tagTuples.count {
-            let selected = localTagDictionary[tagFilterDelegate.tagTuples[i].0]!
-            tagFilterDelegate.tagTuples[i].1 = selected
+        var tags : [Tag] = []
+        for (tag, selected) in localTagDictionary {
+            if selected {
+                tags.append(tag)
+            }
         }
+        
+        tagFilterDelegate.selectedTags = tags
+        
     }
     
     func searchTagsFor(prefix: String){
         localTempTagFilters = []
-        for tuple in tagFilterDelegate.tagTuples {
-            if tuple.0.name.lowercased().hasPrefix(prefix.lowercased()) {
-                localTempTagFilters.append(tuple)
+        for tag in tagFilterDelegate.tags {
+            if tag.name.lowercased().hasPrefix(prefix.lowercased()) {
+                localTempTagFilters.append(tag)
             }
         }
     }

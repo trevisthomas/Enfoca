@@ -34,10 +34,7 @@ class TagFilterViewController: UIViewController {
 
     private func applyFilter(){
         //Clear out the delegates selecions
-        let tuples = tagFilterDelegate.tagTuples
-        for index in (0..<tuples.count) {
-            tagFilterDelegate.tagTuples[index].1 = false
-        }
+        tagFilterDelegate.selectedTags = []
         
         viewModel.applySelectedTagsToDelegate()
         
