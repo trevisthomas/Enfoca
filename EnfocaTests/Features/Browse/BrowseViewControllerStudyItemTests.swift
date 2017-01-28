@@ -534,6 +534,7 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
         XCTAssertNotNil(destVC.wordPair)
         XCTAssertEqual(destVC.wordPair, wp)
+        XCTAssertNotNil(destVC.delegate)
     }
     
 }

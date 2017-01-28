@@ -13,6 +13,8 @@ class TagFilterViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
+        getAppDelegate().webService = MockWebService()
+        
         let storyboard = UIStoryboard(name: "Browse", bundle: nil)
         sut = storyboard.instantiateViewController(withIdentifier: "TagFilterVC") as! TagFilterViewController
         
@@ -96,7 +98,7 @@ class TagFilterViewControllerTests: XCTestCase {
         
         XCTAssertNotNil(cell)
         
-        let tag = sut.tagFilterDelegate.tags[0]
+        let tag = sut.viewModel.allTags[0]
         XCTAssertEqual(cell.tagTitleLabel?.text, tag.name)
     }
     
@@ -119,14 +121,14 @@ class TagFilterViewControllerTests: XCTestCase {
         
         sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
         
-        let tag1 = sut.viewModel.tagFilterDelegate.tags[1]
+        let tag1 = sut.viewModel.allTags[1]
         
         XCTAssertEqual(sut.tagSummaryLabel.text, "Selected: \(tag1.name)")
         
         
         sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: IndexPath(row: 2, section: 0))
         
-        let tag2 = sut.viewModel.tagFilterDelegate.tags[2]
+        let tag2 = sut.viewModel.allTags[2]
         
         XCTAssertEqual(sut.tagSummaryLabel.text, "Selected: \(tag2.name), \(tag1.name)")
         
@@ -258,14 +260,14 @@ class TagFilterViewControllerTests: XCTestCase {
         
         sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
         
-        let tag1 = sut.viewModel.tagFilterDelegate.tags[1]
+        let tag1 = sut.viewModel.allTags[1]
         
         XCTAssertEqual(sut.tagSummaryLabel.text, "Selected: \(tag1.name)")
         
         
         sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: IndexPath(row: 2, section: 0))
         
-        let tag2 = sut.viewModel.tagFilterDelegate.tags[2]
+        let tag2 = sut.viewModel.allTags[2]
         XCTAssertEqual(sut.tagSummaryLabel.text, "Selected: \(tag2.name), \(tag1.name)")
     }
 }

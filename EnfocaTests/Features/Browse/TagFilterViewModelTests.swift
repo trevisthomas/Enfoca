@@ -19,7 +19,8 @@ class TagFilterViewModelTests: XCTestCase {
         sut = TagFilterViewModel()
         
         let delegate = MockTagFilterDelegate()
-        delegate.tags = makeTags()
+        getAppDelegate().webService = MockWebService()
+//        delegate.tags = makeTags()
         sut.configureFromDelegate(delegate: delegate)
         
         let storyboard = UIStoryboard(name: "Browse", bundle: nil)
@@ -30,7 +31,7 @@ class TagFilterViewModelTests: XCTestCase {
     func testTuple_SizeShouldMatchSize(){
         let tableView = UITableView()
         
-        let tags = sut.tagFilterDelegate.tags
+        let tags = sut.allTags
         
         XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), tags.count)
 
@@ -57,7 +58,7 @@ class TagFilterViewModelTests: XCTestCase {
         
         let cell = sut.tableView(vc.tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as! TagCell
         
-        let tag = sut.tagFilterDelegate.tags[1]
+        let tag = sut.allTags[1]
         
         XCTAssertEqual(cell.tagTitleLabel?.text, tag.name)
         //Note: The detailTextLabel will be nil if the cell style isnt set
@@ -73,10 +74,10 @@ class TagFilterViewModelTests: XCTestCase {
         
         let tableView = vc.tableView!
         
-        XCTAssertEqual(sut.tagFilterDelegate.tags.count, sut.tableView(tableView, numberOfRowsInSection: 0))
+        XCTAssertEqual(sut.allTags.count, sut.tableView(tableView, numberOfRowsInSection: 0))
         
         
-        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), sut.tagFilterDelegate.tags.count) //Assert initial state of all tags shown
+        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), sut.allTags.count) //Assert initial state of all tags shown
         
         sut.searchTagsFor(prefix: "Ph")
         
@@ -107,9 +108,9 @@ class TagFilterViewModelTests: XCTestCase {
         
         let tableView = vc.tableView!
         
-        XCTAssertTrue(sut.tagFilterDelegate.tags.count > 0)
+        XCTAssertTrue(sut.allTags.count > 0)
         
-        XCTAssertEqual(sut.tagFilterDelegate.tags.count, sut.tableView(tableView, numberOfRowsInSection: 0))
+        XCTAssertEqual(sut.allTags.count, sut.tableView(tableView, numberOfRowsInSection: 0))
         
         var cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 2, section: 0)) as! TagCell
         XCTAssertEqual(cell.tagTitleLabel?.text, "Phrase")
@@ -123,7 +124,7 @@ class TagFilterViewModelTests: XCTestCase {
         //XCTAssertTrue(cell.isSelected) //Irrelevant.  The table decides.
         XCTAssertTrue((vc.tableView.indexPathsForSelectedRows?.contains(path))!)
         
-        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), sut.tagFilterDelegate.tags.count) //Assert initial state of all tags shown
+        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), sut.allTags.count) //Assert initial state of all tags shown
         
         sut.searchTagsFor(prefix: "Ph")
         
@@ -144,9 +145,9 @@ class TagFilterViewModelTests: XCTestCase {
         
         let tableView = vc.tableView!
         
-        XCTAssertTrue(sut.tagFilterDelegate.tags.count > 0)
+        XCTAssertTrue(sut.allTags.count > 0)
         
-        XCTAssertEqual(sut.tagFilterDelegate.tags.count, sut.tableView(tableView, numberOfRowsInSection: 0))
+        XCTAssertEqual(sut.allTags.count, sut.tableView(tableView, numberOfRowsInSection: 0))
         
         
         var path = IndexPath(row: 2, section: 0)

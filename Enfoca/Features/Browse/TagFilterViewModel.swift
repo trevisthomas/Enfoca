@@ -13,14 +13,21 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
     var localTagDictionary : [Tag: Bool] = [:]
     private(set) var tagFilterDelegate : TagFilterDelegate!
     var callbackWhenChanged : (() -> ())?
+    var allTags : [Tag] = []
     
     func configureFromDelegate(delegate : TagFilterDelegate){
         self.tagFilterDelegate = delegate
         
-        localTempTagFilters = delegate.tags
-        
-        for tag in localTempTagFilters {
-            localTagDictionary[tag] = delegate.selectedTags.contains(tag)
+        getAppDelegate().webService.fetchUserTags { (tags:[Tag]) in
+            
+            self.allTags = tags
+            self.localTempTagFilters = tags
+            
+            for tag in self.localTempTagFilters {
+                self.localTagDictionary[tag] = self.tagFilterDelegate.selectedTags.contains(tag)
+            }
+            
+            //TREVIS: This might have some odd behavior since you've moved this to a callback.  The VC may need to be notified that the data set has changed since this could be async.
         }
     }
     
@@ -77,7 +84,8 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
     
     func searchTagsFor(prefix: String){
         localTempTagFilters = []
-        for tag in tagFilterDelegate.tags {
+        
+        for tag in allTags {
             if tag.name.lowercased().hasPrefix(prefix.lowercased()) {
                 localTempTagFilters.append(tag)
             }

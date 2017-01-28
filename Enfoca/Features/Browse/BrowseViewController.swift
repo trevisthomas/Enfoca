@@ -36,11 +36,6 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
    
     var appDefaults : ApplicationDefaults!
     var authenticateionDelegate : AuthenticationDelegate!
-//    var tagTuples : [(Tag, Bool)] = [] {
-//        didSet{
-//            appDefaults.tagFilters = tagTuples
-//        }
-//    }
     var webService : WebService!
     var viewModel : BrowseViewModel!
     var tags: [Tag] = []
@@ -103,11 +98,6 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
             self.tags = list
             self.selectedTags = self.appDefaults.selectedTags
             
-            //                for tag in self.tags {
-            //                    if let _ = self.appDefaults.tagFilters.find(tag: tag)?.1 {
-            //                        self.selectedTags.append(tag)
-            //                    }
-            //                }
         }
         
         
@@ -119,8 +109,7 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         wordPairSearchBar.backgroundImage = UIImage() //Ah ha!  This gits rid of that horible border!
         
         registerForKeyboardNotifications(NotificationCenter.default)
-        
-        
+
     }
     
     
@@ -196,6 +185,7 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
             guard let pairEditorVC = segue.destination as? PairEditorViewController else { fatalError() }
             guard let wordPair = sender as? WordPair else { fatalError() }
             pairEditorVC.wordPair = wordPair
+            pairEditorVC.delegate = self
             return
         }
         
@@ -259,5 +249,15 @@ extension BrowseViewController : UISearchBarDelegate {
         viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: selectedTags, wordPairOrder : determineWordOrder(), pattern: pattern, callback: {
             self.tableView.reloadData()
         })
+    }
+}
+
+extension BrowseViewController : PairEditorDelegate {
+    func added(wordPair: WordPair) {
+        fatalError()
+    }
+    
+    func updated(wordPair: WordPair) {
+        fatalError()
     }
 }

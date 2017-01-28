@@ -11,5 +11,4 @@ import Foundation
 protocol TagFilterDelegate {
     func updated(_ callback: (() -> ())?)
     var selectedTags : [Tag] {get set}
-    var tags : [Tag] {get set}
 }

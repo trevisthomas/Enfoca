@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import CloudKit
 @testable import Enfoca
 class MockAuthenticationDelegate: AuthenticationDelegate {
     var performLoginCount = 0
@@ -48,6 +48,13 @@ class MockWebService : WebService {
     var deactivateCalled : Bool = false
     var deactiveCalledWithWordPair : WordPair!
     
+    var createCalledCount: Int = 0
+    var updateCalledCount: Int = 0
+    
+    var addCreateWord : String?
+    var addCreateDefinition : String?
+    var addCreateTags : [Tag]?
+    
     
     func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder : WordPairOrder, pattern : String? = nil, callback: @escaping ([WordPair]) -> ()) {
         fetchWordPairTagFilter = tagFilter
@@ -59,11 +66,20 @@ class MockWebService : WebService {
         callback(wordPairs)
     }
     
-    var fetchCallCount : Int = 0
+    var fetchUserTagsCallCount : Int = 0
     var tags : [Tag] = []
     
+    convenience init(tags : [Tag]) {
+        self.init()
+        self.tags = tags
+    }
+    
+    init() {
+        self.tags = makeTags()
+    }
+    
     func fetchUserTags(callback : @escaping([Tag])->()){
-        fetchCallCount += 1
+        fetchUserTagsCallCount += 1
         callback(tags)
     }
     
@@ -78,6 +94,31 @@ class MockWebService : WebService {
         deactiveCalledWithWordPair = wordPair
         callback!(true)
     }
+    
+    func createWordPair(word: String, definition: String, tags : [Tag], callback : @escaping(WordPair)->()) {
+        
+        addCreateWord = word
+        addCreateDefinition = definition
+        addCreateTags = tags
+        
+        createCalledCount += 1
+        let wp = WordPair(creatorId: -1, pairId: "none", word: word, definition: definition, dateCreated: Date(), tags: tags)
+        callback(wp)
+    }
+    
+    
+    func updateWordPair(oldWordPair : WordPair, word: String, definition: String, tags : [Tag], callback :
+        @escaping(WordPair)->()) {
+        
+        addCreateWord = word
+        addCreateDefinition = definition
+        addCreateTags = tags
+        
+        updateCalledCount += 1
+        let wp = WordPair(creatorId: -1, pairId: "none", word: word, definition: definition, dateCreated: Date(), tags: tags)
+        callback(wp)
+    }
+
     
 }
 

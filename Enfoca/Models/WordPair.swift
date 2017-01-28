@@ -28,7 +28,7 @@ class WordPair : Equatable {
     private(set) var definition: String
     private(set) var dateCreated: Date
     
-    var tags : [Tag] = []
+    private(set) var tags : [Tag] = []
     var active : Bool
     
 //    private String word;
@@ -52,13 +52,14 @@ class WordPair : Equatable {
 //    private long totalTime;
 //    private long timedViewCount;
     
-    init (creatorId: Int, pairId: String, word: String, definition: String, dateCreated: Date, active : Bool = false ) {
+    init (creatorId: Int, pairId: String, word: String, definition: String, dateCreated: Date, active : Bool = false, tags : [Tag] = []) {
         self.creatorId = creatorId
         self.pairId = pairId
         self.word = word
         self.definition = definition
         self.dateCreated = dateCreated
         self.active = active
+        self.tags = tags
     }
 
 }

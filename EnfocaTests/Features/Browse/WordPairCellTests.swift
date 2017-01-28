@@ -47,14 +47,16 @@ class WordPairCellTests: XCTestCase {
         let row = 1
         
         var wordPairs = makeWordPairs()
-        wordPairs[row].active = true
         
         let tag1 = Tag(ownerId: -1, tagId: "notimportant", name: "Noun")
         let tag2 = Tag(ownerId: -1, tagId: "notimportant", name: "Home")
         
-        wordPairs[row].tags.append(tag1)
-        wordPairs[row].tags.append(tag2)
-        let wp = wordPairs[row]
+        let wp = WordPair(creatorId: -1, pairId: "guid", word: "To Run", definition: "Correr", dateCreated: Date(), tags: [tag1, tag2])
+        
+        wp.active = true
+        
+        wordPairs[row] = wp
+        
         mockWebService.wordPairs = wordPairs
         
         mockAppDefaults.reverseWordPair = true

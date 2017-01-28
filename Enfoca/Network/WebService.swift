@@ -16,4 +16,9 @@ protocol WebService {
     func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder: WordPairOrder, pattern : String?, callback : @escaping([WordPair])->())
     func activateWordPair(wordPair: WordPair, callback: ((Bool)->())? )
     func deactivateWordPair(wordPair: WordPair, callback: ((Bool)->())? )
+    
+    func createWordPair(word: String, definition: String, tags : [Tag], callback : @escaping(WordPair)->());
+    
+    func updateWordPair(oldWordPair : WordPair, word: String, definition: String, tags : [Tag], callback :
+        @escaping(WordPair)->());
 }

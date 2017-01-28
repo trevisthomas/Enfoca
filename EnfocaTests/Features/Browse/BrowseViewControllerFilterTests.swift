@@ -17,11 +17,13 @@ class BrowseViewControllerFilterTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
+        getAppDelegate().webService = MockWebService()
+        
         let storyboard = UIStoryboard(name: "Browse", bundle: nil)
         sut = storyboard.instantiateViewController(withIdentifier: "BrowseVC") as! BrowseViewController
         authDelegate = MockAuthenticationDelegate(user: currentUser)
         sut.authenticateionDelegate = authDelegate
-        sut.webService = MockWebService()
+//        sut.webService = MockWebService()
         
         
     }
@@ -171,7 +173,7 @@ class BrowseViewControllerFilterTests: XCTestCase {
         //To force view did load to be called
         _ = vc.view
         
-        XCTAssertEqual(webservice.fetchCallCount, 1)
+        XCTAssertEqual(webservice.fetchUserTagsCallCount, 1)
 
         XCTAssertTrue(vc.selectedTags.contains(tagUnderTest))
     }
@@ -193,7 +195,7 @@ class BrowseViewControllerFilterTests: XCTestCase {
         //To force view did load to be called
         _ = vc.view
         
-        XCTAssertEqual(webservice.fetchCallCount, 1)
+        XCTAssertEqual(webservice.fetchUserTagsCallCount, 1)
         
         XCTAssertEqual(vc.tags.count, tagCount)
     }
@@ -239,7 +241,10 @@ class BrowseViewControllerFilterTests: XCTestCase {
         
         //TODO: test VC for expected stuff
         XCTAssertNotNil(destVC.tagFilterDelegate)
-        XCTAssertEqual(destVC.tagFilterDelegate.tags.count, sut.tags.count)
+        
+        _ = destVC.view
+        
+        XCTAssertEqual(destVC.viewModel.allTags.count, sut.tags.count)
         
         XCTAssertTrue(destVC.tagFilterDelegate.selectedTags == sut.selectedTags)
         
@@ -288,7 +293,7 @@ class BrowseViewControllerFilterTests: XCTestCase {
         //To force view did load to be called
         _ = vc.view
         
-        XCTAssertEqual(webservice.fetchCallCount, 1)
+        XCTAssertEqual(webservice.fetchUserTagsCallCount, 1)
         
         
         let testTag = vc.tags[1] //Grab a tag to test

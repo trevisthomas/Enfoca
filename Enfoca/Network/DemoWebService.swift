@@ -14,17 +14,19 @@ class DemoWebService : WebService {
     
     init () {
         
+        let tags = DemoWebService.makeTags()
+        
         let d = Date()
         list = []
-        list.append(DemoWebService.makeWordPairWithTag(word: "blacksmith", definition: "herrero", tagNames: ["Noun"]))
+        list.append(DemoWebService.makeWordPairWithTag(word: "blacksmith", definition: "herrero", tags: [tags[0], tags[2]]))
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "English", definition: "Espanol", dateCreated: d))
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "Black", definition: "Negro", dateCreated: d))
-        list.append(DemoWebService.makeWordPairWithTag(word: "Party", definition: "Fiesta", tagNames: ["Noun"]))
-        list.append(DemoWebService.makeWordPairWithTag(word: "to forge", definition: "forjar", tagNames: ["Verb", "Ferrg, El Dragon"]))
+        list.append(DemoWebService.makeWordPairWithTag(word: "Party", definition: "Fiesta", tags: [tags[0]]))
+        list.append(DemoWebService.makeWordPairWithTag(word: "to forge", definition: "forjar", tags: [tags[3], tags[4]]))
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "Tall", definition: "Alta", dateCreated: d))
         
         
-        list.append(DemoWebService.makeWordPairWithTag(word: "i got to speak with him", definition: "yo conseguí hablar con el", tagNames: ["Phrase", "Ferrg, El Dragon"]))
+        list.append(DemoWebService.makeWordPairWithTag(word: "i got to speak with him", definition: "yo conseguí hablar con el", tags: [tags[0], tags[2], tags[3]]))
         
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "To Run", definition: "Correr", dateCreated: d))
         list.append(WordPair(creatorId: -1, pairId: "guid", word: "Clean", definition: "Limpo", dateCreated: d))
@@ -67,11 +69,16 @@ class DemoWebService : WebService {
         
     }
     
-    private class func makeWordPairWithTag(word: String, definition: String, tagNames : [String]) -> WordPair{
-        let wp = WordPair(creatorId: -1, pairId: "1-0-0-1", word: word, definition: definition, dateCreated: Date())
-        for name in tagNames{
-            wp.tags.append(Tag(ownerId: -1, tagId: "nothing", name: name))
-        }
+//    private class func makeWordPairWithTag(word: String, definition: String, tagNames : [String]) -> WordPair{
+//        let wp = WordPair(creatorId: -1, pairId: "1-0-0-1", word: word, definition: definition, dateCreated: Date())
+//        for name in tagNames{
+//            wp.tags.append(Tag(ownerId: -1, tagId: "nothing", name: name))
+//        }
+//        return wp
+//    }
+    
+    private class func makeWordPairWithTag(word: String, definition: String, tags : [Tag]) -> WordPair{
+        let wp = WordPair(creatorId: -1, pairId: "1-0-0-1", word: word, definition: definition, dateCreated: Date(), tags : tags)
         return wp
     }
 
@@ -87,5 +94,18 @@ class DemoWebService : WebService {
         tags.append(Tag(ownerId: ownerId, tagId: "126", name: "Adverb"))
         tags.append(Tag(ownerId: ownerId, tagId: "127", name: "From Class #3"))
         return tags
+    }
+    
+    func createWordPair(word: String, definition: String, tags : [Tag], callback : @escaping(WordPair)->()) {
+        
+        let wp = WordPair(creatorId: -1, pairId: "none", word: word, definition: definition, dateCreated: Date(), tags: tags)
+        callback(wp)
+    }
+    
+    func updateWordPair(oldWordPair : WordPair, word: String, definition: String, tags : [Tag], callback :
+        @escaping(WordPair)->()) {
+        
+        let wp = WordPair(creatorId: -1, pairId: "none", word: word, definition: definition, dateCreated: Date(), tags: tags)
+        callback(wp)
     }
 }
