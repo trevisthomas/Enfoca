@@ -39,15 +39,12 @@ class WordPairCell: UITableViewCell {
                 tagLabel.isHidden = false
                 tagLabel.text = "Tags: \(wordPair.tags.tagsToText())"
             }
-            
-            activeSwitch.isOn = wordPair.active
         }
     }
     var reverseWordPair : Bool!
     
     @IBOutlet weak var definitionLabel: UILabel!
     @IBOutlet weak var wordLabel: UILabel!
-    @IBOutlet weak var activeSwitch: UISwitch!
     @IBOutlet weak var tagLabel: UILabel!
 
 //    func animate(){
@@ -103,20 +100,5 @@ class WordPairCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-    }
-    
-    @IBAction func activeSwitchAction(_ sender: UISwitch) {
-        if sender.isOn {
-            wordPair.active = true
-            getAppDelegate().webService.activateWordPair(wordPair : wordPair, callback: { success in
-                //Do sometning if the web call fails
-            })
-        }
-        else {
-            wordPair.active = false
-            getAppDelegate().webService.deactivateWordPair(wordPair : wordPair, callback: { success in
-                //Do sometning if the web call fails
-            })
-        }
     }
 }

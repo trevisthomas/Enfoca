@@ -177,10 +177,10 @@ class TagFilterViewControllerTests: XCTestCase {
         XCTAssertFalse(delegate.updateCalled) //Stil false!
         XCTAssertFalse(delegate.selectedTags.contains(selectedTag)) //Assert that this is still not selected in the delegate
         
-        let applyButton = sut.navigationItem.rightBarButtonItem!
-        XCTAssertEqual(applyButton.title, "Apply")
+        let applyButton = sut.applyButton!
+        XCTAssertEqual(applyButton.title(for: .normal), "Apply")
+        applyButton.sendActions(for: .touchUpInside)
         
-        UIApplication.shared.sendAction(applyButton.action!, to: applyButton.target, from: nil, for: nil)
         //Verify that it is selected now and that it has been notified
         XCTAssertTrue(delegate.updateCalled)
         XCTAssertTrue(delegate.selectedTags.contains(selectedTag))
@@ -236,10 +236,10 @@ class TagFilterViewControllerTests: XCTestCase {
         let path = IndexPath(row: 0, section: 0) //The only row post search
         sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: path)
         
-        let applyButton = sut.navigationItem.rightBarButtonItem!
-        XCTAssertEqual(applyButton.title, "Apply")
+        let applyButton = sut.applyButton!
+        XCTAssertEqual(applyButton.title(for: .normal), "Apply")
         
-        UIApplication.shared.sendAction(applyButton.action!, to: applyButton.target, from: nil, for: nil)
+        applyButton.sendActions(for: .touchUpInside)
         
         //Verify that it is selected now and that it has been notified
         XCTAssertTrue(delegate.updateCalled)

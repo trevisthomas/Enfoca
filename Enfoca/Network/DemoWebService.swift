@@ -96,16 +96,18 @@ class DemoWebService : WebService {
         return tags
     }
     
-    func createWordPair(word: String, definition: String, tags : [Tag], callback : @escaping(WordPair)->()) {
+    func createWordPair(word: String, definition: String, tags : [Tag], gender : Gender, example: String? = nil, callback : @escaping(WordPair?, EnfocaError?)->()) {
         
-        let wp = WordPair(creatorId: -1, pairId: "none", word: word, definition: definition, dateCreated: Date(), tags: tags)
-        callback(wp)
+        
+        let wp = WordPair(creatorId: -1, pairId: "none", word: word, definition: definition, dateCreated: Date(), gender: gender, tags: tags, example: example)
+        callback(wp, nil)
     }
     
-    func updateWordPair(oldWordPair : WordPair, word: String, definition: String, tags : [Tag], callback :
-        @escaping(WordPair)->()) {
+    func updateWordPair(oldWordPair : WordPair, word: String, definition: String, gender : Gender, example: String? = nil, tags : [Tag], callback :
+        @escaping(WordPair?, EnfocaError?)->()) {
         
-        let wp = WordPair(creatorId: -1, pairId: "none", word: word, definition: definition, dateCreated: Date(), tags: tags)
-        callback(wp)
+        
+        let wp = WordPair(creatorId: -1, pairId: "none", word: word, definition: definition, dateCreated: Date(), gender: gender, tags: tags, example: example)
+        callback(wp, nil)
     }
 }

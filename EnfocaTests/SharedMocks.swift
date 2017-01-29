@@ -51,10 +51,6 @@ class MockWebService : WebService {
     var createCalledCount: Int = 0
     var updateCalledCount: Int = 0
     
-    var addCreateWord : String?
-    var addCreateDefinition : String?
-    var addCreateTags : [Tag]?
-    
     
     func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder : WordPairOrder, pattern : String? = nil, callback: @escaping ([WordPair]) -> ()) {
         fetchWordPairTagFilter = tagFilter
@@ -95,30 +91,23 @@ class MockWebService : WebService {
         callback!(true)
     }
     
-    func createWordPair(word: String, definition: String, tags : [Tag], callback : @escaping(WordPair)->()) {
-        
-        addCreateWord = word
-        addCreateDefinition = definition
-        addCreateTags = tags
+
+    func createWordPair(word: String, definition: String, tags : [Tag], gender : Gender, example: String? = nil, callback : @escaping(WordPair?, EnfocaError?)->()) {
         
         createCalledCount += 1
-        let wp = WordPair(creatorId: -1, pairId: "none", word: word, definition: definition, dateCreated: Date(), tags: tags)
-        callback(wp)
+        
+        let wp = WordPair(creatorId: -1, pairId: "none", word: word, definition: definition, dateCreated: Date(), gender: gender, tags: tags, example: example)
+        callback(wp, nil)
     }
     
-    
-    func updateWordPair(oldWordPair : WordPair, word: String, definition: String, tags : [Tag], callback :
-        @escaping(WordPair)->()) {
-        
-        addCreateWord = word
-        addCreateDefinition = definition
-        addCreateTags = tags
+    func updateWordPair(oldWordPair : WordPair, word: String, definition: String, gender : Gender, example: String? = nil, tags : [Tag], callback :
+        @escaping(WordPair?, EnfocaError?)->()) {
         
         updateCalledCount += 1
-        let wp = WordPair(creatorId: -1, pairId: "none", word: word, definition: definition, dateCreated: Date(), tags: tags)
-        callback(wp)
+        
+        let wp = WordPair(creatorId: -1, pairId: "none", word: word, definition: definition, dateCreated: Date(), gender: gender, tags: tags, example: example)
+        callback(wp, nil)
     }
-
     
 }
 

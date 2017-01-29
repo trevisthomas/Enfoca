@@ -14,6 +14,7 @@ class TagFilterViewController: UIViewController {
     @IBOutlet weak var tagSearchBar: UISearchBar!
     @IBOutlet weak var tagSummaryLabel: UILabel!
     @IBOutlet weak var clearButton: UIButton!
+    @IBOutlet weak var applyButton: UIButton!
     
     var tagFilterDelegate : TagFilterDelegate!
     var viewModel : TagFilterViewModel!

@@ -15,6 +15,8 @@ class PairEditorViewControllerTests: XCTestCase {
     
     var mockWebservice : MockWebService!
     
+    let tagsNoneMessage = "Tags: (none)"
+    
     override func setUp() {
         super.setUp()
         
@@ -30,6 +32,7 @@ class PairEditorViewControllerTests: XCTestCase {
     }
 
     
+    
     func testInit_ViewControllerShouldBeWired(){
         viewDidLoad()
         
@@ -37,7 +40,7 @@ class PairEditorViewControllerTests: XCTestCase {
         XCTAssertNotNil(sut.definitionTextField)
         
         XCTAssertEqual(sut.saveOrCreateButton.title(for: .normal), "Create")
-        XCTAssertEqual(sut.tagSummaryLabel.text, "Tags: (none)")
+        XCTAssertEqual(sut.tagSummaryLabel.text, tagsNoneMessage)
         
         let list = segues(ofViewController: sut)
         XCTAssertTrue(list.contains("TagEditorSegue"))
@@ -51,7 +54,7 @@ class PairEditorViewControllerTests: XCTestCase {
         
         XCTAssertEqual(sut.saveOrCreateButton.title(for: .normal), "Create")
         
-        XCTAssertEqual(sut.tagSummaryLabel.text, "Tags: (none)")
+        XCTAssertEqual(sut.tagSummaryLabel.text, tagsNoneMessage)
         
     }
     
@@ -209,6 +212,21 @@ class PairEditorViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.tagSummaryLabel.text, "Noun, Proverb")
     }
 
+    func testUpdated_RemovingAllTagsShouldResetTagMessage(){
+        let wp = makeWordPair()
+        sut.wordPair = wp
+        
+        viewDidLoad()
+        
+        XCTAssertEqual(sut.tagSummaryLabel.text, "Noun")
+        
+        sut.selectedTags.removeAll()
+        
+        sut.updated(nil)
+        
+        XCTAssertEqual(sut.tagSummaryLabel.text, tagsNoneMessage)
+    }
+    
     func testSave_ShouldNotifyDelegateUpdated(){
         
         let wp = makeWordPair()
@@ -219,13 +237,13 @@ class PairEditorViewControllerTests: XCTestCase {
         
         let word = "new word"
         let def = "it's definition"
-        
-        
+        let example = "it's a word, Bird."
         
         viewDidLoad()
         
         sut.wordTextField.text = word
         sut.definitionTextField.text = def
+        sut.exampleTextView.text = example
         
         let tag1 = Tag(ownerId: -1, tagId: "shrug", name: "Noun")
         
@@ -247,6 +265,8 @@ class PairEditorViewControllerTests: XCTestCase {
         XCTAssertEqual(mockDelegate.updated?.word, word)
         XCTAssertEqual(mockDelegate.updated?.definition, def)
         XCTAssertEqual((mockDelegate.updated?.tags)!, sut.selectedTags)
+        XCTAssertEqual(mockDelegate.updated?.gender, wp.gender)
+        XCTAssertEqual(mockDelegate.updated?.example, example)
     }
     
     func testCreate_ShouldNotifyDelegateAdded(){
@@ -254,7 +274,23 @@ class PairEditorViewControllerTests: XCTestCase {
         
         sut.delegate = mockDelegate
         
+        let word = "new word"
+        let def = "it's definition"
+        let example = "Ejemplo"
+        let gender : Gender = .masculine
+        
         viewDidLoad()
+        
+        sut.wordTextField.text = word
+        sut.definitionTextField.text = def
+        sut.exampleTextView.text = example
+        sut.gender = gender
+        
+        let tag1 = Tag(ownerId: -1, tagId: "shrug", name: "Noun")
+        let tag2 = Tag(ownerId: -1, tagId: "shrug", name: "Vurbe")
+        
+        sut.selectedTags.append(tag1)
+        sut.selectedTags.append(tag2)
         
         XCTAssertEqual(mockDelegate.updatedCallCount, 0)
         XCTAssertEqual(mockDelegate.addedCallCount, 0)
@@ -269,6 +305,12 @@ class PairEditorViewControllerTests: XCTestCase {
         XCTAssertNotNil(mockDelegate.added)
         XCTAssertEqual(mockDelegate.addedCallCount, 1)
         XCTAssertEqual(mockDelegate.updatedCallCount, 0)
+        
+        XCTAssertEqual(mockDelegate.added?.word, word)
+        XCTAssertEqual(mockDelegate.added?.definition, def)
+        XCTAssertEqual((mockDelegate.added?.tags)!, sut.selectedTags)
+        XCTAssertEqual(mockDelegate.added?.gender, gender)
+        XCTAssertEqual(mockDelegate.added?.example, example)
     }
     
     //Validation!

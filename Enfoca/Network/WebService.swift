@@ -17,8 +17,8 @@ protocol WebService {
     func activateWordPair(wordPair: WordPair, callback: ((Bool)->())? )
     func deactivateWordPair(wordPair: WordPair, callback: ((Bool)->())? )
     
-    func createWordPair(word: String, definition: String, tags : [Tag], callback : @escaping(WordPair)->());
+    func createWordPair(word: String, definition: String, tags : [Tag], gender : Gender, example: String?, callback : @escaping(WordPair?, EnfocaError?)->());
     
-    func updateWordPair(oldWordPair : WordPair, word: String, definition: String, tags : [Tag], callback :
-        @escaping(WordPair)->());
+    func updateWordPair(oldWordPair : WordPair, word: String, definition: String, gender : Gender, example: String?, tags : [Tag], callback :
+        @escaping(WordPair?, EnfocaError?)->());
 }

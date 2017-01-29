@@ -111,19 +111,19 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GEe-fa-3Ks">
-                                                    <rect key="frame" x="8" y="8" width="307" height="21"/>
+                                                    <rect key="frame" x="8" y="8" width="359" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ErS-gc-kid">
-                                                    <rect key="frame" x="8" y="38" width="307" height="21"/>
+                                                    <rect key="frame" x="8" y="38" width="359" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="crw-ef-WmO">
-                                                    <rect key="frame" x="8" y="61" width="307" height="12"/>
+                                                    <rect key="frame" x="8" y="61" width="359" height="12"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -135,32 +135,23 @@
                                                         <constraint firstAttribute="height" constant="1" id="2Nx-ow-le6"/>
                                                     </constraints>
                                                 </view>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cYv-EF-3Xu">
-                                                    <rect key="frame" x="318" y="25" width="51" height="31"/>
-                                                    <connections>
-                                                        <action selector="activeSwitchAction:" destination="LI5-cI-mJG" eventType="valueChanged" id="j10-b5-g8t"/>
-                                                    </connections>
-                                                </switch>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="4ZY-yH-25H" firstAttribute="top" secondItem="hMz-8G-kBa" secondAttribute="topMargin" constant="25" id="5M1-3c-zSa"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="crw-ef-WmO" secondAttribute="leading" id="6I2-Xl-gLM"/>
-                                                <constraint firstItem="cYv-EF-3Xu" firstAttribute="centerY" secondItem="hMz-8G-kBa" secondAttribute="centerY" id="8KK-HQ-uwg"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="4ZY-yH-25H" secondAttribute="trailing" constant="239" id="8Tf-hJ-6X9"/>
                                                 <constraint firstAttribute="topMargin" secondItem="GEe-fa-3Ks" secondAttribute="top" id="93V-qe-5DI"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="ErS-gc-kid" secondAttribute="leading" id="AIK-Po-tel"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="GEe-fa-3Ks" secondAttribute="trailing" constant="52" id="E0X-RM-eJq"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="GEe-fa-3Ks" secondAttribute="trailing" id="E0X-RM-eJq"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="crw-ef-WmO" secondAttribute="bottom" id="F5J-hf-g4X"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="4ZY-yH-25H" secondAttribute="leading" id="Fzv-wX-4mA"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="crw-ef-WmO" secondAttribute="trailing" constant="52" id="IkY-At-wGx"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="crw-ef-WmO" secondAttribute="trailing" id="IkY-At-wGx"/>
                                                 <constraint firstItem="ErS-gc-kid" firstAttribute="width" secondItem="GEe-fa-3Ks" secondAttribute="width" id="Olh-v5-l5M"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="GEe-fa-3Ks" secondAttribute="leading" id="SRG-3d-zhZ"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="cYv-EF-3Xu" secondAttribute="trailing" id="Ses-qv-oCm"/>
                                                 <constraint firstAttribute="topMargin" secondItem="ErS-gc-kid" secondAttribute="top" constant="-30" id="XKV-kL-Nrd"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="activeSwitch" destination="cYv-EF-3Xu" id="SPC-Bn-YkQ"/>
                                             <outlet property="definitionLabel" destination="ErS-gc-kid" id="HJW-Up-dPv"/>
                                             <outlet property="definitionLabelConstraint" destination="XKV-kL-Nrd" id="gmI-62-gQQ"/>
                                             <outlet property="tagLabel" destination="crw-ef-WmO" id="cz1-TI-fiE"/>
@@ -295,7 +286,7 @@
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="Apply"/>
                                         <connections>
-                                            <action selector="applyFilterAction:" destination="HsY-Jw-NAl" eventType="touchUpInside" id="C8R-5Z-pyZ"/>
+                                            <action selector="applyFilterAction:" destination="Lw3-aX-uZa" eventType="touchUpInside" id="nAW-xg-AgP"/>
                                         </connections>
                                     </button>
                                     <searchBar contentMode="redraw" placeholder="Tag Search" translatesAutoresizingMaskIntoConstraints="NO" id="dQE-oM-e5Q">
@@ -415,14 +406,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Tag Filter" id="gsT-N0-9PD">
-                        <barButtonItem key="rightBarButtonItem" title="Apply" id="qFG-Hh-SIo">
-                            <connections>
-                                <action selector="applyFilterAction:" destination="Lw3-aX-uZa" id="vSF-WG-YRH"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Apply" id="qFG-Hh-SIo"/>
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="applyButton" destination="wWl-KI-b4o" id="jc1-R9-mF8"/>
                         <outlet property="clearButton" destination="Ccm-0w-qoP" id="I2a-d0-ekF"/>
                         <outlet property="tableView" destination="zHM-Zn-nWK" id="dY6-em-cKu"/>
                         <outlet property="tagSearchBar" destination="dQE-oM-e5Q" id="lep-br-ccV"/>

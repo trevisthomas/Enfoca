@@ -16,10 +16,35 @@ class PairEditorViewController: UIViewController {
     @IBOutlet weak var saveOrCreateButton: UIButton!
     @IBOutlet weak var tagSummaryLabel: UILabel!
     @IBOutlet weak var tagButton: UIButton!
+    @IBOutlet weak var exampleTextView: UITextView!
+    @IBOutlet weak var genderSegmentedControl: UISegmentedControl!
     
     var wordPair : WordPair?
     var selectedTags: [Tag] = []
     var delegate: PairEditorDelegate!
+    var gender: Gender {
+        get{
+            guard genderSegmentedControl.isSelected else {
+                return .notset
+            }
+            return genderSegmentedControl.selectedSegmentIndex == 0 ? .masculine : .feminine
+        }
+        set {
+            guard let _ = genderSegmentedControl else {
+                return //Happens in some unit tests.
+            }
+            
+            genderSegmentedControl.isSelected = true
+            switch newValue {
+            case .notset:
+                genderSegmentedControl.isSelected = false
+            case .masculine:
+                genderSegmentedControl.selectedSegmentIndex = 0
+            case .feminine:
+                genderSegmentedControl.selectedSegmentIndex = 1
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,12 +54,11 @@ class PairEditorViewController: UIViewController {
     
     func initialize(){
         
-        tagSummaryLabel.text = "Tags: (none)"
-        
         if let wordPair = wordPair {
             configureForEdit(wordPair: wordPair)
         } else {
             saveOrCreateButton.setTitle("Create", for: .normal)
+            updateTagSummary(tags: selectedTags)
         }
     }
     
@@ -53,15 +77,16 @@ class PairEditorViewController: UIViewController {
         saveOrCreateButton?.setTitle("Save", for: .normal)
         wordTextField?.text = wp.word
         definitionTextField?.text = wp.definition
-        
         updateTagSummary(tags: selectedTags)
-        
+        gender = wp.gender
     }
     
     func updateTagSummary(tags: [Tag]){
         let tagsAsText = tags.tagsToText()
         if !tagsAsText.isEmpty {
             tagSummaryLabel?.text = tagsAsText
+        } else {
+            tagSummaryLabel.text = "Tags: (none)"
         }
     }
     
@@ -84,15 +109,19 @@ class PairEditorViewController: UIViewController {
         let definition = definitionTextField.text!
         
         if wordPair == nil {
-//            getAppDelegate().webService.createWordPair(word: word, definition: definition, tags: selectedTags, callback: { (newWordPair : WordPair) in
-//                self.delegate.added(wordPair: newWordPair)
-//            })
-            
-            getAppDelegate().webService.createWordPair(word: "", definition: "", tags: selectedTags, callback: { (newWordPair : WordPair) in
+            getAppDelegate().webService.createWordPair(word: word, definition: definition, tags: selectedTags, gender: gender, example: exampleTextView.text, callback: { (wordPair : WordPair?, error: EnfocaError?) in
+                guard let newWordPair = wordPair else {
+                    //handle error
+                    return
+                }
                 self.delegate.added(wordPair: newWordPair)
             })
         } else {
-            getAppDelegate().webService.updateWordPair(oldWordPair: wordPair!, word: word, definition: definition, tags: selectedTags, callback: { (updatedWordPair : WordPair) in
+            getAppDelegate().webService.updateWordPair(oldWordPair: wordPair!, word: word, definition: definition, gender: gender, example: exampleTextView.text, tags: selectedTags, callback: { (wordPair : WordPair?, error: EnfocaError?) in
+                    guard let updatedWordPair = wordPair else {
+                        //handle error
+                        return
+                    }
                     self.delegate.updated(wordPair: updatedWordPair)
             })
         }

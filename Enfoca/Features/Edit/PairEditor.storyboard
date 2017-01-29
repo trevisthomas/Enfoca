@@ -50,36 +50,44 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="XgN-NZ-dGg">
-                                <rect key="frame" x="16" y="68" width="343" height="457"/>
+                                <rect key="frame" x="16" y="68" width="343" height="485"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="muO-6O-eLS">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="51"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="muO-6O-eLS">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="81"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WuR-PT-T5N">
-                                                <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Term" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WuR-PT-T5N">
+                                                <rect key="frame" x="0.0" y="0.0" width="343" height="14.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Word" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N1b-AO-JeH">
-                                                <rect key="frame" x="0.0" y="20.5" width="343" height="30.5"/>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Spanish" textAlignment="natural" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="N1b-AO-JeH">
+                                                <rect key="frame" x="0.0" y="18.5" width="343" height="30.5"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="siI-hp-LV0">
+                                                <rect key="frame" x="0.0" y="53" width="343" height="29"/>
+                                                <segments>
+                                                    <segment title="Masculine"/>
+                                                    <segment title="Feminine"/>
+                                                </segments>
+                                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            </segmentedControl>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="IuC-SX-qQX">
-                                        <rect key="frame" x="0.0" y="71" width="343" height="50.5"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="IuC-SX-qQX">
+                                        <rect key="frame" x="0.0" y="101" width="343" height="48.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spanish" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pKN-La-Rzh">
-                                                <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Definition" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pKN-La-Rzh">
+                                                <rect key="frame" x="0.0" y="0.0" width="343" height="14.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Definition" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OAm-d3-IIx">
-                                                <rect key="frame" x="0.0" y="20.5" width="343" height="30"/>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="English" textAlignment="natural" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="OAm-d3-IIx">
+                                                <rect key="frame" x="0.0" y="18.5" width="343" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
@@ -87,13 +95,13 @@
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Noun, Verb, Adjective, Nosotros No, La Casa Blanca" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vao-cO-IcA">
-                                        <rect key="frame" x="4.5" y="141.5" width="334.5" height="17"/>
+                                        <rect key="frame" x="4.5" y="169.5" width="334.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="fPq-wM-Ni5">
-                                        <rect key="frame" x="0.0" y="178.5" width="343" height="40"/>
+                                        <rect key="frame" x="0.0" y="206.5" width="343" height="40"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bA5-YT-RUk">
                                                 <rect key="frame" x="0.0" y="0.0" width="161.5" height="40"/>
@@ -119,13 +127,13 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CBr-sW-NHH">
-                                        <rect key="frame" x="91" y="238.5" width="161.5" height="40"/>
+                                        <rect key="frame" x="91" y="266.5" width="161.5" height="40"/>
                                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Delete"/>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="nim-ob-nfR">
-                                        <rect key="frame" x="0.0" y="298.5" width="343" height="158.5"/>
+                                        <rect key="frame" x="0.0" y="326.5" width="343" height="158.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Example" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JGo-OM-Ush">
                                                 <rect key="frame" x="0.0" y="0.0" width="65" height="20.5"/>
@@ -136,7 +144,6 @@
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="WlM-ib-d3U">
                                                 <rect key="frame" x="0.0" y="20.5" width="343" height="138"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
@@ -163,7 +170,7 @@
                             <constraint firstAttribute="leadingMargin" secondItem="XgN-NZ-dGg" secondAttribute="leading" id="DOt-6G-kFV"/>
                             <constraint firstItem="XgN-NZ-dGg" firstAttribute="top" secondItem="Vbo-tI-t5k" secondAttribute="bottom" constant="8" id="Nx4-aB-AE9"/>
                             <constraint firstItem="Vbo-tI-t5k" firstAttribute="top" secondItem="SGD-FG-y0v" secondAttribute="bottom" constant="-20" id="Rae-OZ-xK9"/>
-                            <constraint firstItem="fiH-0o-CpH" firstAttribute="top" secondItem="XgN-NZ-dGg" secondAttribute="bottom" constant="142" id="Yuw-zD-WVS"/>
+                            <constraint firstItem="fiH-0o-CpH" firstAttribute="top" secondItem="XgN-NZ-dGg" secondAttribute="bottom" constant="114" id="Vy4-OV-QPo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Vbo-tI-t5k" secondAttribute="trailing" constant="-20" id="dQg-DO-BPW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XgN-NZ-dGg" secondAttribute="trailing" id="vL3-nN-P0A"/>
                         </constraints>
@@ -171,6 +178,8 @@
                     <connections>
                         <outlet property="backButton" destination="oj6-SO-Od7" id="R10-ig-aEa"/>
                         <outlet property="definitionTextField" destination="OAm-d3-IIx" id="V9C-iH-ScY"/>
+                        <outlet property="exampleTextView" destination="WlM-ib-d3U" id="0np-GT-hRe"/>
+                        <outlet property="genderSegmentedControl" destination="siI-hp-LV0" id="Ynt-Ri-eZ0"/>
                         <outlet property="saveOrCreateButton" destination="YOn-Cu-qzg" id="37p-S4-HY1"/>
                         <outlet property="tagButton" destination="bA5-YT-RUk" id="SSN-dJ-aYu"/>
                         <outlet property="tagSummaryLabel" destination="vao-cO-IcA" id="RqN-Ce-r5N"/>

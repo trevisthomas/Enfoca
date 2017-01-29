@@ -27,9 +27,10 @@ class WordPair : Equatable {
     private(set) var word: String
     private(set) var definition: String
     private(set) var dateCreated: Date
-    
+    private(set) var gender: Gender
+    private(set) var example: String?
     private(set) var tags : [Tag] = []
-    var active : Bool
+    
     
 //    private String word;
 //    private String definition;
@@ -52,14 +53,15 @@ class WordPair : Equatable {
 //    private long totalTime;
 //    private long timedViewCount;
     
-    init (creatorId: Int, pairId: String, word: String, definition: String, dateCreated: Date, active : Bool = false, tags : [Tag] = []) {
+    init (creatorId: Int, pairId: String, word: String, definition: String, dateCreated: Date, gender: Gender = .notset, tags : [Tag] = [], example: String? = nil) {
         self.creatorId = creatorId
         self.pairId = pairId
         self.word = word
         self.definition = definition
         self.dateCreated = dateCreated
-        self.active = active
+        self.gender = gender
         self.tags = tags
+        self.example = example
     }
 
 }
