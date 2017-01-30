@@ -57,7 +57,7 @@ class PairEditorViewController: UIViewController {
         if let wordPair = wordPair {
             configureForEdit(wordPair: wordPair)
         } else {
-            saveOrCreateButton.setTitle("Create", for: .normal)
+            saveOrCreateButton?.setTitle("Create", for: .normal)
             updateTagSummary(tags: selectedTags)
         }
     }
@@ -86,7 +86,7 @@ class PairEditorViewController: UIViewController {
         if !tagsAsText.isEmpty {
             tagSummaryLabel?.text = tagsAsText
         } else {
-            tagSummaryLabel.text = "Tags: (none)"
+            tagSummaryLabel?.text = "Tags: (none)"
         }
     }
     
@@ -109,6 +109,12 @@ class PairEditorViewController: UIViewController {
         let definition = definitionTextField.text!
         
         if wordPair == nil {
+            
+            if let error = validateForCreate() {
+                presetAlert(title : "Validation Error", message : error)
+                return
+            }
+            
             getAppDelegate().webService.createWordPair(word: word, definition: definition, tags: selectedTags, gender: gender, example: exampleTextView.text, callback: { (wordPair : WordPair?, error: EnfocaError?) in
                 guard let newWordPair = wordPair else {
                     //handle error
@@ -117,6 +123,12 @@ class PairEditorViewController: UIViewController {
                 self.delegate.added(wordPair: newWordPair)
             })
         } else {
+            
+            if let error = validateForUpdate() {
+                presetAlert(title : "Validation Error", message : error)
+                return
+            }
+            
             getAppDelegate().webService.updateWordPair(oldWordPair: wordPair!, word: word, definition: definition, gender: gender, example: exampleTextView.text, tags: selectedTags, callback: { (wordPair : WordPair?, error: EnfocaError?) in
                     guard let updatedWordPair = wordPair else {
                         //handle error
@@ -125,8 +137,38 @@ class PairEditorViewController: UIViewController {
                     self.delegate.updated(wordPair: updatedWordPair)
             })
         }
-        
     }
+    
+    private func presetAlert(title : String, message : String){
+        let alertController = UIAlertController(title: title, message:
+            message, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    private func validateForCreate() -> String?{
+        if (wordTextField.text ?? "").isEmpty {
+            return "Word pair not created.  Word is blank or empty."
+        }
+        if (definitionTextField.text ?? "").isEmpty {
+            return "Word pair not created.  Definiton can not be blank."
+        }
+        return nil
+    }
+    
+    private func validateForUpdate() -> String?{
+        if (wordTextField.text ?? "").isEmpty {
+            return "Word pair not saved.  Word is blank or empty."
+        }
+        if (definitionTextField.text ?? "").isEmpty {
+            return "Word pair not saved.  Definiton can not be blank."
+        }
+        
+        return nil //success
+    }
+    
+    
 }
 
 extension PairEditorViewController : TagFilterDelegate {
