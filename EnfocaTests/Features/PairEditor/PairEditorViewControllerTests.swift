@@ -114,7 +114,7 @@ class PairEditorViewControllerTests: XCTestCase {
     
     func testTagButton_ShouldSegueWhenTapped(){
         
-        let mockVC = MockPairEditorViewController(nibName: nil, bundle: nil)
+        let mockVC = PairEditorViewControllerMockVCTests.MockPairEditorViewController(nibName: nil, bundle: nil)
         
         let tag1 = Tag(ownerId: -1, tagId: "shrug", name: "Noun")
         
@@ -230,7 +230,7 @@ class PairEditorViewControllerTests: XCTestCase {
     func testSave_ShouldNotifyDelegateUpdated(){
         
         let wp = makeWordPair()
-        let mockDelegate = MockPairEditorDelegate()
+        let mockDelegate = PairEditorViewControllerMockVCTests.MockPairEditorDelegate()
         
         sut.wordPair = wp
         sut.delegate = mockDelegate
@@ -270,7 +270,7 @@ class PairEditorViewControllerTests: XCTestCase {
     }
     
     func testCreate_ShouldNotifyDelegateAdded(){
-        let mockDelegate = MockPairEditorDelegate()
+        let mockDelegate = PairEditorViewControllerMockVCTests.MockPairEditorDelegate()
         
         sut.delegate = mockDelegate
         
@@ -313,202 +313,14 @@ class PairEditorViewControllerTests: XCTestCase {
         XCTAssertEqual(mockDelegate.added?.example, example)
     }
     
-    func testCreate_BlankWordShouldFailValidationWithAlert(){
-        
-        let mockVC = MockPairEditorViewController()
-        let mockDelegate = MockPairEditorDelegate()
-        
-        mockVC.delegate = mockDelegate
-        
-        mockVC.initialize()
-        
-        mockVC.wordTextField.text = ""
-//        sut.definitionTextField.text = def
-//        sut.exampleTextView.text = example
-//        sut.gender = gender
-        
-        
-        XCTAssertEqual(mockWebservice.createCalledCount, 0)
-        
-        mockVC.saveOrCreateAction(UIButton())
-        
-        XCTAssertEqual(mockWebservice.createCalledCount, 0)
-        
-        let alertVC = mockVC.viewControllerPresented as! UIAlertController
-        
-        XCTAssertEqual(alertVC.title, "Validation Error")
-        XCTAssertEqual(alertVC.message, "Word pair not created.  Word is blank or empty.")
-    }
-    
-    func testUpdate_BlankWordShouldFailValidationWithAlert(){
-        
-        let wp = makeWordPair()
-        
-        let mockVC = MockPairEditorViewController()
-        let mockDelegate = MockPairEditorDelegate()
-        
-        mockVC.wordPair = wp
-        
-        mockVC.delegate = mockDelegate
-        
-        mockVC.initialize()
-        
-//        mockVC.wordTextField.text = ""
-        //        sut.definitionTextField.text = def
-        //        sut.exampleTextView.text = example
-        //        sut.gender = gender
-        
-        XCTAssertEqual(mockVC.wordTextField.text, wp.word) //Asserting initial state
-        
-        
-        mockVC.wordTextField.text = "" //Making it bad
-        
-        XCTAssertEqual(mockWebservice.createCalledCount, 0)
-        
-        mockVC.saveOrCreateAction(UIButton())
-        
-        XCTAssertEqual(mockWebservice.createCalledCount, 0)
-        
-        let alertVC = mockVC.viewControllerPresented as! UIAlertController
-        
-        XCTAssertEqual(alertVC.title, "Validation Error")
-        XCTAssertEqual(alertVC.message, "Word pair not saved.  Word is blank or empty.")
-    }
-    
-    func testCreate_BlankDefinitionShouldFailValidationWithAlert(){
-        
-        let mockVC = MockPairEditorViewController()
-        let mockDelegate = MockPairEditorDelegate()
-        
-        mockVC.delegate = mockDelegate
-        
-        mockVC.initialize()
-        
-        mockVC.wordTextField.text = "Something"
-        mockVC.definitionTextField.text = nil
-        //        sut.exampleTextView.text = example
-        //        sut.gender = gender
-        
-        
-        XCTAssertEqual(mockWebservice.createCalledCount, 0)
-        
-        mockVC.saveOrCreateAction(UIButton())
-        
-        XCTAssertEqual(mockWebservice.createCalledCount, 0)
-        
-        let alertVC = mockVC.viewControllerPresented as! UIAlertController
-        
-        XCTAssertEqual(alertVC.title, "Validation Error")
-        XCTAssertEqual(alertVC.message, "Word pair not created.  Definiton can not be blank.")
-    }
-    
-    func testUpdate_BlankDefinitionShouldFailValidationWithAlert(){
-        
-        let wp = makeWordPair()
-        
-        let mockVC = MockPairEditorViewController()
-        let mockDelegate = MockPairEditorDelegate()
-        
-        mockVC.wordPair = wp
-        
-        mockVC.delegate = mockDelegate
-        
-        mockVC.initialize()
-  
-        XCTAssertEqual(mockVC.definitionTextField.text, wp.definition) //Asserting initial state
-        
-        mockVC.definitionTextField.text = "" //Making it bad
-        
-        XCTAssertEqual(mockWebservice.createCalledCount, 0)
-        
-        mockVC.saveOrCreateAction(UIButton())
-        
-        XCTAssertEqual(mockWebservice.createCalledCount, 0)
-        
-        let alertVC = mockVC.viewControllerPresented as! UIAlertController
-        
-        XCTAssertEqual(alertVC.title, "Validation Error")
-        XCTAssertEqual(alertVC.message, "Word pair not saved.  Definiton can not be blank.")
-    }
-    
-
-
-    
-    
-    
-    //Validation!
+   
 }
 
 
 
 extension PairEditorViewControllerTests {
-    class MockPairEditorViewController : PairEditorViewController {
-        var identifier : String!
-        var sender : Any?
-        override func performSegue(withIdentifier identifier: String, sender: Any?) {
-            self.identifier = identifier
-            self.sender = sender
-        }
-        
-        var  _saveOrCreateButton : UIButton!
-        var _genderSegmentedControl : UISegmentedControl!
-        
-        
-        init() {
-            super.init(nibName: nil, bundle: nil)
-            self.wordTextField = UITextField()
-            self.definitionTextField = UITextField()
-            _genderSegmentedControl = UISegmentedControl()
-            _saveOrCreateButton = UIButton()
-            self.genderSegmentedControl = _genderSegmentedControl
-            self.exampleTextView = UITextView()
-            self.saveOrCreateButton = _saveOrCreateButton
-            
-            
-            _genderSegmentedControl.isSelected = false
-            
-        }
-        
-        override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-            super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        }
-        
-        required init?(coder aDecoder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
-        
-        var viewControllerPresented : UIViewController!
-        
-        override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
-            viewControllerPresented = viewControllerToPresent
-        }
-    }
     
-    class MockPairEditorDelegate : PairEditorDelegate {
-        var added : WordPair?
-        var updated : WordPair?
-        
-        var addedCallCount : Int = 0
-        var updatedCallCount : Int = 0
-        
-        func added(wordPair: WordPair) {
-            addedCallCount += 1
-            added = wordPair
-        }
-        
-        func updated(wordPair: WordPair) {
-            updatedCallCount += 1
-            updated = wordPair
-        }
-    }
-    
-    func makeWordPair() -> WordPair {
-        let tag1 = Tag(ownerId: -1, tagId: "shrug", name: "Noun")
-        
-        let wp = WordPair(creatorId: 1, pairId: "thisIsCrap", word: "Red", definition: "Rojo", dateCreated: Date(), tags: [tag1])
-        
-        return wp
-    }
+
     
     
     

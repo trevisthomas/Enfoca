@@ -9,6 +9,15 @@
 import Foundation
 
 class DemoWebService : WebService {
+    var showNetworkActivityIndicator: Bool {
+        get {
+            return UIApplication.shared.isNetworkActivityIndicatorVisible
+        }
+        set {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = newValue
+        }
+    }
+
     private var list : [WordPair]
     private var order = WordPairOrder.wordAsc
     

@@ -21,4 +21,6 @@ protocol WebService {
     
     func updateWordPair(oldWordPair : WordPair, word: String, definition: String, gender : Gender, example: String?, tags : [Tag], callback :
         @escaping(WordPair?, EnfocaError?)->());
+    
+    var showNetworkActivityIndicator : Bool {get set}
 }

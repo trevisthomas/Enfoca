@@ -61,6 +61,7 @@
 		0F864E8A1E1808C900539773 /* BrowserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F864E891E1808C900539773 /* BrowserViewModel.swift */; };
 		0F864E8C1E180C1E00539773 /* BrowseViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F864E8B1E180C1E00539773 /* BrowseViewModelTests.swift */; };
 		0F864E8E1E18660800539773 /* WordPairCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F864E8D1E18660800539773 /* WordPairCellTests.swift */; };
+		0F87D0C41E466487001394AB /* PairEditorViewControllerMockVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F87D0C31E466487001394AB /* PairEditorViewControllerMockVCTests.swift */; };
 		0FAA961F1E19A56600078365 /* WordPairOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAA961E1E19A56600078365 /* WordPairOrder.swift */; };
 		0FB1C64D1E13F05E0087DC93 /* WordStateFilterViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB1C64C1E13F05E0087DC93 /* WordStateFilterViewControllerTests.swift */; };
 		0FB1C64F1E13F3530087DC93 /* WordStateFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB1C64E1E13F3530087DC93 /* WordStateFilterViewModel.swift */; };
@@ -153,6 +154,7 @@
 		0F864E891E1808C900539773 /* BrowserViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowserViewModel.swift; path = Features/Browse/BrowserViewModel.swift; sourceTree = "<group>"; };
 		0F864E8B1E180C1E00539773 /* BrowseViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowseViewModelTests.swift; path = Features/Browse/BrowseViewModelTests.swift; sourceTree = "<group>"; };
 		0F864E8D1E18660800539773 /* WordPairCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WordPairCellTests.swift; path = Features/Browse/WordPairCellTests.swift; sourceTree = "<group>"; };
+		0F87D0C31E466487001394AB /* PairEditorViewControllerMockVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PairEditorViewControllerMockVCTests.swift; path = Features/PairEditor/PairEditorViewControllerMockVCTests.swift; sourceTree = "<group>"; };
 		0FAA961E1E19A56600078365 /* WordPairOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordPairOrder.swift; sourceTree = "<group>"; };
 		0FB1C64C1E13F05E0087DC93 /* WordStateFilterViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WordStateFilterViewControllerTests.swift; path = Features/Browse/WordStateFilterViewControllerTests.swift; sourceTree = "<group>"; };
 		0FB1C64E1E13F3530087DC93 /* WordStateFilterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WordStateFilterViewModel.swift; path = Features/Browse/WordStateFilterViewModel.swift; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 			isa = PBXGroup;
 			children = (
 				0F64F1821E2AB872000549CF /* PairEditorViewControllerTests.swift */,
+				0F87D0C31E466487001394AB /* PairEditorViewControllerMockVCTests.swift */,
 			);
 			name = PairEditor;
 			sourceTree = "<group>";
@@ -752,6 +755,7 @@
 				0F38A4E01E11B94A00051F9E /* SharedMocks.swift in Sources */,
 				0FB1C6681E154F650087DC93 /* Sequence+Tests.swift in Sources */,
 				0FDC870F1E15D92700CF4EC6 /* WordPairTests.swift in Sources */,
+				0F87D0C41E466487001394AB /* PairEditorViewControllerMockVCTests.swift in Sources */,
 				0F38A4E41E11E3C100051F9E /* WelcomeViewControllerTests.swift in Sources */,
 				0F864E811E17F81600539773 /* BrowseViewControllerStudyItemTests.swift in Sources */,
 				0FDC870B1E15560700CF4EC6 /* TagFilterViewModelTests.swift in Sources */,

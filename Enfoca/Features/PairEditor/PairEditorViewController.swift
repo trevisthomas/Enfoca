@@ -103,35 +103,38 @@ class PairEditorViewController: UIViewController {
     }
     
     @IBAction func saveOrCreateAction(_ sender: Any) {
-        
-        //TODO Validate!!
         let word = wordTextField.text!
         let definition = definitionTextField.text!
         
         if wordPair == nil {
-            
+            //Create
             if let error = validateForCreate() {
                 presetAlert(title : "Validation Error", message : error)
                 return
             }
-            
+            getAppDelegate().webService.showNetworkActivityIndicator = true
             getAppDelegate().webService.createWordPair(word: word, definition: definition, tags: selectedTags, gender: gender, example: exampleTextView.text, callback: { (wordPair : WordPair?, error: EnfocaError?) in
+                
+                getAppDelegate().webService.showNetworkActivityIndicator = false
                 guard let newWordPair = wordPair else {
                     //handle error
+                    self.presetAlert(title : "Network Error", message : error!)
                     return
                 }
                 self.delegate.added(wordPair: newWordPair)
             })
         } else {
-            
+            //Update
             if let error = validateForUpdate() {
                 presetAlert(title : "Validation Error", message : error)
                 return
             }
-            
+            getAppDelegate().webService.showNetworkActivityIndicator = true
             getAppDelegate().webService.updateWordPair(oldWordPair: wordPair!, word: word, definition: definition, gender: gender, example: exampleTextView.text, tags: selectedTags, callback: { (wordPair : WordPair?, error: EnfocaError?) in
+                    getAppDelegate().webService.showNetworkActivityIndicator = false
                     guard let updatedWordPair = wordPair else {
                         //handle error
+                        self.presetAlert(title : "Network Error", message : error!)
                         return
                     }
                     self.delegate.updated(wordPair: updatedWordPair)

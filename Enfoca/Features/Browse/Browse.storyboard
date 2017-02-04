@@ -88,9 +88,23 @@
                                             <action selector="performBackButtonAction" destination="jDD-bs-71Q" eventType="touchUpInside" id="ReU-Pz-z7Z"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bqs-XZ-7fb">
+                                        <rect key="frame" x="337" y="16" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="XPc-cm-0Vg"/>
+                                            <constraint firstAttribute="height" constant="30" id="p9q-TM-RNj"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                        <state key="normal" title="+"/>
+                                        <connections>
+                                            <action selector="addNewWordPairAction:" destination="jDD-bs-71Q" eventType="touchUpInside" id="yTY-wg-mfR"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Bqs-XZ-7fb" secondAttribute="trailing" constant="8" id="09L-De-ibJ"/>
+                                    <constraint firstItem="Bqs-XZ-7fb" firstAttribute="top" secondItem="0RR-Za-2Lm" secondAttribute="top" constant="16" id="FdX-4u-oBL"/>
                                     <constraint firstItem="aFd-G5-Z5x" firstAttribute="leading" secondItem="0RR-Za-2Lm" secondAttribute="leading" constant="-1" id="ISf-cX-PuU"/>
                                     <constraint firstAttribute="height" constant="168" id="Vuk-yP-Ddg"/>
                                     <constraint firstItem="rnw-3e-3nj" firstAttribute="leading" secondItem="0RR-Za-2Lm" secondAttribute="leading" constant="8" id="bXD-eU-2uf"/>
@@ -182,6 +196,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Blm-8b-SmH"/>
                     <connections>
+                        <outlet property="addNewWordPairButton" destination="Bqs-XZ-7fb" id="LSS-b4-taH"/>
                         <outlet property="backButton" destination="rnw-3e-3nj" id="8Wh-HP-Xhf"/>
                         <outlet property="reverseWordPairSegmentedControl" destination="DAz-mb-g1w" id="rUg-1E-X8M"/>
                         <outlet property="tableView" destination="1L9-nB-MDd" id="yTX-ug-p9o"/>

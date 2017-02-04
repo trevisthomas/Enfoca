@@ -46,3 +46,11 @@ func makeWordPairs() -> [WordPair]{
     
     return list
 }
+
+func makeWordPair() -> WordPair {
+    let tag1 = Tag(ownerId: -1, tagId: "shrug", name: "Noun")
+    
+    let wp = WordPair(creatorId: 1, pairId: "thisIsCrap", word: "Red", definition: "Rojo", dateCreated: Date(), tags: [tag1])
+    
+    return wp
+}

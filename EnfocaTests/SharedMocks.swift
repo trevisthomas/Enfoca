@@ -51,6 +51,19 @@ class MockWebService : WebService {
     var createCalledCount: Int = 0
     var updateCalledCount: Int = 0
     
+    var createdWordPair: WordPair?
+    var updatedWordPair: WordPair?
+    
+    var showNetworkActivityIndicatorCalledCount = 0
+    var showNetworkActivityIndicator: Bool = false {
+        didSet{
+            showNetworkActivityIndicatorCalledCount += 1
+        }
+    }
+    
+    //Set this to non null values to get errors back in your test
+    var errorOnCreateWordPair : String?
+    var errorOnUpdateWordPair : String?
     
     func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder : WordPairOrder, pattern : String? = nil, callback: @escaping ([WordPair]) -> ()) {
         fetchWordPairTagFilter = tagFilter
@@ -96,8 +109,13 @@ class MockWebService : WebService {
         
         createCalledCount += 1
         
-        let wp = WordPair(creatorId: -1, pairId: "none", word: word, definition: definition, dateCreated: Date(), gender: gender, tags: tags, example: example)
-        callback(wp, nil)
+        if let error = errorOnCreateWordPair {
+            callback(nil, error)
+            return
+        }
+        
+        createdWordPair = WordPair(creatorId: -1, pairId: "none", word: word, definition: definition, dateCreated: Date(), gender: gender, tags: tags, example: example)
+        callback(createdWordPair, nil)
     }
     
     func updateWordPair(oldWordPair : WordPair, word: String, definition: String, gender : Gender, example: String? = nil, tags : [Tag], callback :
@@ -105,8 +123,13 @@ class MockWebService : WebService {
         
         updateCalledCount += 1
         
-        let wp = WordPair(creatorId: -1, pairId: "none", word: word, definition: definition, dateCreated: Date(), gender: gender, tags: tags, example: example)
-        callback(wp, nil)
+        if let error = errorOnUpdateWordPair {
+            callback(nil, error)
+            return
+        }
+        
+        updatedWordPair = WordPair(creatorId: oldWordPair.creatorId, pairId: oldWordPair.pairId, word: word, definition: definition, dateCreated: Date(), gender: gender, tags: tags, example: example)
+        callback(updatedWordPair, nil)
     }
     
 }

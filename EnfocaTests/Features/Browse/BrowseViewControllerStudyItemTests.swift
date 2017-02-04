@@ -86,6 +86,8 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
         XCTAssertEqual(cell.wordLabel?.text, wp.word)
         XCTAssertEqual(cell.definitionLabel?.text, wp.definition)
+        
+        XCTAssertNotNil(sut.addNewWordPairButton)
     }
     
     func testInit_ViewModelShouldNotAnimateCellsDuringInit(){
@@ -499,14 +501,14 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
     }
     
     func testEdit_EditingWordPairShouldSegue(){
-        class MockBrowseViewController : BrowseViewController {
-            var segueIdentifier : String?
-            var sender : Any?
-            override func performSegue(withIdentifier identifier: String, sender: Any?) {
-                self.segueIdentifier = identifier
-                self.sender = sender
-            }
-        }
+//        class MockBrowseViewController : BrowseViewController {
+//            var segueIdentifier : String?
+//            var sender : Any?
+//            override func performSegue(withIdentifier identifier: String, sender: Any?) {
+//                self.segueIdentifier = identifier
+//                self.sender = sender
+//            }
+//        }
         
         let mockVC = MockBrowseViewController(nibName: nil, bundle: nil)
         
@@ -537,6 +539,35 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         XCTAssertNotNil(destVC.delegate)
     }
     
+    func testAdd_NewWordPairButtonShouldSegue(){
+        
+        
+        let mockVC = MockBrowseViewController(nibName: nil, bundle: nil)
+        
+        let button = UIButton()
+        mockVC.addNewWordPairAction(button)
+        
+        XCTAssertEqual(mockVC.segueIdentifier, "PairEditorSegue")
+        XCTAssertTrue(mockVC.sender == nil)
+    }
+    
+    func testAdd_SegueShouldPrepareForCreate(){
+        overrideWithMocks()
+        
+        viewDidLoad()
+        
+        let storyboard = UIStoryboard(name: "PairEditor", bundle: nil)
+        
+        let destVC = storyboard.instantiateInitialViewController() as! PairEditorViewController
+        let segue = UIStoryboardSegue(identifier: "PairEditorSegue", source: sut, destination: destVC)
+        
+        
+        sut.prepare(for: segue, sender: nil)
+        
+        XCTAssertNil(destVC.wordPair)
+        
+        XCTAssertNotNil(destVC.delegate)
+    }
 }
 
 extension BrowseViewControllerStudyItemTests {
@@ -563,6 +594,15 @@ extension BrowseViewControllerStudyItemTests {
             didSet{
                 animatingSetCount += 1
             }
+        }
+    }
+    
+    class MockBrowseViewController : BrowseViewController {
+        var segueIdentifier : String?
+        var sender : Any?
+        override func performSegue(withIdentifier identifier: String, sender: Any?) {
+            self.segueIdentifier = identifier
+            self.sender = sender
         }
     }
 }

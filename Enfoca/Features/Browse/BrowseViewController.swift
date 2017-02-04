@@ -32,6 +32,7 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var reverseWordPairSegmentedControl: UISegmentedControl!
     @IBOutlet weak var wordPairSearchBar: UISearchBar!
+    @IBOutlet weak var addNewWordPairButton: UIButton!
     
    
     var appDefaults : ApplicationDefaults!
@@ -156,6 +157,9 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
             self.tableView.reloadData() // you tried some ways of setting .animating back to false but they didn't always leave things in the right state
         })
     }
+    @IBAction func addNewWordPairAction(_ sender: UIButton) {
+        performSegue(withIdentifier: "PairEditorSegue", sender: nil)
+    }
     
     func keyboardWillShow(_ notification : NSNotification) {
         guard let tap = view.gestureRecognizers?.first as? UITapGestureRecognizer else {
@@ -183,8 +187,10 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PairEditorSegue" {
             guard let pairEditorVC = segue.destination as? PairEditorViewController else { fatalError() }
-            guard let wordPair = sender as? WordPair else { fatalError() }
-            pairEditorVC.wordPair = wordPair
+            if let wordPair = sender as? WordPair {
+                pairEditorVC.wordPair = wordPair
+            }
+            
             pairEditorVC.delegate = self
             return
         }
