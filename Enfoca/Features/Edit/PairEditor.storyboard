@@ -33,11 +33,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YOn-Cu-qzg">
-                                        <rect key="frame" x="266" y="16" width="101" height="30"/>
-                                        <state key="normal" title="Save or Create"/>
-                                        <connections>
-                                            <action selector="saveOrCreateAction:" destination="vAK-aZ-pqa" eventType="touchUpInside" id="WOn-z7-3KU"/>
-                                        </connections>
+                                        <rect key="frame" x="322" y="16" width="45" height="30"/>
+                                        <state key="normal" title="Delete"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -130,7 +127,10 @@
                                         <rect key="frame" x="91" y="266.5" width="161.5" height="40"/>
                                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Delete"/>
+                                        <state key="normal" title="Save / Create"/>
+                                        <connections>
+                                            <action selector="saveOrCreateAction:" destination="vAK-aZ-pqa" eventType="touchUpInside" id="mT0-th-eB6"/>
+                                        </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="nim-ob-nfR">
                                         <rect key="frame" x="0.0" y="326.5" width="343" height="158.5"/>
@@ -178,9 +178,10 @@
                     <connections>
                         <outlet property="backButton" destination="oj6-SO-Od7" id="R10-ig-aEa"/>
                         <outlet property="definitionTextField" destination="OAm-d3-IIx" id="V9C-iH-ScY"/>
+                        <outlet property="deleteButton" destination="YOn-Cu-qzg" id="71J-lx-XLj"/>
                         <outlet property="exampleTextView" destination="WlM-ib-d3U" id="0np-GT-hRe"/>
                         <outlet property="genderSegmentedControl" destination="siI-hp-LV0" id="Ynt-Ri-eZ0"/>
-                        <outlet property="saveOrCreateButton" destination="YOn-Cu-qzg" id="37p-S4-HY1"/>
+                        <outlet property="saveOrCreateButton" destination="CBr-sW-NHH" id="VB1-Ku-OZH"/>
                         <outlet property="tagButton" destination="bA5-YT-RUk" id="SSN-dJ-aYu"/>
                         <outlet property="tagSummaryLabel" destination="vao-cO-IcA" id="RqN-Ce-r5N"/>
                         <outlet property="wordTextField" destination="N1b-AO-JeH" id="586-u3-jEn"/>

@@ -9,6 +9,7 @@
 import Foundation
 
 class DemoWebService : WebService {
+  
     var showNetworkActivityIndicator: Bool {
         get {
             return UIApplication.shared.isNetworkActivityIndicatorVisible
@@ -60,8 +61,11 @@ class DemoWebService : WebService {
     }
     
     
-
-    internal func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder: WordPairOrder, pattern: String? = nil, callback: @escaping ([WordPair]) -> ()) {
+    internal func wordPairCount(tagFilter: [Tag], pattern: String?, callback: @escaping (Int) -> ()) {
+        callback(list.count)
+    }
+    
+    internal func fetchWordPairs(tagFilter: [Tag], wordPairOrder: WordPairOrder, pattern: String? = nil, callback: @escaping ([WordPair]) -> ()) {
         
         let tagNames : [String] = tagFilter.map { (tag) -> String in
             return tag.name

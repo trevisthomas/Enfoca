@@ -36,7 +36,6 @@ class MockAuthenticationDelegate: AuthenticationDelegate {
 
 class MockWebService : WebService {
     var fetchWordPairTagFilter : [Tag]?
-    var fetchWordPairWordStateFilter : WordStateFilter?
     var fetchWordPairCallCount : Int = 0
     var wordPairs : [WordPair] = []
     var fetchWordPairOrder : WordPairOrder?
@@ -65,14 +64,17 @@ class MockWebService : WebService {
     var errorOnCreateWordPair : String?
     var errorOnUpdateWordPair : String?
     
-    func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder : WordPairOrder, pattern : String? = nil, callback: @escaping ([WordPair]) -> ()) {
+    func fetchWordPairs(tagFilter: [Tag], wordPairOrder : WordPairOrder, pattern : String? = nil, callback: @escaping ([WordPair]) -> ()) {
         fetchWordPairTagFilter = tagFilter
-        fetchWordPairWordStateFilter = wordStateFilter
         fetchWordPairCallCount += 1
         fetchWordPairOrder = wordPairOrder
         fetchWordPairPattern = pattern
         
         callback(wordPairs)
+    }
+    
+    func wordPairCount(tagFilter: [Tag], pattern: String?, callback: @escaping (Int) -> ()) {
+        callback(wordPairs.count)
     }
     
     var fetchUserTagsCallCount : Int = 0
@@ -135,16 +137,11 @@ class MockWebService : WebService {
 }
 
 class MockDefaults : ApplicationDefaults {
-    var wordStateFilter: WordStateFilter
     var reverseWordPair: Bool = false
     var saveCount = 0
     var selectedTags: [Tag] = []
     var tags: [Tag] = []
     
-    
-    init(defaultWordStateFilter: WordStateFilter = .active){
-        self.wordStateFilter = defaultWordStateFilter
-    }
     
     func save() {
         saveCount += 1
@@ -199,14 +196,6 @@ class MockWordPairCell : WordPairCell {
     
 }
 
-class MockWordStateFilterDelegate : WordStateFilterDelegate {
-    var currentWordStateFilter: WordStateFilter = .all
-    var updatedCalled : Bool = false
-    func updated(_ callback: (() -> ())? = nil) {
-        updatedCalled = true
-    }
-}
-
 class MockTableView : UITableView {
     
     var dataReloaded : Bool = false
@@ -247,7 +236,7 @@ class MockTagFilterDelegate : TagFilterDelegate {
         selectedTags = []
     }
     
-    func updated(_ callback : (() -> ())? = nil){
+    func tagFilterUpdated(_ callback : (() -> ())? = nil){
         updateCalled = true
     }
 }

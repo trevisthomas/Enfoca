@@ -37,7 +37,7 @@ class BrowseViewModelTests: XCTestCase {
         var tags : [Tag] = []
         tags.append(Tag(ownerId: -1, tagId: "guid100", name: "Noun"))
         
-        sut.fetchWordPairs(wordStateFilter: .all, tagFilter: tags, wordPairOrder: .wordAsc)
+        sut.fetchWordPairs(tagFilter: tags, wordPairOrder: .wordAsc)
         
         XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), mockService.wordPairs.count)
     }
@@ -45,7 +45,7 @@ class BrowseViewModelTests: XCTestCase {
     func testTableView_ShouldCreatePopulatedCell(){
         let tableView = MockWordPairTableView()
         
-        sut.fetchWordPairs(wordStateFilter: .all, tagFilter: [], wordPairOrder: .wordAsc)
+        sut.fetchWordPairs(tagFilter: [], wordPairOrder: .wordAsc)
         
         sut.reverseWordPair = true
 
@@ -64,7 +64,7 @@ class BrowseViewModelTests: XCTestCase {
     
     func testWebService_CallbackShouldNotifyCallerUponComplete(){
         var callbackCalled = false
-        sut.fetchWordPairs(wordStateFilter: .all, tagFilter: [], wordPairOrder: .wordAsc, callback: {
+        sut.fetchWordPairs(tagFilter: [], wordPairOrder: .wordAsc, callback: {
             callbackCalled = true
         })
         
@@ -77,7 +77,7 @@ class BrowseViewModelTests: XCTestCase {
         
         let tableView = MockWordPairTableView()
         
-        sut.fetchWordPairs(wordStateFilter: .all, tagFilter: [], wordPairOrder: .wordAsc)
+        sut.fetchWordPairs(tagFilter: [], wordPairOrder: .wordAsc)
         
         sut.reverseWordPair = true
         
@@ -101,7 +101,7 @@ class BrowseViewModelTests: XCTestCase {
         
         let tableView = MockWordPairTableView()
         
-        sut.fetchWordPairs(wordStateFilter: .all, tagFilter: [], wordPairOrder: .wordAsc)
+        sut.fetchWordPairs(tagFilter: [], wordPairOrder: .wordAsc)
         
         sut.reverseWordPair = true
         
@@ -128,7 +128,7 @@ class BrowseViewModelTests: XCTestCase {
         
         let wp = mockService.wordPairs[rut]
         
-        sut.fetchWordPairs(wordStateFilter: .all, tagFilter: [], wordPairOrder: .wordAsc) //This forces the VM to load data.
+        sut.fetchWordPairs(tagFilter: [], wordPairOrder: .wordAsc) //This forces the VM to load data.
         
         sut.tableView(tableView, didSelectRowAt: IndexPath(row: rut, section: 0))
         

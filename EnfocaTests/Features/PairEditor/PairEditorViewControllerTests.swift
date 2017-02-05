@@ -42,6 +42,7 @@ class PairEditorViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.saveOrCreateButton.title(for: .normal), "Create")
         XCTAssertEqual(sut.tagSummaryLabel.text, tagsNoneMessage)
         
+        XCTAssertTrue(sut.deleteButton.isHidden)
         let list = segues(ofViewController: sut)
         XCTAssertTrue(list.contains("TagEditorSegue"))
         
@@ -71,6 +72,7 @@ class PairEditorViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.wordTextField.text, wp.word)
         XCTAssertEqual(sut.definitionTextField.text, wp.definition)
         XCTAssertEqual(sut.tagSummaryLabel.text, "Noun")
+        XCTAssertFalse(sut.deleteButton.isHidden)
         
     }
     
@@ -207,7 +209,7 @@ class PairEditorViewControllerTests: XCTestCase {
         let tag2 = Tag(ownerId: -1, tagId: "shrug", name: "Proverb")
         sut.selectedTags.append(tag2)
         
-        sut.updated(nil)
+        sut.tagFilterUpdated(nil)
         
         XCTAssertEqual(sut.tagSummaryLabel.text, "Noun, Proverb")
     }
@@ -222,7 +224,7 @@ class PairEditorViewControllerTests: XCTestCase {
         
         sut.selectedTags.removeAll()
         
-        sut.updated(nil)
+        sut.tagFilterUpdated(nil)
         
         XCTAssertEqual(sut.tagSummaryLabel.text, tagsNoneMessage)
     }

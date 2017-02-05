@@ -8,15 +8,15 @@
 
 import UIKit
 
-class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilterDelegate {
+class BrowseViewController: UIViewController, TagFilterDelegate {
     
-    func updated(_ callback: (() -> ())? = nil) {
+    func tagFilterUpdated(_ callback: (() -> ())? = nil) {
         reloadWordPairs(callback)
         appDefaults.save()
     }
     
     private func reloadWordPairs(_ callback: (() -> ())? = nil){
-        viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: selectedTags, wordPairOrder : determineWordOrder(), callback: {
+        viewModel.fetchWordPairs(tagFilter: selectedTags, wordPairOrder : determineWordOrder(), callback: {
             //My assumption here is that if you give me a callback, that you will reload the table manually
             if let callback = callback {
                 callback()
@@ -27,7 +27,6 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
     }
 
     @IBOutlet weak var backButton: UIButton!
-    @IBOutlet weak var wordStateFilterButton: UIButton!
     @IBOutlet weak var tagFilterButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var reverseWordPairSegmentedControl: UISegmentedControl!
@@ -43,13 +42,6 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
     var selectedTags: [Tag] = [] {
         didSet{
             appDefaults.selectedTags = selectedTags
-        }
-    }
-   
-    var currentWordStateFilter: WordStateFilter = .all {
-        didSet{
-            wordStateFilterButton.setTitle(currentWordStateFilter.rawValue, for: .normal)
-            appDefaults.wordStateFilter = currentWordStateFilter
         }
     }
     
@@ -87,7 +79,6 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        currentWordStateFilter = appDefaults.wordStateFilter //Setting this before the webservice so that update doesnt get called twice.
         viewModel = tableView.delegate as! BrowseViewModel
         viewModel.delegate = self
         
@@ -100,7 +91,6 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
             self.selectedTags = self.appDefaults.selectedTags
             
         }
-        
         
         reverseWordPair = appDefaults.reverseWordPair
         viewModel.reverseWordPair = reverseWordPair
@@ -152,7 +142,7 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
                 fatalError()
         }
         
-        updated({
+        tagFilterUpdated({
             self.viewModel.animating = true
             self.tableView.reloadData() // you tried some ways of setting .animating back to false but they didn't always leave things in the right state
         })
@@ -202,10 +192,7 @@ class BrowseViewController: UIViewController, WordStateFilterDelegate, TagFilter
         
         let vc = segue.destination
         
-        if button == wordStateFilterButton {
-            let wordFilterVC = vc as! WordStateFilterViewController
-            wordFilterVC.wordStateFilterDelegate = self
-        } else if button == tagFilterButton {
+        if button == tagFilterButton {
             let tagFilterVC = vc as! TagFilterViewController
             tagFilterVC.tagFilterDelegate = self
         }
@@ -252,7 +239,7 @@ extension BrowseViewController : UISearchBarDelegate {
     }
     
     private func autoComplete(pattern : String) {
-        viewModel.fetchWordPairs(wordStateFilter: currentWordStateFilter, tagFilter: selectedTags, wordPairOrder : determineWordOrder(), pattern: pattern, callback: {
+        viewModel.fetchWordPairs(tagFilter: selectedTags, wordPairOrder : determineWordOrder(), pattern: pattern, callback: {
             self.tableView.reloadData()
         })
     }

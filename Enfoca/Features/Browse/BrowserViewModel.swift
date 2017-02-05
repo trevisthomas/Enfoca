@@ -33,8 +33,8 @@ class BrowseViewModel : NSObject, UITableViewDelegate, UITableViewDataSource{
         delegate.edit(wordPair: wp)
     }
 
-    func fetchWordPairs(wordStateFilter: WordStateFilter, tagFilter: [Tag], wordPairOrder order : WordPairOrder, pattern : String? = nil, callback completionHandler : (() -> ())? = nil ) {
-        delegate.webService.fetchWordPairs(wordStateFilter: wordStateFilter, tagFilter: tagFilter, wordPairOrder: order, pattern: pattern, callback: {
+    func fetchWordPairs(tagFilter: [Tag], wordPairOrder order : WordPairOrder, pattern : String? = nil, callback completionHandler : (() -> ())? = nil ) {
+        delegate.webService.fetchWordPairs(tagFilter: tagFilter, wordPairOrder: order, pattern: pattern, callback: {
             newWordPairs in
             self.wordPairs = newWordPairs
             if let completionHandler = completionHandler {

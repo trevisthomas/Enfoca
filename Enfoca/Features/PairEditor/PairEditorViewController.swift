@@ -18,6 +18,7 @@ class PairEditorViewController: UIViewController {
     @IBOutlet weak var tagButton: UIButton!
     @IBOutlet weak var exampleTextView: UITextView!
     @IBOutlet weak var genderSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var deleteButton: UIButton!
     
     var wordPair : WordPair?
     var selectedTags: [Tag] = []
@@ -59,6 +60,7 @@ class PairEditorViewController: UIViewController {
         } else {
             saveOrCreateButton?.setTitle("Create", for: .normal)
             updateTagSummary(tags: selectedTags)
+            deleteButton?.isHidden = true
         }
     }
     
@@ -79,6 +81,7 @@ class PairEditorViewController: UIViewController {
         definitionTextField?.text = wp.definition
         updateTagSummary(tags: selectedTags)
         gender = wp.gender
+        deleteButton?.isHidden = false
     }
     
     func updateTagSummary(tags: [Tag]){
@@ -101,8 +104,8 @@ class PairEditorViewController: UIViewController {
             popover.permittedArrowDirections = [.left, .right]
         }
     }
+    @IBAction func saveOrCreateAction(_ sender: UIButton) {
     
-    @IBAction func saveOrCreateAction(_ sender: Any) {
         let word = wordTextField.text!
         let definition = definitionTextField.text!
         
@@ -176,7 +179,7 @@ class PairEditorViewController: UIViewController {
 
 extension PairEditorViewController : TagFilterDelegate {
     
-    func updated(_ callback: (() -> ())?) {
+    func tagFilterUpdated(_ callback: (() -> ())?) {
         updateTagSummary(tags: selectedTags)
     }
     

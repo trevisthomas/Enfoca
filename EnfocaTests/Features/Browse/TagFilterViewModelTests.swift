@@ -187,7 +187,7 @@ extension TagFilterViewModelTests {
     class MockTagFilterDelegate : TagFilterDelegate{
         var tags: [Tag] = []
         var selectedTags: [Tag] = []
-        func updated(_ callback : (() -> ())? = nil) {
+        func tagFilterUpdated(_ callback : (() -> ())? = nil) {
             //noop
         }
     }

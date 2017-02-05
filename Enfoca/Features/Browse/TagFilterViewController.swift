@@ -39,7 +39,7 @@ class TagFilterViewController: UIViewController {
         
         viewModel.applySelectedTagsToDelegate()
         
-        tagFilterDelegate.updated(nil)
+        tagFilterDelegate.tagFilterUpdated(nil)
     }
     
     @IBAction func applyFilterAction(_ sender: Any) {

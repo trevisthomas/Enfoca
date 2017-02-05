@@ -98,7 +98,7 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
     func testWebService_ShouldFetchWordsFromServiceWithCurrentFilterParams(){
         overrideWithMocks()
         
-        let defaults = MockDefaults(defaultWordStateFilter: .inactive)
+        let defaults = MockDefaults()
         sut.appDefaults = defaults
         
         let service = sut.webService as! MockWebService //Just making sure
@@ -107,14 +107,13 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
         //The webservice should be called!
         XCTAssertEqual(service.fetchWordPairTagFilter!, [])
-        XCTAssertEqual(service.fetchWordPairWordStateFilter, sut.currentWordStateFilter)
     }
     
     func testWebService_WebserviceShouldBeCalledWhenFilterIsUpdated(){
         
         overrideWithMocks()
         
-        let defaults = MockDefaults(defaultWordStateFilter: .inactive)
+        let defaults = MockDefaults()
         sut.appDefaults = defaults
         
         let service = sut.webService as! MockWebService //Just making sure
@@ -130,12 +129,9 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
         sut.selectedTags = selectedTags
         
-        sut.currentWordStateFilter = .inactive
-        
-        sut.updated() //Causes the service to be called again with the updated filter
+        sut.tagFilterUpdated() //Causes the service to be called again with the updated filter
         
         XCTAssertEqual(service.fetchWordPairTagFilter!, selectedTags)
-        XCTAssertEqual(service.fetchWordPairWordStateFilter, .inactive)
     }
     
     func testAppDefaults_ViewModelShouldReflectReverseWordPairSetting(){
@@ -200,26 +196,6 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         XCTAssertTrue(mockDefaults.reverseWordPair)
     }
     
-    func testAppDefaults_WordStateFilterChangeShouldUpdateAppDefaults(){
-        overrideWithMocks()
-        
-        let mockDefaults = MockDefaults()
-        mockDefaults.wordStateFilter = .inactive
-        sut.appDefaults = mockDefaults
-        viewDidLoad()
-        
-        
-        XCTAssertEqual(mockDefaults.wordStateFilter, .inactive)
-        XCTAssertEqual(mockDefaults.saveCount, 0)
-        
-        sut.currentWordStateFilter = .active
-        sut.updated()
-        
-        //Verify that save was called and that the value was updated
-        XCTAssertEqual(mockDefaults.saveCount, 1)
-        XCTAssertEqual(mockDefaults.wordStateFilter, .active)
-    }
-
     func testAppDefaults_TagFilterChangeShouldUpdateAppDefaults(){
         overrideWithMocks()
         
@@ -240,7 +216,7 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
         //Simulating what the tag filter view controller does.
         sut.selectedTags.append(tut)
-        sut.updated()
+        sut.tagFilterUpdated()
         
         //Verify that save was called and that the value was updated
         XCTAssertEqual(mockDefaults.saveCount, 1)
@@ -343,7 +319,7 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         sut.tableView = tableView
         
         var callbackCalled : Bool = false
-        sut.updated({
+        sut.tagFilterUpdated({
             callbackCalled = true
         })
         
@@ -363,7 +339,7 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         tableView.dataSource = sut.viewModel
         sut.tableView = tableView
         
-        sut.updated()
+        sut.tagFilterUpdated()
         
         
         XCTAssertTrue(tableView.dataReloaded)
