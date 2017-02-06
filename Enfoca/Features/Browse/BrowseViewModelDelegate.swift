@@ -11,4 +11,6 @@ import Foundation
 protocol BrowseViewModelDelegate {
     func edit(wordPair : WordPair)
     var webService : WebService! {get}
+    
+    func reloadRows(withIndexPaths: [IndexPath])
 }

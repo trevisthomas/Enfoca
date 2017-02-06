@@ -64,6 +64,8 @@ class WordPairCellTests: XCTestCase {
         
         XCTAssertNotNil(sut.tableView)
         
+        _ = sut.viewModel.tableView(sut.tableView, cellForRowAt: IndexPath(row: row, section: 0))
+        
         let cell = sut.viewModel.tableView(sut.tableView, cellForRowAt: IndexPath(row: row, section: 0)) as! WordPairCell
 
         XCTAssertTrue(sut.appDefaults.reverseWordPair) //Confirming initial state
@@ -79,28 +81,6 @@ class WordPairCellTests: XCTestCase {
         XCTAssertFalse(cell.tagLabel.isHidden)
         XCTAssertEqual(cell.tagLabel.text, "Tags: Noun, Home")
     }
-    
-//    func testInit_WithActiveFalseAndNoTags(){
-//        overrideWithMocks()
-//        
-//        let row = 3
-//        
-//        var wordPairs = makeWordPairs()
-//        wordPairs[row].active = false
-//        
-//        let wp = wordPairs[row]
-//        mockWebService.wordPairs = wordPairs
-//        
-//        viewDidLoad()
-//        
-//        let cell = sut.viewModel.tableView(sut.tableView, cellForRowAt: IndexPath(row: row, section: 0)) as! WordPairCell
-//
-//        XCTAssertFalse(cell.reverseWordPair)
-//        XCTAssertEqual(cell.activeSwitch.isOn, wp.active) //false
-//        XCTAssertNil(cell.tagLabel.text)
-//        XCTAssertTrue(cell.tagLabel.isHidden)
-//        
-//    }
     
     func testInit_ConstraintsShouldBeWired(){
         overrideWithMocks()

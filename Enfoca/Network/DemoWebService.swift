@@ -67,18 +67,23 @@ class DemoWebService : WebService {
     
     internal func fetchWordPairs(tagFilter: [Tag], wordPairOrder: WordPairOrder, pattern: String? = nil, callback: @escaping ([WordPair]) -> ()) {
         
-        let tagNames : [String] = tagFilter.map { (tag) -> String in
-            return tag.name
+        DispatchQueue.main.asyncAfter(deadline:  DispatchTime.now() + .seconds(1)) {
+//            print("test")
+            let tagNames : [String] = tagFilter.map { (tag) -> String in
+                return tag.name
+            }
+            
+            print("Dummy fetch called with tags \(tagNames)")
+            
+            if wordPairOrder != self.order {
+                self.order = wordPairOrder
+                self.list.reverse()
+            }
+            
+            callback(self.list)
         }
         
-        print("Dummy fetch called with tags \(tagNames)")
         
-        if wordPairOrder != self.order {
-            order = wordPairOrder
-            list.reverse()
-        }
-        
-        callback(list)
         
     }
     

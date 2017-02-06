@@ -16,14 +16,15 @@ class BrowseViewController: UIViewController, TagFilterDelegate {
     }
     
     private func reloadWordPairs(_ callback: (() -> ())? = nil){
-        viewModel.fetchWordPairs(tagFilter: selectedTags, wordPairOrder : determineWordOrder(), callback: {
-            //My assumption here is that if you give me a callback, that you will reload the table manually
+        viewModel.performWordPairFetch(tagFilter: selectedTags, pattern: nil, wordPairOrder: determineWordOrder()) { (count :Int) in
+            
+            //TODO: Do something intreresting with count.
             if let callback = callback {
                 callback()
             } else {
                 self.tableView.reloadData()
             }
-        })
+        }
     }
 
     @IBOutlet weak var backButton: UIButton!
@@ -203,26 +204,15 @@ class BrowseViewController: UIViewController, TagFilterDelegate {
         popover.sourceRect = button.bounds //No clue why source view didnt do this.
 
     }
-    
-    
-    
-    //deprecated - Since i do a reload, this isnt needed.
-//    private func applyWordPairOrder() {
-//        for cell in tableView.visibleCells {
-//            
-//            guard let myCell = cell as? WordPairCell else {
-//                fatalError()
-//            }
-//            
-//            myCell.reverseWordPair = reverseWordPair
-//        }
-//    }
-    
 }
 
 extension BrowseViewController : BrowseViewModelDelegate {
     func edit(wordPair: WordPair){
         performSegue(withIdentifier: "PairEditorSegue", sender: wordPair)
+    }
+    
+    func reloadRows(withIndexPaths indexPaths: [IndexPath]) {
+        tableView.reloadRows(at: indexPaths, with: .fade)
     }
 }
 
@@ -239,7 +229,8 @@ extension BrowseViewController : UISearchBarDelegate {
     }
     
     private func autoComplete(pattern : String) {
-        viewModel.fetchWordPairs(tagFilter: selectedTags, wordPairOrder : determineWordOrder(), pattern: pattern, callback: {
+        viewModel.performWordPairFetch(tagFilter: selectedTags, pattern: pattern, wordPairOrder : determineWordOrder(), callback: {count in
+            //TODO: Do something with count!
             self.tableView.reloadData()
         })
     }

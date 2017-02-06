@@ -46,7 +46,15 @@ class WordPairCell: UITableViewCell {
     @IBOutlet weak var definitionLabel: UILabel!
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var tagLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
+    func clear(){
+        definitionLabel?.text = nil
+        wordLabel?.text = nil
+        tagLabel?.text = nil
+//        activityIndicator?.startAnimating()
+    }
+    
 //    func animate(){
 //        guard let _ = wordLabelConstraint else {
 //            return //Some unit tests call this before we're wired

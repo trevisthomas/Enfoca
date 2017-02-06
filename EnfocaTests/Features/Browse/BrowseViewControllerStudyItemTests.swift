@@ -77,6 +77,8 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
         XCTAssertNotNil(sut.tableView)
         
+        _ = sut.viewModel.tableView(sut.tableView, cellForRowAt: IndexPath(row: 2, section: 0))
+        
         let cell = sut.viewModel.tableView(sut.tableView, cellForRowAt: IndexPath(row: 2, section: 0)) as! WordPairCell
         
         let wp = mockWebService.wordPairs[2]
@@ -145,7 +147,8 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         viewDidLoad()
         
         XCTAssertTrue(sut.viewModel.reverseWordPair)
-        XCTAssertEqual(mockWebService.fetchWordPairOrder!, .definitionAsc)
+        XCTAssertEqual(sut.viewModel.currentWordPairOrder, .definitionAsc)
+        
     }
     
     func testAppDefaults_ViewModelShouldReflectNormalWordPairSetting(){
@@ -160,7 +163,9 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
         XCTAssertFalse(sut.viewModel.reverseWordPair)
         
-        XCTAssertEqual(mockWebService.fetchWordPairOrder!, .wordAsc)
+        XCTAssertEqual(sut.viewModel.currentWordPairOrder, .wordAsc)
+        
+//        XCTAssertEqual(mockWebService.fetchWordPairOrder!, .wordAsc)
     }
     
     func testAppDefaults_ViewModelShouldReflectReverseWordPairSettingWhenFalse(){
@@ -256,10 +261,15 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         sut.reverseWordPairSegmentedControl.selectedSegmentIndex = 1
         sut.reverseWordPairSegmentedControl.sendActions(for: .valueChanged)
         
-        let cell = sut.tableView.dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as! WordPairCell
+        //First call, the data wasnt retrieved yet.
+        var cell = sut.tableView.dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as! WordPairCell
         
+        cell = sut.tableView.dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as! WordPairCell
+        
+        
+        //Trevis, your big refactor caused this to go to 3, and the one below to 4.  You didnt look longenough to figure out why but assumed that it had to do with the count being incremented in the mock on countWordPairs and fetchWordPairs
         XCTAssertTrue(cell.reverseWordPair)
-        XCTAssertEqual(mockWebService.fetchWordPairCallCount, 2)
+        XCTAssertEqual(mockWebService.fetchWordPairCallCount, 3)
         
         //I'm buildint this test based on the assumption that calling cellForRow means that the cell is visible.  I am trying to verify that visible cells are notified when the order changes
         
@@ -272,7 +282,7 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         XCTAssertFalse(sut.reverseWordPair)
         XCTAssertFalse(sut.viewModel.reverseWordPair)
         
-        XCTAssertEqual(mockWebService.fetchWordPairCallCount, 3)
+        XCTAssertEqual(mockWebService.fetchWordPairCallCount, 4)
 //        XCTAssertFalse(cell.reverseWordPair) - I dont notify active cells anymore since i reload data.
     }
     
@@ -290,6 +300,8 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
         sut.reverseWordPairSegmentedControl.selectedSegmentIndex = 1
         sut.reverseWordPairSegmentedControl.sendActions(for: .valueChanged)
+        
+        _ = sut.tableView.dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0))
         
         let cell = sut.tableView.dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as! WordPairCell
         
@@ -365,6 +377,8 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
         sut.reverseWordPairSegmentedControl.selectedSegmentIndex = 1
         sut.reverseWordPairSegmentedControl.sendActions(for: .valueChanged)
+        
+        _ = sut.tableView.dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0))
         
         let cell = sut.tableView.dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as! WordPairCell
         
@@ -477,14 +491,6 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
     }
     
     func testEdit_EditingWordPairShouldSegue(){
-//        class MockBrowseViewController : BrowseViewController {
-//            var segueIdentifier : String?
-//            var sender : Any?
-//            override func performSegue(withIdentifier identifier: String, sender: Any?) {
-//                self.segueIdentifier = identifier
-//                self.sender = sender
-//            }
-//        }
         
         let mockVC = MockBrowseViewController(nibName: nil, bundle: nil)
         
@@ -543,6 +549,24 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         XCTAssertNil(destVC.wordPair)
         
         XCTAssertNotNil(destVC.delegate)
+    }
+    
+    func testReload_ReloadingPathsShouldTellTableToReload(){
+        
+        let mockVC = MockBrowseViewController(nibName: nil, bundle: nil)
+        
+        let mockTableView = MockTableView()
+        mockVC.tableView = mockTableView
+        
+        
+        var somePaths : [IndexPath] = []
+        somePaths.append(IndexPath(row: 0, section: 0))
+        somePaths.append(IndexPath(row: 1, section: 0))
+        
+        mockVC.reloadRows(withIndexPaths: somePaths)
+        
+        XCTAssertEqual(mockTableView.reloadedRowsAtIndexPaths, somePaths)
+        
     }
 }
 

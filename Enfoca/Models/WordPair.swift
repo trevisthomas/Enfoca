@@ -8,6 +8,10 @@
 
 import Foundation
 
+class WordPairWrapper {
+    var wordPair : WordPair?
+}
+
 class WordPair : Equatable {
     /// Returns a Boolean value indicating whether two values are equal.
     ///

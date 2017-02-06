@@ -74,6 +74,11 @@ class MockWebService : WebService {
     }
     
     func wordPairCount(tagFilter: [Tag], pattern: String?, callback: @escaping (Int) -> ()) {
+        fetchWordPairTagFilter = tagFilter
+        fetchWordPairCallCount += 1
+//        fetchWordPairOrder = wordPairOrder
+        fetchWordPairPattern = pattern
+        
         callback(wordPairs.count)
     }
     
@@ -142,6 +147,9 @@ class MockDefaults : ApplicationDefaults {
     var selectedTags: [Tag] = []
     var tags: [Tag] = []
     
+    var fetchWordPairPageSize: Int {
+        return 10
+    }
     
     func save() {
         saveCount += 1
@@ -154,11 +162,14 @@ class MockWordPairTableView : UITableView {
     
     var dataReloaded : Bool = false
     
+    var strongStuff : [UIActivityIndicatorView] = []
+    
     //WARNING! This is not the way these work.  dequing does not make a cell visible
     override func dequeueReusableCell(withIdentifier identifier: String) -> UITableViewCell? {
         self.identifier = identifier
         let c = MockWordPairCell()
         visibleMockCells.append(c)
+        
         return c
         
     }
@@ -176,16 +187,16 @@ class MockWordPairTableView : UITableView {
 class MockWordPairCell : WordPairCell {
     var animateCallCount = 0
     var setContentPositionCalledCount = 0
-//    override func animate(){
-//        animateCallCount += 1
-//    }
     
-//    override func setContentPositions(animate : Bool) {
-//        if (animate) {
-//            animateCallCount += 1
-//        }
-//        setContentPositionCalledCount += 1
-//    }
+    var _activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 10, width: 100, height: 100))
+    
+    override var activityIndicator: UIActivityIndicatorView! {
+        get {
+            return _activityIndicator
+        } set {
+            //dont care
+        }
+    }
     
     override func updateContentPositions(animate : Bool = false) {
         if (animate) {
@@ -223,6 +234,11 @@ class MockTableView : UITableView {
             return UITableViewCell(style: .subtitle, reuseIdentifier: identifier)
         }
 
+    }
+    
+    var reloadedRowsAtIndexPaths : [IndexPath] = []
+    override func reloadRows(at indexPaths: [IndexPath], with animation: UITableViewRowAnimation) {
+        reloadedRowsAtIndexPaths = indexPaths
     }
 }
 
