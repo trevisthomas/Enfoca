@@ -32,7 +32,37 @@ class TagCellTests: XCTestCase {
         sut.setSelected(true, animated: false)
         XCTAssertTrue(sut.isSelected)
         XCTAssertFalse((sut.tagSelectedView?.isHidden)!)
+        
+        sut.createTagCallback = nil
+        XCTAssertTrue(sut.createButton.isHidden)
     }
     
+    func testCreate_IfCreateCallbackExistsShowCreateButton(){
+        
+        sut.createTagCallback = { tagValue in
+            return
+        }
+        XCTAssertFalse(sut.createButton.isHidden)
+    }
+    
+    func testCreate_WhenTappedValueShouldBePassedToCallback(){
+        var newTagValue : String?
+        
+        sut.tagTitleLabel?.text = "Nu Tag"
+        var cell : TagCell?
+        sut.createTagCallback = { tagCell, tagValue in
+            newTagValue = tagValue
+            cell = tagCell
+            return
+        }
+        
+        XCTAssertNil(cell)
+        XCTAssertFalse(sut.createButton.isHidden)
+        
+        sut.createButton.sendActions(for: .touchUpInside)
+        XCTAssertNotNil(cell)
+        XCTAssertEqual(newTagValue, "Nu Tag")
+        
+    }
     
 }

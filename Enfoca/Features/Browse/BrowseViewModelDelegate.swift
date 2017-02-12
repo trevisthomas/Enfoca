@@ -13,4 +13,5 @@ protocol BrowseViewModelDelegate {
     var webService : WebService! {get}
     
     func reloadRows(withIndexPaths: [IndexPath])
+    func reloadTable()
 }

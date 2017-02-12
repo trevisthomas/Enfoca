@@ -139,6 +139,30 @@ class MockWebService : WebService {
         callback(updatedWordPair, nil)
     }
     
+    var errorOnCreateTag : String? = nil
+    var createTagCallCount = 0
+    var createTagValue : String? = nil
+    var createTagBlockedCallback : ((Tag?, EnfocaError?)->())?
+    var createTagBlockCallback : Bool = false
+    
+    func createTag(tagValue: String, callback: @escaping (Tag?, EnfocaError?) -> ()) {
+        
+        createTagCallCount += 1
+        createTagValue = tagValue
+        
+        if let error = errorOnCreateTag {
+            callback(nil, error)
+            return
+        } else {
+            let t = Tag(ownerId: -1, tagId: "eyedee", name: tagValue)
+            if (createTagBlockCallback) {
+                createTagBlockedCallback = callback
+            } else {
+                callback(t, nil)
+            }
+        }
+    }
+    
 }
 
 class MockDefaults : ApplicationDefaults {
@@ -240,6 +264,8 @@ class MockTableView : UITableView {
     override func reloadRows(at indexPaths: [IndexPath], with animation: UITableViewRowAnimation) {
         reloadedRowsAtIndexPaths = indexPaths
     }
+    
+    
 }
 
 class MockTagFilterDelegate : TagFilterDelegate {
@@ -257,3 +283,20 @@ class MockTagFilterDelegate : TagFilterDelegate {
     }
 }
 
+class MockTagFilterViewModelDelegate : TagFilterViewModelDelegate{
+    var selectedTagsChangedCalled : Bool = false
+    var reloadTableCalled : Bool = false
+    func selectedTagsChanged(){
+        selectedTagsChangedCalled = true
+    }
+    func reloadTable() {
+        reloadTableCalled = true
+    }
+    
+    var alertTitle : String?
+    var alertMessage : String?
+    func alert(title: String, message: String) {
+        alertTitle = title
+        alertMessage = message
+    }
+}

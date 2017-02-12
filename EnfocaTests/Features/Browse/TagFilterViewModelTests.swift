@@ -12,6 +12,7 @@ class TagFilterViewModelTests: XCTestCase {
     
     var sut : TagFilterViewModel!
     var vc : TagFilterViewController!
+    var mockWebService : MockWebService!
     
     override func setUp() {
         super.setUp()
@@ -19,9 +20,10 @@ class TagFilterViewModelTests: XCTestCase {
         sut = TagFilterViewModel()
         
         let delegate = MockTagFilterDelegate()
-        getAppDelegate().webService = MockWebService()
-//        delegate.tags = makeTags()
-        sut.configureFromDelegate(delegate: delegate)
+        mockWebService = MockWebService()
+        getAppDelegate().webService = mockWebService
+
+        sut.configureFromDelegate(delegate: delegate){}
         
         let storyboard = UIStoryboard(name: "Browse", bundle: nil)
         vc = storyboard.instantiateViewController(withIdentifier: "TagFilterVC") as! TagFilterViewController
@@ -39,9 +41,18 @@ class TagFilterViewModelTests: XCTestCase {
     
     func testTable_ShouldDequeExpectedCellIdentifier(){
         let tableView = MockTableView()
+        
         let _ = sut.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0))
         XCTAssertEqual(tableView.identifier, "TagFilterCell")
         //I'd like to test cell style but appearently it's not public
+    }
+
+    func testTable_ShouldNotBeAbleToSelectPendingRow(){
+        let tableView = MockTableView()
+        sut.localTagDictionary.removeValue(forKey: sut.allTags[1])
+        
+        XCTAssertNil(sut.tableView(tableView, willSelectRowAt: IndexPath(row: 1, section: 0)))
+        XCTAssertNotNil(sut.tableView(tableView, willSelectRowAt: IndexPath(row: 0, section: 0)))
     }
     
     func testCells_ShouldContainTagData(){
@@ -69,6 +80,7 @@ class TagFilterViewModelTests: XCTestCase {
         
         let _ = vc.view //View Did Load
         
+        
         vc.tableView.delegate = sut
         vc.tableView.dataSource = sut
         
@@ -81,23 +93,29 @@ class TagFilterViewModelTests: XCTestCase {
         
         sut.searchTagsFor(prefix: "Ph")
         
-        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 1)
+        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 2)
         let cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as! TagCell
         XCTAssertEqual(cell.tagTitleLabel?.text, "Phrase")
+        XCTAssertTrue(cell.createButton.isHidden) //Asserting that create is hidden!
+        
+        let cell2 = sut.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as! TagCell
+        XCTAssertEqual(cell2.tagTitleLabel?.text, "Ph")
+        XCTAssertFalse(cell2.createButton.isHidden) //Asserting that it is in create mode!
         
         
         sut.searchTagsFor(prefix: "Xa")
-        
-        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 0)
+        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 1)
         
         sut.searchTagsFor(prefix: "Ad")
         
-        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 2)
+        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 3)
         
         sut.searchTagsFor(prefix: "nOun") //case insensitivie
         
-        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 1)
+        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 2)
+
     }
+    
     
     func testTagSearch_SearchShouldNotClearSelection() {
         
@@ -128,7 +146,7 @@ class TagFilterViewModelTests: XCTestCase {
         
         sut.searchTagsFor(prefix: "Ph")
         
-        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 1)
+        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 2) //2 because of create cell
         path = IndexPath(row: 0, section: 0)
         cell = sut.tableView(tableView, cellForRowAt: path) as! TagCell
         XCTAssertEqual(cell.tagTitleLabel?.text, "Phrase")
@@ -167,20 +185,131 @@ class TagFilterViewModelTests: XCTestCase {
     }
     
     func testDeselect_ShouldCallCallback(){
-        var called : Bool = false
+        
         
         let _ = vc.view
         
-        
-        sut.observeChanges(callback: {
-            called = true
-        })
+        let delegate = MockTagFilterViewModelDelegate()
+        sut.tagFilterViewModelDelegate = delegate
         
         sut.deselectAll()
         
-        XCTAssertTrue(called)
+        XCTAssertTrue(delegate.selectedTagsChangedCalled)
         
     }
+    
+    func testTagSearch_CreateTagCreateButtonShouldCreate() {
+        helperTestTagSearch()
+    }
+    
+    func testTagSearch_CreateTagButtonShouldWorkEvenIfCreateCellDisapearedDuringWebCall(){
+        helperTestTagSearch(disapear: true)
+    }
+    
+    private func helperTestTagSearch(disapear : Bool = false){
+        let _ = vc.view //View Did Load
+        
+        vc.tableView.delegate = sut
+        vc.tableView.dataSource = sut
+        
+        let tableView = vc.tableView!
+        
+        let mockDelegate = MockTagFilterViewModelDelegate()
+        sut.tagFilterViewModelDelegate = mockDelegate
+        
+        XCTAssertEqual(sut.allTags.count, sut.tableView(tableView, numberOfRowsInSection: 0))
+        
+        XCTAssertEqual(mockWebService.createTagCallCount, 0) //Assumed starting condition
+        
+        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), sut.allTags.count) //Assert initial state of all tags shown
+        
+        sut.searchTagsFor(prefix: "Poptastic")
+        
+        mockWebService.createTagBlockCallback = true
+        
+        XCTAssertFalse(mockDelegate.reloadTableCalled)
+        
+        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 1)
+        let cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as! TagCell
+        XCTAssertEqual(cell.tagTitleLabel?.text, "Poptastic")
+        XCTAssertFalse(cell.createButton.isHidden) //Asserting that it is in create mode!
+        
+        cell.createButton.sendActions(for: .touchUpInside)
+        
+        guard let callback = mockWebService.createTagBlockedCallback else {
+            XCTFail()
+            return
+        }
+        
+        if disapear {
+            sut.localTempTagFilters.removeAll()
+        }
+        
+        XCTAssertTrue(cell.createButton.isHidden)
+        XCTAssertTrue(cell.activityIndicator.isAnimating)
+        
+        
+        XCTAssertEqual(mockWebService.createTagCallCount, 1)
+        XCTAssertEqual(mockWebService.createTagValue, "Poptastic")
+        
+        let tag = Tag(ownerId: -1, tagId: "id", name: "Poptastic")
+        callback(tag, nil)
+        
+        XCTAssertTrue(sut.localTempTagFilters.index(of: tag)! >= 0) //Make sure that the tag is here
+        XCTAssertNotNil(sut.localTagDictionary[tag]) //Tag should be in dicionary
+        XCTAssertFalse(sut.localTagDictionary[tag]!) //Because new tag should not be selected.
+        XCTAssertTrue(sut.allTags.index(of: tag)! >= 0) //New tag should be in all tags.
+        XCTAssertTrue(mockDelegate.reloadTableCalled)
+
+    }
+    
+    func testTagCreate_WebServiceErrorShouldAlert(){
+        let _ = vc.view //View Did Load
+        
+        vc.tableView.delegate = sut
+        vc.tableView.dataSource = sut
+        
+        let tableView = vc.tableView!
+        
+        let mockDelegate = MockTagFilterViewModelDelegate()
+        sut.tagFilterViewModelDelegate = mockDelegate
+        
+        XCTAssertEqual(sut.allTags.count, sut.tableView(tableView, numberOfRowsInSection: 0))
+        
+        XCTAssertEqual(mockWebService.createTagCallCount, 0) //Assumed starting condition
+        
+        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), sut.allTags.count) //Assert initial state of all tags shown
+        
+        sut.searchTagsFor(prefix: "Poptastic")
+        
+        mockWebService.createTagBlockCallback = true
+        
+        XCTAssertFalse(mockDelegate.reloadTableCalled)
+        
+        XCTAssertEqual(sut.tableView(tableView, numberOfRowsInSection: 0), 1)
+        let cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as! TagCell
+        XCTAssertEqual(cell.tagTitleLabel?.text, "Poptastic")
+        XCTAssertFalse(cell.createButton.isHidden) //Asserting that it is in create mode!
+        
+        cell.createButton.sendActions(for: .touchUpInside)
+        
+        guard let callback = mockWebService.createTagBlockedCallback else {
+            XCTFail()
+            return
+        }
+        
+        callback(nil, "Network error fool")
+        
+        XCTAssertEqual(mockDelegate.alertMessage, "Network error fool")
+        
+        XCTAssertEqual(mockDelegate.alertTitle, "Error")
+        
+        XCTAssertFalse(cell.createButton.isHidden)
+        XCTAssertFalse(cell.activityIndicator.isAnimating)
+        
+    }
+    
+    
 }
 
 extension TagFilterViewModelTests {
@@ -191,4 +320,6 @@ extension TagFilterViewModelTests {
             //noop
         }
     }
+    
+    
 }

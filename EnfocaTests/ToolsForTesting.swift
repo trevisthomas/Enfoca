@@ -39,10 +39,10 @@ func makeTagTuples(tags : [Tag] = makeTags())->[(Tag, Bool)] {
 func makeWordPairs() -> [WordPair]{
     let d = Date()
     var list : [WordPair] = []
-    list.append(WordPair(creatorId: -1, pairId: "guid", word: "English", definition: "Espanol", dateCreated: d))
-    list.append(WordPair(creatorId: -1, pairId: "guid", word: "Black", definition: "Negro", dateCreated: d))
-    list.append(WordPair(creatorId: -1, pairId: "guid", word: "Tall", definition: "Alta", dateCreated: d))
-    list.append(WordPair(creatorId: -1, pairId: "guid", word: "To Run", definition: "Correr", dateCreated: d))
+    list.append(WordPair(creatorId: -1, pairId: "guid0", word: "English", definition: "Espanol", dateCreated: d))
+    list.append(WordPair(creatorId: -1, pairId: "guid1", word: "Black", definition: "Negro", dateCreated: d))
+    list.append(WordPair(creatorId: -1, pairId: "guid2", word: "Tall", definition: "Alta", dateCreated: d))
+    list.append(WordPair(creatorId: -1, pairId: "guid3", word: "To Run", definition: "Correr", dateCreated: d))
     
     return list
 }

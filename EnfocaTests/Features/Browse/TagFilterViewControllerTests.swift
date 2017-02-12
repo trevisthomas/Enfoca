@@ -10,10 +10,13 @@ import XCTest
 @testable import Enfoca
 class TagFilterViewControllerTests: XCTestCase {
     var sut : TagFilterViewController!
+    var mockWebService : MockWebService!
     override func setUp() {
         super.setUp()
         
-        getAppDelegate().webService = MockWebService()
+        mockWebService =  MockWebService()
+        
+        getAppDelegate().webService = mockWebService
         
         let storyboard = UIStoryboard(name: "Browse", bundle: nil)
         sut = storyboard.instantiateViewController(withIdentifier: "TagFilterVC") as! TagFilterViewController
@@ -33,6 +36,7 @@ class TagFilterViewControllerTests: XCTestCase {
         let viewModel = sut.tableView.dataSource as! TagFilterViewModel
         XCTAssertNotNil(viewModel.tagFilterDelegate)
     }
+    
     
     func testInit_TableViewsDataSourceAndDelegateAreWiredToViewModel(){
         let _ = sut.view //View Did Load
@@ -154,13 +158,13 @@ class TagFilterViewControllerTests: XCTestCase {
         
         XCTAssertFalse(delegate.selectedTags.contains(selectedTag))
         
-        sut.applyFilterAction("none")
+        sut.applyFilterAction(sut.applyButton)
         XCTAssertTrue(delegate.updateCalled)
         
         XCTAssertTrue(delegate.selectedTags.contains(selectedTag))
         
         sut.tableView.delegate?.tableView!(sut.tableView, didDeselectRowAt: path) //This should deselect
-        sut.applyFilterAction("none")
+        sut.applyFilterAction(sut.applyButton)
         XCTAssertFalse(delegate.selectedTags.contains(selectedTag))
     }
     
@@ -230,8 +234,8 @@ class TagFilterViewControllerTests: XCTestCase {
         
         sut.searchBar(sut.tagSearchBar, textDidChange: selectedTag.name) //Search for this tag
         
-        //Post search, the list should contain only this tag
-        XCTAssertEqual(sut.viewModel.tableView(sut.tableView, numberOfRowsInSection: 0), 1)
+        //Post search, the list should contain only this tag (and the create cell!)
+        XCTAssertEqual(sut.viewModel.tableView(sut.tableView, numberOfRowsInSection: 0), 2)
         
         let path = IndexPath(row: 0, section: 0) //The only row post search
         sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: path)
@@ -248,6 +252,25 @@ class TagFilterViewControllerTests: XCTestCase {
         //TODO: How to test if popover is closed?
         
     }
+    
+    func testSearch_IfSearchIsBlankDontPresentCreate(){
+        let delegate = sut.tagFilterDelegate as! MockTagFilterDelegate
+        
+        let _ = sut.view //View Did Load
+        
+        let selectedTag = delegate.tags[2]
+        
+        XCTAssertFalse(delegate.selectedTags.contains(selectedTag)) //Assert that this is not selected in the delegate
+        XCTAssertFalse(delegate.updateCalled)
+        
+        
+        sut.searchBar(sut.tagSearchBar, textDidChange: "") //Search for this tag
+        
+        //Blank search, AKA clearing, should show all, and no create button
+        XCTAssertEqual(sut.viewModel.tableView(sut.tableView, numberOfRowsInSection: 0), delegate.tags.count)
+        
+    }
+
     
     func testTagSummary_LabelShouldExist(){
         let _ = sut.view //View Did Load
@@ -270,6 +293,28 @@ class TagFilterViewControllerTests: XCTestCase {
         let tag2 = sut.viewModel.allTags[2]
         XCTAssertEqual(sut.tagSummaryLabel.text, "Selected: \(tag2.name), \(tag1.name)")
     }
+    
+    func testTagFilterViewModelDelegate_TableShouldReload(){
+        let _ = sut.view //View Did Load
+        
+        let mockTable = MockTableView()
+        sut.tableView = mockTable
+        
+        sut.reloadTable()
+        
+        XCTAssertTrue(mockTable.dataReloaded)
+    }
+    
+    func testTagFilterViewModelDelegate_AlertShouldAlert(){
+        let vc = MockTagFilterViewController()
+        
+        vc.alert(title: "Error", message: "Message")
+        
+        let alertVC = vc.viewControllerPresented as! UIAlertController
+        
+        XCTAssertEqual(alertVC.title, "Error")
+        XCTAssertEqual(alertVC.message, "Message")
+    }
 }
 
 extension TagFilterViewControllerTests {
@@ -277,6 +322,14 @@ extension TagFilterViewControllerTests {
         var searchFor : String?
         override func searchTagsFor(prefix: String) {
             searchFor = prefix
+        }
+    }
+    
+    class MockTagFilterViewController : TagFilterViewController{
+        var viewControllerPresented : UIViewController!
+        
+        override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+            viewControllerPresented = viewControllerToPresent
         }
     }
     

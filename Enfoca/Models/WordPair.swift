@@ -9,6 +9,13 @@
 import Foundation
 
 class WordPairWrapper {
+    init(){
+        
+    }
+    
+    init(_ wordPair: WordPair) {
+        self.wordPair = wordPair
+    }
     var wordPair : WordPair?
 }
 

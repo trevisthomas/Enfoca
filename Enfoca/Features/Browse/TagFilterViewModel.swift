@@ -12,10 +12,10 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
     var localTempTagFilters : [Tag] = []
     var localTagDictionary : [Tag: Bool] = [:]
     private(set) var tagFilterDelegate : TagFilterDelegate!
-    var callbackWhenChanged : (() -> ())?
+    var tagFilterViewModelDelegate : TagFilterViewModelDelegate?
     var allTags : [Tag] = []
     
-    func configureFromDelegate(delegate : TagFilterDelegate){
+    func configureFromDelegate(delegate : TagFilterDelegate, callback : @escaping()->()){
         self.tagFilterDelegate = delegate
         
         getAppDelegate().webService.fetchUserTags { (tags:[Tag]) in
@@ -27,7 +27,7 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
                 self.localTagDictionary[tag] = self.tagFilterDelegate.selectedTags.contains(tag)
             }
             
-            //TREVIS: This might have some odd behavior since you've moved this to a callback.  The VC may need to be notified that the data set has changed since this could be async.
+            callback()
         }
     }
     
@@ -41,33 +41,72 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
         let tag = localTempTagFilters[indexPath.row]
         cell.tagTitleLabel?.text = tag.name
         cell.tagSubtitleLabel?.text = formatDetailText(tag.count)
-        let selected : Bool = localTagDictionary[tag]!
         
-        if selected {
-            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        
+        if let selected : Bool = localTagDictionary[tag] {
+            cell.createTagCallback = nil
+            if selected {
+                tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+            } else {
+                tableView.deselectRow(at: indexPath, animated: false)
+            }
         } else {
-            tableView.deselectRow(at: indexPath, animated: false)
+            cell.createTagCallback = createCallback
         }
 
         return cell
+    }
+    
+    func createCallback(tagCell : TagCell, tagValue : String){
+        tagCell.activityIndicator.startAnimating()
+        getAppDelegate().webService.createTag(tagValue: tagValue) { (newTag: Tag?, error :EnfocaError?) in
+            
+            if let error = error {
+                //Should probably refactor and put this logic in the  cell
+                tagCell.activityIndicator.stopAnimating()
+                tagCell.createButton.isHidden = false
+                self.tagFilterViewModelDelegate?.alert(title: "Error", message: error)
+            }
+            
+            guard let newTag = newTag else {return}
+            
+            self.allTags.append(newTag)
+            self.localTagDictionary[newTag] = false
+            if let index = self.localTempTagFilters.index(of: newTag) {
+                self.localTempTagFilters[index] = newTag
+            } else {
+                self.localTempTagFilters.append(newTag)
+            }
+            
+            self.tagFilterViewModelDelegate?.reloadTable()
+        }
     }
     
     func formatDetailText(_ count : Int ) -> String {
         return "\(count) words tagged."
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         let tag = localTempTagFilters[indexPath.row]
+        guard let _ = localTagDictionary[tag] else {
+            return nil
+        }
+        return indexPath
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let tag = localTempTagFilters[indexPath.row]
+        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
         localTagDictionary[tag] = true
-        callbackWhenChanged?()
+        tagFilterViewModelDelegate?.selectedTagsChanged()
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let tag = localTempTagFilters[indexPath.row]
         localTagDictionary[tag] = false
-        callbackWhenChanged?()
+        tagFilterViewModelDelegate?.selectedTagsChanged()
     }
     
     func applySelectedTagsToDelegate(){
@@ -90,6 +129,11 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
                 localTempTagFilters.append(tag)
             }
         }
+        
+        if prefix.characters.count > 0 {
+            let createTag = Tag(name: prefix)
+            localTempTagFilters.append(createTag)
+        }
     }
     
     func getSelectedTags() -> [Tag] {
@@ -102,15 +146,11 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
         return tags
     }
     
-    func observeChanges(callback : @escaping () ->()) {
-        callbackWhenChanged = callback
-    }
-    
     func deselectAll(){
         for (tag, _) in localTagDictionary {
             localTagDictionary[tag] = false
         }
-        callbackWhenChanged?()
+        tagFilterViewModelDelegate?.selectedTagsChanged()
     }
     
 }

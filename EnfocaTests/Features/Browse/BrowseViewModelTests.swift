@@ -312,6 +312,69 @@ class BrowseViewModelTests: XCTestCase {
         XCTAssertEqual(cellPage2.wordPair.definition, wp2.definition)
         XCTAssertEqual(cellPage2.wordPair.word, wp2.word)
     }
+    
+    func testPairEditDelegate_AddWordPairShouldAdd(){
+        let wp = WordPair(creatorId: 1, pairId: "p-id", word: "new", definition: "nuevo", dateCreated: Date())
+        
+        
+        
+        XCTAssertFalse(mockBVMDelegate.reloadTableCalled)
+        
+        sut.performWordPairFetch(tagFilter: [], pattern: nil, wordPairOrder: .wordAsc) { (count) in
+            //Dont care
+        }
+        
+        XCTAssertEqual(sut.wordPairDictionary.count, mockService.wordPairs.count)
+        let count = sut.wordPairDictionary.count
+        
+        
+        
+        sut.added(wordPair: wp)
+        
+//        for (key, value) in sut.wordPairDictionary {
+//            
+//        }
+        
+        let ip = IndexPath(row: 0, section: 0)
+        
+        //New words are inserted at the top
+        XCTAssertEqual(sut.wordPairDictionary[ip]?.wordPair, wp)
+        XCTAssertEqual(sut.wordPairDictionary.count, count + 1)
+        XCTAssertTrue(mockBVMDelegate.reloadTableCalled)
+    }
+    
+    func testPairEditDelegate_UpdateWordPairShouldUpdate(){
+        XCTAssertFalse(mockBVMDelegate.reloadTableCalled)
+        
+        sut.performWordPairFetch(tagFilter: [], pattern: nil, wordPairOrder: .wordAsc) { (count) in
+            //Dont care
+        }
+        
+        let ip = IndexPath(row: 2, section: 0)
+        
+        sut.fetchDataForIndexPath(path: ip)
+        
+        let wp = sut.wordPairDictionary[ip]!.wordPair!
+        
+        
+        let updatedWp = WordPair(creatorId: wp.creatorId, pairId: wp.pairId, word: "new", definition: "nuevo", dateCreated: wp.dateCreated)
+        
+        XCTAssertEqual(sut.wordPairDictionary.count, mockService.wordPairs.count)
+        let count = sut.wordPairDictionary.count
+        
+        
+        sut.updated(wordPair: updatedWp)
+        
+        XCTAssertEqual(mockBVMDelegate.pathsReloaded[0], ip)
+        
+        XCTAssertEqual(sut.wordPairDictionary.count, count) // no change on update
+        
+        XCTAssertEqual(sut.wordPairDictionary[ip]?.wordPair, updatedWp)
+        
+        XCTAssertEqual(sut.wordPairDictionary[ip]?.wordPair?.word, updatedWp.word)
+        XCTAssertEqual(sut.wordPairDictionary[ip]?.wordPair?.definition, updatedWp.definition)
+
+    }
 }
 
 extension BrowseViewModelTests{
@@ -327,6 +390,11 @@ extension BrowseViewModelTests{
         
         func reloadRows(withIndexPaths paths: [IndexPath]) {
             pathsReloaded = paths
+        }
+        
+        var reloadTableCalled = false
+        func reloadTable() {
+            reloadTableCalled = true
         }
     }
     

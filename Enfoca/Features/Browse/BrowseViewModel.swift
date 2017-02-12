@@ -54,7 +54,7 @@ class BrowseViewModel : NSObject, UITableViewDelegate, UITableViewDataSource{
         delegate.edit(wordPair: wp)
     }
     
-    private func fetchDataForIndexPath(path indexPath : IndexPath) {
+    func fetchDataForIndexPath(path indexPath : IndexPath) {
         
         if isFetchInProgress {
             return
@@ -110,4 +110,34 @@ class BrowseViewModel : NSObject, UITableViewDelegate, UITableViewDataSource{
             completionHandler(count)
         }
     }
+}
+
+extension BrowseViewModel : PairEditorDelegate {
+    func added(wordPair: WordPair) {
+        var newDict = [IndexPath : WordPairWrapper]()
+        newDict[IndexPath(row: 0, section: 0)] = WordPairWrapper(wordPair)
+        
+        //Re-adding the old word pairs with their new ip's
+        var index = 1
+        for (_, value) in wordPairDictionary {
+            let ip = IndexPath(row: index, section: 0)
+            newDict[ip] = value
+            index += 1
+        }
+        
+        wordPairDictionary = newDict
+        
+        delegate.reloadTable()
+    }
+    
+    func updated(wordPair: WordPair) {
+        for (ip, value) in wordPairDictionary {
+            if value.wordPair == wordPair {
+                wordPairDictionary[ip]?.wordPair = wordPair
+                delegate.reloadRows(withIndexPaths: [ip])
+                break
+            }
+        }
+    }
+    
 }

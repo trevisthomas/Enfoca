@@ -21,16 +21,16 @@ class TagFilterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        viewModel = tableView.dataSource as! TagFilterViewModel
-        viewModel.configureFromDelegate(delegate: tagFilterDelegate)
-        
-        viewModel.observeChanges(callback : updateSelectedSummary)
-        
-        updateSelectedSummary()
-        
         tagSearchBar.backgroundImage = UIImage() //Ah ha!  This gits rid of that horible border!
         
+        viewModel = tableView.dataSource as! TagFilterViewModel
+        viewModel.tagFilterViewModelDelegate = self
+        
+        //Trevis, the below is a blocking call.  Refactor for completion callback.
+        viewModel.configureFromDelegate(delegate: tagFilterDelegate){
+            self.updateSelectedSummary()
+            self.tableView.reloadData() // Not unit tested :-(
+        }
     }
 
     private func applyFilter(){
@@ -42,7 +42,7 @@ class TagFilterViewController: UIViewController {
         tagFilterDelegate.tagFilterUpdated(nil)
     }
     
-    @IBAction func applyFilterAction(_ sender: Any) {
+    @IBAction func applyFilterAction(_ sender: UIButton) {
         applyFilter()
         
         //TODO, learn how to test
@@ -56,27 +56,33 @@ class TagFilterViewController: UIViewController {
             tagSummaryLabel.text = "Selected: (none)"
             return
         }
-        
-        var s : String = ""
-        for tag in selected {
-            if !s.isEmpty {
-                s.append(", ")
-            }
-            s.append(tag.name)
-        }
-        
-        tagSummaryLabel.text = "Selected: \(s)"
+        tagSummaryLabel.text = "Selected: \(selected.tagsToText())"
     }
 
     @IBAction func clearButtonAction(_ sender: Any) {
         viewModel.deselectAll()
         tableView.reloadData()
     }
+    
 }
 
 extension TagFilterViewController : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         viewModel.searchTagsFor(prefix: searchText)
         tableView.reloadData()
+    }
+}
+
+extension TagFilterViewController : TagFilterViewModelDelegate{
+    func selectedTagsChanged() {
+        updateSelectedSummary()
+    }
+    
+    func reloadTable() {
+        tableView.reloadData()
+    }
+    
+    func alert(title: String, message: String) {
+        presentAlert(title: title, message : message)
     }
 }

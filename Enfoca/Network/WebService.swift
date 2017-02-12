@@ -24,5 +24,7 @@ protocol WebService {
     
     var showNetworkActivityIndicator : Bool {get set}
     
+    func createTag(tagValue: String, callback: @escaping(Tag?, EnfocaError?)->())
+    
     
 }

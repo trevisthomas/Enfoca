@@ -182,7 +182,7 @@ class BrowseViewController: UIViewController, TagFilterDelegate {
                 pairEditorVC.wordPair = wordPair
             }
             
-            pairEditorVC.delegate = self
+            pairEditorVC.delegate = viewModel
             return
         }
         
@@ -214,6 +214,10 @@ extension BrowseViewController : BrowseViewModelDelegate {
     func reloadRows(withIndexPaths indexPaths: [IndexPath]) {
         tableView.reloadRows(at: indexPaths, with: .fade)
     }
+    
+    func reloadTable(){
+        tableView.reloadData()
+    }
 }
 
 extension BrowseViewController : UIPopoverPresentationControllerDelegate {
@@ -236,12 +240,3 @@ extension BrowseViewController : UISearchBarDelegate {
     }
 }
 
-extension BrowseViewController : PairEditorDelegate {
-    func added(wordPair: WordPair) {
-        fatalError()
-    }
-    
-    func updated(wordPair: WordPair) {
-        fatalError()
-    }
-}

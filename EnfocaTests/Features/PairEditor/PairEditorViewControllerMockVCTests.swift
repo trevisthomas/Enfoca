@@ -203,6 +203,8 @@ class PairEditorViewControllerMockVCTests: XCTestCase {
         XCTAssertEqual(mockWebservice.createdWordPair!.example, example)
         XCTAssertTrue(mockWebservice.createdWordPair!.tags.count == 2)
         XCTAssertEqual(mockWebservice.createdWordPair!.tags, tags)
+        
+        XCTAssertTrue(mockVC.performBackButtonCalled)
 
     }
     
@@ -242,6 +244,8 @@ class PairEditorViewControllerMockVCTests: XCTestCase {
         
         XCTAssertEqual(mockWebservice.updatedWordPair!.creatorId, wp.creatorId)
         XCTAssertEqual(mockWebservice.updatedWordPair!.pairId, wp.pairId) //TODO Switch this for a CKRecordID or maybe NSObject
+        
+        XCTAssertTrue(mockVC.performBackButtonCalled)
 
     }
     
@@ -288,6 +292,12 @@ extension PairEditorViewControllerMockVCTests {
         
         override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
             viewControllerPresented = viewControllerToPresent
+        }
+        
+        var performBackButtonCalled = false
+        override func performBackButtonAction() {
+            super.performBackButtonAction()
+            performBackButtonCalled = true
         }
     }
 

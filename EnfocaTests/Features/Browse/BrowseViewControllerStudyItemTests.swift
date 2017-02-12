@@ -568,6 +568,18 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         XCTAssertEqual(mockTableView.reloadedRowsAtIndexPaths, somePaths)
         
     }
+    
+    func testReload_ReloadTable(){
+        let mockVC = MockBrowseViewController(nibName: nil, bundle: nil)
+        
+        let mockTableView = MockTableView()
+        mockVC.tableView = mockTableView
+        
+        mockVC.reloadTable()
+        
+        XCTAssertTrue(mockTableView.dataReloaded)
+
+    }
 }
 
 extension BrowseViewControllerStudyItemTests {

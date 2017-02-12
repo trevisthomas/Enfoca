@@ -112,7 +112,7 @@ class PairEditorViewController: UIViewController {
         if wordPair == nil {
             //Create
             if let error = validateForCreate() {
-                presetAlert(title : "Validation Error", message : error)
+                presentAlert(title : "Validation Error", message : error)
                 return
             }
             getAppDelegate().webService.showNetworkActivityIndicator = true
@@ -121,15 +121,16 @@ class PairEditorViewController: UIViewController {
                 getAppDelegate().webService.showNetworkActivityIndicator = false
                 guard let newWordPair = wordPair else {
                     //handle error
-                    self.presetAlert(title : "Network Error", message : error!)
+                    self.presentAlert(title : "Network Error", message : error!)
                     return
                 }
                 self.delegate.added(wordPair: newWordPair)
+                self.performBackButtonAction()
             })
         } else {
             //Update
             if let error = validateForUpdate() {
-                presetAlert(title : "Validation Error", message : error)
+                presentAlert(title : "Validation Error", message : error)
                 return
             }
             getAppDelegate().webService.showNetworkActivityIndicator = true
@@ -137,21 +138,16 @@ class PairEditorViewController: UIViewController {
                     getAppDelegate().webService.showNetworkActivityIndicator = false
                     guard let updatedWordPair = wordPair else {
                         //handle error
-                        self.presetAlert(title : "Network Error", message : error!)
+                        self.presentAlert(title : "Network Error", message : error!)
                         return
                     }
                     self.delegate.updated(wordPair: updatedWordPair)
+                    self.performBackButtonAction()
             })
         }
     }
     
-    private func presetAlert(title : String, message : String){
-        let alertController = UIAlertController(title: title, message:
-            message, preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
-        
-        self.present(alertController, animated: true, completion: nil)
-    }
+    
     
     private func validateForCreate() -> String?{
         if (wordTextField.text ?? "").isEmpty {
