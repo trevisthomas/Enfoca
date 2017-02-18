@@ -116,33 +116,33 @@ class TagFilterViewControllerTests: XCTestCase {
     func testClear_ButtonShouldExist() {
         let _ = sut.view //View Did Load
         
-        let clearButton = sut.clearButton
-        XCTAssertEqual(clearButton?.title(for: .normal), "Clear")
+        let editDoneButton = sut.editDoneButton
+        XCTAssertEqual(editDoneButton?.title(for: .normal), "Edit")
     }
     
-    func testClear_ClearButtonShouldClearSelections(){
-        let _ = sut.view //View Did Load
-        
-        sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
-        
-        let tag1 = sut.viewModel.allTags[1]
-        
-        XCTAssertEqual(sut.tagSummaryLabel.text, "Selected: \(tag1.name)")
-        
-        
-        sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: IndexPath(row: 2, section: 0))
-        
-        let tag2 = sut.viewModel.allTags[2]
-        
-        XCTAssertEqual(sut.tagSummaryLabel.text, "Selected: \(tag2.name), \(tag1.name)")
-        
-        XCTAssertEqual(sut.viewModel.getSelectedTags().count, 2)
-        
-        sut.clearButton.sendActions(for: .touchUpInside)
-        
-        XCTAssertEqual(sut.viewModel.getSelectedTags().count, 0)
-        
-    }
+//    func testClear_ClearButtonShouldClearSelections(){
+//        let _ = sut.view //View Did Load
+//        
+//        sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
+//        
+//        let tag1 = sut.viewModel.allTags[1]
+//        
+//        XCTAssertEqual(sut.tagSummaryLabel.text, "Selected: \(tag1.name)")
+//        
+//        
+//        sut.tableView.delegate?.tableView!(sut.tableView, didSelectRowAt: IndexPath(row: 2, section: 0))
+//        
+//        let tag2 = sut.viewModel.allTags[2]
+//        
+//        XCTAssertEqual(sut.tagSummaryLabel.text, "Selected: \(tag2.name), \(tag1.name)")
+//        
+//        XCTAssertEqual(sut.viewModel.getSelectedTags().count, 2)
+//        
+//        sut.editDoneButton.sendActions(for: .touchUpInside)
+//        
+//        XCTAssertEqual(sut.viewModel.getSelectedTags().count, 0)
+//        
+//    }
     
     
     func testApplyFilter_ShouldBeAbleToUnselectASelectedItem(){

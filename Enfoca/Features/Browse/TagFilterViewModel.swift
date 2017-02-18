@@ -70,15 +70,37 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
             
             guard let newTag = newTag else {return}
             
-            self.allTags.append(newTag)
+//            self.allTags.append(newTag)
             self.localTagDictionary[newTag] = false
-            if let index = self.localTempTagFilters.index(of: newTag) {
-                self.localTempTagFilters[index] = newTag
-            } else {
-                self.localTempTagFilters.append(newTag)
-            }
+//            if let index = self.localTempTagFilters.index(of: newTag) {
+//                self.localTempTagFilters[index] = newTag
+//            } else {
+//                self.localTempTagFilters.append(newTag)
+//            }
+            
+            //Just clear everything out.
+            self.allTags.insert(newTag, at: 0)
+            self.localTempTagFilters = self.allTags
             
             self.tagFilterViewModelDelegate?.reloadTable()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
+//        <#code#>
+        print(indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            //TODO test!
+            let tag = localTempTagFilters.remove(at: indexPath.row)
+            localTagDictionary.removeValue(forKey: tag)
+            allTags = allTags.filter({ (t) -> Bool in
+                return t != tag
+            })
+            //tagFilterViewModelDelegate?.reloadTable()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
     
@@ -108,6 +130,8 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
         localTagDictionary[tag] = false
         tagFilterViewModelDelegate?.selectedTagsChanged()
     }
+    
+    
     
     func applySelectedTagsToDelegate(){
         var tags : [Tag] = []

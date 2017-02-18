@@ -13,7 +13,7 @@ class TagFilterViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tagSearchBar: UISearchBar!
     @IBOutlet weak var tagSummaryLabel: UILabel!
-    @IBOutlet weak var clearButton: UIButton!
+    @IBOutlet weak var editDoneButton: UIButton!
     @IBOutlet weak var applyButton: UIButton!
     
     var tagFilterDelegate : TagFilterDelegate!
@@ -31,6 +31,7 @@ class TagFilterViewController: UIViewController {
             self.updateSelectedSummary()
             self.tableView.reloadData() // Not unit tested :-(
         }
+        
     }
 
     private func applyFilter(){
@@ -59,9 +60,21 @@ class TagFilterViewController: UIViewController {
         tagSummaryLabel.text = "Selected: \(selected.tagsToText())"
     }
 
-    @IBAction func clearButtonAction(_ sender: Any) {
-        viewModel.deselectAll()
-        tableView.reloadData()
+    var selectedPaths : [IndexPath] = []
+    @IBAction func editDoneButtonAction(_ sender: Any) {
+        if tableView.isEditing {
+            tableView.setEditing(false, animated: true)
+            editDoneButton.setTitle("Edit", for: .normal)
+            for path in selectedPaths {
+                tableView.selectRow(at: path, animated: false, scrollPosition: .none)
+            }
+        } else {
+            editDoneButton.setTitle("Done", for: .normal)
+            if let paths = tableView.indexPathsForSelectedRows {
+                selectedPaths = paths
+            }
+            tableView.setEditing(true, animated: true)
+        }
     }
     
 }
@@ -79,6 +92,7 @@ extension TagFilterViewController : TagFilterViewModelDelegate{
     }
     
     func reloadTable() {
+        tagSearchBar.text = nil
         tableView.reloadData()
     }
     
