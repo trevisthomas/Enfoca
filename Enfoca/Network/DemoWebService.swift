@@ -6,7 +6,7 @@
 //  Copyright © 2016 Trevis Thomas. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class DemoWebService : WebService {
     internal func createTag(tagValue: String, callback: @escaping (Tag?, EnfocaError?) -> ()) {

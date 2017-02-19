@@ -6,7 +6,7 @@
 //  Copyright © 2016 Trevis Thomas. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate {
     var localTempTagFilters : [Tag] = []
@@ -70,13 +70,7 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
             
             guard let newTag = newTag else {return}
             
-//            self.allTags.append(newTag)
             self.localTagDictionary[newTag] = false
-//            if let index = self.localTempTagFilters.index(of: newTag) {
-//                self.localTempTagFilters[index] = newTag
-//            } else {
-//                self.localTempTagFilters.append(newTag)
-//            }
             
             //Just clear everything out.
             self.allTags.insert(newTag, at: 0)
@@ -84,11 +78,6 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
             
             self.tagFilterViewModelDelegate?.reloadTable()
         }
-    }
-    
-    func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
-//        <#code#>
-        print(indexPath)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, GIDSignInUIDelegate {
+class LoginViewController: UIViewController {
     
     var authenticateionDelegate : AuthenticationDelegate!
     
@@ -26,13 +26,16 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.userAuthenticated = self.userAuthenticated
         authenticateionDelegate = appDelegate
-        GIDSignIn.sharedInstance().uiDelegate = self
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
         authenticateionDelegate.performSilentLogin()
+        
+        //***** Trevis.  Making fake user.  TODO, get enfoca id from cloudkit
+        let user = User(enfocaId: -1, name: "Unknown", email: "unknown@unknown")
+        userAuthenticated(user: user)
     }
 
     override func didReceiveMemoryWarning() {

@@ -6,9 +6,10 @@
 //  Copyright © 2016 Trevis Thomas. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import CloudKit
 @testable import Enfoca
+
 class MockAuthenticationDelegate: AuthenticationDelegate {
     var performLoginCount = 0
     var performSilentLoginCount = 0

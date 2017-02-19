@@ -6,7 +6,7 @@
 //  Copyright © 2016 Trevis Thomas. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension UIViewController{
     func presentAlert(title : String, message : String){

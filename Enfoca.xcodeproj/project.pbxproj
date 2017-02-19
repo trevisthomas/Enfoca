@@ -15,14 +15,8 @@
 		0F2431CF1E10A5F90046A224 /* TagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431CE1E10A5F90046A224 /* TagTests.swift */; };
 		0F2431D11E10A9860046A224 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431D01E10A9860046A224 /* User.swift */; };
 		0F2431D31E10A9E70046A224 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431D21E10A9E70046A224 /* UserTests.swift */; };
-		0F32FC341E11A69F00D599D8 /* GoogleAppUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F32FC2F1E11A69F00D599D8 /* GoogleAppUtilities.framework */; };
-		0F32FC351E11A6A200D599D8 /* GoogleSignIn.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0F32FC301E11A69F00D599D8 /* GoogleSignIn.bundle */; };
-		0F32FC361E11A6A200D599D8 /* GoogleSignIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F32FC311E11A69F00D599D8 /* GoogleSignIn.framework */; };
-		0F32FC371E11A6A200D599D8 /* GoogleSignInDependencies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F32FC321E11A69F00D599D8 /* GoogleSignInDependencies.framework */; };
-		0F32FC381E11A6A200D599D8 /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F32FC331E11A69F00D599D8 /* GoogleSymbolUtilities.framework */; };
 		0F32FC3A1E11A73200D599D8 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F32FC391E11A73200D599D8 /* SafariServices.framework */; };
 		0F32FC3C1E11A74B00D599D8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F32FC3B1E11A74B00D599D8 /* SystemConfiguration.framework */; };
-		0F32FC3F1E11A7F100D599D8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F32FC3E1E11A7F100D599D8 /* GoogleService-Info.plist */; };
 		0F38A4D41E11AFE100051F9E /* LoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F38A4D31E11AFE100051F9E /* LoginViewControllerTests.swift */; };
 		0F38A4D81E11B14D00051F9E /* AuthenticationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F38A4D71E11B14D00051F9E /* AuthenticationDelegate.swift */; };
 		0F38A4DC1E11B28A00051F9E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F38A4DB1E11B28A00051F9E /* Login.storyboard */; };
@@ -97,11 +91,6 @@
 		0F2431CE1E10A5F90046A224 /* TagTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagTests.swift; path = Models/TagTests.swift; sourceTree = "<group>"; };
 		0F2431D01E10A9860046A224 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		0F2431D21E10A9E70046A224 /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserTests.swift; path = Models/UserTests.swift; sourceTree = "<group>"; };
-		0F32FC2F1E11A69F00D599D8 /* GoogleAppUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppUtilities.framework; sourceTree = "<group>"; };
-		0F32FC301E11A69F00D599D8 /* GoogleSignIn.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleSignIn.bundle; sourceTree = "<group>"; };
-		0F32FC311E11A69F00D599D8 /* GoogleSignIn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSignIn.framework; sourceTree = "<group>"; };
-		0F32FC321E11A69F00D599D8 /* GoogleSignInDependencies.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSignInDependencies.framework; sourceTree = "<group>"; };
-		0F32FC331E11A69F00D599D8 /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSymbolUtilities.framework; sourceTree = "<group>"; };
 		0F32FC391E11A73200D599D8 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		0F32FC3B1E11A74B00D599D8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		0F32FC3E1E11A7F100D599D8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -176,10 +165,6 @@
 			files = (
 				0F32FC3C1E11A74B00D599D8 /* SystemConfiguration.framework in Frameworks */,
 				0F32FC3A1E11A73200D599D8 /* SafariServices.framework in Frameworks */,
-				0F32FC341E11A69F00D599D8 /* GoogleAppUtilities.framework in Frameworks */,
-				0F32FC361E11A6A200D599D8 /* GoogleSignIn.framework in Frameworks */,
-				0F32FC381E11A6A200D599D8 /* GoogleSymbolUtilities.framework in Frameworks */,
-				0F32FC371E11A6A200D599D8 /* GoogleSignInDependencies.framework in Frameworks */,
 				E13C77D8E44DD9252F8222F4 /* Pods_Enfoca.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -221,18 +206,6 @@
 				0FDC870E1E15D92700CF4EC6 /* WordPairTests.swift */,
 			);
 			name = Models;
-			sourceTree = "<group>";
-		};
-		0F32FC2E1E11A68500D599D8 /* Google */ = {
-			isa = PBXGroup;
-			children = (
-				0F32FC2F1E11A69F00D599D8 /* GoogleAppUtilities.framework */,
-				0F32FC301E11A69F00D599D8 /* GoogleSignIn.bundle */,
-				0F32FC311E11A69F00D599D8 /* GoogleSignIn.framework */,
-				0F32FC321E11A69F00D599D8 /* GoogleSignInDependencies.framework */,
-				0F32FC331E11A69F00D599D8 /* GoogleSymbolUtilities.framework */,
-			);
-			name = Google;
 			sourceTree = "<group>";
 		};
 		0F32FC3D1E11A7DB00D599D8 /* Resources */ = {
@@ -340,7 +313,6 @@
 		0F5ADF901E107CDD003B1225 = {
 			isa = PBXGroup;
 			children = (
-				0F32FC2E1E11A68500D599D8 /* Google */,
 				0F5ADF9B1E107CDD003B1225 /* Enfoca */,
 				0F5ADFB01E107CDD003B1225 /* EnfocaTests */,
 				0F5ADF9A1E107CDD003B1225 /* Products */,
@@ -571,11 +543,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F32FC351E11A6A200D599D8 /* GoogleSignIn.bundle in Resources */,
 				0F5ADFA71E107CDD003B1225 /* LaunchScreen.storyboard in Resources */,
 				0F4D8A481E12E3FA00900729 /* Browse.storyboard in Resources */,
 				0F38A4DC1E11B28A00051F9E /* Login.storyboard in Resources */,
-				0F32FC3F1E11A7F100D599D8 /* GoogleService-Info.plist in Resources */,
 				0F5ADFA41E107CDD003B1225 /* Assets.xcassets in Resources */,
 				0F8594161E2AB41500163462 /* PairEditor.storyboard in Resources */,
 			);
@@ -889,7 +859,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.ttdc.Enfoca;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Enfoca/Enfoca-Bridging-Header.h";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -915,7 +885,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.ttdc.Enfoca;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Enfoca/Enfoca-Bridging-Header.h";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
