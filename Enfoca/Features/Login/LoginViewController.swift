@@ -34,8 +34,21 @@ class LoginViewController: UIViewController {
         authenticateionDelegate.performSilentLogin()
         
         //***** Trevis.  Making fake user.  TODO, get enfoca id from cloudkit
-        let user = User(enfocaId: -1, name: "Unknown", email: "unknown@unknown")
-        userAuthenticated(user: user)
+        
+        OperationsDemo.authentcate { (enfocaId :Int?, error: String?) in
+            guard let enfocaId = enfocaId else {
+                if let error = error {
+                    print(error) //TODO : alert
+                }
+                return 
+            }
+            print("EnfocaId: \(enfocaId)")
+            let user = User(enfocaId: enfocaId, name: "Unknown", email: "unknown@unknown")
+            self.userAuthenticated(user: user)
+        }
+        
+//        let user = User(enfocaId: -1, name: "Unknown", email: "unknown@unknown")
+//        userAuthenticated(user: user)
     }
 
     override func didReceiveMemoryWarning() {
