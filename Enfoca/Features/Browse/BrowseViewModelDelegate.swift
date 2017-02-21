@@ -14,4 +14,5 @@ protocol BrowseViewModelDelegate {
     
     func reloadRows(withIndexPaths: [IndexPath])
     func reloadTable()
+    func onError(error : EnfocaError?)
 }

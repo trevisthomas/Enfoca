@@ -25,7 +25,7 @@ class PairEditorViewController: UIViewController {
     var delegate: PairEditorDelegate!
     var gender: Gender {
         get{
-            guard genderSegmentedControl.isSelected else {
+            if genderSegmentedControl.selectedSegmentIndex == UISegmentedControlNoSegment {
                 return .notset
             }
             return genderSegmentedControl.selectedSegmentIndex == 0 ? .masculine : .feminine
@@ -35,10 +35,9 @@ class PairEditorViewController: UIViewController {
                 return //Happens in some unit tests.
             }
             
-            genderSegmentedControl.isSelected = true
             switch newValue {
             case .notset:
-                genderSegmentedControl.isSelected = false
+                genderSegmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment
             case .masculine:
                 genderSegmentedControl.selectedSegmentIndex = 0
             case .feminine:

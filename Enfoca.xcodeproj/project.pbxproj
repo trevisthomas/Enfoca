@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		0F168DEB1E5A38B800F3E555 /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DE91E5A38B800F3E555 /* BaseOperation.swift */; };
 		0F168DEC1E5A38B800F3E555 /* ReadWriteMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DEA1E5A38B800F3E555 /* ReadWriteMutex.swift */; };
-		0F168DFA1E5A39A000F3E555 /* OperationsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DF21E5A39A000F3E555 /* OperationsDemo.swift */; };
+		0F168DFA1E5A39A000F3E555 /* Perform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DF21E5A39A000F3E555 /* Perform.swift */; };
 		0F168DFB1E5A39A000F3E555 /* BaseUserOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DF31E5A39A000F3E555 /* BaseUserOperation.swift */; };
 		0F168DFC1E5A39A000F3E555 /* CloudAuthOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DF41E5A39A000F3E555 /* CloudAuthOperation.swift */; };
 		0F168DFD1E5A39A100F3E555 /* FetchUserRecordOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DF51E5A39A000F3E555 /* FetchUserRecordOperation.swift */; };
@@ -19,6 +19,16 @@
 		0F168E011E5A39A100F3E555 /* InternalUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DF91E5A39A000F3E555 /* InternalUser.swift */; };
 		0F168E031E5A3B7900F3E555 /* ErrorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E021E5A3B7900F3E555 /* ErrorDelegate.swift */; };
 		0F168E061E5A433D00F3E555 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F168E051E5A433D00F3E555 /* CloudKit.framework */; };
+		0F168E081E5B55DD00F3E555 /* CloudKitWebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E071E5B55DD00F3E555 /* CloudKitWebService.swift */; };
+		0F168E0A1E5B6CC500F3E555 /* OperationFetchTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E091E5B6CC500F3E555 /* OperationFetchTags.swift */; };
+		0F168E0D1E5B721F00F3E555 /* Perform+Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E0C1E5B721F00F3E555 /* Perform+Tags.swift */; };
+		0F168E0F1E5B777400F3E555 /* BaseCKOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E0E1E5B777400F3E555 /* BaseCKOperation.swift */; };
+		0F168E111E5B7DC900F3E555 /* OperationCreateTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E101E5B7DC900F3E555 /* OperationCreateTag.swift */; };
+		0F168E131E5B810B00F3E555 /* CloudKitConverters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E121E5B810B00F3E555 /* CloudKitConverters.swift */; };
+		0F168E161E5B8A5300F3E555 /* OperationCreateWordPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E151E5B8A5300F3E555 /* OperationCreateWordPair.swift */; };
+		0F168E181E5B950D00F3E555 /* Perform+WordPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E171E5B950D00F3E555 /* Perform+WordPair.swift */; };
+		0F168E1D1E5BA4A700F3E555 /* OperationCountWordPairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E1C1E5BA4A700F3E555 /* OperationCountWordPairs.swift */; };
+		0F168E1F1E5BB02300F3E555 /* OperationFetchWordPairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E1E1E5BB02300F3E555 /* OperationFetchWordPairs.swift */; };
 		0F2431BE1E109CDF0046A224 /* CardOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431BD1E109CDF0046A224 /* CardOrder.swift */; };
 		0F2431C31E109E120046A224 /* CardOrderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431C21E109E120046A224 /* CardOrderTests.swift */; };
 		0F2431C51E10A04E0046A224 /* CardSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431C41E10A04E0046A224 /* CardSide.swift */; };
@@ -97,7 +107,7 @@
 /* Begin PBXFileReference section */
 		0F168DE91E5A38B800F3E555 /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
 		0F168DEA1E5A38B800F3E555 /* ReadWriteMutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadWriteMutex.swift; sourceTree = "<group>"; };
-		0F168DF21E5A39A000F3E555 /* OperationsDemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationsDemo.swift; sourceTree = "<group>"; };
+		0F168DF21E5A39A000F3E555 /* Perform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Perform.swift; sourceTree = "<group>"; };
 		0F168DF31E5A39A000F3E555 /* BaseUserOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUserOperation.swift; sourceTree = "<group>"; };
 		0F168DF41E5A39A000F3E555 /* CloudAuthOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudAuthOperation.swift; sourceTree = "<group>"; };
 		0F168DF51E5A39A000F3E555 /* FetchUserRecordOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchUserRecordOperation.swift; sourceTree = "<group>"; };
@@ -108,6 +118,16 @@
 		0F168E021E5A3B7900F3E555 /* ErrorDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorDelegate.swift; path = Network/Operations/Public/ErrorDelegate.swift; sourceTree = "<group>"; };
 		0F168E041E5A42C500F3E555 /* Enfoca.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Enfoca.entitlements; sourceTree = "<group>"; };
 		0F168E051E5A433D00F3E555 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		0F168E071E5B55DD00F3E555 /* CloudKitWebService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CloudKitWebService.swift; path = Network/CloudKitWebService.swift; sourceTree = "<group>"; };
+		0F168E091E5B6CC500F3E555 /* OperationFetchTags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OperationFetchTags.swift; path = Network/Operations/Core/Tags/OperationFetchTags.swift; sourceTree = "<group>"; };
+		0F168E0C1E5B721F00F3E555 /* Perform+Tags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Perform+Tags.swift"; path = "Network/Operations/Public/Perform+Tags.swift"; sourceTree = "<group>"; };
+		0F168E0E1E5B777400F3E555 /* BaseCKOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseCKOperation.swift; path = Network/Operations/Core/BaseCKOperation.swift; sourceTree = "<group>"; };
+		0F168E101E5B7DC900F3E555 /* OperationCreateTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OperationCreateTag.swift; path = Network/Operations/Core/Tags/OperationCreateTag.swift; sourceTree = "<group>"; };
+		0F168E121E5B810B00F3E555 /* CloudKitConverters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitConverters.swift; sourceTree = "<group>"; };
+		0F168E151E5B8A5300F3E555 /* OperationCreateWordPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OperationCreateWordPair.swift; path = Network/Operations/Core/WordPairs/OperationCreateWordPair.swift; sourceTree = "<group>"; };
+		0F168E171E5B950D00F3E555 /* Perform+WordPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Perform+WordPair.swift"; path = "Network/Operations/Public/Perform+WordPair.swift"; sourceTree = "<group>"; };
+		0F168E1C1E5BA4A700F3E555 /* OperationCountWordPairs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationCountWordPairs.swift; sourceTree = "<group>"; };
+		0F168E1E1E5BB02300F3E555 /* OperationFetchWordPairs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OperationFetchWordPairs.swift; path = Network/Operations/Core/WordPairs/OperationFetchWordPairs.swift; sourceTree = "<group>"; };
 		0F2431BD1E109CDF0046A224 /* CardOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardOrder.swift; sourceTree = "<group>"; };
 		0F2431C21E109E120046A224 /* CardOrderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardOrderTests.swift; path = Models/CardOrderTests.swift; sourceTree = "<group>"; };
 		0F2431C41E10A04E0046A224 /* CardSide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSide.swift; sourceTree = "<group>"; };
@@ -218,9 +238,13 @@
 		0F168DEE1E5A38EC00F3E555 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				0F168E141E5B883400F3E555 /* WordPairs */,
+				0F168E0B1E5B703600F3E555 /* Tags */,
 				0F168DF11E5A398B00F3E555 /* Authentication */,
 				0F168DE91E5A38B800F3E555 /* BaseOperation.swift */,
+				0F168E0E1E5B777400F3E555 /* BaseCKOperation.swift */,
 				0F168DEA1E5A38B800F3E555 /* ReadWriteMutex.swift */,
+				0F168E121E5B810B00F3E555 /* CloudKitConverters.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -228,7 +252,10 @@
 		0F168DEF1E5A390200F3E555 /* Public */ = {
 			isa = PBXGroup;
 			children = (
+				0F168DF21E5A39A000F3E555 /* Perform.swift */,
 				0F168E021E5A3B7900F3E555 /* ErrorDelegate.swift */,
+				0F168E0C1E5B721F00F3E555 /* Perform+Tags.swift */,
+				0F168E171E5B950D00F3E555 /* Perform+WordPair.swift */,
 			);
 			name = Public;
 			sourceTree = "<group>";
@@ -236,7 +263,6 @@
 		0F168DF11E5A398B00F3E555 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				0F168DF21E5A39A000F3E555 /* OperationsDemo.swift */,
 				0F168DF31E5A39A000F3E555 /* BaseUserOperation.swift */,
 				0F168DF41E5A39A000F3E555 /* CloudAuthOperation.swift */,
 				0F168DF51E5A39A000F3E555 /* FetchUserRecordOperation.swift */,
@@ -246,6 +272,25 @@
 				0F168DF91E5A39A000F3E555 /* InternalUser.swift */,
 			);
 			name = Authentication;
+			sourceTree = "<group>";
+		};
+		0F168E0B1E5B703600F3E555 /* Tags */ = {
+			isa = PBXGroup;
+			children = (
+				0F168E091E5B6CC500F3E555 /* OperationFetchTags.swift */,
+				0F168E101E5B7DC900F3E555 /* OperationCreateTag.swift */,
+			);
+			name = Tags;
+			sourceTree = "<group>";
+		};
+		0F168E141E5B883400F3E555 /* WordPairs */ = {
+			isa = PBXGroup;
+			children = (
+				0F168E151E5B8A5300F3E555 /* OperationCreateWordPair.swift */,
+				0F168E1C1E5BA4A700F3E555 /* OperationCountWordPairs.swift */,
+				0F168E1E1E5BB02300F3E555 /* OperationFetchWordPairs.swift */,
+			);
+			name = WordPairs;
 			sourceTree = "<group>";
 		};
 		0F2431BC1E109CBE0046A224 /* Models */ = {
@@ -495,6 +540,7 @@
 				0F168DED1E5A38D300F3E555 /* Operations */,
 				0FB1C65A1E14500E0087DC93 /* WebService.swift */,
 				0FB1C65D1E145CB60087DC93 /* DemoWebService.swift */,
+				0F168E071E5B55DD00F3E555 /* CloudKitWebService.swift */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -739,19 +785,24 @@
 			files = (
 				0F64F1AA1E3D4059000549CF /* PairEditorDelegate.swift in Sources */,
 				0FB1C65B1E14500E0087DC93 /* WebService.swift in Sources */,
-				0F168DFA1E5A39A000F3E555 /* OperationsDemo.swift in Sources */,
+				0F168DFA1E5A39A000F3E555 /* Perform.swift in Sources */,
+				0F168E1F1E5BB02300F3E555 /* OperationFetchWordPairs.swift in Sources */,
+				0F168E0F1E5B777400F3E555 /* BaseCKOperation.swift in Sources */,
 				0FDC87111E15DCC800CF4EC6 /* WordPair.swift in Sources */,
 				0FB1C6641E148F710087DC93 /* TagFilterDelegate.swift in Sources */,
 				0F5044D21E22D8B3007030CD /* UITableView+.swift in Sources */,
+				0F168E0A1E5B6CC500F3E555 /* OperationFetchTags.swift in Sources */,
 				0F64F1871E2C141D000549CF /* TagCell.swift in Sources */,
 				0FB1C6661E154F200087DC93 /* Sequence+.swift in Sources */,
 				0F64F1801E2AB7EF000549CF /* PairEditorViewController.swift in Sources */,
 				0F72122A1E50C7E400DD3870 /* TagFilterViewModelDelegate.swift in Sources */,
 				0F168DEC1E5A38B800F3E555 /* ReadWriteMutex.swift in Sources */,
+				0F168E1D1E5BA4A700F3E555 /* OperationCountWordPairs.swift in Sources */,
 				0F864E8A1E1808C900539773 /* BrowseViewModel.swift in Sources */,
 				0F38A4DE1E11B2AA00051F9E /* LoginViewController.swift in Sources */,
 				0F864E831E17F93F00539773 /* ApplicationDefaults.swift in Sources */,
 				0F168E031E5A3B7900F3E555 /* ErrorDelegate.swift in Sources */,
+				0F168E131E5B810B00F3E555 /* CloudKitConverters.swift in Sources */,
 				0F38A4E21E11C61000051F9E /* WelcomeViewController.swift in Sources */,
 				0F4D8A4B1E12E86900900729 /* UIViewController+.swift in Sources */,
 				0F168DFD1E5A39A100F3E555 /* FetchUserRecordOperation.swift in Sources */,
@@ -770,14 +821,19 @@
 				0F38A4D81E11B14D00051F9E /* AuthenticationDelegate.swift in Sources */,
 				0FB1C6621E148CA00087DC93 /* TagFilterViewController.swift in Sources */,
 				0FB1C6591E144D730087DC93 /* TagAssociation.swift in Sources */,
+				0F168E081E5B55DD00F3E555 /* CloudKitWebService.swift in Sources */,
+				0F168E111E5B7DC900F3E555 /* OperationCreateTag.swift in Sources */,
 				0F2431BE1E109CDF0046A224 /* CardOrder.swift in Sources */,
 				0F168DEB1E5A38B800F3E555 /* BaseOperation.swift in Sources */,
 				0F5ADF9D1E107CDD003B1225 /* AppDelegate.swift in Sources */,
 				0F168DFE1E5A39A100F3E555 /* FetchUserRecordId.swift in Sources */,
 				0F2431D11E10A9860046A224 /* User.swift in Sources */,
+				0F168E0D1E5B721F00F3E555 /* Perform+Tags.swift in Sources */,
 				0F5044D01E22A316007030CD /* TypeAliases.swift in Sources */,
+				0F168E181E5B950D00F3E555 /* Perform+WordPair.swift in Sources */,
 				0F168DFB1E5A39A000F3E555 /* BaseUserOperation.swift in Sources */,
 				0FAA961F1E19A56600078365 /* WordPairOrder.swift in Sources */,
+				0F168E161E5B8A5300F3E555 /* OperationCreateWordPair.swift in Sources */,
 				0F168E001E5A39A100F3E555 /* FetchIncrementAndSaveSeedIfNecessary.swift in Sources */,
 				0FB1C65E1E145CB60087DC93 /* DemoWebService.swift in Sources */,
 			);

@@ -18,7 +18,11 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
     func configureFromDelegate(delegate : TagFilterDelegate, callback : @escaping()->()){
         self.tagFilterDelegate = delegate
         
-        getAppDelegate().webService.fetchUserTags { (tags:[Tag]) in
+        getAppDelegate().webService.fetchUserTags { (tags:[Tag]?, error : EnfocaError?) in
+            guard let tags = tags else {
+                self.tagFilterViewModelDelegate?.alert(title: "Error", message: error!)
+                return
+            }
             
             self.allTags = tags
             self.localTempTagFilters = tags
@@ -72,7 +76,6 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
             
             self.localTagDictionary[newTag] = false
             
-            //Just clear everything out.
             self.allTags.insert(newTag, at: 0)
             self.localTempTagFilters = self.allTags
             

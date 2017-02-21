@@ -86,7 +86,12 @@ class BrowseViewController: UIViewController, TagFilterDelegate {
         
         //Load the persons tags from the webservice and then apply any local default selections to them
         self.webService.fetchUserTags() {
-            list in
+            list, error in
+            
+            guard let list = list else {
+                self.presentAlert(title: "Error", message: error)
+                return
+            }
             
             self.tags = list
             self.selectedTags = self.appDefaults.selectedTags
@@ -217,6 +222,10 @@ extension BrowseViewController : BrowseViewModelDelegate {
     
     func reloadTable(){
         tableView.reloadData()
+    }
+    
+    func onError(error: EnfocaError?) {
+        presentAlert(title: "An error has occured", message: error)
     }
 }
 

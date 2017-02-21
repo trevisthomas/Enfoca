@@ -19,7 +19,8 @@ extension Sequence where Iterator.Element == (Tag, Bool) {
         for i in (0..<rhs.count) {
             
             let (tag, selected) = array[i]
-            if tag.tagId == rhs[i].0.tagId && selected == rhs[i].1 {
+//            if tag.tagId == rhs[i].0.tagId && selected == rhs[i].1 {
+            if tag == rhs[i].0 && selected == rhs[i].1 {
                 continue
             }
             return false

@@ -9,8 +9,8 @@
 import Foundation
 import CloudKit
 
-class OperationsDemo {
-    class func authentcate(callback : @escaping (_ enfocaId : Int?,_ error : String?) -> ()){
+class Perform {
+    class func authentcate(db: CKDatabase, callback : @escaping (_ userTuple : (Int, CKRecordID)?,_ error : String?) -> ()){
         
         let user : InternalUser = InternalUser()
         let errorHandler = ErrorHandler(callback: callback)
@@ -20,17 +20,17 @@ class OperationsDemo {
             //            print ("Tags loaded: \(fetchOp.tags)")
             OperationQueue.main.addOperation{
                 print(user.recordId)
-                callback(user.enfocaId, nil)
+                callback((user.enfocaId, user.recordId), nil)
             }
         }
         
         let queue = OperationQueue()
         
-        let fetchUserId = FetchUserRecordId(user: user, errorDelegate: errorHandler)
-        let cloudAuth = CloudAuthOperation(user: user, errorDelegate: errorHandler)
-        let fetchUserRecord = FetchUserRecordOperation(user: user, errorDelegate: errorHandler)
-        let fetchOrCreateEnfocaId = FetchOrCreateEnfocaId(user: user, errorDelegate: errorHandler)
-        let fetchIncrementAndSaveSeedIfNecessary = FetchIncrementAndSaveSeedIfNecessary(user: user, errorDelegate: errorHandler)
+        let fetchUserId = FetchUserRecordId(user: user, db: db, errorDelegate: errorHandler)
+        let cloudAuth = CloudAuthOperation(user: user, db: db, errorDelegate: errorHandler)
+        let fetchUserRecord = FetchUserRecordOperation(user: user, db: db, errorDelegate: errorHandler)
+        let fetchOrCreateEnfocaId = FetchOrCreateEnfocaId(user: user, db: db, errorDelegate: errorHandler)
+        let fetchIncrementAndSaveSeedIfNecessary = FetchIncrementAndSaveSeedIfNecessary(user: user, db: db, errorDelegate: errorHandler)
         
         fetchUserId.addDependency(cloudAuth)
         fetchUserRecord.addDependency(fetchUserId)
@@ -41,19 +41,19 @@ class OperationsDemo {
         queue.addOperations([fetchUserId, cloudAuth, fetchUserRecord, fetchOrCreateEnfocaId, fetchIncrementAndSaveSeedIfNecessary, completeOp], waitUntilFinished: false)
         
     }
-    
-    fileprivate class ErrorHandler : ErrorDelegate {
-        let callback : (_ enfocaId : Int?,_ error : String?) -> ()
-        init (callback : @escaping (_ enfocaId : Int?,_ error : String?) -> ()) {
-            self.callback = callback
-        }
         
-        func onError(message: String) {
-            callback(nil, message)
-        }
-    }
-    
-    
 }
 
+class ErrorHandler<T> : ErrorDelegate {
+    let callback: ( T?, _ error : String?) -> ()
+    init (callback : @escaping ( T?, _ error : String?) -> ()) {
+        self.callback = callback
+    }
+    
+    func onError(message: String) {
+        OperationQueue.main.addOperation {
+            self.callback(nil, message)
+        }
+    }
+}
 

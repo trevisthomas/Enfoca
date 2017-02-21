@@ -20,7 +20,6 @@ class FetchIncrementAndSaveSeedIfNecessary : BaseUserOperation {
             return
         }
         
-        let db = CKContainer.default().publicCloudDatabase
         state = .inProgress
 //        let settingsId = CKRecordID(recordName: "9ea8a03a-9867-4365-8ece-94380971bc13")
         let settingsId = CKRecordID(recordName: "900682b2-f02d-4239-9640-b3566c04bdc8")
@@ -34,7 +33,7 @@ class FetchIncrementAndSaveSeedIfNecessary : BaseUserOperation {
             }
             let enfocaId = id + 1
             record.setValue(enfocaId, forKey: "Seed")
-            db.save(record, completionHandler: { (record:CKRecord?, error:Error?) in
+            self.db.save(record, completionHandler: { (record:CKRecord?, error:Error?) in
                 if let error = error {
                     print(error)
                     fatalError() //Handle error.  Here is where we'd end up if the error record was updated while you were updating it

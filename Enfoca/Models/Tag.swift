@@ -29,23 +29,20 @@ public struct Tag : Equatable, Hashable {
         return lhs.name == rhs.name
     }
 
-    private(set) var tagId : String?
+    private(set) var tagId : Any?
     private(set) var name : String
-    private(set) var ownerId : Int?
     private(set) var count : Int
     
     init (name: String){
         self.tagId = nil
         self.name = name
-        self.ownerId = nil
         self.count = 0
         self.hashValue = name.hashValue
     }
     
-    init (ownerId : Int, tagId : String, name: String, count: Int = 0){
+    init (tagId : Any, name: String, count: Int = 0){
         self.tagId = tagId
         self.name = name
-        self.ownerId = ownerId
         self.count = count
         self.hashValue = name.hashValue
     }

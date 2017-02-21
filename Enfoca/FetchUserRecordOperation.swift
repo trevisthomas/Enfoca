@@ -24,7 +24,7 @@ class FetchUserRecordOperation : BaseUserOperation {
             return
         }
         
-        CKContainer.default().publicCloudDatabase.fetch(withRecordID: user.recordId) { (record:CKRecord?, error:Error?) in
+        db.fetch(withRecordID: user.recordId) { (record:CKRecord?, error:Error?) in
             if let error = error {
                 self.handleError(error)
             } else if let record = record {

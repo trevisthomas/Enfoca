@@ -30,7 +30,7 @@ class FetchOrCreateEnfocaId : BaseUserOperation {
         }
         
         user.record.setValue(id, forKey: "enfocaId")
-        CKContainer.default().publicCloudDatabase.save(user.record, completionHandler: { (record:CKRecord?, error:Error?) in
+        db.save(user.record, completionHandler: { (record:CKRecord?, error:Error?) in
             if let error = error {
                 self.handleError(error)
 //                fatalError() //Failed to update.   What to do!?

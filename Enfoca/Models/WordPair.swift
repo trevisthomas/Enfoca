@@ -33,8 +33,7 @@ class WordPair : Equatable {
     }
 
     
-    private(set) var creatorId: Int
-    private(set) var pairId: String
+    private(set) var pairId: AnyHashable
     private(set) var word: String
     private(set) var definition: String
     private(set) var dateCreated: Date
@@ -64,8 +63,7 @@ class WordPair : Equatable {
 //    private long totalTime;
 //    private long timedViewCount;
     
-    init (creatorId: Int, pairId: String, word: String, definition: String, dateCreated: Date, gender: Gender = .notset, tags : [Tag] = [], example: String? = nil) {
-        self.creatorId = creatorId
+    init (pairId: AnyHashable, word: String, definition: String, dateCreated: Date, gender: Gender = .notset, tags : [Tag] = [], example: String? = nil) {
         self.pairId = pairId
         self.word = word
         self.definition = definition

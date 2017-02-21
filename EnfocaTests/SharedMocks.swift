@@ -65,22 +65,22 @@ class MockWebService : WebService {
     var errorOnCreateWordPair : String?
     var errorOnUpdateWordPair : String?
     
-    func fetchWordPairs(tagFilter: [Tag], wordPairOrder : WordPairOrder, pattern : String? = nil, callback: @escaping ([WordPair]) -> ()) {
+    func fetchWordPairs(tagFilter: [Tag], wordPairOrder : WordPairOrder, pattern : String? = nil, callback: @escaping ([WordPair]?, EnfocaError?) -> ()) {
         fetchWordPairTagFilter = tagFilter
         fetchWordPairCallCount += 1
         fetchWordPairOrder = wordPairOrder
         fetchWordPairPattern = pattern
         
-        callback(wordPairs)
+        callback(wordPairs, nil)
     }
     
-    func wordPairCount(tagFilter: [Tag], pattern: String?, callback: @escaping (Int) -> ()) {
+    func wordPairCount(tagFilter: [Tag], pattern: String?, callback: @escaping (Int?, EnfocaError?) -> ()) {
         fetchWordPairTagFilter = tagFilter
         fetchWordPairCallCount += 1
 //        fetchWordPairOrder = wordPairOrder
         fetchWordPairPattern = pattern
         
-        callback(wordPairs.count)
+        callback(wordPairs.count, nil)
     }
     
     var fetchUserTagsCallCount : Int = 0
@@ -95,22 +95,26 @@ class MockWebService : WebService {
         self.tags = makeTags()
     }
     
-    func fetchUserTags(callback : @escaping([Tag])->()){
+    func initialize(callback: @escaping (Bool, EnfocaError?) -> ()) {
+        callback(true, nil)
+    }
+    
+    func fetchUserTags(callback : @escaping([Tag]?, EnfocaError?)->()){
         fetchUserTagsCallCount += 1
-        callback(tags)
+        callback(tags, nil)
     }
     
-    func activateWordPair(wordPair: WordPair, callback: ((Bool) -> ())?) {
-        activateCalled = true
-        activeCalledWithWordPair = wordPair
-        callback!(true)
-    }
-    
-    func deactivateWordPair(wordPair: WordPair, callback: ((Bool) -> ())?) {
-        deactivateCalled = true
-        deactiveCalledWithWordPair = wordPair
-        callback!(true)
-    }
+//    func activateWordPair(wordPair: WordPair, callback: ((Bool) -> ())?) {
+//        activateCalled = true
+//        activeCalledWithWordPair = wordPair
+//        callback!(true)
+//    }
+//    
+//    func deactivateWordPair(wordPair: WordPair, callback: ((Bool) -> ())?) {
+//        deactivateCalled = true
+//        deactiveCalledWithWordPair = wordPair
+//        callback!(true)
+//    }
     
 
     func createWordPair(word: String, definition: String, tags : [Tag], gender : Gender, example: String? = nil, callback : @escaping(WordPair?, EnfocaError?)->()) {
@@ -122,7 +126,7 @@ class MockWebService : WebService {
             return
         }
         
-        createdWordPair = WordPair(creatorId: -1, pairId: "none", word: word, definition: definition, dateCreated: Date(), gender: gender, tags: tags, example: example)
+        createdWordPair = WordPair(pairId: "none", word: word, definition: definition, dateCreated: Date(), gender: gender, tags: tags, example: example)
         callback(createdWordPair, nil)
     }
     
@@ -136,8 +140,13 @@ class MockWebService : WebService {
             return
         }
         
-        updatedWordPair = WordPair(creatorId: oldWordPair.creatorId, pairId: oldWordPair.pairId, word: word, definition: definition, dateCreated: Date(), gender: gender, tags: tags, example: example)
+        updatedWordPair = WordPair(pairId: oldWordPair.pairId, word: word, definition: definition, dateCreated: Date(), gender: gender, tags: tags, example: example)
         callback(updatedWordPair, nil)
+        
+        
+    }
+    
+    func fetchNextWordPairs(callback : @escaping([WordPair]?,EnfocaError?)->()){
     }
     
     var errorOnCreateTag : String? = nil
@@ -155,7 +164,7 @@ class MockWebService : WebService {
             callback(nil, error)
             return
         } else {
-            let t = Tag(ownerId: -1, tagId: "eyedee", name: tagValue)
+            let t = Tag(tagId: "eyedee", name: tagValue)
             if (createTagBlockCallback) {
                 createTagBlockedCallback = callback
             } else {

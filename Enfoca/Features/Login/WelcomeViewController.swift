@@ -18,11 +18,11 @@ class WelcomeViewController: UIViewController {
     
     var authenticationDelegate : AuthenticationDelegate!
     
-    var user : User! {
-        didSet{
-            populateComponents()
-        }
-    }
+//    var user : User! {
+//        didSet{
+//            populateComponents()
+//        }
+//    }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -47,9 +47,10 @@ class WelcomeViewController: UIViewController {
     }
     
     func populateComponents(){
-        guard let _ = user else { return }
+//        guard let _ = user else { return }
         guard let _ = welcomeLabel else { return }
-        welcomeLabel.text = "Hi, \(user.name). Welcome to..."
+//        welcomeLabel.text = "Hi, \(user.name). Welcome to..."
+        welcomeLabel.text = "Welcome to..."
     }
 
     override func didReceiveMemoryWarning() {

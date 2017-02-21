@@ -7,21 +7,13 @@
 //
 
 import Foundation
+import CloudKit
 
-class BaseUserOperation : BaseOperation {
+class BaseUserOperation : BaseCKOperation {
     let user : InternalUser
-    let errorDelegate : ErrorDelegate
     
-    init(user : InternalUser, errorDelegate : ErrorDelegate){
+    init(user : InternalUser, db : CKDatabase, errorDelegate : ErrorDelegate){
         self.user = user
-        self.errorDelegate = errorDelegate
-        super.init()
-        qualityOfService = .userInitiated
-    }
-    
-    func handleError(_ error : Error) {
-        print(error)
-//        fatalError() //Shrug?  
-        errorDelegate.onError(message: error.localizedDescription)
+        super.init(db : db, errorDelegate: errorDelegate)
     }
 }

@@ -11,6 +11,7 @@ import CloudKit
 
 class InternalUser {
     var enfocaId : Int!
+    var totalPairs : Int?
     var newEnfocaId : Int!
     var recordId : CKRecordID!
     var record : CKRecord!

@@ -60,13 +60,21 @@ class BrowseViewModel : NSObject, UITableViewDelegate, UITableViewDataSource{
             return
         }
         
-        isFetchInProgress = true 
-        delegate.webService.fetchWordPairs(tagFilter: currentTagFilter!, wordPairOrder: currentWordPairOrder!, pattern: currentPattern, callback: {
-            newWordPairs in
+        func callback(newWordPairs : [WordPair]?, error : String?) {
+            guard let newWordPairs = newWordPairs else {
+                self.delegate.onError(error: error)
+                return
+            }
             self.isFetchInProgress = false
             self.loadWordPairsIntoDictionary(newWordPairs)
-        })
-
+        }
+        
+        isFetchInProgress = true
+        if indexPath.row == 0 {
+            delegate.webService.fetchWordPairs(tagFilter: currentTagFilter!, wordPairOrder: currentWordPairOrder!, pattern: currentPattern, callback: callback)
+        } else {
+            delegate.webService.fetchNextWordPairs(callback: callback)
+        }
     }
     
     private func loadWordPairsIntoDictionary(_ wordPairs : [WordPair]){
@@ -101,7 +109,11 @@ class BrowseViewModel : NSObject, UITableViewDelegate, UITableViewDataSource{
         currentTagFilter = tagFilter
         currentWordPairOrder = order
         
-        delegate.webService.wordPairCount(tagFilter: tagFilter, pattern: pattern) { (count: Int) in
+        delegate.webService.wordPairCount(tagFilter: tagFilter, pattern: pattern) { (count: Int?, error: EnfocaError?) in
+            guard let count = count else {
+                self.delegate.onError(error: error)
+                return
+            }
             for i in 0..<count {
                 let ip = IndexPath(item: i, section: 0)
                 self.wordPairDictionary[ip] = WordPairWrapper()

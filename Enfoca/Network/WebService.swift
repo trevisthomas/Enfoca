@@ -9,13 +9,17 @@
 import Foundation
 
 protocol WebService {
-    func fetchUserTags(callback : @escaping([Tag])->())
-    func fetchWordPairs(tagFilter: [Tag], wordPairOrder: WordPairOrder, pattern : String?, callback : @escaping([WordPair])->())
-
-    func wordPairCount(tagFilter: [Tag], pattern : String?, callback : @escaping(Int)->())
+    func initialize(callback: @escaping (_ success : Bool, _ error : EnfocaError?) -> ())
     
-    func activateWordPair(wordPair: WordPair, callback: ((Bool)->())? )
-    func deactivateWordPair(wordPair: WordPair, callback: ((Bool)->())? )
+    func fetchUserTags(callback : @escaping([Tag]?, EnfocaError?)->())
+    func fetchWordPairs(tagFilter: [Tag], wordPairOrder: WordPairOrder, pattern : String?, callback : @escaping([WordPair]?,EnfocaError?)->())
+    
+    func fetchNextWordPairs(callback : @escaping([WordPair]?,EnfocaError?)->())
+
+    func wordPairCount(tagFilter: [Tag], pattern : String?, callback : @escaping(Int?, EnfocaError?)->())
+    
+//    func activateWordPair(wordPair: WordPair, callback: ((Bool)->())? )
+//    func deactivateWordPair(wordPair: WordPair, callback: ((Bool)->())? )
     
     func createWordPair(word: String, definition: String, tags : [Tag], gender : Gender, example: String?, callback : @escaping(WordPair?, EnfocaError?)->());
     

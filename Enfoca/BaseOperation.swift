@@ -46,6 +46,17 @@ class BaseOperation : Operation {
     }
     
     let mutex = ReadWriteMutex()
+    private let errorDelegate : ErrorDelegate
+    
+    func handleError(_ error : Error) {
+        print(error)
+        errorDelegate.onError(message: error.localizedDescription)
+    }
+    
+    func handleError(message : String) {
+        errorDelegate.onError(message: message)
+    }
+
     
     //TODO: Use this.
     enum OperationState {
@@ -54,8 +65,10 @@ class BaseOperation : Operation {
         case done
     }
     
-    override init() {
+    init(errorDelegate : ErrorDelegate){
+        self.errorDelegate = errorDelegate
         super.init()
+        self.qualityOfService = .userInitiated
         mutex.writing {
             state = .initial
         }
