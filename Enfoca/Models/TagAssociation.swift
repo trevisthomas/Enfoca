@@ -9,11 +9,11 @@
 import Foundation
 
 struct TagAssociation{
-    private(set) var ownerId : Int
-    private(set) var tag : Tag
+    private(set) var wordPairId : AnyHashable
+    private(set) var tagId : AnyHashable
     
-    init (ownerId: Int, tag : Tag) {
-        self.ownerId = ownerId
-        self.tag = tag
+    init (wordPairId: AnyHashable, tagId : AnyHashable) {
+        self.wordPairId = wordPairId
+        self.tagId = tagId
     }
 }

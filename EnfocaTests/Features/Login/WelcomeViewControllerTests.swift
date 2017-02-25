@@ -42,11 +42,11 @@ class WelcomeViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.logOffButton.title(for: .normal), "Log Off")
     }
     
-    func testInitialState_ShouldShowWelcomMessage(){
-        let user = User(enfocaId: 1, name: "Player 1", email: "player@email.com")
-        sut.user = user
-        XCTAssertEqual(sut.welcomeLabel.text, "Hi, \(user.name). Welcome to...")
-    }
+//    func testInitialState_ShouldShowWelcomMessage(){
+//        let user = User(enfocaId: 1, name: "Player 1", email: "player@email.com")
+//        sut.user = user
+//        XCTAssertEqual(sut.welcomeLabel.text, "Hi, \(user.name). Welcome to...")
+//    }
     
     func testLogoff_ActionShouldTellDelegateToLogOff(){
         XCTAssertEqual(authDelegate.performLogoffCount, 0)

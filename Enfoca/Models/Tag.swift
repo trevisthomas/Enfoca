@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Tag : Equatable, Hashable {
+public class Tag : Equatable, Hashable {
     /// The hash value.
     ///
     /// Hash values are not guaranteed to be equal across different executions of
@@ -29,21 +29,33 @@ public struct Tag : Equatable, Hashable {
         return lhs.name == rhs.name
     }
 
-    private(set) var tagId : Any?
+    private(set) var tagId : AnyHashable
     private(set) var name : String
-    private(set) var count : Int
+    private(set) var wordPairs : [WordPair] = []
+    var count : Int {
+        return wordPairs.count
+    }
     
     init (name: String){
-        self.tagId = nil
+        self.tagId = "notset"
         self.name = name
-        self.count = 0
         self.hashValue = name.hashValue
     }
     
-    init (tagId : Any, name: String, count: Int = 0){
+    init (tagId : AnyHashable, name: String){
         self.tagId = tagId
         self.name = name
-        self.count = count
         self.hashValue = name.hashValue
+    }
+    
+    func addWordPair(_ wordPair: WordPair){
+        wordPairs.append(wordPair)
+    }
+    
+    func remove(wordPair : WordPair) -> WordPair? {
+        guard let index = wordPairs.index(of: wordPair) else {
+            return nil
+        }
+        return wordPairs.remove(at: index)
     }
 }

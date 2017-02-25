@@ -17,12 +17,12 @@ func segues(ofViewController viewController: UIViewController) -> [String] {
 
 func makeTags(ownerId : Int = 1) -> [Tag] {
     var tags: [Tag] = []
-    tags.append(Tag(ownerId: ownerId, tagId: "123", name: "Noun"))
-    tags.append(Tag(ownerId: ownerId, tagId: "124", name: "Verb"))
-    tags.append(Tag(ownerId: ownerId, tagId: "125", name: "Phrase"))
-    tags.append(Tag(ownerId: ownerId, tagId: "126", name: "Adverb"))
-    tags.append(Tag(ownerId: ownerId, tagId: "127", name: "From Class #3"))
-    tags.append(Tag(ownerId: ownerId, tagId: "128", name: "Adjective"))
+    tags.append(Tag(tagId: "123", name: "Noun"))
+    tags.append(Tag(tagId: "124", name: "Verb"))
+    tags.append(Tag(tagId: "125", name: "Phrase"))
+    tags.append(Tag(tagId: "126", name: "Adverb"))
+    tags.append(Tag(tagId: "127", name: "From Class #3"))
+    tags.append(Tag(tagId: "128", name: "Adjective"))
     return tags
 }
 
@@ -39,18 +39,18 @@ func makeTagTuples(tags : [Tag] = makeTags())->[(Tag, Bool)] {
 func makeWordPairs() -> [WordPair]{
     let d = Date()
     var list : [WordPair] = []
-    list.append(WordPair(creatorId: -1, pairId: "guid0", word: "English", definition: "Espanol", dateCreated: d))
-    list.append(WordPair(creatorId: -1, pairId: "guid1", word: "Black", definition: "Negro", dateCreated: d))
-    list.append(WordPair(creatorId: -1, pairId: "guid2", word: "Tall", definition: "Alta", dateCreated: d))
-    list.append(WordPair(creatorId: -1, pairId: "guid3", word: "To Run", definition: "Correr", dateCreated: d))
+    list.append(WordPair(pairId: "guid0", word: "English", definition: "Espanol", dateCreated: d))
+    list.append(WordPair(pairId: "guid1", word: "Black", definition: "Negro", dateCreated: d))
+    list.append(WordPair(pairId: "guid2", word: "Tall", definition: "Alta", dateCreated: d))
+    list.append(WordPair(pairId: "guid3", word: "To Run", definition: "Correr", dateCreated: d))
     
     return list
 }
 
 func makeWordPair() -> WordPair {
-    let tag1 = Tag(ownerId: -1, tagId: "shrug", name: "Noun")
+    let tag1 = Tag(tagId: "shrug", name: "Noun")
     
-    let wp = WordPair(creatorId: 1, pairId: "thisIsCrap", word: "Red", definition: "Rojo", dateCreated: Date(), tags: [tag1])
+    let wp = WordPair(pairId: "thisIsCrap", word: "Red", definition: "Rojo", dateCreated: Date(), tags: [tag1])
     
     return wp
 }

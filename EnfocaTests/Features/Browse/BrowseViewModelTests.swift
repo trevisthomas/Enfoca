@@ -35,7 +35,7 @@ class BrowseViewModelTests: XCTestCase {
         let tableView = UITableView()
         
         var tags : [Tag] = []
-        tags.append(Tag(ownerId: -1, tagId: "guid100", name: "Noun"))
+        tags.append(Tag(tagId: "guid100", name: "Noun"))
         
         sut.performWordPairFetch(tagFilter: tags, pattern: nil, wordPairOrder: .wordAsc) { (count) in
             //Dont care
@@ -275,7 +275,7 @@ class BrowseViewModelTests: XCTestCase {
         
         XCTAssertEqual(pagingWebService.fetchWordPairCallCount, 1) //Still at 1 because this was on the same page.
         
-        pagingWebService.fetchCallback(wordPairs) //return them.
+        pagingWebService.fetchCallback(wordPairs, nil) //return them.
         XCTAssertFalse(sut.isFetchInProgress)
         
         guard let cellExists = sut.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as? MockWordPairCell else {
@@ -302,7 +302,7 @@ class BrowseViewModelTests: XCTestCase {
         
         
         //Return some data
-        pagingWebService.fetchCallback(wordPairs) //return them.
+        pagingWebService.fetchCallback(wordPairs, nil) //return them.
         XCTAssertFalse(sut.isFetchInProgress)
         
         //check to see if page two data exists now
@@ -314,7 +314,7 @@ class BrowseViewModelTests: XCTestCase {
     }
     
     func testPairEditDelegate_AddWordPairShouldAdd(){
-        let wp = WordPair(creatorId: 1, pairId: "p-id", word: "new", definition: "nuevo", dateCreated: Date())
+        let wp = WordPair(pairId: "p-id", word: "new", definition: "nuevo", dateCreated: Date())
         
         
         
@@ -357,7 +357,7 @@ class BrowseViewModelTests: XCTestCase {
         let wp = sut.wordPairDictionary[ip]!.wordPair!
         
         
-        let updatedWp = WordPair(creatorId: wp.creatorId, pairId: wp.pairId, word: "new", definition: "nuevo", dateCreated: wp.dateCreated)
+        let updatedWp = WordPair(pairId: wp.pairId, word: "new", definition: "nuevo", dateCreated: wp.dateCreated)
         
         XCTAssertEqual(sut.wordPairDictionary.count, mockService.wordPairs.count)
         let count = sut.wordPairDictionary.count
@@ -396,18 +396,22 @@ extension BrowseViewModelTests{
         func reloadTable() {
             reloadTableCalled = true
         }
+        
+        func onError(error : EnfocaError?){
+            
+        }
     }
     
     class MockPagingWebService : MockWebService {
         
         var wordPairCountValue : Int = 0
-        var fetchCallback : (([WordPair]) -> ())!
+        var fetchCallback : (([WordPair], EnfocaError?) -> ())!
         
-        override func wordPairCount(tagFilter: [Tag], pattern: String?, callback: @escaping (Int) -> ()) {
-            callback(wordPairCountValue)
+        override func wordPairCount(tagFilter: [Tag], pattern: String?, callback: @escaping (Int?, EnfocaError?) -> ()) {
+            callback(wordPairCountValue, nil)
         }
         
-        override func fetchWordPairs(tagFilter: [Tag], wordPairOrder: WordPairOrder, pattern: String?, callback: @escaping ([WordPair]) -> ()) {
+        override func fetchWordPairs(tagFilter: [Tag], wordPairOrder: WordPairOrder, pattern: String?, callback: @escaping ([WordPair], EnfocaError?) -> ()) {
             super.fetchWordPairCallCount += 1
             
             fetchWordPairOrder = wordPairOrder

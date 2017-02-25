@@ -252,7 +252,7 @@ class TagFilterViewModelTests: XCTestCase {
         XCTAssertEqual(mockWebService.createTagCallCount, 1)
         XCTAssertEqual(mockWebService.createTagValue, "Poptastic")
         
-        let tag = Tag(ownerId: -1, tagId: "id", name: "Poptastic")
+        let tag = Tag(tagId: "id", name: "Poptastic")
         callback(tag, nil)
         
         XCTAssertTrue(sut.localTempTagFilters.index(of: tag)! >= 0) //Make sure that the tag is here

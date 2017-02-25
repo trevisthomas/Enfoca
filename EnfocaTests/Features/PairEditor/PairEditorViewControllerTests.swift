@@ -61,8 +61,8 @@ class PairEditorViewControllerTests: XCTestCase {
     
     
     func testInit_ShouldBeInEditModeIfWordPairIsProvided(){
-        let tag1 = Tag(ownerId: -1, tagId: "shrug", name: "Noun")
-        let wp = WordPair(creatorId: 1, pairId: "thisIsCrap", word: "Red", definition: "Rojo", dateCreated: Date(), tags: [tag1])
+        let tag1 = Tag(tagId: "shrug", name: "Noun")
+        let wp = WordPair(pairId: "thisIsCrap", word: "Red", definition: "Rojo", dateCreated: Date(), tags: [tag1])
         
         sut.wordPair = wp
         
@@ -77,7 +77,7 @@ class PairEditorViewControllerTests: XCTestCase {
     }
     
     func testInit_TitleShouldBeAppropriateWhenNoTags(){
-        let wp = WordPair(creatorId: 1, pairId: "thisIsCrap", word: "Red", definition: "Rojo", dateCreated: Date())
+        let wp = WordPair(pairId: "thisIsCrap", word: "Red", definition: "Rojo", dateCreated: Date())
         
         sut.wordPair = wp
         
@@ -118,9 +118,9 @@ class PairEditorViewControllerTests: XCTestCase {
         
         let mockVC = PairEditorViewControllerMockVCTests.MockPairEditorViewController(nibName: nil, bundle: nil)
         
-        let tag1 = Tag(ownerId: -1, tagId: "shrug", name: "Noun")
+        let tag1 = Tag(tagId: "shrug", name: "Noun")
         
-        let wp = WordPair(creatorId: 1, pairId: "thisIsCrap", word: "Red", definition: "Rojo", dateCreated: Date(), tags: [tag1])
+        let wp = WordPair(pairId: "pear-id", word: "Red", definition: "Rojo", dateCreated: Date(), tags: [tag1])
         
         
         mockVC.configureForEdit(wordPair: wp);
@@ -176,8 +176,8 @@ class PairEditorViewControllerTests: XCTestCase {
     }
     
     func testSegue_SegueShouldPrepareWithSelectedTags(){
-        let tag1 = Tag(ownerId: -1, tagId: "shrug", name: "Noun")
-        let wp = WordPair(creatorId: 1, pairId: "thisIsCrap", word: "Red", definition: "Rojo", dateCreated: Date(), tags: [tag1])
+        let tag1 = Tag(tagId: "shrug", name: "Noun")
+        let wp = WordPair(pairId: "thisIsCrap", word: "Red", definition: "Rojo", dateCreated: Date(), tags: [tag1])
 
         sut.wordPair = wp
         
@@ -206,7 +206,7 @@ class PairEditorViewControllerTests: XCTestCase {
         
         XCTAssertEqual(sut.tagSummaryLabel.text, "Noun")
         
-        let tag2 = Tag(ownerId: -1, tagId: "shrug", name: "Proverb")
+        let tag2 = Tag(tagId: "shrug", name: "Proverb")
         sut.selectedTags.append(tag2)
         
         sut.tagFilterUpdated(nil)
@@ -247,7 +247,7 @@ class PairEditorViewControllerTests: XCTestCase {
         sut.definitionTextField.text = def
         sut.exampleTextView.text = example
         
-        let tag1 = Tag(ownerId: -1, tagId: "shrug", name: "Noun")
+        let tag1 = Tag(tagId: "shrug", name: "Noun")
         
         sut.selectedTags.append(tag1)
         
@@ -288,8 +288,8 @@ class PairEditorViewControllerTests: XCTestCase {
         sut.exampleTextView.text = example
         sut.gender = gender
         
-        let tag1 = Tag(ownerId: -1, tagId: "shrug", name: "Noun")
-        let tag2 = Tag(ownerId: -1, tagId: "shrug", name: "Vurbe")
+        let tag1 = Tag(tagId: "shrug", name: "Noun")
+        let tag2 = Tag(tagId: "shrug", name: "Vurbe")
         
         sut.selectedTags.append(tag1)
         sut.selectedTags.append(tag2)

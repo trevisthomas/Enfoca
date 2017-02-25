@@ -268,6 +268,7 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
         
         //Trevis, your big refactor caused this to go to 3, and the one below to 4.  You didnt look longenough to figure out why but assumed that it had to do with the count being incremented in the mock on countWordPairs and fetchWordPairs
+        
         XCTAssertTrue(cell.reverseWordPair)
         XCTAssertEqual(mockWebService.fetchWordPairCallCount, 3)
         
@@ -494,7 +495,7 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         
         let mockVC = MockBrowseViewController(nibName: nil, bundle: nil)
         
-        let wp = WordPair(creatorId: 1, pairId: "thisIsCrap", word: "Red", definition: "Rojo", dateCreated: Date())
+        let wp = WordPair(pairId: "thisIsCrap", word: "Red", definition: "Rojo", dateCreated: Date())
         
         mockVC.edit(wordPair: wp)
         
@@ -512,7 +513,7 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         let destVC = storyboard.instantiateInitialViewController() as! PairEditorViewController
         let segue = UIStoryboardSegue(identifier: "PairEditorSegue", source: sut, destination: destVC)
         
-        let wp = WordPair(creatorId: 1, pairId: "thisIsCrap", word: "Red", definition: "Rojo", dateCreated: Date())
+        let wp = WordPair(pairId: "thisIsCrap", word: "Red", definition: "Rojo", dateCreated: Date())
         
         sut.prepare(for: segue, sender: wp)
         

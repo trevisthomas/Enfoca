@@ -63,7 +63,7 @@ class WordPair : Equatable {
 //    private long totalTime;
 //    private long timedViewCount;
     
-    init (pairId: AnyHashable, word: String, definition: String, dateCreated: Date, gender: Gender = .notset, tags : [Tag] = [], example: String? = nil) {
+    init (pairId: AnyHashable, word: String, definition: String, dateCreated: Date = Date(), gender: Gender = .notset, tags : [Tag] = [], example: String? = nil) {
         self.pairId = pairId
         self.word = word
         self.definition = definition
@@ -72,5 +72,18 @@ class WordPair : Equatable {
         self.tags = tags
         self.example = example
     }
-
+    
+    func addTag(_ tag : Tag) {
+        tags.append(tag)
+        tags.sort { (t1:Tag, t2:Tag) -> Bool in
+            return t1.name < t2.name
+        }
+    }
+    
+    func remove(tag: Tag) -> Tag? {
+        guard let index = tags.index(of: tag) else {
+            return nil
+        }
+        return tags.remove(at: index)
+    }
 }

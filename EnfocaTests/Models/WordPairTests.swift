@@ -23,28 +23,27 @@ class WordPairTests: XCTestCase {
     func testInit_ShouldBeInitialized(){
         
         let d = Date()
-        let wp = WordPair(creatorId: 1, pairId: "guid", word: "hello", definition: "hola", dateCreated: d )
+        let wp = WordPair(pairId: "guid", word: "hello", definition: "hola", dateCreated: d )
         
         XCTAssertEqual(wp.pairId, "guid")
         XCTAssertEqual(wp.word, "hello")
         XCTAssertEqual(wp.definition, "hola")
         XCTAssertEqual(wp.dateCreated, d)
-        XCTAssertEqual(wp.creatorId, 1)
         
     }
     
     func testEquals_ShouldBeEqual(){
         let d = Date()
-        let wp1 = WordPair(creatorId: 2, pairId: "1234", word: "hello", definition: "hola", dateCreated: d )
-        let wp2 = WordPair(creatorId: 1, pairId: "1234", word: "hello dont care", definition: "nope", dateCreated: d )
+        let wp1 = WordPair(pairId: "1234", word: "hello", definition: "hola", dateCreated: d )
+        let wp2 = WordPair(pairId: "1234", word: "hello dont care", definition: "nope", dateCreated: d )
         
         XCTAssertTrue(wp1 == wp2) //Only compared field is the pairId
     }
     
     func testEquals_ShouldNotBeEqual(){
         let d = Date()
-        let wp1 = WordPair(creatorId: 2, pairId: "1234", word: "hello", definition: "hola", dateCreated: d )
-        let wp2 = WordPair(creatorId: 1, pairId: "4321", word: "hello dont care", definition: "nope", dateCreated: d )
+        let wp1 = WordPair(pairId: "1234", word: "hello", definition: "hola", dateCreated: d )
+        let wp2 = WordPair(pairId: "4321", word: "hello dont care", definition: "nope", dateCreated: d )
         
         XCTAssertFalse(wp1 == wp2) //Only compared field is the pairId
     }

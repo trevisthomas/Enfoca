@@ -48,10 +48,10 @@ class WordPairCellTests: XCTestCase {
         
         var wordPairs = makeWordPairs()
         
-        let tag1 = Tag(ownerId: -1, tagId: "notimportant", name: "Noun")
-        let tag2 = Tag(ownerId: -1, tagId: "notimportant", name: "Home")
+        let tag1 = Tag(tagId: "notimportant", name: "Noun")
+        let tag2 = Tag(tagId: "notimportant", name: "Home")
         
-        let wp = WordPair(creatorId: -1, pairId: "guid", word: "To Run", definition: "Correr", dateCreated: Date(), tags: [tag1, tag2])
+        let wp = WordPair(pairId: "guid", word: "To Run", definition: "Correr", dateCreated: Date(), tags: [tag1, tag2])
         
     
         wordPairs[row] = wp

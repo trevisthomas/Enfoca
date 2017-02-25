@@ -60,9 +60,9 @@ class Sequence_Tests: XCTestCase {
     }
     
     func testFind_ShouldFindIt(){
-        let tag1 = Tag(ownerId: -1, tagId: "123", name: "Noun")
-        let tag2 = Tag(ownerId: -1, tagId: "456", name: "Bird")
-        let tag3 = Tag(ownerId: -1, tagId: "789", name: "Turd")
+        let tag1 = Tag(tagId: "123", name: "Noun")
+        let tag2 = Tag(tagId: "456", name: "Bird")
+        let tag3 = Tag(tagId: "789", name: "Turd")
         
         let tags = [tag1, tag2]
         
@@ -82,7 +82,7 @@ class Sequence_Tests: XCTestCase {
     }
     
     func testTagsToText_OneTag(){
-        let tag = Tag(ownerId: -1, tagId: "", name: "Noun")
+        let tag = Tag(tagId: "", name: "Noun")
         let listOfOne = [tag]
         let text = listOfOne.tagsToText()
         XCTAssertEqual(text, "Noun")
@@ -90,8 +90,8 @@ class Sequence_Tests: XCTestCase {
     }
     
     func testTagsToText_TwoTags(){
-        let tag1 = Tag(ownerId: -1, tagId: "", name: "Noun")
-        let tag2 = Tag(ownerId: -1, tagId: "", name: "Bird")
+        let tag1 = Tag(tagId: "", name: "Noun")
+        let tag2 = Tag(tagId: "", name: "Bird")
         let two = [tag1, tag2]
         let text = two.tagsToText()
         XCTAssertEqual(text, "Noun, Bird")

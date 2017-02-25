@@ -16,12 +16,7 @@ class CloudKitConverters{
             fatalError()
         }
         
-        guard let count = record.value(forKey: "count") as? Int else {
-            //This is really bad.  Should probably delete this record
-            fatalError()
-        }
-        
-        let t = Tag(tagId: record.recordID, name: name, count: count)
+        let t = Tag(tagId: record.recordID, name: name)
         return t
     }
     

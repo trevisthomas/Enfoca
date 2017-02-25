@@ -242,7 +242,6 @@ class PairEditorViewControllerMockVCTests: XCTestCase {
         XCTAssertTrue(mockWebservice.updatedWordPair!.tags.count == 2)
         XCTAssertEqual(mockWebservice.updatedWordPair!.tags, newTags)
         
-        XCTAssertEqual(mockWebservice.updatedWordPair!.creatorId, wp.creatorId)
         XCTAssertEqual(mockWebservice.updatedWordPair!.pairId, wp.pairId) //TODO Switch this for a CKRecordID or maybe NSObject
         
         XCTAssertTrue(mockVC.performBackButtonCalled)

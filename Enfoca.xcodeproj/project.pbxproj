@@ -29,6 +29,8 @@
 		0F168E181E5B950D00F3E555 /* Perform+WordPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E171E5B950D00F3E555 /* Perform+WordPair.swift */; };
 		0F168E1D1E5BA4A700F3E555 /* OperationCountWordPairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E1C1E5BA4A700F3E555 /* OperationCountWordPairs.swift */; };
 		0F168E1F1E5BB02300F3E555 /* OperationFetchWordPairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E1E1E5BB02300F3E555 /* OperationFetchWordPairs.swift */; };
+		0F168E221E60F33A00F3E555 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E211E60F33A00F3E555 /* DataStore.swift */; };
+		0F168E261E60F39300F3E555 /* DataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E251E60F39300F3E555 /* DataStoreTests.swift */; };
 		0F2431BE1E109CDF0046A224 /* CardOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431BD1E109CDF0046A224 /* CardOrder.swift */; };
 		0F2431C31E109E120046A224 /* CardOrderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431C21E109E120046A224 /* CardOrderTests.swift */; };
 		0F2431C51E10A04E0046A224 /* CardSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431C41E10A04E0046A224 /* CardSide.swift */; };
@@ -128,6 +130,8 @@
 		0F168E171E5B950D00F3E555 /* Perform+WordPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Perform+WordPair.swift"; path = "Network/Operations/Public/Perform+WordPair.swift"; sourceTree = "<group>"; };
 		0F168E1C1E5BA4A700F3E555 /* OperationCountWordPairs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationCountWordPairs.swift; sourceTree = "<group>"; };
 		0F168E1E1E5BB02300F3E555 /* OperationFetchWordPairs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OperationFetchWordPairs.swift; path = Network/Operations/Core/WordPairs/OperationFetchWordPairs.swift; sourceTree = "<group>"; };
+		0F168E211E60F33A00F3E555 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataStore.swift; path = Network/DataStore.swift; sourceTree = "<group>"; };
+		0F168E251E60F39300F3E555 /* DataStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataStoreTests.swift; path = Network/DataStoreTests.swift; sourceTree = "<group>"; };
 		0F2431BD1E109CDF0046A224 /* CardOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardOrder.swift; sourceTree = "<group>"; };
 		0F2431C21E109E120046A224 /* CardOrderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardOrderTests.swift; path = Models/CardOrderTests.swift; sourceTree = "<group>"; };
 		0F2431C41E10A04E0046A224 /* CardSide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSide.swift; sourceTree = "<group>"; };
@@ -291,6 +295,14 @@
 				0F168E1E1E5BB02300F3E555 /* OperationFetchWordPairs.swift */,
 			);
 			name = WordPairs;
+			sourceTree = "<group>";
+		};
+		0F168E271E60F39D00F3E555 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				0F168E251E60F39300F3E555 /* DataStoreTests.swift */,
+			);
+			name = Network;
 			sourceTree = "<group>";
 		};
 		0F2431BC1E109CBE0046A224 /* Models */ = {
@@ -468,6 +480,7 @@
 				0F38A4DF1E11B94A00051F9E /* SharedMocks.swift */,
 				0F4D8A521E13ED9A00900729 /* ToolsForTesting.swift */,
 				0FAA96201E1AB79100078365 /* Shared */,
+				0F168E271E60F39D00F3E555 /* Network */,
 			);
 			path = EnfocaTests;
 			sourceTree = "<group>";
@@ -541,6 +554,7 @@
 				0FB1C65A1E14500E0087DC93 /* WebService.swift */,
 				0FB1C65D1E145CB60087DC93 /* DemoWebService.swift */,
 				0F168E071E5B55DD00F3E555 /* CloudKitWebService.swift */,
+				0F168E211E60F33A00F3E555 /* DataStore.swift */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -790,6 +804,7 @@
 				0F168E0F1E5B777400F3E555 /* BaseCKOperation.swift in Sources */,
 				0FDC87111E15DCC800CF4EC6 /* WordPair.swift in Sources */,
 				0FB1C6641E148F710087DC93 /* TagFilterDelegate.swift in Sources */,
+				0F168E221E60F33A00F3E555 /* DataStore.swift in Sources */,
 				0F5044D21E22D8B3007030CD /* UITableView+.swift in Sources */,
 				0F168E0A1E5B6CC500F3E555 /* OperationFetchTags.swift in Sources */,
 				0F64F1871E2C141D000549CF /* TagCell.swift in Sources */,
@@ -845,6 +860,7 @@
 			files = (
 				0F64F1831E2AB872000549CF /* PairEditorViewControllerTests.swift in Sources */,
 				0F864E8E1E18660800539773 /* WordPairCellTests.swift in Sources */,
+				0F168E261E60F39300F3E555 /* DataStoreTests.swift in Sources */,
 				0F64F1B01E3E5D9E000549CF /* EnfocaErrorTests.swift in Sources */,
 				0F38A4E01E11B94A00051F9E /* SharedMocks.swift in Sources */,
 				0FB1C6681E154F650087DC93 /* Sequence+Tests.swift in Sources */,
