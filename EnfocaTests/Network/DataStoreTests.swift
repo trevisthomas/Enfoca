@@ -52,12 +52,12 @@ class DataStoreTests: XCTestCase {
     func testTagAssociation_AddTagShouldWork() {
         mockDataOne()
         
-        let tag = sut.tags["1"]!
-        let wordPair = sut.wordPairs["102"]!
+        let tag = sut.tagDictionary["1"]!
+        let wordPair = sut.wordPairDictionary["102"]!
         
         XCTAssertEqual(tag.count, 2) //Initial state
         
-        let newAssociation = sut.createTagAssociation(tag: tag, wordPair: wordPair)
+        let newAssociation = sut.add(tag: tag, wordPair: wordPair)
         
         XCTAssertEqual(tag.count, 3)
         XCTAssertTrue(tag.wordPairs.contains(wordPair))
@@ -73,8 +73,12 @@ class DataStoreTests: XCTestCase {
     func testTagAssociation_RemoveTagShouldWork(){
         mockDataOne()
         
-        let tag = sut.tags["1"]!
-        let wordPair = sut.wordPairs["100"]!
+        XCTAssertEqual(wpAss.count, sut.countAssociations)
+        XCTAssertEqual(tags.count, sut.countTags)
+        XCTAssertEqual(wordPairs.count, sut.countWordPairs)
+        
+        let tag = sut.tagDictionary["1"]!
+        let wordPair = sut.wordPairDictionary["100"]!
         
         XCTAssertEqual(wordPair.tags.count, 2) //initial state
         XCTAssertEqual(tag.count, 2) //Initial state
@@ -92,20 +96,298 @@ class DataStoreTests: XCTestCase {
         XCTAssertFalse(wordPair.tags.contains(tag))
         XCTAssertEqual(tag.count, 1)
         XCTAssertEqual(wordPair.tags.count, 1)
+        
+        XCTAssertEqual(wpAss.count - 1, sut.countAssociations)
+        //Removing the association should *not* remove the tag or the wordPair!
+        XCTAssertEqual(tags.count, sut.countTags)
+        XCTAssertEqual(wordPairs.count, sut.countWordPairs)
     }
     
-    //TODO
+    func testWordPair_CreateShouldCreate(){
+        mockDataOne()
+        
+        let word = "Pegajosa"
+        let definition = "Sticky"
+        let gender : Gender = .masculine
+        let example = "La mesa es pegajosa."
+        let date = Date()
+        let wpId = "Eye Dee"
+        
+        let wp = WordPair(pairId: wpId, word: word, definition: definition, dateCreated: date, gender: gender, tags: [], example: example);
+        
+        sut.add(wordPair: wp);
+        
+        let wp2 = sut.findWordPair(withId: wpId)!;
+        
+        XCTAssertEqual(wp.word, wp2.word)
+        XCTAssertEqual(wp.definition, wp2.definition)
+        XCTAssertEqual(wp.dateCreated, wp2.dateCreated)
+        XCTAssertEqual(wp.example, wp2.example)
+        XCTAssertEqual(wp.gender, wp2.gender)
+        XCTAssertEqual(wp.tags, wp2.tags)
+    }
     
-    // create WordPair
-    // create Tag
-    // delete WP
-    // delete Tag
-    // modify WP
-    // modify Tag
-    // search for WP by word
-    // search for WP by definition
-    // search for Tag by name
-    // search for WP with n-tags
+    func testWordPair_existsShouldVerifyExistance(){
+        mockDataOne()
+        
+        XCTAssertTrue(sut.containsWordPair(withWord: "Azul"))
+        XCTAssertFalse(sut.containsWordPair(withWord: "llave"))
+    }
+    
+    func testTag_containsTagShouldWork() {
+        mockDataOne()
+        
+        XCTAssertTrue(sut.containsTag(withName: "Noun"))
+        XCTAssertFalse(sut.containsTag(withName: "Jack"))
+        
+    }
+    
+    func testWordPair_DeleteShouldDelete(){
+        mockDataOne()
+        
+        let tag1 = sut.tagDictionary["1"]
+        let tag3 = sut.tagDictionary["3"]
+        
+        XCTAssertEqual(tag1?.count, 2)
+        XCTAssertEqual(tag3?.count, 1)
+        XCTAssertEqual(wpAss.count, sut.countAssociations)
+        XCTAssertEqual(wordPairs.count, sut.countWordPairs)
+        
+        let wp = sut.wordPairDictionary["100"]!
+        
+        sut.remove(wordPair: wp)
+        
+        XCTAssertEqual(wpAss.count - 2, sut.countAssociations)
+        XCTAssertEqual(wordPairs.count - 1, sut.countWordPairs)
+        XCTAssertEqual(tag1?.count, 1)
+        XCTAssertEqual(tag3?.count, 0)
+        
+    }
+    
+    func testTag_RemoveShouldRemove(){
+        mockDataOne()
+        let tag = sut.tagDictionary["1"]!
+        
+        XCTAssertEqual(tag.count, 2)
+        XCTAssertEqual(wpAss.count, sut.countAssociations)
+        XCTAssertEqual(tags.count, sut.countTags)
+        XCTAssertEqual(wordPairs.count, sut.countWordPairs)
+        
+        let pairsWithTag = tag.wordPairs
+        
+        for wp in pairsWithTag {
+            XCTAssertTrue(wp.tags.contains(tag))
+        }
+        
+        
+        sut.remove(tag: tag)
+        
+        for wp in pairsWithTag {
+            XCTAssertFalse(wp.tags.contains(tag))
+        }
+        
+        XCTAssertEqual(wpAss.count - 2, sut.countAssociations)
+        XCTAssertEqual(tags.count - 1, sut.countTags)
+        XCTAssertEqual(wordPairs.count, sut.countWordPairs)
+    }
+    
+    func testWordPair_ModifyShouldModify(){
+        mockDataOne()
+        
+        XCTAssertEqual(wpAss.count, sut.countAssociations)
+        XCTAssertEqual(tags.count, sut.countTags)
+        XCTAssertEqual(wordPairs.count, sut.countWordPairs)
+        
+        let wp = sut.wordPairDictionary["100"]!
+        
+        
+        _ = sut.applyUpdate(oldWordPair: wp, word: "Nuevo", definition: "New", gender: .feminine, example: "Example", tags: wp.tags)
+        
+        let updatedWp = sut.wordPairDictionary[wp.pairId]
+        XCTAssertEqual(updatedWp?.word, "Nuevo")
+        XCTAssertEqual(updatedWp?.definition, "New")
+        XCTAssertEqual(updatedWp?.gender, .feminine)
+        XCTAssertEqual(updatedWp?.example, "Example")
+        XCTAssertEqual((updatedWp?.tags)!, wp.tags)
+        
+        XCTAssertEqual(wpAss.count, sut.countAssociations)
+        XCTAssertEqual(tags.count, sut.countTags)
+        XCTAssertEqual(wordPairs.count, sut.countWordPairs)
+    }
+    
+    func testWordPair_ModifyToRemoveTagShouldRemove(){
+        mockDataOne()
+        
+        XCTAssertEqual(wpAss.count, sut.countAssociations)
+        XCTAssertEqual(tags.count, sut.countTags)
+        XCTAssertEqual(wordPairs.count, sut.countWordPairs)
+        
+        let wp = sut.wordPairDictionary["100"]!
+        
+        XCTAssertEqual(wp.tags.count, 2)
+        
+        var newTags = wp.tags
+        let removedTag = newTags.remove(at: 0)
+        
+        XCTAssertEqual(wp.tags.count, 2) //Asserting that mutating the newTags varible doesnt impact the tags attribute that it was copied from.
+        
+        let tuple = sut.applyUpdate(oldWordPair: wp, word: wp.word, definition: wp.definition, gender: wp.gender, example: wp.example, tags: newTags)
+        
+        XCTAssertEqual(wpAss.count - 1, sut.countAssociations)
+        XCTAssertEqual(tags.count, sut.countTags)
+        XCTAssertEqual(wordPairs.count, sut.countWordPairs)
+        
+        
+        XCTAssertEqual(tuple.0.tags.count, 1)
+        XCTAssertFalse(tuple.0.tags.contains(removedTag))
+        XCTAssertTrue(tuple.0.tags.contains(wp.tags[1]))
+        
+        
+        XCTAssertEqual(tuple.1.count, 0)
+        XCTAssertEqual(tuple.2.count, 1) // Remove one tag
+        
+        //Confirming that the removed association list has the removed tag
+        XCTAssertEqual(removedTag.tagId, tuple.2[0].tagId)
+        XCTAssertEqual(wp.pairId, tuple.2[0].wordPairId)
+        
+    }
+    
+    func testWordPair_ModifyToAddTagShouldAdd(){
+        mockDataOne()
+        
+        XCTAssertEqual(wpAss.count, sut.countAssociations)
+        XCTAssertEqual(tags.count, sut.countTags)
+        XCTAssertEqual(wordPairs.count, sut.countWordPairs)
+        
+        let wp = sut.wordPairDictionary["100"]!
+        
+        XCTAssertEqual(wp.tags.count, 2)
+        
+        let tagAdded = sut.tagDictionary["2"]!
+        
+        var newTags = wp.tags
+        newTags.append(tagAdded)
+        
+        
+        XCTAssertEqual(wp.tags.count, 2)
+        
+        let tuple = sut.applyUpdate(oldWordPair: wp, word: wp.word, definition: wp.definition, gender: wp.gender, example: wp.example, tags: newTags)
+        
+        XCTAssertEqual(wpAss.count + 1, sut.countAssociations)
+        XCTAssertEqual(tags.count, sut.countTags)
+        XCTAssertEqual(wordPairs.count, sut.countWordPairs)
+        
+        
+        XCTAssertEqual(tuple.0.tags.count, 3)
+        XCTAssertTrue(tuple.0.tags.contains(tagAdded))
+        
+        
+        XCTAssertEqual(tuple.1.count, 1) // added one tag association
+        XCTAssertEqual(tuple.2.count, 0) // Remove one tag
+        
+        //Confirming that the added association list has the added tag
+        XCTAssertEqual(tagAdded.tagId, tuple.1[0].tagId)
+        XCTAssertEqual(wp.pairId, tuple.1[0].wordPairId)
+        
+    }
+    
+    func testTag_Modify(){
+        mockDataOne()
+        
+        let wp = sut.wordPairDictionary["100"]!
+        let tag = wp.tags[0]
+        
+        XCTAssertEqual(wp.tags.count, 2) //Initial state
+        XCTAssertEqual(tag.count, 1) //Initial state
+        
+        let newTag = sut.applyUpdate(oldTag: tag, name: "Fuzzy")
+        
+        
+        XCTAssertEqual(newTag.tagId, tag.tagId)
+        XCTAssertEqual(newTag.name, "Fuzzy")
+        
+        //Hm.
+        
+        let wp2 = sut.wordPairDictionary["100"]!
+        
+        XCTAssertEqual(wp2.tags.count, 2) //No change
+        XCTAssertEqual(newTag.count, 1) //No change
+        XCTAssertTrue(wp2.tags.contains(newTag))
+        
+        
+        XCTAssertEqual(wpAss.count, sut.countAssociations)
+        XCTAssertEqual(tags.count, sut.countTags)
+        XCTAssertEqual(wordPairs.count, sut.countWordPairs)
+    }
+
+    func testSearch_ByWord(){
+        mockDataOne()
+        
+        var result = sut.search(forWordsLike : "a")
+        
+        XCTAssertEqual(result.count, 2)
+        
+        result = sut.search(forWordsLike : "A")
+        
+        XCTAssertEqual(result.count, 2)
+    }
+    
+    func testSearch_ByDefinition(){
+        mockDataOne()
+        
+        let result = sut.search(forDefinitionsLike : "bl")
+        
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result[0].word, "Azul")
+    }
+    
+    func testSearch_ByWordWithTag(){
+        mockDataOne()
+        
+        let tag = sut.tagDictionary["3"]!
+        let result = sut.search(forWordsLike : "a", withTags: [tag])
+        
+        XCTAssertEqual(result.count, 1)
+        
+        XCTAssertEqual(result[0].word, "Azul")
+    }
+    
+    func testSearch_ByTag(){
+        mockDataOne()
+        
+        let tag = sut.tagDictionary["1"]!
+        let result = sut.search(forWordsLike : "", withTags: [tag])
+        
+        XCTAssertEqual(result.count, 2)
+        
+    }
+    
+    func testSearch_ByDefinitionWithTag(){
+        mockDataOne()
+        let tag = sut.tagDictionary["1"]!
+        let result = sut.search(forDefinitionsLike : "b", withTags: [tag])
+        
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result[0].word, "Azul")
+    }
+    
+    func testSearch_AllWithTags(){
+        mockDataOne()
+        
+        let tag = sut.tagDictionary["1"]!
+        let tag2 = sut.tagDictionary["3"]!
+        
+        let result = sut.search(allWithTags: [tag, tag2])
+        XCTAssertEqual(result.count, 2)
+    }
+    
+    func testSearch_TagsByNameShouldFindTag() {
+        mockDataOne()
+        
+        let result = sut.search(tagWithName: "noU")
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result[0].name, "Noun")
+    }
 }
 
 

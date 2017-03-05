@@ -42,6 +42,7 @@ class WordPair : Equatable {
     private(set) var tags : [Tag] = []
     
     
+    
 //    private String word;
 //    private String definition;
 //    private Date createDate = new Date();
