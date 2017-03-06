@@ -43,7 +43,7 @@ extension Perform{
     class func fetchNextWordPairs(cursor : CKQueryCursor, db: CKDatabase, callback : @escaping([WordPair]?,EnfocaError?)->(), cursorCallback : @escaping(CKQueryCursor)->()){
         
         let errorHandler = ErrorHandler(callback: callback)
-        let fetchWordPairsOperation = OperationFetchWordPairs(cursor: cursor, db: db, errorDelegate: errorHandler)
+        let fetchWordPairsOperation = OperationPagedWordPairs(cursor: cursor, db: db, errorDelegate: errorHandler)
         
         let completeOp = BlockOperation {
             OperationQueue.main.addOperation{
@@ -61,7 +61,7 @@ extension Perform{
     
     class func fetchWordPairs(tags: [Tag], wordPairOrder: WordPairOrder, phrase : String?, enfocaId: NSNumber, db: CKDatabase, callback : @escaping([WordPair]?,EnfocaError?)->(), cursorCallback : @escaping(CKQueryCursor)->()){
         let errorHandler = ErrorHandler(callback: callback)
-        let fetchWordPairsOperation = OperationFetchWordPairs(tags: tags, phrase: phrase, order: wordPairOrder, enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
+        let fetchWordPairsOperation = OperationPagedWordPairs(tags: tags, phrase: phrase, order: wordPairOrder, enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
         
         let completeOp = BlockOperation {
             OperationQueue.main.addOperation{

@@ -9,7 +9,7 @@
 import Foundation
 import CloudKit
 
-class OperationFetchWordPairs : BaseOperation {
+class OperationPagedWordPairs : BaseOperation {
     private let enfocaId : NSNumber?
     private let db : CKDatabase
     private(set) var count : Int = 0

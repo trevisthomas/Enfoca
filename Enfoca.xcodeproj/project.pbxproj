@@ -28,7 +28,7 @@
 		0F168E161E5B8A5300F3E555 /* OperationCreateWordPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E151E5B8A5300F3E555 /* OperationCreateWordPair.swift */; };
 		0F168E181E5B950D00F3E555 /* Perform+WordPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E171E5B950D00F3E555 /* Perform+WordPair.swift */; };
 		0F168E1D1E5BA4A700F3E555 /* OperationCountWordPairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E1C1E5BA4A700F3E555 /* OperationCountWordPairs.swift */; };
-		0F168E1F1E5BB02300F3E555 /* OperationFetchWordPairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E1E1E5BB02300F3E555 /* OperationFetchWordPairs.swift */; };
+		0F168E1F1E5BB02300F3E555 /* OperationPagedWordPairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E1E1E5BB02300F3E555 /* OperationPagedWordPairs.swift */; };
 		0F168E221E60F33A00F3E555 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E211E60F33A00F3E555 /* DataStore.swift */; };
 		0F168E261E60F39300F3E555 /* DataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168E251E60F39300F3E555 /* DataStoreTests.swift */; };
 		0F2431BE1E109CDF0046A224 /* CardOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2431BD1E109CDF0046A224 /* CardOrder.swift */; };
@@ -129,7 +129,7 @@
 		0F168E151E5B8A5300F3E555 /* OperationCreateWordPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OperationCreateWordPair.swift; path = Network/Operations/Core/WordPairs/OperationCreateWordPair.swift; sourceTree = "<group>"; };
 		0F168E171E5B950D00F3E555 /* Perform+WordPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Perform+WordPair.swift"; path = "Network/Operations/Public/Perform+WordPair.swift"; sourceTree = "<group>"; };
 		0F168E1C1E5BA4A700F3E555 /* OperationCountWordPairs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationCountWordPairs.swift; sourceTree = "<group>"; };
-		0F168E1E1E5BB02300F3E555 /* OperationFetchWordPairs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OperationFetchWordPairs.swift; path = Network/Operations/Core/WordPairs/OperationFetchWordPairs.swift; sourceTree = "<group>"; };
+		0F168E1E1E5BB02300F3E555 /* OperationPagedWordPairs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OperationPagedWordPairs.swift; path = Network/Operations/Core/WordPairs/OperationPagedWordPairs.swift; sourceTree = "<group>"; };
 		0F168E211E60F33A00F3E555 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataStore.swift; path = Network/DataStore.swift; sourceTree = "<group>"; };
 		0F168E251E60F39300F3E555 /* DataStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataStoreTests.swift; path = Network/DataStoreTests.swift; sourceTree = "<group>"; };
 		0F2431BD1E109CDF0046A224 /* CardOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardOrder.swift; sourceTree = "<group>"; };
@@ -292,7 +292,7 @@
 			children = (
 				0F168E151E5B8A5300F3E555 /* OperationCreateWordPair.swift */,
 				0F168E1C1E5BA4A700F3E555 /* OperationCountWordPairs.swift */,
-				0F168E1E1E5BB02300F3E555 /* OperationFetchWordPairs.swift */,
+				0F168E1E1E5BB02300F3E555 /* OperationPagedWordPairs.swift */,
 			);
 			name = WordPairs;
 			sourceTree = "<group>";
@@ -800,7 +800,7 @@
 				0F64F1AA1E3D4059000549CF /* PairEditorDelegate.swift in Sources */,
 				0FB1C65B1E14500E0087DC93 /* WebService.swift in Sources */,
 				0F168DFA1E5A39A000F3E555 /* Perform.swift in Sources */,
-				0F168E1F1E5BB02300F3E555 /* OperationFetchWordPairs.swift in Sources */,
+				0F168E1F1E5BB02300F3E555 /* OperationPagedWordPairs.swift in Sources */,
 				0F168E0F1E5B777400F3E555 /* BaseCKOperation.swift in Sources */,
 				0FDC87111E15DCC800CF4EC6 /* WordPair.swift in Sources */,
 				0FB1C6641E148F710087DC93 /* TagFilterDelegate.swift in Sources */,
