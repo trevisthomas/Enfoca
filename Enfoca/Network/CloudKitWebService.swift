@@ -81,6 +81,17 @@ class CloudKitWebService : WebService {
         Perform.countWordPairs(withTags: tagFilter, phrase: pattern, enfocaId: enfocaId, db: db) { (count:Int?, error:String?) in
             callback(count, error)
         }
+        
+        //Demo!
+        Perform.createDataStore(enfocaId: enfocaId, db: db) { (dataStore: DataStore?, error:EnfocaError?) in
+            
+            guard let _ = dataStore else {
+                guard let error = error else { fatalError() }
+                print("Error creating data store \(error)")
+                return
+            }
+            print("Demo created data store")
+        }
     }
     
     func createWordPair(word: String, definition: String, tags : [Tag], gender : Gender, example: String?, callback : @escaping(WordPair?, EnfocaError?)->()){

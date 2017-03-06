@@ -38,4 +38,18 @@ class CloudKitConverters{
         
         return WordPair(pairId: record.recordID, word: word, definition: definition, dateCreated: dateCreated, gender: gender, tags: [], example: example)
     }
+    
+    class func toTagAssociation(from record : CKRecord) -> TagAssociation {
+        guard let tagRef = record.value(forKey: "tagRef") as? CKReference else {
+            fatalError()
+        }
+        
+        guard let wordRef = record.value(forKey: "wordRef") as? CKReference else {
+            fatalError()
+        }
+        
+        let ass = TagAssociation(wordPairId: wordRef, tagId: tagRef)
+        
+        return ass
+    }
 }

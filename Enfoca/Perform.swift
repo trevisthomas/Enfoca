@@ -41,6 +41,32 @@ class Perform {
         queue.addOperations([fetchUserId, cloudAuth, fetchUserRecord, fetchOrCreateEnfocaId, fetchIncrementAndSaveSeedIfNecessary, completeOp], waitUntilFinished: false)
         
     }
+    
+    class func createDataStore(enfocaId: NSNumber, db: CKDatabase, callback : @escaping (DataStore?, EnfocaError?)->()){
+        let errorHandler = ErrorHandler(callback: callback)
+        
+        let queue = OperationQueue()
+        
+        let fetchTagAssociations = OperationFetchTagAssociations(enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
+        let fetchTags = OperationFetchTags(enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
+        let fetchWordPairs = OperationFetchWordPairs(enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
+        
+        let completeOp = BlockOperation {
+            OperationQueue.main.addOperation{
+                print("Initializing data store")
+                let dataStore = DataStore()
+                dataStore.initialize(tags: fetchTags.tags, wordPairs: fetchWordPairs.wordPairs, tagAssociations: fetchTagAssociations.tagAssociations)
+                
+                print("DataStore initialized with \(dataStore.wordPairDictionary.count) word pairs, \(dataStore.tagDictionary.count) tags and \(dataStore.tagAssociations.count) associations.")
+            }
+        }
+        
+        completeOp.addDependency(fetchTagAssociations)
+        completeOp.addDependency(fetchTags)
+        completeOp.addDependency(fetchWordPairs)
+        
+        queue.addOperations([fetchWordPairs, fetchTags, fetchTagAssociations, completeOp], waitUntilFinished: false)
+    }
         
 }
 

@@ -9,6 +9,9 @@
 import Foundation
 import CloudKit
 
+//Deprecated
+
+
 class OperationCountWordPairs : BaseOperation {
     private let enfocaId : NSNumber
     private let db : CKDatabase
