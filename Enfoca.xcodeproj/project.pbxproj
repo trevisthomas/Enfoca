@@ -50,6 +50,17 @@
 		0F38A4E41E11E3C100051F9E /* WelcomeViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F38A4E31E11E3C100051F9E /* WelcomeViewControllerTests.swift */; };
 		0F3B2B571E6D310000BB50EC /* OperationFetchWordPairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3B2B561E6D310000BB50EC /* OperationFetchWordPairs.swift */; };
 		0F3B2B591E6D34D200BB50EC /* OperationFetchTagAssociations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3B2B581E6D34D200BB50EC /* OperationFetchTagAssociations.swift */; };
+		0F3B2B5F1E6F375A00BB50EC /* study_item_meta.json in Resources */ = {isa = PBXBuildFile; fileRef = 0F3B2B5B1E6F375A00BB50EC /* study_item_meta.json */; };
+		0F3B2B601E6F375A00BB50EC /* study_item.json in Resources */ = {isa = PBXBuildFile; fileRef = 0F3B2B5C1E6F375A00BB50EC /* study_item.json */; };
+		0F3B2B611E6F375A00BB50EC /* tag_associations.json in Resources */ = {isa = PBXBuildFile; fileRef = 0F3B2B5D1E6F375A00BB50EC /* tag_associations.json */; };
+		0F3B2B621E6F375A00BB50EC /* tag.json in Resources */ = {isa = PBXBuildFile; fileRef = 0F3B2B5E1E6F375A00BB50EC /* tag.json */; };
+		0F3B2B651E6F37E100BB50EC /* OldTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3B2B641E6F37E100BB50EC /* OldTag.swift */; };
+		0F3B2B671E6F37F700BB50EC /* Import.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3B2B661E6F37F700BB50EC /* Import.swift */; };
+		0F3B2B6A1E6F481B00BB50EC /* ImportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3B2B691E6F481B00BB50EC /* ImportTests.swift */; };
+		0F3B2B6C1E6F4BFB00BB50EC /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = 0F3B2B6B1E6F4BFB00BB50EC /* test.json */; };
+		0F3B2B6E1E6FC1B400BB50EC /* OldWordPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3B2B6D1E6FC1B400BB50EC /* OldWordPair.swift */; };
+		0F3B2B701E6FC1D800BB50EC /* OldMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3B2B6F1E6FC1D800BB50EC /* OldMetaData.swift */; };
+		0F3B2B721E6FC1EC00BB50EC /* OldTagAssociation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3B2B711E6FC1EC00BB50EC /* OldTagAssociation.swift */; };
 		0F4D8A431E12E27600900729 /* BrowseViewControllerFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D8A421E12E27600900729 /* BrowseViewControllerFilterTests.swift */; };
 		0F4D8A451E12E3D400900729 /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D8A441E12E3D400900729 /* BrowseViewController.swift */; };
 		0F4D8A481E12E3FA00900729 /* Browse.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F4D8A471E12E3FA00900729 /* Browse.storyboard */; };
@@ -155,6 +166,17 @@
 		0F38A4E31E11E3C100051F9E /* WelcomeViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeViewControllerTests.swift; path = Features/Login/WelcomeViewControllerTests.swift; sourceTree = "<group>"; };
 		0F3B2B561E6D310000BB50EC /* OperationFetchWordPairs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OperationFetchWordPairs.swift; path = Network/Operations/Core/WordPairs/OperationFetchWordPairs.swift; sourceTree = "<group>"; };
 		0F3B2B581E6D34D200BB50EC /* OperationFetchTagAssociations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OperationFetchTagAssociations.swift; path = Network/Operations/Core/Tags/OperationFetchTagAssociations.swift; sourceTree = "<group>"; };
+		0F3B2B5B1E6F375A00BB50EC /* study_item_meta.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = study_item_meta.json; sourceTree = "<group>"; };
+		0F3B2B5C1E6F375A00BB50EC /* study_item.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = study_item.json; sourceTree = "<group>"; };
+		0F3B2B5D1E6F375A00BB50EC /* tag_associations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tag_associations.json; sourceTree = "<group>"; };
+		0F3B2B5E1E6F375A00BB50EC /* tag.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tag.json; sourceTree = "<group>"; };
+		0F3B2B641E6F37E100BB50EC /* OldTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OldTag.swift; path = DataImport/OldTag.swift; sourceTree = "<group>"; };
+		0F3B2B661E6F37F700BB50EC /* Import.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Import.swift; path = DataImport/Import.swift; sourceTree = "<group>"; };
+		0F3B2B691E6F481B00BB50EC /* ImportTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImportTests.swift; path = DataImport/ImportTests.swift; sourceTree = "<group>"; };
+		0F3B2B6B1E6F4BFB00BB50EC /* test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = test.json; path = DataImport/DataDump/test.json; sourceTree = "<group>"; };
+		0F3B2B6D1E6FC1B400BB50EC /* OldWordPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OldWordPair.swift; path = DataImport/OldWordPair.swift; sourceTree = "<group>"; };
+		0F3B2B6F1E6FC1D800BB50EC /* OldMetaData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OldMetaData.swift; path = DataImport/OldMetaData.swift; sourceTree = "<group>"; };
+		0F3B2B711E6FC1EC00BB50EC /* OldTagAssociation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OldTagAssociation.swift; path = DataImport/OldTagAssociation.swift; sourceTree = "<group>"; };
 		0F4D8A421E12E27600900729 /* BrowseViewControllerFilterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowseViewControllerFilterTests.swift; path = Features/Browse/BrowseViewControllerFilterTests.swift; sourceTree = "<group>"; };
 		0F4D8A441E12E3D400900729 /* BrowseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowseViewController.swift; path = Features/Browse/BrowseViewController.swift; sourceTree = "<group>"; };
 		0F4D8A471E12E3FA00900729 /* Browse.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Browse.storyboard; path = Features/Browse/Browse.storyboard; sourceTree = "<group>"; };
@@ -400,6 +422,39 @@
 			name = Login;
 			sourceTree = "<group>";
 		};
+		0F3B2B5A1E6F373100BB50EC /* DataDump */ = {
+			isa = PBXGroup;
+			children = (
+				0F3B2B5B1E6F375A00BB50EC /* study_item_meta.json */,
+				0F3B2B5C1E6F375A00BB50EC /* study_item.json */,
+				0F3B2B5D1E6F375A00BB50EC /* tag_associations.json */,
+				0F3B2B5E1E6F375A00BB50EC /* tag.json */,
+				0F3B2B6B1E6F4BFB00BB50EC /* test.json */,
+			);
+			name = DataDump;
+			sourceTree = "<group>";
+		};
+		0F3B2B631E6F377100BB50EC /* DataImport */ = {
+			isa = PBXGroup;
+			children = (
+				0F3B2B5A1E6F373100BB50EC /* DataDump */,
+				0F3B2B661E6F37F700BB50EC /* Import.swift */,
+				0F3B2B641E6F37E100BB50EC /* OldTag.swift */,
+				0F3B2B6D1E6FC1B400BB50EC /* OldWordPair.swift */,
+				0F3B2B6F1E6FC1D800BB50EC /* OldMetaData.swift */,
+				0F3B2B711E6FC1EC00BB50EC /* OldTagAssociation.swift */,
+			);
+			name = DataImport;
+			sourceTree = "<group>";
+		};
+		0F3B2B681E6F47FC00BB50EC /* DataImport */ = {
+			isa = PBXGroup;
+			children = (
+				0F3B2B691E6F481B00BB50EC /* ImportTests.swift */,
+			);
+			name = DataImport;
+			sourceTree = "<group>";
+		};
 		0F4D8A411E12E19400900729 /* Browse */ = {
 			isa = PBXGroup;
 			children = (
@@ -464,6 +519,7 @@
 		0F5ADF9B1E107CDD003B1225 /* Enfoca */ = {
 			isa = PBXGroup;
 			children = (
+				0F3B2B631E6F377100BB50EC /* DataImport */,
 				0F168E041E5A42C500F3E555 /* Enfoca.entitlements */,
 				0F864E841E17F94D00539773 /* Core */,
 				0F38A4D91E11B1FE00051F9E /* Features */,
@@ -479,6 +535,7 @@
 		0F5ADFB01E107CDD003B1225 /* EnfocaTests */ = {
 			isa = PBXGroup;
 			children = (
+				0F3B2B681E6F47FC00BB50EC /* DataImport */,
 				0F38A4D11E11AFA200051F9E /* Features */,
 				0F2431BF1E109DBA0046A224 /* Models */,
 				0F5ADFB11E107CDD003B1225 /* EnfocaTests.swift */,
@@ -688,10 +745,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F3B2B611E6F375A00BB50EC /* tag_associations.json in Resources */,
 				0F5ADFA71E107CDD003B1225 /* LaunchScreen.storyboard in Resources */,
+				0F3B2B621E6F375A00BB50EC /* tag.json in Resources */,
+				0F3B2B5F1E6F375A00BB50EC /* study_item_meta.json in Resources */,
 				0F4D8A481E12E3FA00900729 /* Browse.storyboard in Resources */,
+				0F3B2B601E6F375A00BB50EC /* study_item.json in Resources */,
 				0F38A4DC1E11B28A00051F9E /* Login.storyboard in Resources */,
 				0F5ADFA41E107CDD003B1225 /* Assets.xcassets in Resources */,
+				0F3B2B6C1E6F4BFB00BB50EC /* test.json in Resources */,
 				0F8594161E2AB41500163462 /* PairEditor.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -804,6 +866,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F64F1AA1E3D4059000549CF /* PairEditorDelegate.swift in Sources */,
+				0F3B2B651E6F37E100BB50EC /* OldTag.swift in Sources */,
 				0FB1C65B1E14500E0087DC93 /* WebService.swift in Sources */,
 				0F168DFA1E5A39A000F3E555 /* Perform.swift in Sources */,
 				0F168E1F1E5BB02300F3E555 /* OperationPagedWordPairs.swift in Sources */,
@@ -827,13 +890,16 @@
 				0F168E131E5B810B00F3E555 /* CloudKitConverters.swift in Sources */,
 				0F38A4E21E11C61000051F9E /* WelcomeViewController.swift in Sources */,
 				0F4D8A4B1E12E86900900729 /* UIViewController+.swift in Sources */,
+				0F3B2B6E1E6FC1B400BB50EC /* OldWordPair.swift in Sources */,
 				0F168DFD1E5A39A100F3E555 /* FetchUserRecordOperation.swift in Sources */,
 				0FB1C6541E1403BE0087DC93 /* EnumCollection.swift in Sources */,
 				0F168DFC1E5A39A000F3E555 /* CloudAuthOperation.swift in Sources */,
 				0F64F1AC1E3E575D000549CF /* Gender.swift in Sources */,
 				0F168E011E5A39A100F3E555 /* InternalUser.swift in Sources */,
 				0F64F1851E2AD1C7000549CF /* BrowseViewModelDelegate.swift in Sources */,
+				0F3B2B721E6FC1EC00BB50EC /* OldTagAssociation.swift in Sources */,
 				0F2431CD1E10A5420046A224 /* Tag.swift in Sources */,
+				0F3B2B671E6F37F700BB50EC /* Import.swift in Sources */,
 				0F168DFF1E5A39A100F3E555 /* FetchOrCreateEnfocaId.swift in Sources */,
 				0F4D8A451E12E3D400900729 /* BrowseViewController.swift in Sources */,
 				0F3B2B571E6D310000BB50EC /* OperationFetchWordPairs.swift in Sources */,
@@ -852,6 +918,7 @@
 				0F168DFE1E5A39A100F3E555 /* FetchUserRecordId.swift in Sources */,
 				0F2431D11E10A9860046A224 /* User.swift in Sources */,
 				0F168E0D1E5B721F00F3E555 /* Perform+Tags.swift in Sources */,
+				0F3B2B701E6FC1D800BB50EC /* OldMetaData.swift in Sources */,
 				0F5044D01E22A316007030CD /* TypeAliases.swift in Sources */,
 				0F168E181E5B950D00F3E555 /* Perform+WordPair.swift in Sources */,
 				0F168DFB1E5A39A000F3E555 /* BaseUserOperation.swift in Sources */,
@@ -884,6 +951,7 @@
 				0F4D8A531E13ED9A00900729 /* ToolsForTesting.swift in Sources */,
 				0F38A4D41E11AFE100051F9E /* LoginViewControllerTests.swift in Sources */,
 				0F864E8C1E180C1E00539773 /* BrowseViewModelTests.swift in Sources */,
+				0F3B2B6A1E6F481B00BB50EC /* ImportTests.swift in Sources */,
 				0F2431CF1E10A5F90046A224 /* TagTests.swift in Sources */,
 				0F64F18B1E2C5173000549CF /* TagCellTests.swift in Sources */,
 				0F5ADFB21E107CDD003B1225 /* EnfocaTests.swift in Sources */,
