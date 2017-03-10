@@ -11,10 +11,8 @@ import XCTest
 
 class ImportTests : XCTestCase{
     func test_Load (){
-        let importer = Import()
-        
-        importer.loadWordPairs()
-        importer.loadTags()
-        importer.loadTagAssociations()
+//        let importer = Import()
+//        
+//        importer.process()
     }
 }

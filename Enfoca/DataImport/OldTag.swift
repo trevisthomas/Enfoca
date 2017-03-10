@@ -11,8 +11,10 @@ import CloudKit
 
 class OldTag {
     var tagId : String
-    var ckTagId : CKReference?
+    var ckTagId : CKRecordID!
     var tagName : String
+    
+    var newTag : Tag?
     
     init(tagId: String, tagName: String) {
         self.tagId = tagId

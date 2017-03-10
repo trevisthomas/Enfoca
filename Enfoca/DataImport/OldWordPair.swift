@@ -10,12 +10,14 @@ import Foundation
 import CloudKit
 
 class OldWordPair {
-    var ckPairid: CKReference?
+    var ckPairid: CKRecordID?
     var studyItemId : String
     var creationDate : Date
     var word: String
     var definition: String
     var example: String?
+    
+    var newWordPair: WordPair?
     
     
     init(studyItemId : String, creationDate : Date, word: String, definition: String, example: String?){

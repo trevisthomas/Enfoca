@@ -12,8 +12,8 @@ import CloudKit
 class OldTagAssociation{
     var tagId: String
     var studyItemId: String
-    var ckTagId : CKReference?
-    var ckPairId : CKReference?
+    var ckTagId : CKRecordID?
+    var ckPairId : CKRecordID?
     
     init(tagId : String, studyItemId: String){
         self.tagId = tagId
