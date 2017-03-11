@@ -12,7 +12,8 @@ class DataStore {
     private(set) var tagDictionary : [AnyHashable : Tag] = [:]
     private(set) var wordPairDictionary : [AnyHashable :  WordPair] = [:]
     private(set) var tagAssociations : [TagAssociation] = []
-    
+//    private var progressObserver : ProgressObserver?
+    private let key : String = "DataStoreInit"
     var countAssociations : Int {
         return tagAssociations.count
     }
@@ -25,7 +26,9 @@ class DataStore {
         return wordPairDictionary.count
     }
     
-    func initialize(tags: [Tag], wordPairs: [WordPair], tagAssociations: [TagAssociation]){
+    func initialize(tags: [Tag], wordPairs: [WordPair], tagAssociations: [TagAssociation], progressObserver: ProgressObserver? = nil){
+        
+        progressObserver?.startProgress(ofType: key, message: "Initializing DataStore")
         
         self.tagDictionary = tags.reduce([AnyHashable : Tag]()) { (acc, tag) in
             var dict = acc // This shit show is because the seed dictionary isnt mutable
@@ -33,11 +36,15 @@ class DataStore {
             return dict
         }
         
+        progressObserver?.updateProgress(ofType: key, message: "DataStore loaded \(tagDictionary.count) tags...")
+        
         self.wordPairDictionary = wordPairs.reduce([AnyHashable : WordPair]()) { (acc, wordPair) in
             var dict = acc
             dict[wordPair.pairId] = wordPair
             return dict
         }
+        
+        progressObserver?.updateProgress(ofType: key, message: "DataStore loaded \(wordPairDictionary.count) words...")
         
         self.tagAssociations = tagAssociations
         
@@ -53,6 +60,9 @@ class DataStore {
             t.addWordPair(wp)
             wp.addTag(t)
         }
+        progressObserver?.updateProgress(ofType: key, message: "DataStore tagged \(tagAssociations.count) words...")
+        
+        progressObserver?.endProgress(ofType: key, message: "DataStore initialization complete.")
     }
     
     func findWordPair(withId wordPairId : AnyHashable) -> WordPair? {
@@ -187,20 +197,30 @@ class DataStore {
     
     private func search(value : String, useWordField: Bool = true, withTags tags : [Tag]? = nil) -> [WordPair]{
         
-        let pattern = value.lowercased()
+        let pattern : String
+//        if value.characters.count > 0 && value.characters.count < 2 {
+        if value.characters.count == 1 {
+            pattern = "^\(value)"
+        } else {
+            pattern = value
+        }
         
         let pairFilter : (WordPair) -> Bool
         if useWordField {
             pairFilter = { (wordPair:WordPair) -> Bool in
-                return wordPair.word.lowercased().hasPrefix(pattern)
+                
+                return wordPair.word.range(of: pattern, options: [.regularExpression, .caseInsensitive], range: nil, locale: nil) != nil
+//                return wordPair.word.lowercased().hasPrefix(pattern)
             }
         } else {
             pairFilter = { (wordPair:WordPair) -> Bool in
-                    return wordPair.definition.lowercased().hasPrefix(pattern)
+//                    return wordPair.definition.lowercased().hasPrefix(pattern)
+                return wordPair.definition.range(of: pattern, options: [.regularExpression, .caseInsensitive], range: nil, locale: nil) != nil
             }
         }
         
-        if let tags = tags {
+        if let tags = tags, tags.count > 0 {
+            
             
             let tagIds = tags.map({ (tag:Tag) -> AnyHashable in
                 return tag.tagId
@@ -231,7 +251,11 @@ class DataStore {
                 return wordPairs.filter(pairFilter)
             }
         } else {
-            return wordPairDictionary.values.filter(pairFilter)
+            if(pattern == "") {
+                return Array(wordPairDictionary.values)
+            } else {
+                return wordPairDictionary.values.filter(pairFilter)
+            }
         }
 
         
@@ -239,50 +263,43 @@ class DataStore {
     
     func search(forWordsLike : String, withTags tags : [Tag]? = nil) -> [WordPair]{
         return search(value: forWordsLike, useWordField: true, withTags: tags)
-//        let pattern = forWordsLike.lowercased()
-//        
-//        
-//        if let tags = tags {
-//            
-//            let tagIds = tags.map({ (tag:Tag) -> AnyHashable in
-//                return tag.tagId
-//            })
-//            
-//            let filteredAssociations = tagAssociations.filter({ (tagAss:TagAssociation) -> Bool in
-//                return tagIds.contains(tagAss.tagId)
-//            })
-//            
-//            let filteredPairIds = filteredAssociations.map({ (tagAss:TagAssociation) -> AnyHashable in
-//                return tagAss.wordPairId
-//            })
-//            
-//            let wordPairs = wordPairDictionary.reduce([], { (result:[WordPair], entry: (key: AnyHashable, value: WordPair)) -> [WordPair] in
-//                
-//                var accumulator = result
-//                if(filteredPairIds.contains(entry.key)){
-//                    accumulator.append(entry.value)
-//                }
-//                
-//                return accumulator
-//                
-//            })
-//            
-//            if(pattern == "") {
-//                return wordPairs
-//            } else {
-//                return wordPairs.filter({ (wordPair:WordPair) -> Bool in
-//                    return wordPair.word.lowercased().hasPrefix(pattern)
-//                })
-//            }
-//        } else {
-//            return wordPairDictionary.values.filter({ (wordPair:WordPair) -> Bool in
-//                return wordPair.word.lowercased().hasPrefix(pattern)
-//            })
-//        }
-        
-        
     }
    
+    func search(wordPairMatching pattern: String, order wordPairOrder: WordPairOrder, withTags tagFilter : [Tag]? = nil) -> [WordPair]{
+        
+        let wordPairs : [WordPair]
+        switch wordPairOrder {
+        case .definitionAsc, .definitionDesc:
+            wordPairs = search(forDefinitionsLike: pattern, withTags: tagFilter)
+        case .wordAsc, .wordDesc:
+            wordPairs = search(forWordsLike: pattern, withTags: tagFilter)
+        }
+        
+        var sortFunc : (WordPair, WordPair) -> Bool
+        
+        switch wordPairOrder {
+        case .definitionAsc:
+            sortFunc = { (wp1: WordPair, wp2: WordPair) -> Bool in
+                return wp1.definition.localizedCaseInsensitiveCompare(wp2.definition).rawValue < 0
+            }
+        case .definitionDesc:
+            sortFunc = { (wp1: WordPair, wp2: WordPair) -> Bool in
+                return wp1.definition.localizedCaseInsensitiveCompare(wp2.definition).rawValue > 0
+            }
+        case .wordAsc:
+            sortFunc = { (wp1: WordPair, wp2: WordPair) -> Bool in
+                return wp1.word.localizedCaseInsensitiveCompare(wp2.word).rawValue < 0
+            }
+        case .wordDesc:
+            sortFunc = { (wp1: WordPair, wp2: WordPair) -> Bool in
+                return wp1.word.localizedCaseInsensitiveCompare(wp2.word).rawValue > 0
+            }
+        }
+        
+        let sorted = wordPairs.sorted(by: sortFunc)
+     
+        return sorted
+    }
     
     func search(forDefinitionsLike : String, withTags tags : [Tag]? = nil) -> [WordPair]{
         return search(value: forDefinitionsLike, useWordField: false, withTags: tags)
@@ -292,14 +309,22 @@ class DataStore {
         return search(value: "", useWordField: false, withTags: allWithTags)
     }
     
-    func search(tagWithName: String) -> [Tag] {
-        let pattern = tagWithName.lowercased()
+    func search(forTagWithName: String) -> [Tag] {
+        let pattern = forTagWithName.lowercased()
         return tagDictionary.values.reduce([], { (result:[Tag], tag: Tag) -> [Tag] in
             var accumulator = result
             if tag.name.lowercased().hasPrefix(pattern) {
                 accumulator.append(tag)
             }
             return accumulator
+        }).sorted(by: { (t1:Tag, t2:Tag) -> Bool in
+            t1.name.lowercased() < t2.name.lowercased()
+        })
+    }
+    
+    func allTags() -> [Tag]{
+        return tagDictionary.values.sorted(by: { (t1: Tag, t2: Tag) -> Bool in
+            t1.name.lowercased() < t2.name.lowercased()
         })
     }
 }

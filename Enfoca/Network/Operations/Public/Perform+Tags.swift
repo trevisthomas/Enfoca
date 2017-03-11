@@ -10,21 +10,21 @@ import Foundation
 import CloudKit
 
 extension Perform{
-    class func fetchTags(enfocaId: NSNumber, db: CKDatabase, callback : @escaping (_ tags : [Tag]?, _ error : String?) -> ()){
-        let errorHandler = ErrorHandler(callback: callback)
-        let fetchTagsOperation = OperationFetchTags(enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
-        let completeOp = BlockOperation {
-            OperationQueue.main.addOperation{
-                callback(fetchTagsOperation.tags, nil)
-            }
-        }
-        
-        let queue = OperationQueue()
-        
-        completeOp.addDependency(fetchTagsOperation)
-        
-        queue.addOperations([fetchTagsOperation, completeOp], waitUntilFinished: false)
-    }
+//    class func fetchTags(enfocaId: NSNumber, db: CKDatabase, callback : @escaping (_ tags : [Tag]?, _ error : String?) -> ()){
+//        let errorHandler = ErrorHandler(callback: callback)
+//        let fetchTagsOperation = OperationFetchTags(enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
+//        let completeOp = BlockOperation {
+//            OperationQueue.main.addOperation{
+//                callback(fetchTagsOperation.tags, nil)
+//            }
+//        }
+//        
+//        let queue = OperationQueue()
+//        
+//        completeOp.addDependency(fetchTagsOperation)
+//        
+//        queue.addOperations([fetchTagsOperation, completeOp], waitUntilFinished: false)
+//    }
     
     
     

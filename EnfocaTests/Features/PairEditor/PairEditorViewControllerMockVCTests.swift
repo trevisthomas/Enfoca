@@ -237,7 +237,7 @@ class PairEditorViewControllerMockVCTests: XCTestCase {
         
         XCTAssertEqual(mockWebservice.updatedWordPair!.word, wp.word)
         XCTAssertEqual(mockWebservice.updatedWordPair!.definition, wp.definition)
-        XCTAssertEqual(mockWebservice.updatedWordPair!.gender, .feminine)
+        XCTAssertEqual(mockWebservice.updatedWordPair!.gender, wp.gender)
         XCTAssertEqual(mockWebservice.updatedWordPair!.example, example)
         XCTAssertTrue(mockWebservice.updatedWordPair!.tags.count == 2)
         XCTAssertEqual(mockWebservice.updatedWordPair!.tags, newTags)

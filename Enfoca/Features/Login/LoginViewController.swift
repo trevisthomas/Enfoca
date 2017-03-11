@@ -10,6 +10,8 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    @IBOutlet weak var messageStackView: UIStackView!
+    fileprivate var progressLabels : [String: UILabel] = [:]
 //    var authenticateionDelegate : AuthenticationDelegate!
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -31,11 +33,13 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
+        
 //        authenticateionDelegate.performSilentLogin()
         
-        let service = CloudKitWebService()
+        let service = LocalCloudKitWebService()
+//        let service = CloudKitWebService()
 //        let service = DemoWebService()
-        service.initialize { (success :Bool, error : EnfocaError?) in
+        service.initialize(progressObserver: self) { (success :Bool, error : EnfocaError?) in
             getAppDelegate().webService = service
             self.performSegue(withIdentifier: "WelcomeVC", sender: self)
         }
@@ -82,5 +86,41 @@ class LoginViewController: UIViewController {
 //        destVC?.user = user
     }
     
+
+}
+
+extension LoginViewController : ProgressObserver {
+    func startProgress(ofType key : String, message: String){
+        print("Starting: \(key) : \(message)")
+        
+        DispatchQueue.main.async {
+//            let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
+//            label.center = CGPoint(x: 160, y: 285)
+//            label.textAlignment = .center
+            let label = UILabel()
+            
+            label.text = message
+            self.progressLabels[key] = label
+            self.messageStackView.addArrangedSubview(label)
+            self.messageStackView.translatesAutoresizingMaskIntoConstraints = false;
+        }
+    }
+    func updateProgress(ofType key : String, message: String){
+        DispatchQueue.main.async {
+            guard let label = self.progressLabels[key] else { return }
+            label.text = message
+        }
+//        print("Progress: \(key) : \(message)")
+    }
+    func endProgress(ofType key : String, message: String) {
+        print("Ending: \(key) : \(message)")
+        DispatchQueue.main.async {
+            guard let label = self.progressLabels[key] else { return }
+            label.text = nil
+            self.messageStackView.removeArrangedSubview(label)
+            self.progressLabels[key] = nil
+            
+        }
+    }
 
 }

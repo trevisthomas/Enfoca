@@ -10,19 +10,22 @@ import Foundation
 
 import CloudKit
 
-class OperationFetchTags : BaseOperation {
+class OperationFetchTags : MonitoredBaseOperation {
     private let enfocaId : NSNumber
     private let db : CKDatabase
     private(set) var tags : [Tag] = []
+    private let key : String = "FetchTags"
     
-    init (enfocaId: NSNumber, db: CKDatabase, errorDelegate : ErrorDelegate) {
+    init (enfocaId: NSNumber, db: CKDatabase, progressObserver: ProgressObserver, errorDelegate : ErrorDelegate) {
         self.enfocaId = enfocaId
         self.db = db
-        super.init(errorDelegate: errorDelegate)
+        super.init(progressObserver: progressObserver, errorDelegate: errorDelegate)
     }
     
     override func start() {
         super.start() //Required for base class state
+        
+        self.progressObserver.startProgress(ofType: self.key, message: "Loading tags")
         
         let sort : NSSortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         let predicate : NSPredicate = NSPredicate(format: "enfocaId == %@", enfocaId)
@@ -37,7 +40,9 @@ class OperationFetchTags : BaseOperation {
     
     private func execute(operation : CKQueryOperation) {
         operation.recordFetchedBlock = {record in
-            self.tags.append(CloudKitConverters.toTag(from: record))
+            let tag = CloudKitConverters.toTag(from: record)
+            self.tags.append(tag)
+            self.progressObserver.updateProgress(ofType: self.key, message: "tag: \(tag.name)")
         }
         
         operation.queryCompletionBlock = {(cursor, error) in
@@ -51,6 +56,7 @@ class OperationFetchTags : BaseOperation {
                 self.execute(operation: cursorOp)
                 return
             }
+            self.progressObserver.endProgress(ofType: self.key, message: "Done loading tags.")
             self.done()
         }
         

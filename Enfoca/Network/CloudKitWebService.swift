@@ -44,13 +44,13 @@ class CloudKitWebService : WebService {
             return 
         }
         
-        Perform.fetchTags(enfocaId: enfocaId, db: db) { (tags:[Tag]?, error: String?) in
-            guard let tags = tags else {
-                callback(nil, error)
-                return
-            }
-            callback(tags, nil)
-        }
+//        Perform.fetchTags(enfocaId: enfocaId, db: db) { (tags:[Tag]?, error: String?) in
+//            guard let tags = tags else {
+//                callback(nil, error)
+//                return
+//            }
+//            callback(tags, nil)
+//        }
     }
     
     func fetchWordPairs(tagFilter: [Tag], wordPairOrder: WordPairOrder, pattern : String?, callback : @escaping([WordPair]?,EnfocaError?)->()) {
@@ -83,15 +83,15 @@ class CloudKitWebService : WebService {
         }
         
         //Demo!
-        Perform.createDataStore(enfocaId: enfocaId, db: db) { (dataStore: DataStore?, error:EnfocaError?) in
-            
-            guard let _ = dataStore else {
-                guard let error = error else { fatalError() }
-                print("Error creating data store \(error)")
-                return
-            }
-            print("Demo created data store")
-        }
+//        Perform.createDataStore(enfocaId: enfocaId, db: db) { (dataStore: DataStore?, error:EnfocaError?) in
+//            
+//            guard let _ = dataStore else {
+//                guard let error = error else { fatalError() }
+//                print("Error creating data store \(error)")
+//                return
+//            }
+//            print("Demo created data store")
+//        }
     }
     
     func createWordPair(word: String, definition: String, tags : [Tag], gender : Gender, example: String?, callback : @escaping(WordPair?, EnfocaError?)->()){

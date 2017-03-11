@@ -332,6 +332,19 @@ class DataStoreTests: XCTestCase {
         XCTAssertEqual(result.count, 2)
     }
     
+    
+    func testSearch_WordContains(){
+        mockDataOne()
+        
+        sut.add(wordPair: WordPair(pairId: "4", word: "en casa", definition: "at home"))
+        
+        let result = sut.search(forWordsLike : "casa")
+        
+        XCTAssertEqual(result.count, 1)
+        
+        
+    }
+    
     func testSearch_ByDefinition(){
         mockDataOne()
         
@@ -384,10 +397,102 @@ class DataStoreTests: XCTestCase {
     func testSearch_TagsByNameShouldFindTag() {
         mockDataOne()
         
-        let result = sut.search(tagWithName: "noU")
+        let result = sut.search(forTagWithName: "nOu")
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result[0].name, "Noun")
     }
+    
+    func testSearch_ForWordPairWithOrderAscByDef() {
+        mockDataOne()
+        
+        let result = sut.search(wordPairMatching: "", order: .definitionAsc, withTags: nil)
+        
+        XCTAssertEqual(result[0].definition, "Blue")
+        XCTAssertEqual(result[1].definition, "Nail")
+        XCTAssertEqual(result[2].definition, "Yellow")
+    }
+    
+    func testSearch_ForWordPairWithOrderDescByDef() {
+        mockDataOne()
+        
+        let result = sut.search(wordPairMatching: "", order: .definitionDesc, withTags: nil)
+        
+        XCTAssertEqual(result[0].definition, "Yellow")
+        XCTAssertEqual(result[1].definition, "Nail")
+        XCTAssertEqual(result[2].definition, "Blue")
+    }
+    
+    func testSearch_ForWordPairWithOrderAscByWord() {
+        mockDataOne()
+        
+        let result = sut.search(wordPairMatching: "", order: .wordAsc, withTags: nil)
+        
+        XCTAssertEqual(result[0].word, "Amarillo")
+        XCTAssertEqual(result[1].word, "Azul")
+        XCTAssertEqual(result[2].word, "Clave")
+    }
+    
+    func testSearch_ForWordPairWithOrderDescByWord() {
+        mockDataOne()
+        
+        let result = sut.search(wordPairMatching: "", order: .wordDesc, withTags: nil)
+        
+        XCTAssertEqual(result[0].word, "Clave")
+        XCTAssertEqual(result[1].word, "Azul")
+        XCTAssertEqual(result[2].word, "Amarillo")
+    }
+    
+    func testSearch_ForWordPairWithOrderAscByWordWithTag() {
+        mockDataOne()
+        
+        let tag = sut.tagDictionary["1"]!
+        
+        let result = sut.search(wordPairMatching: "", order: .wordAsc, withTags: [tag])
+        
+        XCTAssertEqual(result[0].word, "Amarillo")
+        XCTAssertEqual(result[1].word, "Azul")
+        XCTAssertEqual(result.count, 2)
+    }
+    
+    func testSearch_ForWordPairWithOrderAscByDefWithTagAndPhrase() {
+        mockDataOne()
+        
+        let tag = sut.tagDictionary["1"]!
+        
+        let result = sut.search(wordPairMatching: "Bl", order: .definitionAsc, withTags: [tag])
+        
+        XCTAssertEqual(result[0].word, "Azul")
+        XCTAssertEqual(result.count, 1)
+    }
+
+    func testSearch_SearchForNothingShouldFindAll() {
+        mockDataOne()
+        
+        let result = sut.search(wordPairMatching: "", order: .definitionAsc, withTags: nil)
+        
+        
+        XCTAssertEqual(result.count, 3)
+    }
+    
+    func testSearch_SearchForBlankPhraseWithTagShouldFindTagged() {
+        mockDataOne()
+        let tag = sut.tagDictionary["1"]!
+        
+        let result = sut.search(wordPairMatching: "", order: .definitionAsc, withTags: [tag])
+        
+        
+        XCTAssertEqual(result.count, 2)
+    }
+    
+    func testSearch_SearchForNothingShouldFindAllTwo() {
+        mockDataOne()
+        
+        let result = sut.search(wordPairMatching: "", order: .definitionAsc, withTags: [])
+        
+        
+        XCTAssertEqual(result.count, 3)
+    }
+
 }
 
 
@@ -411,3 +516,5 @@ extension DataStoreTests{
         sut.initialize(tags: tags, wordPairs: wordPairs, tagAssociations: wpAss)
     }
 }
+
+

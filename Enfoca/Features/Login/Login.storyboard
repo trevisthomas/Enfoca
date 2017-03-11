@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ZJs-8X-5ko">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ZJs-8X-5ko">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -31,37 +31,36 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lge-wR-rF0" customClass="GIDSignInButton">
-                                <rect key="frame" x="67" y="357" width="240" height="40"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="IUR-fX-7MG"/>
-                                </constraints>
-                            </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XXX-Bh-5YD">
                                 <rect key="frame" x="67" y="210" width="240" height="121"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="121" id="3OC-qM-ZuI"/>
+                                </constraints>
                                 <string key="text">Hi, Enfoca requires a google acount for authentication. The button below will redirect you to Google.  Once you have provided your login information to Google, you you will be able to proceed.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="LBk-Yc-Rak">
+                                <rect key="frame" x="67" y="339" width="240" height="21"/>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="XXX-Bh-5YD" firstAttribute="centerX" secondItem="Ghg-Gh-GYF" secondAttribute="centerX" id="1Ei-0m-FaY"/>
-                            <constraint firstItem="XXX-Bh-5YD" firstAttribute="leading" secondItem="Lge-wR-rF0" secondAttribute="leading" id="G0T-b5-Eog"/>
+                            <constraint firstItem="LBk-Yc-Rak" firstAttribute="top" secondItem="XXX-Bh-5YD" secondAttribute="bottom" constant="8" id="3Qn-Ow-gi4"/>
                             <constraint firstItem="XXX-Bh-5YD" firstAttribute="top" secondItem="uas-Ab-P6b" secondAttribute="bottom" constant="8" symbolic="YES" id="Ga4-5u-HQI"/>
-                            <constraint firstItem="Lge-wR-rF0" firstAttribute="top" secondItem="XXX-Bh-5YD" secondAttribute="bottom" constant="26" id="Nas-cK-SiT"/>
+                            <constraint firstItem="LBk-Yc-Rak" firstAttribute="leading" secondItem="Ghg-Gh-GYF" secondAttribute="leadingMargin" constant="51" id="N6k-KQ-Jz2"/>
                             <constraint firstItem="uas-Ab-P6b" firstAttribute="centerX" secondItem="XXX-Bh-5YD" secondAttribute="centerX" id="Y9r-1n-YTq"/>
                             <constraint firstItem="XXX-Bh-5YD" firstAttribute="leading" secondItem="Ghg-Gh-GYF" secondAttribute="leadingMargin" constant="51" id="fGs-KP-0Bx"/>
                             <constraint firstItem="uas-Ab-P6b" firstAttribute="top" secondItem="GlI-CX-sWv" secondAttribute="bottom" constant="82" id="fOS-aC-1Mo"/>
                             <constraint firstItem="uas-Ab-P6b" firstAttribute="leading" secondItem="Ghg-Gh-GYF" secondAttribute="leadingMargin" constant="94" id="fxP-gK-5Ad"/>
-                            <constraint firstItem="XXX-Bh-5YD" firstAttribute="trailing" secondItem="Lge-wR-rF0" secondAttribute="trailing" id="pJI-GB-fn1"/>
-                            <constraint firstItem="gGc-wb-Aef" firstAttribute="top" secondItem="Lge-wR-rF0" secondAttribute="bottom" constant="270" id="pLk-dD-fwa"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="LBk-Yc-Rak" secondAttribute="trailing" constant="52" id="vLz-ue-OHz"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="eBt-c9-Nel"/>
                     <connections>
+                        <outlet property="messageStackView" destination="LBk-Yc-Rak" id="Mmt-dD-uqT"/>
                         <segue destination="p0X-zQ-xog" kind="show" identifier="WelcomeVC" id="ueb-t9-cuT"/>
                     </connections>
                 </viewController>
@@ -179,7 +178,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ZJs-8X-5ko" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" hidden="YES" contentMode="scaleToFill" misplaced="YES" id="p10-VP-VB2">
+                    <navigationBar key="navigationBar" hidden="YES" contentMode="scaleToFill" id="p10-VP-VB2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

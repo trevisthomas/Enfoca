@@ -16,15 +16,14 @@ class BrowseViewController: UIViewController, TagFilterDelegate {
     }
     
     private func reloadWordPairs(_ callback: (() -> ())? = nil){
-        viewModel.performWordPairFetch(tagFilter: selectedTags, pattern: nil, wordPairOrder: determineWordOrder()) { (count :Int) in
-            
-            //TODO: Do something intreresting with count.
+        viewModel.performWordPairFetch(tagFilter: selectedTags, pattern: "", wordPairOrder : determineWordOrder(), callback: {count in
+            //TODO: Do something with count!
             if let callback = callback {
                 callback()
             } else {
                 self.tableView.reloadData()
             }
-        }
+        })
     }
 
     @IBOutlet weak var backButton: UIButton!

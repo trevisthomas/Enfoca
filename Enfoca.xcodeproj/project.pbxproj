@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F06A2771E7375D700AC7070 /* LocalCloudKitWebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F06A2761E7375D700AC7070 /* LocalCloudKitWebService.swift */; };
+		0F06A2791E74898B00AC7070 /* ProgressObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F06A2781E74898B00AC7070 /* ProgressObserver.swift */; };
+		0F06A27B1E749B1A00AC7070 /* MonitoredBaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F06A27A1E749B1A00AC7070 /* MonitoredBaseOperation.swift */; };
 		0F168DEB1E5A38B800F3E555 /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DE91E5A38B800F3E555 /* BaseOperation.swift */; };
 		0F168DEC1E5A38B800F3E555 /* ReadWriteMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DEA1E5A38B800F3E555 /* ReadWriteMutex.swift */; };
 		0F168DFA1E5A39A000F3E555 /* Perform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DF21E5A39A000F3E555 /* Perform.swift */; };
@@ -122,6 +125,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F06A2761E7375D700AC7070 /* LocalCloudKitWebService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalCloudKitWebService.swift; sourceTree = "<group>"; };
+		0F06A2781E74898B00AC7070 /* ProgressObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressObserver.swift; path = Network/ProgressObserver.swift; sourceTree = "<group>"; };
+		0F06A27A1E749B1A00AC7070 /* MonitoredBaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MonitoredBaseOperation.swift; path = Network/Operations/Core/MonitoredBaseOperation.swift; sourceTree = "<group>"; };
 		0F168DE91E5A38B800F3E555 /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
 		0F168DEA1E5A38B800F3E555 /* ReadWriteMutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadWriteMutex.swift; sourceTree = "<group>"; };
 		0F168DF21E5A39A000F3E555 /* Perform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Perform.swift; sourceTree = "<group>"; };
@@ -279,6 +285,7 @@
 				0F168E0E1E5B777400F3E555 /* BaseCKOperation.swift */,
 				0F168DEA1E5A38B800F3E555 /* ReadWriteMutex.swift */,
 				0F168E121E5B810B00F3E555 /* CloudKitConverters.swift */,
+				0F06A27A1E749B1A00AC7070 /* MonitoredBaseOperation.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -624,6 +631,8 @@
 				0FB1C65D1E145CB60087DC93 /* DemoWebService.swift */,
 				0F168E071E5B55DD00F3E555 /* CloudKitWebService.swift */,
 				0F168E211E60F33A00F3E555 /* DataStore.swift */,
+				0F06A2761E7375D700AC7070 /* LocalCloudKitWebService.swift */,
+				0F06A2781E74898B00AC7070 /* ProgressObserver.swift */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -886,6 +895,7 @@
 				0F5044D21E22D8B3007030CD /* UITableView+.swift in Sources */,
 				0F168E0A1E5B6CC500F3E555 /* OperationFetchTags.swift in Sources */,
 				0F64F1871E2C141D000549CF /* TagCell.swift in Sources */,
+				0F06A2791E74898B00AC7070 /* ProgressObserver.swift in Sources */,
 				0FB1C6661E154F200087DC93 /* Sequence+.swift in Sources */,
 				0F64F1801E2AB7EF000549CF /* PairEditorViewController.swift in Sources */,
 				0F72122A1E50C7E400DD3870 /* TagFilterViewModelDelegate.swift in Sources */,
@@ -893,6 +903,7 @@
 				0F168E1D1E5BA4A700F3E555 /* OperationCountWordPairs.swift in Sources */,
 				0F864E8A1E1808C900539773 /* BrowseViewModel.swift in Sources */,
 				0F38A4DE1E11B2AA00051F9E /* LoginViewController.swift in Sources */,
+				0F06A2771E7375D700AC7070 /* LocalCloudKitWebService.swift in Sources */,
 				0F864E831E17F93F00539773 /* ApplicationDefaults.swift in Sources */,
 				0F168E031E5A3B7900F3E555 /* ErrorDelegate.swift in Sources */,
 				0F168E131E5B810B00F3E555 /* CloudKitConverters.swift in Sources */,
@@ -901,6 +912,7 @@
 				0F3B2B6E1E6FC1B400BB50EC /* OldWordPair.swift in Sources */,
 				0F168DFD1E5A39A100F3E555 /* FetchUserRecordOperation.swift in Sources */,
 				0FB1C6541E1403BE0087DC93 /* EnumCollection.swift in Sources */,
+				0F06A27B1E749B1A00AC7070 /* MonitoredBaseOperation.swift in Sources */,
 				0F168DFC1E5A39A000F3E555 /* CloudAuthOperation.swift in Sources */,
 				0F64F1AC1E3E575D000549CF /* Gender.swift in Sources */,
 				0F168E011E5A39A100F3E555 /* InternalUser.swift in Sources */,

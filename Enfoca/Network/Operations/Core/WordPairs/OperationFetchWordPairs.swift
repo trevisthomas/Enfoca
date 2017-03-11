@@ -9,15 +9,16 @@
 import Foundation
 import CloudKit
 
-class OperationFetchWordPairs : BaseOperation {
+class OperationFetchWordPairs : MonitoredBaseOperation {
     private let enfocaId : NSNumber
     private let db : CKDatabase
     private(set) var wordPairs : [WordPair] = []
+    private let key : String = "FetchWordPairs"
     
-    init (enfocaId: NSNumber, db: CKDatabase, errorDelegate : ErrorDelegate) {
+    init (enfocaId: NSNumber, db: CKDatabase, progressObserver: ProgressObserver, errorDelegate : ErrorDelegate) {
         self.enfocaId = enfocaId
         self.db = db
-        super.init(errorDelegate: errorDelegate)
+        super.init(progressObserver: progressObserver, errorDelegate: errorDelegate)
     }
     
     override func start() {
@@ -31,12 +32,16 @@ class OperationFetchWordPairs : BaseOperation {
         
         let operation = CKQueryOperation(query: query)
         
+        self.progressObserver.startProgress(ofType: key, message: "Starting load vocabulary")
+        
         execute(operation: operation)
     }
     
     private func execute(operation : CKQueryOperation) {
         operation.recordFetchedBlock = {record in
-            self.wordPairs.append(CloudKitConverters.toWordPair(from: record))
+            let wp = CloudKitConverters.toWordPair(from: record)
+            self.progressObserver.updateProgress(ofType: self.key, message: "loaded \(wp.word)")
+            self.wordPairs.append(wp)
         }
         
         operation.queryCompletionBlock = {(cursor, error) in
@@ -50,10 +55,14 @@ class OperationFetchWordPairs : BaseOperation {
                 self.execute(operation: cursorOp)
                 return
             }
+            
+            self.progressObserver.endProgress(ofType: self.key, message: "Done fetching vocabulary.")
             self.done()
         }
         
         db.add(operation)
     }
+    
+    
     
 }
