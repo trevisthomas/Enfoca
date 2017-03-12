@@ -15,14 +15,42 @@ extension Perform{
         let errorHandler = ErrorHandler(callback: callback)
         let createWordPairOperation = OperationCreateWordPair(wordPairSource: wordPair, enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
         let completeOp = BlockOperation {
+            
+            guard let wp = createWordPairOperation.wordPair else { fatalError() }
+            
+            //Create any tag associations for this new word.
+            for tag in wordPair.tags {
+                createTagAssociation(wordPair: wp, tag: tag, enfocaId: enfocaId, db: db, callback: { (tagAss:TagAssociation?, error:String?) in
+                    guard let _ = tagAss else { fatalError() }
+                    wp.addTag(tag)
+                })
+            }
+            
             OperationQueue.main.addOperation{
-                callback(createWordPairOperation.wordPair, nil)
+                callback(wp, nil)
             }
         }
         
         let queue = OperationQueue()
         completeOp.addDependency(createWordPairOperation)
         queue.addOperations([createWordPairOperation, completeOp], waitUntilFinished: false)
+    }
+    
+    class func createTagAssociation(wordPair: WordPair, tag: Tag, enfocaId: NSNumber, db: CKDatabase, callback : @escaping (_ tagAssociation : TagAssociation?, _ error : String?) -> ()){
+        
+        let errorHandler = ErrorHandler(callback: callback)
+        
+        let createTagAssociation = OperationCreateTagAssociation(tag: tag, wordPair: wordPair, enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
+        let completeOp = BlockOperation {
+            OperationQueue.main.addOperation{
+                callback(createTagAssociation.tagAssociation, nil)
+            }
+        }
+        
+        let queue = OperationQueue()
+        completeOp.addDependency(createTagAssociation)
+        queue.addOperations([createTagAssociation, completeOp], waitUntilFinished: false)
+        
     }
     
     class func countWordPairs(withTags tags : [Tag], phrase : String?, enfocaId: NSNumber, db: CKDatabase, callback : @escaping (_ count : Int?, _ error : String?) -> ()) {

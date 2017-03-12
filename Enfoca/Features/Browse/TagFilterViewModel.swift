@@ -43,9 +43,7 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
         let cell = tableView.dequeueReusableCell(withIdentifier: "TagFilterCell")! as! TagCell
 
         let tag = localTempTagFilters[indexPath.row]
-        cell.tagTitleLabel?.text = tag.name
-        cell.tagSubtitleLabel?.text = formatDetailText(tag.count)
-        
+        cell.sourceTag = tag        
         
         if let selected : Bool = localTagDictionary[tag] {
             cell.createTagCallback = nil
@@ -57,6 +55,8 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
         } else {
             cell.createTagCallback = createCallback
         }
+        
+        cell.tagUpdateDelegate = self //Should createCallBack just be merged into this?
 
         return cell
     }
@@ -96,9 +96,7 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
         }
     }
     
-    func formatDetailText(_ count : Int ) -> String {
-        return "\(count) words tagged."
-    }
+    
     
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
@@ -168,5 +166,41 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
         }
         tagFilterViewModelDelegate?.selectedTagsChanged()
     }
-    
+}
+
+extension TagFilterViewModel : TagCellDelegate {
+    func update(tagCell: TagCell, tag: Tag, newTagName: String) {
+//        tagCell.activityIndicator.startAnimating()
+        getAppDelegate().webService.updateTag(oldTag: tag, newTagName: newTagName) { (tag:Tag?, error:EnfocaError?) in
+//            tagCell.activityIndicator.stopAnimating()
+            if let error = error {
+                //Should probably refactor and put this logic in the  cell
+//                tagCell.createButton.isHidden = false
+                self.tagFilterViewModelDelegate?.alert(title: "Error", message: error)
+            }
+            
+            guard let newTag = tag else { return }
+            
+            self.localTagDictionary[newTag] = false
+            
+            //Tag update has the same tagId and should match.  Replacing the imutable tag is how i'm getting the update value into the collection
+            if let index = self.allTags.index(of: newTag) {
+                self.allTags[index] = newTag
+            }
+            
+            self.localTempTagFilters = self.allTags
+            
+            self.tagFilterViewModelDelegate?.reloadTable()
+            
+        }
+    }
+    func validate(tag: Tag, newTagName: String?) -> Bool {
+        guard let newTagName = newTagName else { return false }
+        if allTags.contains(where: { (tag:Tag) -> Bool in
+            tag.name == newTagName
+        }) {
+            return false
+        }
+        return true
+    }
 }

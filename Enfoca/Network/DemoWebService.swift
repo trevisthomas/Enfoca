@@ -157,4 +157,8 @@ class DemoWebService : WebService {
             callback()
         }
     }
+    
+    func updateTag(oldTag : Tag, newTagName: String, callback: @escaping(Tag?, EnfocaError?)->()) {
+        
+    }
 }

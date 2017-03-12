@@ -21,6 +21,7 @@ class TagCell: UITableViewCell {
     @IBOutlet weak var tagSubtitleLabel: UILabel?
     @IBOutlet weak var tagTitleLabel: UILabel?
     
+    
     @IBOutlet weak var createButton: UIButton!
     @IBOutlet weak var primaryStackViewToTopConstraint: NSLayoutConstraint!
     
@@ -28,7 +29,19 @@ class TagCell: UITableViewCell {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var editTagTextField: UITextField!
-    var isTagEditing = false
+    private var isTagEditing : Bool = false
+    var tagUpdateDelegate : TagCellDelegate?
+    
+    var sourceTag : Tag! {
+        didSet {
+            tagTitleLabel?.text = sourceTag.name
+            tagSubtitleLabel?.text = formatDetailText(sourceTag.count)
+        }
+    }
+    
+    func formatDetailText(_ count : Int ) -> String {
+        return "\(count) words tagged."
+    }
     
     @IBAction func createButtonAction(_ sender: UIButton) {
         createButton?.isHidden = true
@@ -56,10 +69,16 @@ class TagCell: UITableViewCell {
         if sender.title(for: .normal) == "Edit" {
             toggleTagEditor()
         } else {
+            
+            guard let valid = tagUpdateDelegate?.validate(tag: sourceTag, newTagName: editTagTextField.text) else { return }
+            
+            guard valid else { return }
+            
             print("Save")
             tagTitleLabel?.text = editTagTextField.text
             toggleTagEditor()
             
+            tagUpdateDelegate?.update(tagCell: self, tag: sourceTag, newTagName: editTagTextField.text!)
         }
         
     }
@@ -94,4 +113,9 @@ class TagCell: UITableViewCell {
         // Configure the view for the selected state
         tagSelectedView?.isHidden = !selected
     }
+}
+
+protocol TagCellDelegate {
+    func update(tagCell: TagCell, tag: Tag, newTagName: String)
+    func validate(tag: Tag, newTagName: String?) -> Bool
 }

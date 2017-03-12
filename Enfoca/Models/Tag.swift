@@ -25,8 +25,9 @@ public class Tag : Equatable, Hashable {
     ///   - rhs: Another value to compare.
     public static func ==(lhs: Tag, rhs: Tag) -> Bool {
         //Was this a good idea? I am relying on this implementation in the TagFilter for adding new tags.
-//        return lhs.tagId == rhs.tagId
-        return lhs.name == rhs.name
+        //Ok, i'm trying to fix this now.
+        return lhs.tagId == rhs.tagId
+//        return lhs.name == rhs.name
     }
 
     private(set) var tagId : AnyHashable

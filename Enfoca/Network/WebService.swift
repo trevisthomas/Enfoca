@@ -30,5 +30,7 @@ protocol WebService {
     
     func createTag(tagValue: String, callback: @escaping(Tag?, EnfocaError?)->())
     
+    func updateTag(oldTag : Tag, newTagName: String, callback: @escaping(Tag?, EnfocaError?)->())
+    
     
 }

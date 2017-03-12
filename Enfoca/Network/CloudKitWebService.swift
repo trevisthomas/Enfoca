@@ -116,4 +116,8 @@ class CloudKitWebService : WebService {
         }
     }
     
+    func updateTag(oldTag: Tag, newTagName: String, callback: @escaping (Tag?, EnfocaError?) -> ()) {
+        
+    }
+    
 }

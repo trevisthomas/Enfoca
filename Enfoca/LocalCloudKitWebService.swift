@@ -79,14 +79,55 @@ class LocalCloudKitWebService : WebService {
     
     func createWordPair(word: String, definition: String, tags : [Tag], gender : Gender, example: String?, callback : @escaping(WordPair?, EnfocaError?)->()){
         
+        let newWordPair = WordPair(pairId: "", word: word, definition: definition, dateCreated: Date(), gender: gender, tags: tags, example: example)
+        
+        Perform.createWordPair(wordPair: newWordPair, enfocaId: enfocaId, db: db) { (wordPair:WordPair?, error:String?) in
+            
+            if let error = error {
+                callback(nil, error)
+            }
+            
+            guard let wordPair = wordPair else { return }
+            
+            self.dataStore.add(wordPair: newWordPair)
+            callback(wordPair, error)
+        }
     }
     
     func updateWordPair(oldWordPair : WordPair, word: String, definition: String, gender : Gender, example: String?, tags : [Tag], callback :
         @escaping(WordPair?, EnfocaError?)->()){
         
+        let tuple = dataStore.applyUpdate(oldWordPair: oldWordPair, word: word, definition: definition, gender: gender, example: example, tags: tags)
+        
+        //TODO: Update cloud
+        
+        callback(tuple.0, nil)
+        
     }
     
     func createTag(tagValue: String, callback: @escaping(Tag?, EnfocaError?)->()){
         
+        Perform.createTag(tagName: tagValue, enfocaId: enfocaId, db: db) { (tag:Tag?, error: String?) in
+            
+            if let error = error {
+                callback(nil, error)
+            }
+            
+            guard let tag = tag else { return }
+            
+            self.dataStore.add(tag: tag)
+            callback(tag, nil)
+        }
+        
+        
+    }
+    
+    func updateTag(oldTag : Tag, newTagName: String, callback: @escaping(Tag?, EnfocaError?)->()) {
+        
+        //TODO: Update in cloud
+        
+        let newTag = dataStore.applyUpdate(oldTag: oldTag, name: newTagName)
+        
+        callback(newTag, nil)
     }
 }

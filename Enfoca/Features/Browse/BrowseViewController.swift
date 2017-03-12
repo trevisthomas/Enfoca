@@ -221,6 +221,8 @@ extension BrowseViewController : BrowseViewModelDelegate {
     
     func reloadTable(){
         tableView.reloadData()
+        let ipTop = IndexPath(row: 0, section: 0)
+        tableView.scrollToRow(at: ipTop, at: .top, animated: true)
     }
     
     func onError(error: EnfocaError?) {

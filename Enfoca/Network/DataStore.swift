@@ -102,6 +102,10 @@ class DataStore {
         return tagAss
     }
     
+    func add(tag: Tag) {
+        tagDictionary[tag.tagId] = tag
+    }
+    
     func add(wordPair : WordPair) {
         wordPairDictionary[wordPair.pairId] = wordPair
     }
