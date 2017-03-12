@@ -52,13 +52,14 @@ class Perform {
         let fetchWordPairs = OperationFetchWordPairs(enfocaId: enfocaId, db: db, progressObserver: progressObserver, errorDelegate: errorHandler)
         
         let completeOp = BlockOperation {
+            print("Initializing data store")
+            let dataStore = DataStore()
+            dataStore.initialize(tags: fetchTags.tags, wordPairs: fetchWordPairs.wordPairs, tagAssociations: fetchTagAssociations.tagAssociations, progressObserver: progressObserver)
+            
+            print("DataStore initialized with \(dataStore.wordPairDictionary.count) word pairs, \(dataStore.tagDictionary.count) tags and \(dataStore.tagAssociations.count) associations.")
+            
+            
             OperationQueue.main.addOperation{
-                print("Initializing data store")
-                let dataStore = DataStore()
-                dataStore.initialize(tags: fetchTags.tags, wordPairs: fetchWordPairs.wordPairs, tagAssociations: fetchTagAssociations.tagAssociations, progressObserver: progressObserver)
-                
-                print("DataStore initialized with \(dataStore.wordPairDictionary.count) word pairs, \(dataStore.tagDictionary.count) tags and \(dataStore.tagAssociations.count) associations.")
-                
                 callback(dataStore, nil)
             }
         }

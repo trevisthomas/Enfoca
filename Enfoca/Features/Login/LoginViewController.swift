@@ -43,23 +43,6 @@ class LoginViewController: UIViewController {
             getAppDelegate().webService = service
             self.performSegue(withIdentifier: "WelcomeVC", sender: self)
         }
-        
-        
-        
-//        OperationsDemo.authentcate { (enfocaId :Int?, error: String?) in
-//            guard let enfocaId = enfocaId else {
-//                if let error = error {
-//                    print(error) //TODO : alert
-//                }
-//                return 
-//            }
-//            print("EnfocaId: \(enfocaId)")
-//            let user = User(enfocaId: enfocaId, name: "Unknown", email: "unknown@unknown")
-//            self.userAuthenticated(user: user)
-//        }
-        
-//        let user = User(enfocaId: -1, name: "Unknown", email: "unknown@unknown")
-//        userAuthenticated(user: user)
     }
 
     override func didReceiveMemoryWarning() {
@@ -94,9 +77,6 @@ extension LoginViewController : ProgressObserver {
         print("Starting: \(key) : \(message)")
         
         DispatchQueue.main.async {
-//            let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
-//            label.center = CGPoint(x: 160, y: 285)
-//            label.textAlignment = .center
             let label = UILabel()
             
             label.text = message
@@ -110,7 +90,6 @@ extension LoginViewController : ProgressObserver {
             guard let label = self.progressLabels[key] else { return }
             label.text = message
         }
-//        print("Progress: \(key) : \(message)")
     }
     func endProgress(ofType key : String, message: String) {
         print("Ending: \(key) : \(message)")

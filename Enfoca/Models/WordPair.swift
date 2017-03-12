@@ -19,7 +19,7 @@ class WordPairWrapper {
     var wordPair : WordPair?
 }
 
-class WordPair : Equatable {
+class WordPair : Hashable {
     /// Returns a Boolean value indicating whether two values are equal.
     ///
     /// Equality is the inverse of inequality. For any values `a` and `b`,
@@ -30,6 +30,10 @@ class WordPair : Equatable {
     ///   - rhs: Another value to compare.
     public static func ==(lhs: WordPair, rhs: WordPair) -> Bool {
         return lhs.pairId == rhs.pairId
+    }
+    
+    var hashValue: Int {
+        return pairId.hashValue
     }
 
     

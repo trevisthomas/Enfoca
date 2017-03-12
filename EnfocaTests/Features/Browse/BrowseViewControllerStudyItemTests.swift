@@ -38,11 +38,6 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
         super.tearDown()
     }
     
-    func testInit_NonUIDelegatesShouldBeWiredFromStoryboardInit(){
-        //Verifying that after storyboard init that my delegates are in place
-        XCTAssertNotNil(sut.authenticateionDelegate)
-        XCTAssertNotNil(sut.webService)
-    }
     
     func testInit_ShouldHaveTableViewWithViewModelWiredIn(){
         overrideWithMocks()
@@ -93,7 +88,8 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
     }
     
     func testInit_ViewModelShouldNotAnimateCellsDuringInit(){
-        _ = sut.view
+        overrideWithMocks()
+        viewDidLoad()
         XCTAssertFalse(sut.viewModel.animating)
     }
     
@@ -484,8 +480,8 @@ class BrowseViewControllerStudyItemTests: XCTestCase {
     }
     
     func testStorybard_ShoudContainSegues(){
-        //To force view did load to be called
-        _ = sut.view
+        overrideWithMocks()
+        viewDidLoad()
         
         let list = segues(ofViewController: sut)
         XCTAssertTrue(list.contains("PairEditorSegue"))

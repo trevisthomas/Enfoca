@@ -12,8 +12,7 @@ class DataStore {
     private(set) var tagDictionary : [AnyHashable : Tag] = [:]
     private(set) var wordPairDictionary : [AnyHashable :  WordPair] = [:]
     private(set) var tagAssociations : [TagAssociation] = []
-//    private var progressObserver : ProgressObserver?
-    private let key : String = "DataStoreInit"
+    
     var countAssociations : Int {
         return tagAssociations.count
     }
@@ -27,6 +26,8 @@ class DataStore {
     }
     
     func initialize(tags: [Tag], wordPairs: [WordPair], tagAssociations: [TagAssociation], progressObserver: ProgressObserver? = nil){
+        
+        let key : String = "DataStoreInit"
         
         progressObserver?.startProgress(ofType: key, message: "Initializing DataStore")
         
@@ -221,7 +222,6 @@ class DataStore {
         
         if let tags = tags, tags.count > 0 {
             
-            
             let tagIds = tags.map({ (tag:Tag) -> AnyHashable in
                 return tag.tagId
             })
@@ -230,23 +230,13 @@ class DataStore {
                 return tagIds.contains(tagAss.tagId)
             })
             
-            let filteredPairIds = filteredAssociations.map({ (tagAss:TagAssociation) -> AnyHashable in
-                return tagAss.wordPairId
-            })
-            
-            let wordPairs = wordPairDictionary.reduce([], { (result:[WordPair], entry: (key: AnyHashable, value: WordPair)) -> [WordPair] in
-                
-                var accumulator = result
-                if(filteredPairIds.contains(entry.key)){
-                    accumulator.append(entry.value)
-                }
-                
-                return accumulator
-                
-            })
+            var wordPairs = Set<WordPair>()
+            for ass in filteredAssociations {
+                wordPairs.insert(wordPairDictionary[ass.wordPairId]!)
+            }
             
             if(pattern == "") {
-                return wordPairs
+                return Array(wordPairs)
             } else {
                 return wordPairs.filter(pairFilter)
             }
