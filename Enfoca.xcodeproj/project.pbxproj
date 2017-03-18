@@ -10,6 +10,7 @@
 		0F06A2771E7375D700AC7070 /* LocalCloudKitWebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F06A2761E7375D700AC7070 /* LocalCloudKitWebService.swift */; };
 		0F06A2791E74898B00AC7070 /* ProgressObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F06A2781E74898B00AC7070 /* ProgressObserver.swift */; };
 		0F06A27B1E749B1A00AC7070 /* MonitoredBaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F06A27A1E749B1A00AC7070 /* MonitoredBaseOperation.swift */; };
+		0F0C6B341E7DB26C00541ACE /* DataStoreJsonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0C6B331E7DB26C00541ACE /* DataStoreJsonTests.swift */; };
 		0F168DEB1E5A38B800F3E555 /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DE91E5A38B800F3E555 /* BaseOperation.swift */; };
 		0F168DEC1E5A38B800F3E555 /* ReadWriteMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DEA1E5A38B800F3E555 /* ReadWriteMutex.swift */; };
 		0F168DFA1E5A39A000F3E555 /* Perform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DF21E5A39A000F3E555 /* Perform.swift */; };
@@ -128,6 +129,7 @@
 		0F06A2761E7375D700AC7070 /* LocalCloudKitWebService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalCloudKitWebService.swift; sourceTree = "<group>"; };
 		0F06A2781E74898B00AC7070 /* ProgressObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressObserver.swift; path = Network/ProgressObserver.swift; sourceTree = "<group>"; };
 		0F06A27A1E749B1A00AC7070 /* MonitoredBaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MonitoredBaseOperation.swift; path = Network/Operations/Core/MonitoredBaseOperation.swift; sourceTree = "<group>"; };
+		0F0C6B331E7DB26C00541ACE /* DataStoreJsonTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataStoreJsonTests.swift; path = Network/DataStoreJsonTests.swift; sourceTree = "<group>"; };
 		0F168DE91E5A38B800F3E555 /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
 		0F168DEA1E5A38B800F3E555 /* ReadWriteMutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadWriteMutex.swift; sourceTree = "<group>"; };
 		0F168DF21E5A39A000F3E555 /* Perform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Perform.swift; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				0F168E251E60F39300F3E555 /* DataStoreTests.swift */,
+				0F0C6B331E7DB26C00541ACE /* DataStoreJsonTests.swift */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -977,6 +980,7 @@
 				0F5ADFB21E107CDD003B1225 /* EnfocaTests.swift in Sources */,
 				0F4D8A431E12E27600900729 /* BrowseViewControllerFilterTests.swift in Sources */,
 				0F2431C71E10A0B80046A224 /* CardSideTests.swift in Sources */,
+				0F0C6B341E7DB26C00541ACE /* DataStoreJsonTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

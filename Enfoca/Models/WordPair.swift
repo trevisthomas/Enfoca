@@ -20,6 +20,7 @@ class WordPairWrapper {
 }
 
 class WordPair : Hashable {
+    static let formatter = Formatter()
     /// Returns a Boolean value indicating whether two values are equal.
     ///
     /// Equality is the inverse of inequality. For any values `a` and `b`,
@@ -37,7 +38,8 @@ class WordPair : Hashable {
     }
 
     
-    private(set) var pairId: AnyHashable
+//    private(set) var pairId: AnyHashable
+    private(set) var pairId: String
     private(set) var word: String
     private(set) var definition: String
     private(set) var dateCreated: Date
@@ -68,7 +70,7 @@ class WordPair : Hashable {
 //    private long totalTime;
 //    private long timedViewCount;
     
-    init (pairId: AnyHashable, word: String, definition: String, dateCreated: Date = Date(), gender: Gender = .notset, tags : [Tag] = [], example: String? = nil) {
+    init (pairId: String, word: String, definition: String, dateCreated: Date = Date(), gender: Gender = .notset, tags : [Tag] = [], example: String? = nil) {
         self.pairId = pairId
         self.word = word
         self.definition = definition
@@ -90,5 +92,63 @@ class WordPair : Hashable {
             return nil
         }
         return tags.remove(at: index)
+    }
+    
+    public init (json: String) {
+        guard let jsonData = json.data(using: .utf8) else { fatalError() }
+        guard let jsonResult: NSDictionary = try! JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary else {fatalError()}
+        
+        
+        
+        guard let pairId = jsonResult["pairId"] as? String else {fatalError()}
+        guard let word = jsonResult["word"] as? String else {fatalError()}
+        guard let definition = jsonResult["definition"] as? String else {fatalError()}
+        
+        guard let dateString = jsonResult["dateCreated"] as? String else {fatalError()}
+        guard let genderString = jsonResult["gender"] as? String else { fatalError() }
+        
+        guard let dateCreated = WordPair.formatter.dateFormatter.date(from: dateString) else {fatalError()}
+        let gender = Gender.fromString(genderString)
+        
+        
+        
+        self.pairId = pairId
+        self.word = word
+        self.definition = definition
+        self.dateCreated = dateCreated
+        self.gender = gender
+        self.example = jsonResult["example"] as? String
+        
+    }
+    
+    public func toJson() -> String {
+        var representation = [String: AnyObject]()
+        
+        representation["pairId"] = pairId as AnyObject?
+        representation["word"] = word as AnyObject?
+        representation["definition"] = definition as AnyObject?
+        let dateString = WordPair.formatter.dateFormatter.string(from: dateCreated)
+        representation["dateCreated"] = dateString as AnyObject?
+        representation["gender"] = gender.toString() as AnyObject?
+        representation["example"] = example as AnyObject?
+        
+        guard let data = try? JSONSerialization.data(withJSONObject: representation, options: []) else { fatalError() }
+        
+        guard let json = String(data: data, encoding: .utf8) else { fatalError() }
+        
+        return json
+    }
+}
+
+extension WordPair {
+    
+    
+}
+
+class Formatter {
+    let dateFormatter = DateFormatter()
+    
+    init() {
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
     }
 }

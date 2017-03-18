@@ -25,6 +25,10 @@ class DataStore {
         return wordPairDictionary.count
     }
     
+    init() {
+        
+    }
+    
     func initialize(tags: [Tag], wordPairs: [WordPair], tagAssociations: [TagAssociation], progressObserver: ProgressObserver? = nil){
         
         let key : String = "DataStoreInit"
@@ -204,11 +208,12 @@ class DataStore {
         
         let pattern : String
 //        if value.characters.count > 0 && value.characters.count < 2 {
-        if value.characters.count == 1 {
-            pattern = "^\(value)"
-        } else {
-            pattern = value
-        }
+//        if value.characters.count == 1 {
+//            pattern = "^\(value)"
+//        } else {
+//            pattern = value
+//        }
+        pattern = "\\b\(value)"
         
         let pairFilter : (WordPair) -> Bool
         if useWordField {
@@ -320,5 +325,59 @@ class DataStore {
         return tagDictionary.values.sorted(by: { (t1: Tag, t2: Tag) -> Bool in
             t1.name.lowercased() < t2.name.lowercased()
         })
+    }
+    
+    public init (json: String) {
+        guard let jsonData = json.data(using: .utf8) else { fatalError() }
+        guard let jsonResult: NSDictionary = try! JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary else {fatalError()}
+        
+        guard let rawWordPairs = jsonResult["wordPairs"] as? NSArray else {fatalError()}
+        guard let rawTags = jsonResult["tags"] as? NSArray else {fatalError()}
+        guard let rawTagAssociations = jsonResult["tagAssociations"] as? NSArray else {fatalError()}
+        
+        
+        var newWordPairs : [WordPair] = []
+        
+        for rawWordPair in rawWordPairs {
+            guard rawWordPair is String else { fatalError() }
+            newWordPairs.append(WordPair(json: rawWordPair as! String))
+        }
+        
+        var newTags : [Tag] = []
+        for rawTag in rawTags {
+            let json = rawTag as! String
+            newTags.append(Tag(json: json))
+        }
+        
+        var newTagAssociations : [TagAssociation] = []
+        for rawTagAssociation in rawTagAssociations {
+            let json = rawTagAssociation as! String
+            newTagAssociations.append(TagAssociation(json: json))
+        }
+        
+        initialize(tags: newTags, wordPairs: newWordPairs, tagAssociations: newTagAssociations)
+        
+    }
+    
+    public func toJson() -> String {
+        var representation = [String: AnyObject]()
+        representation["wordPairs"] = Array(wordPairDictionary.values).map({ (wp:WordPair) -> AnyObject in
+            return wp.toJson() as AnyObject
+        }) as AnyObject?
+        
+        representation["tags"] = Array(tagDictionary.values).map({ (tag:Tag) -> AnyObject in
+            return tag.toJson() as AnyObject
+        }) as AnyObject?
+        
+        representation["tagAssociations"] = tagAssociations.map({ (tagAss:TagAssociation) -> AnyObject in
+            return tagAss.toJson() as AnyObject
+        }) as AnyObject?
+        
+        
+        guard let data = try? JSONSerialization.data(withJSONObject: representation, options: []) else { fatalError() }
+        
+        guard let json = String(data: data, encoding: .utf8) else { fatalError() }
+        
+        return json
     }
 }

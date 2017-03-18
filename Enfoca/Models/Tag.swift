@@ -30,11 +30,36 @@ public class Tag : Equatable, Hashable {
 //        return lhs.name == rhs.name
     }
 
-    private(set) var tagId : AnyHashable
+    private(set) var tagId : String
     private(set) var name : String
     private(set) var wordPairs : [WordPair] = []
     var count : Int {
         return wordPairs.count
+    }
+    
+    public init (json: String) {
+        guard let jsonData = json.data(using: .utf8) else { fatalError() }
+        guard let jsonResult: NSDictionary = try! JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary else {fatalError()}
+            
+        guard let id = jsonResult["tagId"] as? String else {fatalError()}
+        guard let name = jsonResult["name"] as? String else {fatalError()}
+    
+        self.tagId = id
+        self.name = name
+        self.hashValue = name.hashValue
+    }
+    
+    public func toJson() -> String {
+        var representation = [String: AnyObject]()
+        representation["tagId"] = tagId as AnyObject?
+        representation["name"] = name as AnyObject?
+        
+        
+        guard let data = try? JSONSerialization.data(withJSONObject: representation, options: []) else { fatalError() }
+        
+        guard let json = String(data: data, encoding: .utf8) else { fatalError() }
+        
+        return json
     }
     
     init (name: String){
@@ -43,7 +68,7 @@ public class Tag : Equatable, Hashable {
         self.hashValue = name.hashValue
     }
     
-    init (tagId : AnyHashable, name: String){
+    init (tagId : String, name: String){
         self.tagId = tagId
         self.name = name
         self.hashValue = name.hashValue

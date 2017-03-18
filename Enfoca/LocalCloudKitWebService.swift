@@ -38,6 +38,12 @@ class LocalCloudKitWebService : WebService {
             self.userRecordId = userTuple.1
             //            callback(true, nil)
             
+            if let ds = self.loadDataStore() {
+                self.dataStore = ds
+                callback(true, nil)
+                return
+            }
+            
             Perform.createDataStore(enfocaId: self.enfocaId, db: self.db, progressObserver: progressObserver) { (dataStore : DataStore?, error: EnfocaError?) in
                 if let error = error {
                     callback(false, error)
@@ -47,9 +53,31 @@ class LocalCloudKitWebService : WebService {
                     return;
                 }
                 self.dataStore = dataStore
+                
+                self.saveDataStore(dataStore)
+                
                 callback(true, nil)
             }
         }
+    }
+    
+    let dataStoreKey : String = "DataStoreKey"
+    
+    
+    private func saveDataStore(_ dataStore: DataStore){
+        let defaults = UserDefaults.standard
+        
+        defaults.setValue(dataStore.toJson(), forKey: dataStoreKey)
+    }
+    
+    private func loadDataStore() -> DataStore? {
+        let defaults = UserDefaults.standard
+        guard let json = defaults.value(forKey: dataStoreKey) as? String else { return nil }
+        
+        let ds = DataStore(json: json)
+        
+        return ds
+        
     }
     
     func initialize(callback: @escaping (_ success : Bool, _ error : EnfocaError?) -> ()){

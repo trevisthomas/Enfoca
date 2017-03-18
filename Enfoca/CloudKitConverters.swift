@@ -16,7 +16,7 @@ class CloudKitConverters{
             fatalError()
         }
         
-        let t = Tag(tagId: record.recordID, name: name)
+        let t = Tag(tagId: record.recordID.recordName, name: name)
         return t
     }
     
@@ -36,7 +36,7 @@ class CloudKitConverters{
         
         let example = record.value(forKey: "example") as? String
         
-        return WordPair(pairId: record.recordID, word: word, definition: definition, dateCreated: dateCreated, gender: gender, tags: [], example: example)
+        return WordPair(pairId: record.recordID.recordName, word: word, definition: definition, dateCreated: dateCreated, gender: gender, tags: [], example: example)
     }
     
     class func toTagAssociation(from record : CKRecord) -> TagAssociation {
@@ -48,7 +48,7 @@ class CloudKitConverters{
             fatalError()
         }
         
-        let ass = TagAssociation(wordPairId: wordRef.recordID, tagId: tagRef.recordID)
+        let ass = TagAssociation(wordPairId: wordRef.recordID.recordName, tagId: tagRef.recordID.recordName)
         
         return ass
     }
