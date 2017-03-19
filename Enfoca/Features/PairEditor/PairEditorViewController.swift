@@ -70,6 +70,17 @@ class PairEditorViewController: UIViewController {
     @IBAction func tagButtonAction(_ source: UIButton) {
         performSegue(withIdentifier: "TagEditorSegue", sender: selectedTags)
     }
+    @IBAction func performDeleteButton(_ sender: Any) {
+        guard let wordPair = wordPair else { return }
+        getAppDelegate().webService.deleteWordPair(wordPair: wordPair, callback: { (wordPair : WordPair?, error: EnfocaError?) in
+            
+            if let error = error {
+                self.presentAlert(title : "Network Error", message : error)
+            } else {
+                print("Deleted \(wordPair?.pairId)")
+            }
+        })
+    }
 
     func configureForEdit(wordPair wp: WordPair){
         self.wordPair = wp

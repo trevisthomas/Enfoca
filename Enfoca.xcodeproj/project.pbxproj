@@ -12,8 +12,8 @@
 		0F06A27B1E749B1A00AC7070 /* MonitoredBaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F06A27A1E749B1A00AC7070 /* MonitoredBaseOperation.swift */; };
 		0F0C6B341E7DB26C00541ACE /* DataStoreJsonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0C6B331E7DB26C00541ACE /* DataStoreJsonTests.swift */; };
 		0F0C6B361E7EB94A00541ACE /* OperationUpdateTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0C6B351E7EB94A00541ACE /* OperationUpdateTag.swift */; };
-		0F0C6B381E7ED3F600541ACE /* OperationDeleteTagAssociation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0C6B371E7ED3F600541ACE /* OperationDeleteTagAssociation.swift */; };
 		0F0C6B3A1E7EECD800541ACE /* OperationUpdateWordPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0C6B391E7EECD800541ACE /* OperationUpdateWordPair.swift */; };
+		0F0C6B3E1E7EFA7E00541ACE /* OperationDeleteRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0C6B3D1E7EFA7E00541ACE /* OperationDeleteRecord.swift */; };
 		0F168DEB1E5A38B800F3E555 /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DE91E5A38B800F3E555 /* BaseOperation.swift */; };
 		0F168DEC1E5A38B800F3E555 /* ReadWriteMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DEA1E5A38B800F3E555 /* ReadWriteMutex.swift */; };
 		0F168DFA1E5A39A000F3E555 /* Perform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DF21E5A39A000F3E555 /* Perform.swift */; };
@@ -134,8 +134,8 @@
 		0F06A27A1E749B1A00AC7070 /* MonitoredBaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MonitoredBaseOperation.swift; path = Network/Operations/Core/MonitoredBaseOperation.swift; sourceTree = "<group>"; };
 		0F0C6B331E7DB26C00541ACE /* DataStoreJsonTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataStoreJsonTests.swift; path = Network/DataStoreJsonTests.swift; sourceTree = "<group>"; };
 		0F0C6B351E7EB94A00541ACE /* OperationUpdateTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationUpdateTag.swift; sourceTree = "<group>"; };
-		0F0C6B371E7ED3F600541ACE /* OperationDeleteTagAssociation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationDeleteTagAssociation.swift; sourceTree = "<group>"; };
 		0F0C6B391E7EECD800541ACE /* OperationUpdateWordPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationUpdateWordPair.swift; sourceTree = "<group>"; };
+		0F0C6B3D1E7EFA7E00541ACE /* OperationDeleteRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationDeleteRecord.swift; sourceTree = "<group>"; };
 		0F168DE91E5A38B800F3E555 /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
 		0F168DEA1E5A38B800F3E555 /* ReadWriteMutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadWriteMutex.swift; sourceTree = "<group>"; };
 		0F168DF21E5A39A000F3E555 /* Perform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Perform.swift; sourceTree = "<group>"; };
@@ -331,8 +331,8 @@
 				0F168E101E5B7DC900F3E555 /* OperationCreateTag.swift */,
 				0F3B2B731E72136800BB50EC /* OperationCreateTagAssociation.swift */,
 				0F0C6B351E7EB94A00541ACE /* OperationUpdateTag.swift */,
-				0F0C6B371E7ED3F600541ACE /* OperationDeleteTagAssociation.swift */,
 				0F0C6B391E7EECD800541ACE /* OperationUpdateWordPair.swift */,
+				0F0C6B3D1E7EFA7E00541ACE /* OperationDeleteRecord.swift */,
 			);
 			name = Tags;
 			sourceTree = "<group>";
@@ -938,6 +938,7 @@
 				0F3B2B571E6D310000BB50EC /* OperationFetchWordPairs.swift in Sources */,
 				0F64F1AE1E3E5BE7000549CF /* EnfocaError.swift in Sources */,
 				0F864E871E1807A400539773 /* WordPairCell.swift in Sources */,
+				0F0C6B3E1E7EFA7E00541ACE /* OperationDeleteRecord.swift in Sources */,
 				0FDC870D1E15573300CF4EC6 /* TagFilterViewModel.swift in Sources */,
 				0F2431C51E10A04E0046A224 /* CardSide.swift in Sources */,
 				0F38A4D81E11B14D00051F9E /* AuthenticationDelegate.swift in Sources */,
@@ -947,7 +948,6 @@
 				0F168E111E5B7DC900F3E555 /* OperationCreateTag.swift in Sources */,
 				0F0C6B361E7EB94A00541ACE /* OperationUpdateTag.swift in Sources */,
 				0F2431BE1E109CDF0046A224 /* CardOrder.swift in Sources */,
-				0F0C6B381E7ED3F600541ACE /* OperationDeleteTagAssociation.swift in Sources */,
 				0F168DEB1E5A38B800F3E555 /* BaseOperation.swift in Sources */,
 				0F5ADF9D1E107CDD003B1225 /* AppDelegate.swift in Sources */,
 				0F168DFE1E5A39A100F3E555 /* FetchUserRecordId.swift in Sources */,

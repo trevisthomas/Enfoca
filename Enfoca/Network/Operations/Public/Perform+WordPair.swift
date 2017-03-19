@@ -48,10 +48,10 @@ extension Perform{
         
         let errorHandler = ErrorHandler(callback: callback)
         
-        let deleteTagAssociation = OperationDeleteTagAssociation(tagAssociation: tagAssociation, enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
+        let deleteTagAssociation = OperationDeleteRecord(recordName: tagAssociation.associationId, enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
         let completeOp = BlockOperation {
             OperationQueue.main.addOperation{
-                callback(deleteTagAssociation.associationId, nil)
+                callback(deleteTagAssociation.deletedRecordName, nil)
             }
         }
         
@@ -129,4 +129,40 @@ extension Perform{
         completeOp.addDependency(updateWordPairOperation)
         queue.addOperations([updateWordPairOperation, completeOp], waitUntilFinished: false)
     }
+    
+    
+    class func deleteWordPair(wordPair: WordPair, enfocaId: NSNumber, db: CKDatabase, callback : @escaping (_ pairId : String?, _ error : String?) -> ()){
+        
+        let errorHandler = ErrorHandler(callback: callback)
+        
+        let deleteRecord = OperationDeleteRecord(recordName: wordPair.pairId, enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
+        let completeOp = BlockOperation {
+            OperationQueue.main.addOperation{
+                callback(deleteRecord.deletedRecordName, nil)
+            }
+        }
+        
+        let queue = OperationQueue()
+        completeOp.addDependency(deleteRecord)
+        queue.addOperations([deleteRecord, completeOp], waitUntilFinished: false)
+        
+    }
+    
+    class func deleteTag(tag: Tag, enfocaId: NSNumber, db: CKDatabase, callback : @escaping (_ pairId : String?, _ error : String?) -> ()){
+        
+        let errorHandler = ErrorHandler(callback: callback)
+        
+        let deleteRecord = OperationDeleteRecord(recordName: tag.tagId, enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
+        let completeOp = BlockOperation {
+            OperationQueue.main.addOperation{
+                callback(deleteRecord.deletedRecordName, nil)
+            }
+        }
+        
+        let queue = OperationQueue()
+        completeOp.addDependency(deleteRecord)
+        queue.addOperations([deleteRecord, completeOp], waitUntilFinished: false)
+        
+    }
+
 }

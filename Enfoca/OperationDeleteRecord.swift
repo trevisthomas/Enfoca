@@ -1,5 +1,5 @@
 //
-//  OperationDeleteTagAssociation.swift
+//  OperationDeleteRecord.swift
 //  Enfoca
 //
 //  Created by Trevis Thomas on 3/19/17.
@@ -7,33 +7,34 @@
 //
 
 import Foundation
+
 import CloudKit
 
-class OperationDeleteTagAssociation: BaseOperation {
+class OperationDeleteRecord: BaseOperation {
     private let enfocaId : NSNumber
     private let db : CKDatabase
-    private var tagAssociation: TagAssociation
-    private(set) var associationId: String?
+    private(set) var recordName: String
+    private(set) var deletedRecordName: String?
     
     
-    init (tagAssociation: TagAssociation, enfocaId: NSNumber, db: CKDatabase, errorDelegate : ErrorDelegate) {
+    init (recordName: String, enfocaId: NSNumber, db: CKDatabase, errorDelegate : ErrorDelegate) {
         self.enfocaId = enfocaId
         self.db = db
-        self.tagAssociation = tagAssociation
+        self.recordName = recordName
         super.init(errorDelegate: errorDelegate)
     }
     
     override func start() {
         super.start()
         
-        let recordId = CloudKitConverters.toCKRecordID(fromRecordName: tagAssociation.associationId)
+        let recordId = CloudKitConverters.toCKRecordID(fromRecordName: recordName)
         
         db.delete(withRecordID: recordId) { (recordId:CKRecordID?, error:Error?) in
             if let error = error {
                 self.handleError(error)
             }
             if let recordId = recordId {
-                self.associationId = recordId.recordName
+                self.deletedRecordName = recordId.recordName
             }
             self.done()
         }

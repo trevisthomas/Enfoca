@@ -186,15 +186,86 @@ class LocalCloudKitWebService : WebService {
         
         Perform.updateTag(updatedTag: newTag, enfocaId: enfocaId, db: db) { (tag:Tag?, error:String?) in
             
-            if let error = error {
-                callback(nil, error)
-            }
+            if let error = error { callback(nil, error) }
             
             guard let tag = tag else { fatalError() }
             
             callback(tag, nil)
         }
+    }
+    
+    func deleteWordPair(wordPair: WordPair, callback: @escaping(WordPair?, EnfocaError?)->()) {
         
+        showNetworkActivityIndicator = true
+        let associations = dataStore.remove(wordPair: wordPair)
         
+        //The numer of oprations that will be executed
+        var opsRemaining = 1 + associations.count
+        
+        func notifyOnOpsCompleted(){
+            //A psudo latch
+            opsRemaining -= 1
+            if opsRemaining == 0 {
+                callback(wordPair, nil)
+                showNetworkActivityIndicator = false
+            }
+        }
+        
+        Perform.deleteWordPair(wordPair: wordPair, enfocaId: enfocaId, db: db) { (recordId: String?, error: String?) in
+            
+            if let error = error {
+                callback(nil, error)
+                self.showNetworkActivityIndicator = false
+            }
+            notifyOnOpsCompleted()
+            
+        }
+        
+        for associaion in associations {
+            Perform.deleteTagAssociation(tagAssociation: associaion, enfocaId: enfocaId, db: db) { (recordId:String?, error:String?) in
+                if let error = error {
+                    callback(nil, error)
+                    self.showNetworkActivityIndicator = false
+                }
+                notifyOnOpsCompleted()
+            }
+        }
+    }
+    
+    func deleteTag(tag: Tag, callback: @escaping(Tag?, EnfocaError?)->()){
+        showNetworkActivityIndicator = true
+        let associations = dataStore.remove(tag: tag)
+        
+        //The numer of oprations that will be executed
+        var opsRemaining = 1 + associations.count
+        
+        func notifyOnOpsCompleted(){
+            //A psudo latch
+            opsRemaining -= 1
+            if opsRemaining == 0 {
+                callback(tag, nil)
+                showNetworkActivityIndicator = false
+            }
+        }
+        
+        Perform.deleteTag(tag: tag, enfocaId: enfocaId, db: db) { (recordId: String?, error: String?) in
+            
+            if let error = error {
+                callback(nil, error)
+                self.showNetworkActivityIndicator = false
+            }
+            notifyOnOpsCompleted()
+            
+        }
+        
+        for associaion in associations {
+            Perform.deleteTagAssociation(tagAssociation: associaion, enfocaId: enfocaId, db: db) { (recordId:String?, error:String?) in
+                if let error = error {
+                    callback(nil, error)
+                    self.showNetworkActivityIndicator = false
+                }
+                notifyOnOpsCompleted()
+            }
+        }
     }
 }

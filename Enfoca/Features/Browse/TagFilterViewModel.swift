@@ -93,6 +93,12 @@ class TagFilterViewModel : NSObject, UITableViewDataSource, UITableViewDelegate 
             })
             //tagFilterViewModelDelegate?.reloadTable()
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            getAppDelegate().webService.deleteTag(tag: tag, callback: { (tag:Tag?, error:EnfocaError?) in
+                if let error = error {
+                    self.tagFilterViewModelDelegate?.alert(title: "Error", message: error)
+                }
+            })
         }
     }
     

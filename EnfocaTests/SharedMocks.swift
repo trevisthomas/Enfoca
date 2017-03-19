@@ -177,6 +177,10 @@ class MockWebService : WebService {
         
     }
     
+    func deleteWordPair(wordPair: WordPair, callback: @escaping(WordPair?, EnfocaError?)->()){}
+    
+    func deleteTag(tag: Tag, callback: @escaping(Tag?, EnfocaError?)->()){}
+    
 }
 
 class MockDefaults : ApplicationDefaults {

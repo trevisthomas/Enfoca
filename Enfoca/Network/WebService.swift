@@ -32,5 +32,7 @@ protocol WebService {
     
     func updateTag(oldTag : Tag, newTagName: String, callback: @escaping(Tag?, EnfocaError?)->())
     
+    func deleteWordPair(wordPair: WordPair, callback: @escaping(WordPair?, EnfocaError?)->())
     
+    func deleteTag(tag: Tag, callback: @escaping(Tag?, EnfocaError?)->())
 }

@@ -160,7 +160,9 @@ class DataStoreTests: XCTestCase {
         
         let wp = sut.wordPairDictionary["100"]!
         
-        sut.remove(wordPair: wp)
+        let associations = sut.remove(wordPair: wp)
+        
+        XCTAssertEqual(associations.count, 2)
         
         XCTAssertEqual(wpAss.count - 2, sut.countAssociations)
         XCTAssertEqual(wordPairs.count - 1, sut.countWordPairs)
@@ -185,7 +187,9 @@ class DataStoreTests: XCTestCase {
         }
         
         
-        sut.remove(tag: tag)
+        let removed = sut.remove(tag: tag)
+        
+        XCTAssertEqual(removed.count, 2)
         
         for wp in pairsWithTag {
             XCTAssertFalse(wp.tags.contains(tag))

@@ -130,28 +130,36 @@ class DataStore {
         return matching.count > 0
     }
     
-    func remove(wordPair: WordPair) {
+    func remove(wordPair: WordPair) -> [TagAssociation] {
         wordPairDictionary.removeValue(forKey: wordPair.pairId)
+        var deletedAssociations : [TagAssociation] = []
         tagAssociations = tagAssociations.filter { (tagAss: TagAssociation) -> Bool in
             let keep = tagAss.wordPairId != wordPair.pairId
             if !keep {
                 let tag = tagDictionary[tagAss.tagId]
                 _ = tag?.remove(wordPair: wordPair)
+                
+                deletedAssociations.append(tagAss)
             }
             return keep
         }
+        
+        return deletedAssociations
     }
     
-    func remove(tag: Tag){
+    func remove(tag: Tag) -> [TagAssociation]{
         tagDictionary.removeValue(forKey: tag.tagId)
+        var deletedAssociations : [TagAssociation] = []
         tagAssociations = tagAssociations.filter { (tagAss: TagAssociation) -> Bool in
             let keep = tagAss.tagId != tag.tagId
             if !keep {
                 let wp = wordPairDictionary[tagAss.wordPairId]
                 _ = wp?.remove(tag: tag)
+                deletedAssociations.append(tagAss)
             }
             return keep
         }
+        return deletedAssociations
     }
     
     func applyUpdate(oldWordPair : WordPair, word: String, definition: String, gender : Gender, example: String?, tags : [Tag]) -> (WordPair, [Tag], [TagAssociation]) {
