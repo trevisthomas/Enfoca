@@ -13,16 +13,16 @@ import CloudKit
 class OperationCreateTagAssociation: BaseOperation {
     private let enfocaId : NSNumber
     private let db : CKDatabase
-    private(set) var tag : Tag
-    private(set) var wordPair : WordPair
+    private(set) var tagId : String
+    private(set) var wordPairId : String
     private(set) var tagAssociation: TagAssociation?
     
     
-    init (tag: Tag, wordPair: WordPair, enfocaId: NSNumber, db: CKDatabase, errorDelegate : ErrorDelegate) {
+    init (tagId: String, wordPairId: String, enfocaId: NSNumber, db: CKDatabase, errorDelegate : ErrorDelegate) {
         self.enfocaId = enfocaId
         self.db = db
-        self.wordPair = wordPair
-        self.tag = tag
+        self.wordPairId = wordPairId
+        self.tagId = tagId
         super.init(errorDelegate: errorDelegate)
     }
     
@@ -31,8 +31,11 @@ class OperationCreateTagAssociation: BaseOperation {
         
         let record : CKRecord = CKRecord(recordType: "TagAssociation")
         
-        let tagRef = CKReference(recordID: tag.tagId as! CKRecordID, action: .none)
-        let wpRef = CKReference(recordID: wordPair.pairId as! CKRecordID, action: .none)
+        let ckTagId = CloudKitConverters.toCKRecordID(fromRecordName: tagId)
+        let ckWordPairId = CloudKitConverters.toCKRecordID(fromRecordName: wordPairId)
+        
+        let tagRef = CKReference(recordID: ckTagId, action: .none)
+        let wpRef = CKReference(recordID: ckWordPairId, action: .none)
         
         record.setValue(wpRef, forKey: "wordRef")
         record.setValue(tagRef, forKey: "tagRef")

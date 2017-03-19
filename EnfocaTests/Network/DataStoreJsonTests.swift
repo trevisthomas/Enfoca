@@ -12,18 +12,6 @@ import CloudKit
 
 class DataStoreJsonTests: XCTestCase {
     
-    
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
     func testTag_ShouldCreateTagFromJson(){
         let tag = Tag(tagId: "123-123-123", name: "noun")
         
@@ -62,7 +50,7 @@ class DataStoreJsonTests: XCTestCase {
     }
     
     func testTagAssociation_ShouldJsonify(){
-        let tagAss = TagAssociation(wordPairId: "123", tagId: "456")
+        let tagAss = TagAssociation(associationId: "007", wordPairId: "123", tagId: "456")
         
         let json = tagAss.toJson()
         
@@ -70,6 +58,7 @@ class DataStoreJsonTests: XCTestCase {
         
         XCTAssertEqual(ass2.wordPairId, "123")
         XCTAssertEqual(ass2.tagId, "456")
+        XCTAssertEqual(ass2.associationId, "007")
         
     }
     
@@ -86,10 +75,10 @@ class DataStoreJsonTests: XCTestCase {
         wordPairs.append(WordPair(pairId: "101", word: "Amarillo", definition: "Yellow"))
         wordPairs.append(WordPair(pairId: "102", word: "Clave", definition: "Nail"))
         
-        wpAss.append(TagAssociation(wordPairId: wordPairs[0].pairId, tagId: tags[0].tagId))
-        wpAss.append(TagAssociation(wordPairId: wordPairs[0].pairId, tagId: tags[2].tagId))
+        wpAss.append(TagAssociation(associationId: "10", wordPairId: wordPairs[0].pairId, tagId: tags[0].tagId))
+        wpAss.append(TagAssociation(associationId: "11", wordPairId: wordPairs[0].pairId, tagId: tags[2].tagId))
         
-        wpAss.append(TagAssociation(wordPairId: wordPairs[1].pairId, tagId: tags[0].tagId))
+        wpAss.append(TagAssociation(associationId: "12", wordPairId: wordPairs[1].pairId, tagId: tags[0].tagId))
         
         
         let dataStore = DataStore()
@@ -97,7 +86,11 @@ class DataStoreJsonTests: XCTestCase {
         
         let json = dataStore.toJson()
         
-        let ds2 = DataStore(json: json)
+        
+        let ds2 = DataStore()
+        ds2.initialize(json: json)
+        
+        XCTAssertTrue(ds2.isInitialized)
         
         XCTAssertEqual(ds2.tagDictionary.count, 3)
         XCTAssertEqual(ds2.wordPairDictionary.count, 3)

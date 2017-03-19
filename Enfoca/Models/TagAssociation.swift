@@ -9,12 +9,14 @@
 import Foundation
 
 struct TagAssociation{
+    private(set) var associationId : String
     private(set) var wordPairId : String
     private(set) var tagId : String
     
-    init (wordPairId: String, tagId : String) {
+    init (associationId: String, wordPairId: String, tagId : String) {
         self.wordPairId = wordPairId
         self.tagId = tagId
+        self.associationId = associationId
     }
     
     public init (json: String) {
@@ -23,9 +25,11 @@ struct TagAssociation{
         
         guard let wordPairId = jsonResult["wordPairId"] as? String else {fatalError()}
         guard let tagId = jsonResult["tagId"] as? String else {fatalError()}
+        guard let associationId = jsonResult["associationId"] as? String else {fatalError()}
         
         self.wordPairId = wordPairId
         self.tagId = tagId
+        self.associationId = associationId
         
     }
     
@@ -33,6 +37,7 @@ struct TagAssociation{
         var representation = [String: AnyObject]()
         representation["wordPairId"] = wordPairId as AnyObject?
         representation["tagId"] = tagId as AnyObject?
+        representation["associationId"] = associationId as AnyObject?
         
         guard let data = try? JSONSerialization.data(withJSONObject: representation, options: []) else { fatalError() }
         

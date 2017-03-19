@@ -11,6 +11,9 @@
 		0F06A2791E74898B00AC7070 /* ProgressObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F06A2781E74898B00AC7070 /* ProgressObserver.swift */; };
 		0F06A27B1E749B1A00AC7070 /* MonitoredBaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F06A27A1E749B1A00AC7070 /* MonitoredBaseOperation.swift */; };
 		0F0C6B341E7DB26C00541ACE /* DataStoreJsonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0C6B331E7DB26C00541ACE /* DataStoreJsonTests.swift */; };
+		0F0C6B361E7EB94A00541ACE /* OperationUpdateTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0C6B351E7EB94A00541ACE /* OperationUpdateTag.swift */; };
+		0F0C6B381E7ED3F600541ACE /* OperationDeleteTagAssociation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0C6B371E7ED3F600541ACE /* OperationDeleteTagAssociation.swift */; };
+		0F0C6B3A1E7EECD800541ACE /* OperationUpdateWordPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0C6B391E7EECD800541ACE /* OperationUpdateWordPair.swift */; };
 		0F168DEB1E5A38B800F3E555 /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DE91E5A38B800F3E555 /* BaseOperation.swift */; };
 		0F168DEC1E5A38B800F3E555 /* ReadWriteMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DEA1E5A38B800F3E555 /* ReadWriteMutex.swift */; };
 		0F168DFA1E5A39A000F3E555 /* Perform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F168DF21E5A39A000F3E555 /* Perform.swift */; };
@@ -130,6 +133,9 @@
 		0F06A2781E74898B00AC7070 /* ProgressObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressObserver.swift; path = Network/ProgressObserver.swift; sourceTree = "<group>"; };
 		0F06A27A1E749B1A00AC7070 /* MonitoredBaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MonitoredBaseOperation.swift; path = Network/Operations/Core/MonitoredBaseOperation.swift; sourceTree = "<group>"; };
 		0F0C6B331E7DB26C00541ACE /* DataStoreJsonTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataStoreJsonTests.swift; path = Network/DataStoreJsonTests.swift; sourceTree = "<group>"; };
+		0F0C6B351E7EB94A00541ACE /* OperationUpdateTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationUpdateTag.swift; sourceTree = "<group>"; };
+		0F0C6B371E7ED3F600541ACE /* OperationDeleteTagAssociation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationDeleteTagAssociation.swift; sourceTree = "<group>"; };
+		0F0C6B391E7EECD800541ACE /* OperationUpdateWordPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationUpdateWordPair.swift; sourceTree = "<group>"; };
 		0F168DE91E5A38B800F3E555 /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
 		0F168DEA1E5A38B800F3E555 /* ReadWriteMutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadWriteMutex.swift; sourceTree = "<group>"; };
 		0F168DF21E5A39A000F3E555 /* Perform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Perform.swift; sourceTree = "<group>"; };
@@ -324,6 +330,9 @@
 				0F168E091E5B6CC500F3E555 /* OperationFetchTags.swift */,
 				0F168E101E5B7DC900F3E555 /* OperationCreateTag.swift */,
 				0F3B2B731E72136800BB50EC /* OperationCreateTagAssociation.swift */,
+				0F0C6B351E7EB94A00541ACE /* OperationUpdateTag.swift */,
+				0F0C6B371E7ED3F600541ACE /* OperationDeleteTagAssociation.swift */,
+				0F0C6B391E7EECD800541ACE /* OperationUpdateWordPair.swift */,
 			);
 			name = Tags;
 			sourceTree = "<group>";
@@ -908,6 +917,7 @@
 				0F38A4DE1E11B2AA00051F9E /* LoginViewController.swift in Sources */,
 				0F06A2771E7375D700AC7070 /* LocalCloudKitWebService.swift in Sources */,
 				0F864E831E17F93F00539773 /* ApplicationDefaults.swift in Sources */,
+				0F0C6B3A1E7EECD800541ACE /* OperationUpdateWordPair.swift in Sources */,
 				0F168E031E5A3B7900F3E555 /* ErrorDelegate.swift in Sources */,
 				0F168E131E5B810B00F3E555 /* CloudKitConverters.swift in Sources */,
 				0F38A4E21E11C61000051F9E /* WelcomeViewController.swift in Sources */,
@@ -935,7 +945,9 @@
 				0FB1C6591E144D730087DC93 /* TagAssociation.swift in Sources */,
 				0F168E081E5B55DD00F3E555 /* CloudKitWebService.swift in Sources */,
 				0F168E111E5B7DC900F3E555 /* OperationCreateTag.swift in Sources */,
+				0F0C6B361E7EB94A00541ACE /* OperationUpdateTag.swift in Sources */,
 				0F2431BE1E109CDF0046A224 /* CardOrder.swift in Sources */,
+				0F0C6B381E7ED3F600541ACE /* OperationDeleteTagAssociation.swift in Sources */,
 				0F168DEB1E5A38B800F3E555 /* BaseOperation.swift in Sources */,
 				0F5ADF9D1E107CDD003B1225 /* AppDelegate.swift in Sources */,
 				0F168DFE1E5A39A100F3E555 /* FetchUserRecordId.swift in Sources */,

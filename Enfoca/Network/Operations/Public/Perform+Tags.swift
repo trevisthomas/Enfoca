@@ -10,24 +10,7 @@ import Foundation
 import CloudKit
 
 extension Perform{
-//    class func fetchTags(enfocaId: NSNumber, db: CKDatabase, callback : @escaping (_ tags : [Tag]?, _ error : String?) -> ()){
-//        let errorHandler = ErrorHandler(callback: callback)
-//        let fetchTagsOperation = OperationFetchTags(enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
-//        let completeOp = BlockOperation {
-//            OperationQueue.main.addOperation{
-//                callback(fetchTagsOperation.tags, nil)
-//            }
-//        }
-//        
-//        let queue = OperationQueue()
-//        
-//        completeOp.addDependency(fetchTagsOperation)
-//        
-//        queue.addOperations([fetchTagsOperation, completeOp], waitUntilFinished: false)
-//    }
-    
-    
-    
+
     class func createTag(tagName: String, enfocaId: NSNumber, db: CKDatabase, callback : @escaping (_ tag : Tag?, _ error : String?) -> ()){
         
         let errorHandler = ErrorHandler(callback: callback)
@@ -41,6 +24,21 @@ extension Perform{
         let queue = OperationQueue()
         completeOp.addDependency(createTagOperation)
         queue.addOperations([createTagOperation, completeOp], waitUntilFinished: false)
+    }
+    
+    class func updateTag(updatedTag: Tag, enfocaId: NSNumber, db: CKDatabase, callback : @escaping (_ tag : Tag?, _ error : String?) -> () ){
+        
+        let errorHandler = ErrorHandler(callback: callback)
+        let updateTagOperation = OperationUpdateTag(updatedTag: updatedTag, enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
+        let completeOp = BlockOperation {
+            OperationQueue.main.addOperation{
+                callback(updateTagOperation.tag, nil)
+            }
+        }
+        
+        let queue = OperationQueue()
+        completeOp.addDependency(updateTagOperation)
+        queue.addOperations([updateTagOperation, completeOp], waitUntilFinished: false)
     }
 }
 

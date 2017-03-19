@@ -35,6 +35,8 @@ class DataStoreTests: XCTestCase {
         XCTAssertEqual(wpAss.count, sut.countAssociations)
         XCTAssertEqual(tags.count, sut.countTags)
         XCTAssertEqual(wordPairs.count, sut.countWordPairs)
+        
+        XCTAssertTrue(sut.isInitialized)
     }
     
     func testInit_PairShouldHaveExpectedTags(){
@@ -57,7 +59,10 @@ class DataStoreTests: XCTestCase {
         
         XCTAssertEqual(tag.count, 2) //Initial state
         
-        let newAssociation = sut.add(tag: tag, wordPair: wordPair)
+        
+        let newAssociation = TagAssociation(associationId: "14", wordPairId: wordPair.pairId, tagId: tag.tagId)
+        
+        sut.add(tagAssociation: newAssociation)
         
         XCTAssertEqual(tag.count, 3)
         XCTAssertTrue(tag.wordPairs.contains(wordPair))
@@ -115,7 +120,7 @@ class DataStoreTests: XCTestCase {
         
         let wp = WordPair(pairId: wpId, word: word, definition: definition, dateCreated: date, gender: gender, tags: [], example: example);
         
-        sut.add(wordPair: wp);
+        _ = sut.add(wordPair: wp);
         
         let wp2 = sut.findWordPair(withId: wpId)!;
         
@@ -233,6 +238,10 @@ class DataStoreTests: XCTestCase {
         
         let tuple = sut.applyUpdate(oldWordPair: wp, word: wp.word, definition: wp.definition, gender: wp.gender, example: wp.example, tags: newTags)
         
+        for tag in tuple.2 {
+            _ = sut.remove(tag: tag, from: wp)
+        }
+        
         XCTAssertEqual(wpAss.count - 1, sut.countAssociations)
         XCTAssertEqual(tags.count, sut.countTags)
         XCTAssertEqual(wordPairs.count, sut.countWordPairs)
@@ -248,7 +257,6 @@ class DataStoreTests: XCTestCase {
         
         //Confirming that the removed association list has the removed tag
         XCTAssertEqual(removedTag.tagId, tuple.2[0].tagId)
-        XCTAssertEqual(wp.pairId, tuple.2[0].wordPairId)
         
     }
     
@@ -273,6 +281,13 @@ class DataStoreTests: XCTestCase {
         
         let tuple = sut.applyUpdate(oldWordPair: wp, word: wp.word, definition: wp.definition, gender: wp.gender, example: wp.example, tags: newTags)
         
+        var i = 0
+        for tag in tuple.1 {
+            i = i+1
+            let association = TagAssociation(associationId: "new\(i)", wordPairId: wp.pairId, tagId: tag.tagId)
+            sut.add(tagAssociation: association)
+        }
+        
         XCTAssertEqual(wpAss.count + 1, sut.countAssociations)
         XCTAssertEqual(tags.count, sut.countTags)
         XCTAssertEqual(wordPairs.count, sut.countWordPairs)
@@ -287,7 +302,6 @@ class DataStoreTests: XCTestCase {
         
         //Confirming that the added association list has the added tag
         XCTAssertEqual(tagAdded.tagId, tuple.1[0].tagId)
-        XCTAssertEqual(wp.pairId, tuple.1[0].wordPairId)
         
     }
     
@@ -336,7 +350,7 @@ class DataStoreTests: XCTestCase {
     func testSearch_WordContains(){
         mockDataOne()
         
-        sut.add(wordPair: WordPair(pairId: "4", word: "en casa", definition: "at home"))
+        _ = sut.add(wordPair: WordPair(pairId: "4", word: "en casa", definition: "at home"))
         
         let result = sut.search(forWordsLike : "casa")
         
@@ -506,11 +520,11 @@ extension DataStoreTests{
         wordPairs.append(WordPair(pairId: "101", word: "Amarillo", definition: "Yellow"))
         wordPairs.append(WordPair(pairId: "102", word: "Clave", definition: "Nail"))
         
-        wpAss.append(TagAssociation(wordPairId: wordPairs[0].pairId, tagId: tags[0].tagId))
-        wpAss.append(TagAssociation(wordPairId: wordPairs[0].pairId, tagId: tags[2].tagId))
+        wpAss.append(TagAssociation(associationId: "10", wordPairId: wordPairs[0].pairId, tagId: tags[0].tagId))
         
-        wpAss.append(TagAssociation(wordPairId: wordPairs[1].pairId, tagId: tags[0].tagId))
+        wpAss.append(TagAssociation(associationId: "11", wordPairId: wordPairs[0].pairId, tagId: tags[2].tagId))
         
+        wpAss.append(TagAssociation(associationId: "12", wordPairId: wordPairs[1].pairId, tagId: tags[0].tagId))
         
         
         sut.initialize(tags: tags, wordPairs: wordPairs, tagAssociations: wpAss)

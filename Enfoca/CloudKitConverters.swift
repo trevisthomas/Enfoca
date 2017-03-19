@@ -48,9 +48,14 @@ class CloudKitConverters{
             fatalError()
         }
         
-        let ass = TagAssociation(wordPairId: wordRef.recordID.recordName, tagId: tagRef.recordID.recordName)
+        let ass = TagAssociation(associationId: record.recordID.recordName,
+                                 wordPairId: wordRef.recordID.recordName,
+                                 tagId: tagRef.recordID.recordName)
         
         return ass
     }
     
+    class func toCKRecordID(fromRecordName name: String) -> CKRecordID{
+        return CKRecordID(recordName: name)
+    }
 }

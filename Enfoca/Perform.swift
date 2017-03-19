@@ -42,7 +42,7 @@ class Perform {
         
     }
     
-    class func createDataStore(enfocaId: NSNumber, db: CKDatabase, progressObserver: ProgressObserver, callback : @escaping (DataStore?, EnfocaError?)->()){
+    class func createDataStore(dataStore: DataStore, enfocaId: NSNumber, db: CKDatabase, progressObserver: ProgressObserver, callback : @escaping (DataStore?, EnfocaError?)->()){
         let errorHandler = ErrorHandler(callback: callback)
         
         let queue = OperationQueue()
@@ -53,7 +53,6 @@ class Perform {
         
         let completeOp = BlockOperation {
             print("Initializing data store")
-            let dataStore = DataStore()
             dataStore.initialize(tags: fetchTags.tags, wordPairs: fetchWordPairs.wordPairs, tagAssociations: fetchTagAssociations.tagAssociations, progressObserver: progressObserver)
             
             print("DataStore initialized with \(dataStore.wordPairDictionary.count) word pairs, \(dataStore.tagDictionary.count) tags and \(dataStore.tagAssociations.count) associations.")

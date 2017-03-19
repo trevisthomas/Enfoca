@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
         let service = LocalCloudKitWebService()
 //        let service = CloudKitWebService()
 //        let service = DemoWebService()
-        service.initialize(progressObserver: self) { (success :Bool, error : EnfocaError?) in
+        service.initialize(dataStore: getAppDelegate().applicationDefaults.dataStore, progressObserver: self) { (success :Bool, error : EnfocaError?) in
             getAppDelegate().webService = service
             self.performSegue(withIdentifier: "WelcomeVC", sender: self)
         }

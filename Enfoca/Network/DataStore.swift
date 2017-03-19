@@ -12,6 +12,7 @@ class DataStore {
     private(set) var tagDictionary : [AnyHashable : Tag] = [:]
     private(set) var wordPairDictionary : [AnyHashable :  WordPair] = [:]
     private(set) var tagAssociations : [TagAssociation] = []
+    private(set) var isInitialized : Bool = false
     
     var countAssociations : Int {
         return tagAssociations.count
@@ -23,10 +24,6 @@ class DataStore {
     
     var countWordPairs : Int {
         return wordPairDictionary.count
-    }
-    
-    init() {
-        
     }
     
     func initialize(tags: [Tag], wordPairs: [WordPair], tagAssociations: [TagAssociation], progressObserver: ProgressObserver? = nil){
@@ -68,22 +65,12 @@ class DataStore {
         progressObserver?.updateProgress(ofType: key, message: "DataStore tagged \(tagAssociations.count) words...")
         
         progressObserver?.endProgress(ofType: key, message: "DataStore initialization complete.")
+        
+        isInitialized = true
     }
     
     func findWordPair(withId wordPairId : AnyHashable) -> WordPair? {
         return wordPairDictionary[wordPairId]
-    }
-    
-    func add(tag: Tag, wordPair: WordPair) -> TagAssociation {
-        guard let tag = tagDictionary[tag.tagId], let wordPair = wordPairDictionary[wordPair.pairId] else {
-            fatalError()
-        }
-        
-        tag.addWordPair(wordPair)
-        wordPair.addTag(tag)
-        let tagAss = TagAssociation(wordPairId: wordPair.pairId, tagId: tag.tagId)
-        tagAssociations.append(tagAss)
-        return tagAss
     }
     
     func remove(tag: Tag, from wordPair: WordPair) -> TagAssociation? {
@@ -91,12 +78,7 @@ class DataStore {
             fatalError()
         }
         
-        guard let index = (tagAssociations.index { (ass:TagAssociation) -> Bool in
-            return ass.tagId == tag.tagId && ass.wordPairId == wordPair.pairId
-        }) else {
-//          return nil
-            fatalError()
-        }
+        guard let index = findAssocationIndex(tagId: tag.tagId, wordPairId: wordPair.pairId) else { fatalError() }
         
         let tagAss = tagAssociations.remove(at: index)
         
@@ -106,12 +88,31 @@ class DataStore {
         return tagAss
     }
     
+    private func findAssocationIndex(tagId: String, wordPairId: String) -> Int? {
+        guard let index = (tagAssociations.index { (ass:TagAssociation) -> Bool in
+            return ass.tagId == tagId && ass.wordPairId == wordPairId
+        }) else {
+            return nil
+        }
+        return index
+    }
+    
     func add(tag: Tag) {
         tagDictionary[tag.tagId] = tag
     }
     
     func add(wordPair : WordPair) {
         wordPairDictionary[wordPair.pairId] = wordPair
+    }
+    
+    func add(tagAssociation: TagAssociation) {
+        guard let tag = tagDictionary[tagAssociation.tagId], let wordPair = wordPairDictionary[tagAssociation.wordPairId] else {
+            fatalError()
+        }
+        
+        tag.addWordPair(wordPair)
+        wordPair.addTag(tag)
+        tagAssociations.append(tagAssociation)
     }
     
     func containsWordPair(withWord: String) -> Bool{
@@ -153,7 +154,7 @@ class DataStore {
         }
     }
     
-    func applyUpdate(oldWordPair : WordPair, word: String, definition: String, gender : Gender, example: String?, tags : [Tag]) -> (WordPair, [TagAssociation], [TagAssociation]) {
+    func applyUpdate(oldWordPair : WordPair, word: String, definition: String, gender : Gender, example: String?, tags : [Tag]) -> (WordPair, [Tag], [TagAssociation]) {
         
         //Notice that i am creating the new WP with the old tags! This is because the tag changes happen afterward
         let newWordPair = WordPair(pairId: oldWordPair.pairId, word: word, definition: definition, dateCreated: oldWordPair.dateCreated, gender: gender, tags: oldWordPair.tags, example: example)
@@ -167,21 +168,24 @@ class DataStore {
         wordPairDictionary[oldWordPair.pairId] = newWordPair
         
         var removedAssociations : [TagAssociation] = []
-        var addedAssociations : [TagAssociation] = []
+//        var addedAssociations : [TagAssociation] = []
         //Remove
         for tag in tagsToRemove {
             if let ass = remove(tag: tag, from: newWordPair){
                 removedAssociations.append(ass)
             }
         }
+//
+//        //Add
+//        for tag in tagsToAdd {
+//            let ass = add(tag: tag, wordPair: newWordPair)
+//            addedAssociations.append(ass)
+//        }
+//        
+//        return (newWordPair, addedAssociations, removedAssociations)
         
-        //Add
-        for tag in tagsToAdd {
-            let ass = add(tag: tag, wordPair: newWordPair)
-            addedAssociations.append(ass)
-        }
         
-        return (newWordPair, addedAssociations, removedAssociations)
+        return (newWordPair, Array(tagsToAdd), removedAssociations)
     }
     
     func applyUpdate(oldTag: Tag, name: String) -> Tag{
@@ -189,16 +193,18 @@ class DataStore {
         
         let wordPairs = oldTag.wordPairs
         
+        var associations : [TagAssociation] = []
         for wp in wordPairs {
             // I'm just using the remove/add methods to update the internal double linking structure with the new object
             // I'm not returning the assocations to the caller because they should be exactly the same
-            _ = remove(tag: oldTag, from: wp)
+            guard let ass = remove(tag: oldTag, from: wp) else { fatalError() }
+            associations.append(ass)
         }
         
         tagDictionary[oldTag.tagId] = newTag
         
-        for wp in wordPairs {
-            _ = add(tag: newTag, wordPair: wp)
+        for ass in associations {
+            add(tagAssociation: ass)
         }
         
         return newTag
@@ -327,7 +333,7 @@ class DataStore {
         })
     }
     
-    public init (json: String) {
+    public func initialize (json: String) {
         guard let jsonData = json.data(using: .utf8) else { fatalError() }
         guard let jsonResult: NSDictionary = try! JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary else {fatalError()}
         

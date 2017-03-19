@@ -23,10 +23,11 @@ class TagAssociationTests: XCTestCase {
     }
     
     func testExample() {
-        let ass = TagAssociation(wordPairId: "wpid", tagId: "tid")
+        let ass = TagAssociation(associationId: "001", wordPairId: "wpid", tagId: "tid")
         
         XCTAssertEqual(ass.wordPairId, "wpid")
         XCTAssertEqual(ass.tagId, "tid")
+        XCTAssertEqual(ass.associationId, "001")
     }
     
     

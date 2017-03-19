@@ -18,14 +18,6 @@ extension Perform{
             
             guard let wp = createWordPairOperation.wordPair else { fatalError() }
             
-            //Create any tag associations for this new word.
-            for tag in wordPair.tags {
-                createTagAssociation(wordPair: wp, tag: tag, enfocaId: enfocaId, db: db, callback: { (tagAss:TagAssociation?, error:String?) in
-                    guard let _ = tagAss else { fatalError() }
-                    wp.addTag(tag)
-                })
-            }
-            
             OperationQueue.main.addOperation{
                 callback(wp, nil)
             }
@@ -36,11 +28,11 @@ extension Perform{
         queue.addOperations([createWordPairOperation, completeOp], waitUntilFinished: false)
     }
     
-    class func createTagAssociation(wordPair: WordPair, tag: Tag, enfocaId: NSNumber, db: CKDatabase, callback : @escaping (_ tagAssociation : TagAssociation?, _ error : String?) -> ()){
+    class func createTagAssociation(tagId: String, wordPairId: String, enfocaId: NSNumber, db: CKDatabase, callback : @escaping (_ tagAssociation : TagAssociation?, _ error : String?) -> ()){
         
         let errorHandler = ErrorHandler(callback: callback)
         
-        let createTagAssociation = OperationCreateTagAssociation(tag: tag, wordPair: wordPair, enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
+        let createTagAssociation = OperationCreateTagAssociation(tagId: tagId, wordPairId: wordPairId, enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
         let completeOp = BlockOperation {
             OperationQueue.main.addOperation{
                 callback(createTagAssociation.tagAssociation, nil)
@@ -50,6 +42,22 @@ extension Perform{
         let queue = OperationQueue()
         completeOp.addDependency(createTagAssociation)
         queue.addOperations([createTagAssociation, completeOp], waitUntilFinished: false)
+    }
+    
+    class func deleteTagAssociation(tagAssociation: TagAssociation, enfocaId: NSNumber, db: CKDatabase, callback : @escaping (_ associationId : String?, _ error : String?) -> ()){
+        
+        let errorHandler = ErrorHandler(callback: callback)
+        
+        let deleteTagAssociation = OperationDeleteTagAssociation(tagAssociation: tagAssociation, enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
+        let completeOp = BlockOperation {
+            OperationQueue.main.addOperation{
+                callback(deleteTagAssociation.associationId, nil)
+            }
+        }
+        
+        let queue = OperationQueue()
+        completeOp.addDependency(deleteTagAssociation)
+        queue.addOperations([deleteTagAssociation, completeOp], waitUntilFinished: false)
         
     }
     
@@ -103,5 +111,22 @@ extension Perform{
         let queue = OperationQueue()
         completeOp.addDependency(fetchWordPairsOperation)
         queue.addOperations([fetchWordPairsOperation, completeOp], waitUntilFinished: false)
+    }
+    
+    class func updateWordPair(wordPair : WordPair, enfocaId: NSNumber, db: CKDatabase, callback : @escaping (_ wordPair : WordPair?, _ error : String?) -> ()){
+        
+        let errorHandler = ErrorHandler(callback: callback)
+        let updateWordPairOperation = OperationUpdateWordPair(updatedWordPair: wordPair, enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
+        let completeOp = BlockOperation {
+            guard let wp = updateWordPairOperation.wordPair else { fatalError() }
+            
+            OperationQueue.main.addOperation{
+                callback(wp, nil)
+            }
+        }
+        
+        let queue = OperationQueue()
+        completeOp.addDependency(updateWordPairOperation)
+        queue.addOperations([updateWordPairOperation, completeOp], waitUntilFinished: false)
     }
 }

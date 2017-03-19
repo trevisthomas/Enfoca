@@ -27,7 +27,6 @@ class OperationCreateTag : BaseOperation {
         
         let record : CKRecord = CKRecord(recordType: "Tag")
         record.setValue(tagName, forKey: "name")
-        record.setValue(0, forKey: "count")
         record.setValue(enfocaId, forKey: "enfocaId")
         
         db.save(record) { (newRecord: CKRecord?, error: Error?) in

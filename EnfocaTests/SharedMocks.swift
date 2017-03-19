@@ -184,6 +184,7 @@ class MockDefaults : ApplicationDefaults {
     var saveCount = 0
     var selectedTags: [Tag] = []
     var tags: [Tag] = []
+    var dataStore: DataStore!
     
     var fetchWordPairPageSize: Int {
         return 10
@@ -191,6 +192,10 @@ class MockDefaults : ApplicationDefaults {
     
     func save() {
         saveCount += 1
+    }
+    
+    func load() {
+        
     }
 }
 

@@ -25,7 +25,7 @@ class LocalCloudKitWebService : WebService {
         }
     }
     
-    func initialize(progressObserver: ProgressObserver, callback: @escaping (_ success : Bool, _ error : EnfocaError?) -> ()){
+    func initialize(dataStore: DataStore, progressObserver: ProgressObserver, callback: @escaping (_ success : Bool, _ error : EnfocaError?) -> ()){
         
         db = CKContainer.default().publicCloudDatabase
         Perform.authentcate(db: db) { (userTuple : (Int, CKRecordID)?, error: String?) in
@@ -36,48 +36,26 @@ class LocalCloudKitWebService : WebService {
             print("EnfocaId: \(userTuple.0)")
             self.enfocaId = NSNumber(value: userTuple.0)
             self.userRecordId = userTuple.1
-            //            callback(true, nil)
             
-            if let ds = self.loadDataStore() {
-                self.dataStore = ds
+            if dataStore.isInitialized {
+                self.dataStore = dataStore
                 callback(true, nil)
                 return
-            }
-            
-            Perform.createDataStore(enfocaId: self.enfocaId, db: self.db, progressObserver: progressObserver) { (dataStore : DataStore?, error: EnfocaError?) in
-                if let error = error {
-                    callback(false, error)
+            } else {
+                Perform.createDataStore(dataStore: dataStore, enfocaId: self.enfocaId, db: self.db, progressObserver: progressObserver) { (ds : DataStore?, error: EnfocaError?) in
+                    if let error = error {
+                        callback(false, error)
+                    }
+                    guard let dataStore = ds else {
+                        callback(false, "DataStore was nil.  This is a fatal error.")
+                        return;
+                    }
+                    self.dataStore = dataStore
+                    
+                    callback(true, nil)
                 }
-                guard let dataStore = dataStore else {
-                    callback(false, "DataStore was nil.  This is a fatal error.")
-                    return;
-                }
-                self.dataStore = dataStore
-                
-                self.saveDataStore(dataStore)
-                
-                callback(true, nil)
             }
         }
-    }
-    
-    let dataStoreKey : String = "DataStoreKey"
-    
-    
-    private func saveDataStore(_ dataStore: DataStore){
-        let defaults = UserDefaults.standard
-        
-        defaults.setValue(dataStore.toJson(), forKey: dataStoreKey)
-    }
-    
-    private func loadDataStore() -> DataStore? {
-        let defaults = UserDefaults.standard
-        guard let json = defaults.value(forKey: dataStoreKey) as? String else { return nil }
-        
-        let ds = DataStore(json: json)
-        
-        return ds
-        
     }
     
     func initialize(callback: @escaping (_ success : Bool, _ error : EnfocaError?) -> ()){
@@ -117,7 +95,24 @@ class LocalCloudKitWebService : WebService {
             
             guard let wordPair = wordPair else { return }
             
-            self.dataStore.add(wordPair: newWordPair)
+            self.dataStore.add(wordPair: wordPair)
+            
+            //Create any tag associations for this new word.
+            for tag in tags {
+                Perform.createTagAssociation(tagId: tag.tagId, wordPairId: wordPair.pairId, enfocaId: self.enfocaId, db: self.db, callback: { (tagAss:TagAssociation?, error:String?) in
+                    
+                    if let error = error {
+                        callback(nil, error)
+                    }
+
+                    guard let association = tagAss else { return }
+                    
+                    self.dataStore.add(tagAssociation: association)
+                })
+            }
+            
+            
+            
             callback(wordPair, error)
         }
     }
@@ -127,9 +122,44 @@ class LocalCloudKitWebService : WebService {
         
         let tuple = dataStore.applyUpdate(oldWordPair: oldWordPair, word: word, definition: definition, gender: gender, example: example, tags: tags)
         
-        //TODO: Update cloud
+        //The numer of oprations that will be executed
+        var opsRemaining = 1 + tuple.1.count + tuple.2.count
         
-        callback(tuple.0, nil)
+        func notifyOnOpsCompleted(){
+            //A psudo latch
+            opsRemaining -= 1
+            if opsRemaining == 0 {
+                callback(tuple.0, nil)
+            }
+        }
+        
+        Perform.updateWordPair(wordPair: tuple.0, enfocaId: enfocaId, db: db) { (wp:WordPair?, error:String?) in
+            
+            if let error = error {
+                callback(nil, error)
+            }
+            notifyOnOpsCompleted()
+        }
+        
+        for tag in tuple.1 {
+            Perform.createTagAssociation(tagId: tag.tagId, wordPairId: oldWordPair.pairId, enfocaId: self.enfocaId, db: self.db, callback: { (tagAss:TagAssociation?, error:String?) in
+                
+                if let error = error { callback(nil, error) }
+                
+                guard let assocation = tagAss else { fatalError() }
+                self.dataStore.add(tagAssociation: assocation)
+                notifyOnOpsCompleted()
+            })
+        }
+        
+        for tagAss in tuple.2 {
+            Perform.deleteTagAssociation(tagAssociation: tagAss, enfocaId: self.enfocaId, db: self.db, callback: { (recordId: String?, error: String?) in
+                if let error = error { callback(nil, error) }
+                notifyOnOpsCompleted()
+            })
+        }
+        
+        
         
     }
     
@@ -141,7 +171,7 @@ class LocalCloudKitWebService : WebService {
                 callback(nil, error)
             }
             
-            guard let tag = tag else { return }
+            guard let tag = tag else { fatalError() }
             
             self.dataStore.add(tag: tag)
             callback(tag, nil)
@@ -152,10 +182,19 @@ class LocalCloudKitWebService : WebService {
     
     func updateTag(oldTag : Tag, newTagName: String, callback: @escaping(Tag?, EnfocaError?)->()) {
         
-        //TODO: Update in cloud
-        
         let newTag = dataStore.applyUpdate(oldTag: oldTag, name: newTagName)
         
-        callback(newTag, nil)
+        Perform.updateTag(updatedTag: newTag, enfocaId: enfocaId, db: db) { (tag:Tag?, error:String?) in
+            
+            if let error = error {
+                callback(nil, error)
+            }
+            
+            guard let tag = tag else { fatalError() }
+            
+            callback(tag, nil)
+        }
+        
+        
     }
 }

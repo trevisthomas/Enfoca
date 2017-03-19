@@ -125,7 +125,7 @@ class Import {
             if let wp = wordPairDict[ass.studyItemId]?.newWordPair {
                 //            let wp = wordPairDict[ass.studyItemId]!.newWordPair!
                 
-                let assOp = OperationCreateTagAssociation(tag: tag, wordPair: wp, enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
+                let assOp = OperationCreateTagAssociation(tagId: tag.tagId, wordPairId: wp.pairId, enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
                 
                 queue.addOperations([assOp], waitUntilFinished: true)
                 
