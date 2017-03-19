@@ -238,10 +238,6 @@ class DataStoreTests: XCTestCase {
         
         let tuple = sut.applyUpdate(oldWordPair: wp, word: wp.word, definition: wp.definition, gender: wp.gender, example: wp.example, tags: newTags)
         
-        for tag in tuple.2 {
-            _ = sut.remove(tag: tag, from: wp)
-        }
-        
         XCTAssertEqual(wpAss.count - 1, sut.countAssociations)
         XCTAssertEqual(tags.count, sut.countTags)
         XCTAssertEqual(wordPairs.count, sut.countWordPairs)
