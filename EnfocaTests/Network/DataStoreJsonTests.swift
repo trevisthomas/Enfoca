@@ -66,6 +66,7 @@ class DataStoreJsonTests: XCTestCase {
         var tags : [Tag] = []
         var wordPairs : [WordPair] = []
         var wpAss : [TagAssociation] = []
+        var metaData : [MetaData] = []
         
         tags.append(Tag(tagId: "1", name: "Noun"))
         tags.append(Tag(tagId: "2", name: "Verb"))
@@ -75,14 +76,17 @@ class DataStoreJsonTests: XCTestCase {
         wordPairs.append(WordPair(pairId: "101", word: "Amarillo", definition: "Yellow"))
         wordPairs.append(WordPair(pairId: "102", word: "Clave", definition: "Nail"))
         
+        
         wpAss.append(TagAssociation(associationId: "10", wordPairId: wordPairs[0].pairId, tagId: tags[0].tagId))
         wpAss.append(TagAssociation(associationId: "11", wordPairId: wordPairs[0].pairId, tagId: tags[2].tagId))
         
         wpAss.append(TagAssociation(associationId: "12", wordPairId: wordPairs[1].pairId, tagId: tags[0].tagId))
         
+        metaData.append(MetaData(metaId: "0010", pairId: wordPairs[0].pairId, dateCreated: Date(), dateUpdated: nil, incorrectCount: 1, totalTime: 20, timedViewCount: 1))
+        
         
         let dataStore = DataStore()
-        dataStore.initialize(tags: tags, wordPairs: wordPairs, tagAssociations: wpAss)
+        dataStore.initialize(tags: tags, wordPairs: wordPairs, tagAssociations: wpAss, metaData: metaData)
         
         let json = dataStore.toJson()
         

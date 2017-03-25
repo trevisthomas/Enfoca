@@ -30,8 +30,15 @@ class WordPairCell: UITableViewCell {
             guard wordLabel != nil else {
                 return
             }
+            
+            if let score = wordPair.metaData?.scoreAsString {
+                definitionLabel.text = "\(wordPair.definition) (\(score))"
+            } else {
+                definitionLabel.text = wordPair.definition
+            }
+            
             wordLabel.text = wordPair.word
-            definitionLabel.text = wordPair.definition
+            
             if wordPair.tags.isEmpty {
                 tagLabel.isHidden = true
                 tagLabel.text = nil

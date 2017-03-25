@@ -14,15 +14,28 @@ class Import {
     
     var tagDict : [String: OldTag] = [:]
     var wordPairDict : [String: OldWordPair] = [:]
+    var metaDict: [String: OldMetaData] = [:]
     var tagAssociations : [OldTagAssociation] = []
     let dateformatter = DateFormatter()
     let enfocaId = NSNumber(value: 3)
+    
+    
+    let metaResource = "study_item_meta"
+    let tagResource = "tag"
+    let studyItemResource = "study_item"
+    let tagAssociationResource = "tag_associations"
+    
+//    let metaResource = "small_study_item_meta"
+//    let tagResource = "small_tag"
+//    let studyItemResource = "small_study_item"
+//    let tagAssociationResource = "small_tag_associations"
     
     init(){
         dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
     }
     
     func process(){
+        loadMeta()
         loadWordPairs()
         loadTags()
         loadTagAssociations()
@@ -30,8 +43,40 @@ class Import {
         saveDataToCloudKit()
     }
     
+    func loadMeta(){
+        guard let path = Bundle.main.path(forResource: metaResource, ofType: "json") else { fatalError() }
+//        guard let path = Bundle.main.path(forResource: "test", ofType: "json") else { fatalError() }
+        guard let jsonData =  try? NSData(contentsOfFile: path, options: [.mappedIfSafe]) as Data  else { fatalError() }
+        guard let jsonResult: NSArray = try! JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSArray else { fatalError() }
+        
+        for raw in jsonResult{
+            let meta = raw as! NSDictionary
+            
+            guard let id = meta["studyItemId"] as? String else {fatalError()}
+            guard let createDateString = meta["createDate"] as? String else {fatalError()}
+            guard let createDate  = dateformatter.date(from: createDateString) else {fatalError()}
+            guard let incorrectCount = meta["incorrectCount"] as? Int else {fatalError()}
+            var lastUpdateDate : Date?
+            if let lastUpdateString = meta["lastUpdate"] as? String {
+                guard let lastUpdate  = dateformatter.date(from: lastUpdateString) else {fatalError()}
+                lastUpdateDate = lastUpdate
+            }
+            
+            guard let totalTime = meta["totalTime"] as? Int else {fatalError()}
+            guard let timedViewCount = meta["timedViewCount"] as? Int else {fatalError()}
+            
+            let oldMeta = OldMetaData(studyItemId: id, creationDate: createDate, incorrectCount: incorrectCount, lastUpdate: lastUpdateDate, totalTime: totalTime, timedViewCount: timedViewCount)
+            
+            metaDict[id] = oldMeta
+            
+        }
+        print("Loaded \(metaDict.count) meta data rows.")
+        
+    }
+
+    
     func loadTags(){
-        if let path = Bundle.main.path(forResource: "tag", ofType: "json") {
+        if let path = Bundle.main.path(forResource: tagResource, ofType: "json") {
             if let jsonData =  try? NSData(contentsOfFile: path, options: [.mappedIfSafe]) as Data{
                 if let jsonResult: NSArray = try! JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSArray {
                     
@@ -52,7 +97,7 @@ class Import {
     }
     
     func loadWordPairs(){
-        guard let path = Bundle.main.path(forResource: "study_item", ofType: "json") else { fatalError() }
+        guard let path = Bundle.main.path(forResource: studyItemResource, ofType: "json") else { fatalError() }
 //        guard let path = Bundle.main.path(forResource: "test", ofType: "json") else { fatalError() }
         guard let jsonData =  try? NSData(contentsOfFile: path, options: [.mappedIfSafe]) as Data  else { fatalError() }
         guard let jsonResult: NSArray = try! JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSArray else { fatalError() }
@@ -70,14 +115,13 @@ class Import {
             let oldWordPair = OldWordPair(studyItemId: id, creationDate: date, word: word, definition: definition, example: example)
             
             wordPairDict[oldWordPair.studyItemId] = oldWordPair
-//            print("\(oldWordPair.word) : \(oldWordPair.definition)")
         }
         print("Loaded \(wordPairDict.count) word pairs.")
     }
     
     func loadTagAssociations(){
-        guard let path = Bundle.main.path(forResource: "tag_associations", ofType: "json") else { fatalError() }
-//        guard let path = Bundle.main.path(forResource: "test_ass", ofType: "json") else { fatalError() }
+        guard let path = Bundle.main.path(forResource: tagAssociationResource, ofType: "json") else { fatalError() }
+
         guard let jsonData =  try? NSData(contentsOfFile: path, options: [.mappedIfSafe]) as Data  else { fatalError() }
         guard let jsonResult: NSArray = try! JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSArray else { fatalError() }
         
@@ -101,10 +145,12 @@ class Import {
         let errorHandler = ImportErrorHandler()
         
         let queue = OperationQueue()
+        
+        
+        
         for oldTag in tagDict.values{
             let tagOp = OperationCreateTag(tagName: oldTag.tagName, enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
             queue.addOperations([tagOp], waitUntilFinished: true)
-//            oldTag.ckTagId = tagOp.tag?.tagId as! CKRecordID
             oldTag.newTag = tagOp.tag
             print("Created Tag: \(tagOp.tag?.name)")
         }
@@ -113,7 +159,6 @@ class Import {
         for oldWordPair in wordPairDict.values{
             let wordPairOp = OperationCreateWordPair(wordPairSource: toRealWordPair(oldWordPair: oldWordPair), enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
             queue.addOperations([wordPairOp], waitUntilFinished: true)
-//            oldWordPair.ckPairid = wordPairOp.wordPair?.pairId as? CKRecordID
             oldWordPair.newWordPair = wordPairOp.wordPair
             
             print("Created word pair: \(wordPairOp.wordPair?.word)")
@@ -123,7 +168,6 @@ class Import {
             let tag = tagDict[ass.tagId]!.newTag!
             
             if let wp = wordPairDict[ass.studyItemId]?.newWordPair {
-                //            let wp = wordPairDict[ass.studyItemId]!.newWordPair!
                 
                 let assOp = OperationCreateTagAssociation(tagId: tag.tagId, wordPairId: wp.pairId, enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
                 
@@ -135,47 +179,26 @@ class Import {
                 print("Failed to find: \(ass.studyItemId)")
             }
         }
+        
+        for oldMeta in metaDict.values {
+            let metaOp = OperationCreateMetaData(metaDataSource: toRealMetaData(oldMetaData: oldMeta), enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
+            queue.addOperations([metaOp], waitUntilFinished: true)
+            print("Created Meta: \(metaOp.metaData?.metaId)")
+            
+        }
     }
-    
-//    private func saveRecords(db: CKDatabase,records : [CKRecord]) -> CKDatabaseOperation{
-//        let saveRecordsOperation = CKModifyRecordsOperation()
-//        
-//        saveRecordsOperation.database = db
-//        
-//        saveRecordsOperation.recordsToSave = records
-//        saveRecordsOperation.savePolicy = .allKeys
-////        saveRecordsOperation.perRecordCompletionBlock
-//        saveRecordsOperation.perRecordCompletionBlock = { record, error in
-//            // deal with conflicts
-//            // set completionHandler of wrapper operation if it's the case
-//            let wordPair = CloudKitConverters.toWordPair(from: record)
-//            
-//            let oldWordPair = self.wordPairDict.values.first(where: { (oldWordPair:OldWordPair) -> Bool in
-//                return wordPair.word == oldWordPair.word && wordPair.definition == oldWordPair.definition
-//            })
-//            
-//            oldWordPair?.ckPairid = wordPair.pairId as? CKRecordID
-//            
-//            print("Created word pair: \(wordPair.word)")
-//            
-//            
-////            oldTag.ckTagId = tagOp.tag?.tagId as! CKRecordID
-//        }
-//        
-//        saveRecordsOperation.modifyRecordsCompletionBlock = { savedRecords, deletedRecordIDs, error in
-//            // deal with conflicts
-//            // set completionHandler of wrapper operation if it's the case
-//            
-//            print("Created \(savedRecords?.count) word pairs.")
-//        }
-//        
-//        
-////        db.add(saveRecordsOperation)
-//        return saveRecordsOperation
-//    }
     
     private func toRealWordPair(oldWordPair : OldWordPair) -> WordPair{
         return WordPair(pairId: "", word: oldWordPair.word, definition: oldWordPair.definition, dateCreated: oldWordPair.creationDate, gender: .notset, tags: [], example: oldWordPair.example)
+    }
+    
+    private func toRealMetaData(oldMetaData : OldMetaData) -> MetaData{
+        
+        let wp = wordPairDict[oldMetaData.studyItemId]
+        
+        guard let pairId =  wp?.newWordPair?.pairId else {fatalError()}
+        
+        return MetaData(metaId: "", pairId: pairId, dateCreated: oldMetaData.creationDate, dateUpdated: oldMetaData.lastUpdate, incorrectCount: oldMetaData.incorrectCount, totalTime: oldMetaData.totalTime, timedViewCount: oldMetaData.timedViewCount)
     }
 
 }

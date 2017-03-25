@@ -42,6 +42,9 @@ class LoginViewController: UIViewController {
         service.initialize(dataStore: getAppDelegate().applicationDefaults.dataStore, progressObserver: self) { (success :Bool, error : EnfocaError?) in
             getAppDelegate().webService = service
             self.performSegue(withIdentifier: "WelcomeVC", sender: self)
+            
+//            //DELETE ALL
+//            Perform.deleteAllRecords(dataStore: getAppDelegate().applicationDefaults.dataStore, enfocaId: service.enfocaId, db: service.db)
         }
     }
 

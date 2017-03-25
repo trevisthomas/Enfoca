@@ -8,17 +8,6 @@
 
 import Foundation
 
-class WordPairWrapper {
-    init(){
-        
-    }
-    
-    init(_ wordPair: WordPair) {
-        self.wordPair = wordPair
-    }
-    var wordPair : WordPair?
-}
-
 class WordPair : Hashable {
     static let formatter = Formatter()
     /// Returns a Boolean value indicating whether two values are equal.
@@ -36,9 +25,7 @@ class WordPair : Hashable {
     var hashValue: Int {
         return pairId.hashValue
     }
-
     
-//    private(set) var pairId: AnyHashable
     private(set) var pairId: String
     private(set) var word: String
     private(set) var definition: String
@@ -46,29 +33,8 @@ class WordPair : Hashable {
     private(set) var gender: Gender
     private(set) var example: String?
     private(set) var tags : [Tag] = []
+    var metaData : MetaData?
     
-    
-    
-//    private String word;
-//    private String definition;
-//    private Date createDate = new Date();
-//    private Date lastUpdate = new Date();
-//    private long testedCount;
-//    private long correctCount;
-//    private long incorrectCount;
-//    private double difficulty;
-//    private String id;
-//    private String user;
-//    private long displayOrder;
-//    private List<Tag> tags = new ArrayList<>();
-//    private boolean active = false;
-//    private boolean deleteAllowed;
-//    private long averageTime;
-//    private String example;
-//    
-//    private double confidence;
-//    private long totalTime;
-//    private long timedViewCount;
     
     init (pairId: String, word: String, definition: String, dateCreated: Date = Date(), gender: Gender = .notset, tags : [Tag] = [], example: String? = nil) {
         self.pairId = pairId
@@ -107,7 +73,7 @@ class WordPair : Hashable {
         guard let dateString = jsonResult["dateCreated"] as? String else {fatalError()}
         guard let genderString = jsonResult["gender"] as? String else { fatalError() }
         
-        guard let dateCreated = WordPair.formatter.dateFormatter.date(from: dateString) else {fatalError()}
+        guard let dateCreated = JsonDateFormatter.instance.date(from: dateString) else {fatalError()}
         let gender = Gender.fromString(genderString)
         
         
@@ -127,7 +93,7 @@ class WordPair : Hashable {
         representation["pairId"] = pairId as AnyObject?
         representation["word"] = word as AnyObject?
         representation["definition"] = definition as AnyObject?
-        let dateString = WordPair.formatter.dateFormatter.string(from: dateCreated)
+        let dateString = JsonDateFormatter.instance.string(from: dateCreated)
         representation["dateCreated"] = dateString as AnyObject?
         representation["gender"] = gender.toString() as AnyObject?
         representation["example"] = example as AnyObject?
@@ -140,15 +106,4 @@ class WordPair : Hashable {
     }
 }
 
-extension WordPair {
-    
-    
-}
 
-class Formatter {
-    let dateFormatter = DateFormatter()
-    
-    init() {
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-    }
-}

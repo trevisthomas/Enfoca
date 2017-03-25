@@ -15,12 +15,13 @@ class DataStoreTests: XCTestCase {
     var tags : [Tag] = []
     var wordPairs : [WordPair] = []
     var wpAss : [TagAssociation] = []
+    var metaData : [MetaData] = []
     
     override func setUp() {
         super.setUp()
         
         sut = DataStore()
-        sut.initialize(tags: tags, wordPairs: wordPairs, tagAssociations: wpAss)
+        sut.initialize(tags: tags, wordPairs: wordPairs, tagAssociations: wpAss, metaData: metaData)
     }
     
     override func tearDown() {
@@ -527,7 +528,7 @@ extension DataStoreTests{
         wpAss.append(TagAssociation(associationId: "12", wordPairId: wordPairs[1].pairId, tagId: tags[0].tagId))
         
         
-        sut.initialize(tags: tags, wordPairs: wordPairs, tagAssociations: wpAss)
+        sut.initialize(tags: tags, wordPairs: wordPairs, tagAssociations: wpAss, metaData: [])
     }
 }
 

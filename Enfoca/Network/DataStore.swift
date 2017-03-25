@@ -9,10 +9,12 @@
 import Foundation
 
 class DataStore {
+    private(set) var metaDataDictionary: [AnyHashable : MetaData] = [:]
     private(set) var tagDictionary : [AnyHashable : Tag] = [:]
     private(set) var wordPairDictionary : [AnyHashable :  WordPair] = [:]
     private(set) var tagAssociations : [TagAssociation] = []
     private(set) var isInitialized : Bool = false
+    
     
     var countAssociations : Int {
         return tagAssociations.count
@@ -26,7 +28,7 @@ class DataStore {
         return wordPairDictionary.count
     }
     
-    func initialize(tags: [Tag], wordPairs: [WordPair], tagAssociations: [TagAssociation], progressObserver: ProgressObserver? = nil){
+    func initialize(tags: [Tag], wordPairs: [WordPair], tagAssociations: [TagAssociation], metaData : [MetaData], progressObserver: ProgressObserver? = nil){
         
         let key : String = "DataStoreInit"
         
@@ -62,7 +64,20 @@ class DataStore {
             t.addWordPair(wp)
             wp.addTag(t)
         }
+        
         progressObserver?.updateProgress(ofType: key, message: "DataStore tagged \(tagAssociations.count) words...")
+        
+        self.metaDataDictionary = metaData.reduce([AnyHashable: MetaData](), { (acc, meta) -> [AnyHashable: MetaData] in
+            var dict = acc
+            dict[meta.pairId] = meta
+            
+            wordPairDictionary[meta.pairId]?.metaData = meta
+            
+            return dict
+        })
+        
+        progressObserver?.updateProgress(ofType: key, message: "Loaded quiz stats for \(metaDataDictionary.count) words...")
+        
         
         progressObserver?.endProgress(ofType: key, message: "DataStore initialization complete.")
         
@@ -348,6 +363,7 @@ class DataStore {
         guard let rawWordPairs = jsonResult["wordPairs"] as? NSArray else {fatalError()}
         guard let rawTags = jsonResult["tags"] as? NSArray else {fatalError()}
         guard let rawTagAssociations = jsonResult["tagAssociations"] as? NSArray else {fatalError()}
+        guard let rawMetaData = jsonResult["metaData"] as? NSArray else {fatalError()}
         
         
         var newWordPairs : [WordPair] = []
@@ -369,7 +385,13 @@ class DataStore {
             newTagAssociations.append(TagAssociation(json: json))
         }
         
-        initialize(tags: newTags, wordPairs: newWordPairs, tagAssociations: newTagAssociations)
+        var newMetaData : [MetaData] = []
+        for rawMeta in rawMetaData {
+            let json = rawMeta as! String
+            newMetaData.append(MetaData(json: json))
+        }
+        
+        initialize(tags: newTags, wordPairs: newWordPairs, tagAssociations: newTagAssociations, metaData: newMetaData)
         
     }
     
@@ -385,6 +407,10 @@ class DataStore {
         
         representation["tagAssociations"] = tagAssociations.map({ (tagAss:TagAssociation) -> AnyObject in
             return tagAss.toJson() as AnyObject
+        }) as AnyObject?
+        
+        representation["metaData"] = Array(metaDataDictionary.values).map({ (meta:MetaData) -> AnyObject in
+            return meta.toJson() as AnyObject
         }) as AnyObject?
         
         

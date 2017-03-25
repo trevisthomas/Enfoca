@@ -55,7 +55,28 @@ class CloudKitConverters{
         return ass
     }
     
+    class func toMetaData(from record : CKRecord) -> MetaData {
+        
+        guard let dateCreated = record.value(forKey: "dateCreated") as? Date else { fatalError() }
+        
+        let dateUpdated = record.value(forKey: "dateUpdated") as? Date
+        
+        guard let incorrectCount = record.value(forKey: "incorrectCount") as? Int else { fatalError() }
+        guard let totalTime = record.value(forKey: "totalTime") as? Int else { fatalError() }
+        guard let timedViewCount = record.value(forKey: "timedViewCount") as? Int else { fatalError() }
+        
+        guard let wordRef = record.value(forKey: "wordRef") as? CKReference else {
+            fatalError()
+        }
+        
+        let meta = MetaData(metaId: record.recordID.recordName, pairId: wordRef.recordID.recordName, dateCreated: dateCreated, dateUpdated: dateUpdated, incorrectCount: incorrectCount, totalTime: totalTime, timedViewCount: timedViewCount)
+        
+        return meta
+
+    }
+    
     class func toCKRecordID(fromRecordName name: String) -> CKRecordID{
         return CKRecordID(recordName: name)
+        
     }
 }
