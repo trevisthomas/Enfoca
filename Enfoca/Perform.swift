@@ -42,7 +42,7 @@ class Perform {
         
     }
     
-    class func createDataStore(dataStore: DataStore, enfocaId: NSNumber, db: CKDatabase, progressObserver: ProgressObserver, callback : @escaping (DataStore?, EnfocaError?)->()){
+    class func createDataStore(dataStore: DataStore, enfocaId: NSNumber, db: CKDatabase, privateDb: CKDatabase, progressObserver: ProgressObserver, callback : @escaping (DataStore?, EnfocaError?)->()){
         let errorHandler = ErrorHandler(callback: callback)
         
         let queue = OperationQueue()
@@ -51,7 +51,7 @@ class Perform {
         let fetchTags = OperationFetchTags(enfocaId: enfocaId, db: db, progressObserver: progressObserver, errorDelegate: errorHandler)
         let fetchWordPairs = OperationFetchWordPairs(enfocaId: enfocaId, db: db, progressObserver: progressObserver, errorDelegate: errorHandler)
         
-        let fetchMetaData = OperationFetchMetaData(enfocaId: enfocaId, db: db, progressObserver: progressObserver, errorDelegate: errorHandler)
+        let fetchMetaData = OperationFetchMetaData(enfocaId: enfocaId, db: privateDb, progressObserver: progressObserver, errorDelegate: errorHandler)
         
         let completeOp = BlockOperation {
             print("Initializing data store")

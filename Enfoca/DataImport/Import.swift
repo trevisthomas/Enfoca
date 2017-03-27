@@ -17,7 +17,7 @@ class Import {
     var metaDict: [String: OldMetaData] = [:]
     var tagAssociations : [OldTagAssociation] = []
     let dateformatter = DateFormatter()
-    let enfocaId = NSNumber(value: 3)
+    let enfocaId : NSNumber
     
     
     let metaResource = "study_item_meta"
@@ -30,8 +30,9 @@ class Import {
 //    let studyItemResource = "small_study_item"
 //    let tagAssociationResource = "small_tag_associations"
     
-    init(){
+    init(enfocaId id: Int){
         dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        enfocaId = NSNumber(value: id)
     }
     
     func process(){
@@ -142,6 +143,8 @@ class Import {
     
     func saveDataToCloudKit() {
         let db = CKContainer.default().publicCloudDatabase
+        let privateDb = CKContainer.default().privateCloudDatabase
+        
         let errorHandler = ImportErrorHandler()
         
         let queue = OperationQueue()
@@ -181,7 +184,7 @@ class Import {
         }
         
         for oldMeta in metaDict.values {
-            let metaOp = OperationCreateMetaData(metaDataSource: toRealMetaData(oldMetaData: oldMeta), enfocaId: enfocaId, db: db, errorDelegate: errorHandler)
+            let metaOp = OperationCreateMetaData(metaDataSource: toRealMetaData(oldMetaData: oldMeta), enfocaId: enfocaId, db: privateDb, errorDelegate: errorHandler)
             queue.addOperations([metaOp], waitUntilFinished: true)
             print("Created Meta: \(metaOp.metaData?.metaId)")
             

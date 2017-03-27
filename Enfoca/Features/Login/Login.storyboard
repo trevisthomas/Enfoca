@@ -135,7 +135,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.32481390237808228" green="0.34466239809989929" blue="0.37378150224685669" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="pa4-KL-NKB" firstAttribute="leading" secondItem="ze8-Ue-Dj8" secondAttribute="leading" id="4P3-GP-40O"/>
                             <constraint firstItem="ziY-sd-blh" firstAttribute="top" secondItem="ze8-Ue-Dj8" secondAttribute="bottom" constant="24" id="ALl-Y5-HC6"/>
@@ -153,6 +153,7 @@
                             <constraint firstItem="h4U-rf-p9g" firstAttribute="centerX" secondItem="HjJ-w4-RzK" secondAttribute="centerX" id="uNO-GX-msn"/>
                         </constraints>
                     </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="browseButton" destination="pa4-KL-NKB" id="BZ3-34-F5B"/>
                         <outlet property="logOffButton" destination="ziY-sd-blh" id="P9S-m0-bsX"/>

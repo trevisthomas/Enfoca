@@ -27,7 +27,8 @@ class OperationCreateMetaData : BaseOperation {
         super.start()
         
         let ckWordPairId = CloudKitConverters.toCKRecordID(fromRecordName: metaDataSource.pairId)
-        let wordPairRef = CKReference(recordID: ckWordPairId, action: .deleteSelf)
+//        let wordPairRef = CKReference(recordID: ckWordPairId, action: .deleteSelf) //Wont work accross zones
+        let wordPairRef = CKReference(recordID: ckWordPairId, action: .none)
         
         let record : CKRecord = CKRecord(recordType: "MetaData")
         

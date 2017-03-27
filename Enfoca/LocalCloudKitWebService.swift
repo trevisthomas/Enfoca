@@ -13,6 +13,7 @@ import CloudKit
 class LocalCloudKitWebService : WebService {
     private(set) var enfocaId : NSNumber!
     private(set) var db : CKDatabase!
+    private(set) var privateDb : CKDatabase!
     private(set) var userRecordId : CKRecordID!
     private var dataStore: DataStore!
     
@@ -28,6 +29,8 @@ class LocalCloudKitWebService : WebService {
     func initialize(dataStore: DataStore, progressObserver: ProgressObserver, callback: @escaping (_ success : Bool, _ error : EnfocaError?) -> ()){
         
         db = CKContainer.default().publicCloudDatabase
+        privateDb = CKContainer.default().privateCloudDatabase
+        
         Perform.authentcate(db: db) { (userTuple : (Int, CKRecordID)?, error: String?) in
             guard let userTuple = userTuple else {
                 callback(false, error)
@@ -42,7 +45,7 @@ class LocalCloudKitWebService : WebService {
                 callback(true, nil)
                 return
             } else {
-                Perform.createDataStore(dataStore: dataStore, enfocaId: self.enfocaId, db: self.db, progressObserver: progressObserver) { (ds : DataStore?, error: EnfocaError?) in
+                Perform.createDataStore(dataStore: dataStore, enfocaId: self.enfocaId, db: self.db, privateDb: self.privateDb, progressObserver: progressObserver) { (ds : DataStore?, error: EnfocaError?) in
                     if let error = error {
                         callback(false, error)
                     }

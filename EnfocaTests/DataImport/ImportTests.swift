@@ -10,10 +10,10 @@ import XCTest
 @testable import Enfoca
 
 class ImportTests : XCTestCase{
-    func test_Load (){
-//        let importer = Import()
+//    func test_Load (){
+//        let importer = Import(enfocaId: 5)
 //        
 //        importer.process()
-    }
+//    }
     
 }

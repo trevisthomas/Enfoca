@@ -208,6 +208,17 @@ class BrowseViewController: UIViewController, TagFilterDelegate {
         popover.sourceRect = button.bounds //No clue why source view didnt do this.
 
     }
+    
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//        return .lightContent
+//    }
+//    
+//    override func viewDidAppear(_ animated: Bool) {
+//        navigationController?.navigationBar.barStyle = .black;
+//        
+//        setNeedsStatusBarAppearanceUpdate()
+//        
+//    }
 }
 
 extension BrowseViewController : BrowseViewModelDelegate {
@@ -228,6 +239,8 @@ extension BrowseViewController : BrowseViewModelDelegate {
     func onError(error: EnfocaError?) {
         presentAlert(title: "An error has occured", message: error)
     }
+    
+    
 }
 
 extension BrowseViewController : UIPopoverPresentationControllerDelegate {
