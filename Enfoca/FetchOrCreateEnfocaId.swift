@@ -14,13 +14,13 @@ class FetchOrCreateEnfocaId : BaseUserOperation {
     override func start() {
         state = .inProgress
         
-        if let id = user.record.value(forKey: "enfocaId") as? Int {
-            user.enfocaId = id
+        if isCancelled {
             done()
             return
         }
         
-        if isCancelled {
+        if let id = user.record.value(forKey: "enfocaId") as? Int {
+            user.enfocaId = id
             done()
             return
         }

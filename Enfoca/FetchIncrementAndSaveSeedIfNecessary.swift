@@ -14,13 +14,19 @@ import CloudKit
 class FetchIncrementAndSaveSeedIfNecessary : BaseUserOperation {
     
     override func start() {
+        state = .inProgress
+        
+        if isCancelled {
+            done()
+            return
+        }
+        
         if let _ = user.record.value(forKey: "enfocaId") as? Int {
             //If he has an enfoca id, then incrementing the seed is not necessary
             done()
             return
         }
         
-        state = .inProgress
 //        let settingsId = CKRecordID(recordName: "9ea8a03a-9867-4365-8ece-94380971bc13")
         let settingsId = CKRecordID(recordName: "900682b2-f02d-4239-9640-b3566c04bdc8")
         

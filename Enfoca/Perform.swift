@@ -13,7 +13,8 @@ class Perform {
     class func authentcate(db: CKDatabase, callback : @escaping (_ userTuple : (Int, CKRecordID)?,_ error : String?) -> ()){
         
         let user : InternalUser = InternalUser()
-        let errorHandler = ErrorHandler(callback: callback)
+        let queue = OperationQueue()
+        let errorHandler = ErrorHandler(queue: queue, callback: callback)
         
         let completeOp = BlockOperation {
             //            UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -23,8 +24,6 @@ class Perform {
                 callback((user.enfocaId, user.recordId), nil)
             }
         }
-        
-        let queue = OperationQueue()
         
         let fetchUserId = FetchUserRecordId(user: user, db: db, errorDelegate: errorHandler)
         let cloudAuth = CloudAuthOperation(user: user, db: db, errorDelegate: errorHandler)
@@ -43,9 +42,11 @@ class Perform {
     }
     
     class func createDataStore(dataStore: DataStore, enfocaId: NSNumber, db: CKDatabase, privateDb: CKDatabase, progressObserver: ProgressObserver, callback : @escaping (DataStore?, EnfocaError?)->()){
-        let errorHandler = ErrorHandler(callback: callback)
         
         let queue = OperationQueue()
+        let errorHandler = ErrorHandler(queue: queue, callback: callback)
+        
+        
         
         let fetchTagAssociations = OperationFetchTagAssociations(enfocaId: enfocaId, db: db, progressObserver: progressObserver, errorDelegate: errorHandler)
         let fetchTags = OperationFetchTags(enfocaId: enfocaId, db: db, progressObserver: progressObserver, errorDelegate: errorHandler)
@@ -123,7 +124,7 @@ class Perform {
                 if let error = error {
                     print(error)
                 } else {
-                    print("deleted \(record?.recordID.recordName)")
+                    print("deleted \(String(describing: record?.recordID.recordName))")
                 }
             }
             
@@ -148,11 +149,14 @@ class Perform {
 
 class ErrorHandler<T> : ErrorDelegate {
     let callback: ( T?, _ error : String?) -> ()
-    init (callback : @escaping ( T?, _ error : String?) -> ()) {
+    let queue: OperationQueue?
+    init (queue : OperationQueue?, callback : @escaping ( T?, _ error : String?) -> ()) {
         self.callback = callback
+        self.queue = queue
     }
     
     func onError(message: String) {
+        queue?.cancelAllOperations()
         OperationQueue.main.addOperation {
             self.callback(nil, message)
         }

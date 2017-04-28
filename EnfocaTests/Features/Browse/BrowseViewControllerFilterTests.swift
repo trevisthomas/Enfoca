@@ -166,7 +166,7 @@ class BrowseViewControllerFilterTests: XCTestCase {
         let popover: UIPopoverPresentationController = destVC.popoverPresentationController!
         
         //Alternatives?
-        XCTAssertEqual(popover.delegate as! BrowseViewController, sut) //BrowseViewController should be the delegate
+        XCTAssertEqual((popover.delegate as! BrowseViewController), sut) //BrowseViewController should be the delegate
         XCTAssertEqual(sut.tagFilterButton.bounds, popover.sourceRect)
         
         XCTAssertEqual(destVC.modalPresentationStyle, .popover)

@@ -47,6 +47,7 @@ class CloudAuthOperation : BaseUserOperation {
     func accountStatus(_ status : CKAccountStatus) {
         if status == CKAccountStatus.noAccount {
             //TODO: Show alert
+            handleError(message: self.alertMessage)
             user.isAuthenticated = false
         } else {
             user.isAuthenticated = true
